@@ -7,13 +7,13 @@ const options = {
 };
 export const getMovieDetail = async (id: number) => {
   try {
-    const detailRes = await fetch(`https://api.themoviedb.org/3/movie/${id}?language=ko-KR`, options);
+    const detailRes = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}${id}?language=ko-KR`, options);
     const detailData = await detailRes.json();
 
-    const trailerRes = await fetch(`https://api.themoviedb.org/3/movie/${id}/videos?language=ko-KR`, options);
+    const trailerRes = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}${id}/videos?language=ko-KR`, options);
     const trailerData = await trailerRes.json();
 
-    const watchProviderRes = await fetch(`https://api.themoviedb.org/3/movie/${id}/watch/providers`, options);
+    const watchProviderRes = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}${id}/watch/providers`, options);
     const watchProviderData = await watchProviderRes.json();
 
     const trailerKeys = trailerData.results.map((result: any) => result.key);

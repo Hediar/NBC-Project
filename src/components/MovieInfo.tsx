@@ -19,44 +19,51 @@ const MovieInfo = async ({ movieId }: Props) => {
       <div>장르: {movieData.genres.map((genre: any) => `${genre.name} `)}</div>
       <div>평점: {movieData.vote_average}</div>
       <div>개봉일: {movieData.release_date}</div>
-
-      {movieData.watchProviders.rent && (
-        <div className="provider-rent">
-          <h5>Rent</h5>
-          {movieData.watchProviders.rent.map((provider: any, idx: number) => {
-            return (
-              <div key={idx}>
-                <img src={`${process.env.NEXT_PUBLIC_BASE_IMAGE_URL}w100_and_h100_bestv2${provider.logo_path}`} />
-              </div>
-            );
-          })}
+      {movieData.watchProviders ? (
+        <div>
+          {movieData.watchProviders?.rent && (
+            <div className="provider-rent">
+              <h5>Rent</h5>
+              {movieData.watchProviders.rent.map((provider: any, idx: number) => {
+                return (
+                  <div key={idx}>
+                    <img src={`${process.env.NEXT_PUBLIC_BASE_IMAGE_URL}w100_and_h100_bestv2${provider.logo_path}`} />
+                  </div>
+                );
+              })}
+            </div>
+          )}
+          {movieData.watchProviders?.buy && (
+            <div className="provider-buy">
+              <h5>Buy</h5>
+              {movieData.watchProviders.buy?.map((provider: any, idx: number) => {
+                return (
+                  <div key={idx}>
+                    <img src={`${process.env.NEXT_PUBLIC_BASE_IMAGE_URL}w100_and_h100_bestv2${provider.logo_path}`} />
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </div>
+      ) : (
+        <div>{movieData.title}를 제공하는 곳이 없습니다.</div>
       )}
-      {movieData.watchProviders.buy && (
-        <div className="provider-buy">
-          <h5>Buy</h5>
-          {movieData.watchProviders.buy?.map((provider: any, idx: number) => {
+      <div>
+        {movieData.trailerKeys?.map((key: string, idx: number) => {
+          if (idx < 3) {
             return (
-              <div key={idx}>
-                <img src={`${process.env.NEXT_PUBLIC_BASE_IMAGE_URL}w100_and_h100_bestv2${provider.logo_path}`} />
-              </div>
-            );
-          })}
-        </div>
-      )}
-      {movieData.trailerKeys.map((key: string, idx: number) => {
-        if (idx < 3) {
-          return (
-            <iframe
-              key={idx}
-              src={`
+              <iframe
+                key={idx}
+                src={`
                     https://www.youtube.com/embed/${key}?autoplay=1&origin=https%3A%2F%2Fwww.themoviedb.org&hl=ko&modestbranding=1&fs=1&autohide=1`}
-              width={500}
-              height={300}
-            />
-          );
-        }
-      })}
+                width={500}
+                height={300}
+              />
+            );
+          }
+        })}
+      </div>
     </div>
   );
 };
