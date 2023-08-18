@@ -2,12 +2,20 @@
 
 import { supabase } from '@/supabase/config';
 import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 
 interface Params {
   movieId: string;
 }
-const ReviewPage = ({ params }: { params: Params }) => {
+
+type Props = {
+  params: Params;
+};
+
+const ReviewPage = ({ params }: Props) => {
+  const router = useRouter();
+
   const { movieId } = params;
 
   const [content, setContent] = React.useState('');
@@ -23,6 +31,16 @@ const ReviewPage = ({ params }: { params: Params }) => {
 
     // redirect('/');
   };
+
+  const handleCancel = () => {
+    router.back();
+  };
+
+  // 이미지 작업 중
+  // const fileInput = useRef(null)
+  const handleImage = async (e: any) => {
+
+  }
 
   return (
     <div>
@@ -40,7 +58,23 @@ const ReviewPage = ({ params }: { params: Params }) => {
             placeholder="Content"
             onChange={(e) => setContent(e.target.value)}
           />
-          <button>제출</button>
+
+          {/* <a href="#" onClick={() => fileInput.current.click() } > 
+    		 <Image src={image} width={150} height={150} alt="프로필 이미지" /> 
+    	 </a> */}
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="input-file">
+            이미지 업로드
+          </label>
+          <input
+            id="input-file"
+            name="image_URL"
+            type="file"
+            accept='image/*'
+            // ref={fileInput}
+            onChange={handleImage}
+          />
+          <button>제출하기</button>
+          <button onClick={handleCancel}>돌아가기</button>
         </div>
       </form>
     </div>
