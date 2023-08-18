@@ -1,6 +1,8 @@
-import { getMovieList } from '@/api/movie';
 import { tmdbOptions } from '@/api/tmdb';
+import MovieLikes from './MovieLikes/MovieLikes';
 import supabase from '@/supabase/config';
+
+export const revalidate = 0;
 
 const TrendMoives = async () => {
   // let { data } = await getMovieList();
@@ -11,17 +13,18 @@ const TrendMoives = async () => {
     `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}trending/movie/week?language=ko-KR`,
     tmdbOptions
   );
-  const data = await detailRes.json();
-  const trendMoives = await data.results;
+  const moviesData = await detailRes.json();
+  const trendMoives = await moviesData.results;
   // console.log('movies', trendMoives);
 
-  let movielikes = await supabase.from('movielikes').select('*');
-  let test = await supabase.from('reviews').select('*');
-  console.log('data', movielikes);
+  // let { data } = await supabase.from('movielikes').select('*');
+
+  // console.log('data', data);
 
   return (
     <>
       <div>TrendMoives</div>
+      <MovieLikes />
       <div>
         {trendMoives?.map((provider: any, idx: number) => {
           return (
