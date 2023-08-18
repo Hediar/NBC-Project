@@ -7,4 +7,11 @@ const tmdbApi = axios.create({
     language: 'ko-KR'
   }
 });
-export { tmdbApi };
+const tmdbOptions = {
+  method: 'GET',
+  headers: {
+    accept: 'application/json',
+    Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN_AUTH}`
+  }
+};
+export { tmdbApi, tmdbOptions };
