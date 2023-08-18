@@ -11,8 +11,10 @@ const options = {
   }
 };
 
-export const supabase = createClient<Database>(
+const supabase = createClient<Database>(
   process.env.NEXT_PUBLIC_SUPABASE_URL as string,
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string
 );
-// export const supabase = createServerComponentClient({ cookies });
+// const supabase = createServerComponentClient({ cookies });
+
+export default supabase;

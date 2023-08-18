@@ -1,6 +1,6 @@
 import { getMovieList } from '@/api/movie';
 import { tmdbOptions } from '@/api/tmdb';
-import { supabase } from '@/supabase/config';
+import supabase from '@/supabase/config';
 
 const TrendMoives = async () => {
   // let { data } = await getMovieList();
