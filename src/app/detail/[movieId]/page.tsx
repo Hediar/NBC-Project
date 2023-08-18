@@ -1,8 +1,11 @@
 import MovieInfo from '@/components/MovieInfo';
 import React from 'react';
 
-const MovieDetail = (props: any) => {
-  const { params } = props;
+type Props = {
+  params: Params;
+};
+
+const MovieDetail = ({ params }: Props) => {
   const { movieId } = params;
 
   return (
