@@ -11,19 +11,23 @@ export const revalidate = 0;
  * 좋아요 userid의 배열에 따라 개수 count
  *
  */
-const MovieLikes = () => {
+const MovieLikes = (props: any) => {
   const likeDataFetch = async () => {
     let test = await supabase.from('reviews').select('*');
     let { data } = await supabase.from('movielikes').select('*');
 
     console.log('data', data);
   };
+
   useEffect(() => {
-    likeDataFetch();
+    // likeDataFetch();
   }, []);
+
   return (
     <div>
       MovieLikes
+      <br />
+      {props.movieid} 좋아요 개수
       <LikeButton />
     </div>
   );
