@@ -1,12 +1,11 @@
-import axios from 'axios';
-
-const tmdbApi = axios.create({
-  baseURL: 'https://api.themoviedb.org/3',
-  params: {
-    api_key: 'YOUR_TMDB_API_KEY'
-  }
-});
-
+const tmdbOptions = {
+  method: 'GET',
+  headers: {
+    accept: 'application/json',
+    Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_ACCESS_TOKEN_AUTH}`
+  },
+  next: { revalidate: 3600 }
+};
 const options = {
   method: 'GET',
   headers: {
@@ -39,4 +38,4 @@ export const getMovieDetail = async (id: string) => {
     console.error(error);
   }
 };
-export { tmdbApi };
+>>>>>>>>> Temporary merge branch 2

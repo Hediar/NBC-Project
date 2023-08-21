@@ -1,7 +1,9 @@
 import { tmdbApi } from './tmdb';
 
-const getMovieList = async (params: any) => {
-  const response = await tmdbApi.get('/movie/popular');
+const getMovieList = async () => {
+  const response = await tmdbApi.get('trending/movie/week');
+
+  return response;
 };
 
 export { getMovieList };
