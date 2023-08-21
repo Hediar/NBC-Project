@@ -1,3 +1,5 @@
+import { TrailerData } from '@/types/types';
+
 const options = {
   method: 'GET',
   headers: {
@@ -25,6 +27,7 @@ export const getMovieDetail = async (id: string) => {
     const backdropImages = imageData.backdrops;
 
     const movieDetailData = { ...detailData, trailerKeys, watchProviders, backdropImages };
+
     return movieDetailData;
   } catch (error) {
     console.error(error);

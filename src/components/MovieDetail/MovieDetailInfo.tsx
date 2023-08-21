@@ -2,21 +2,20 @@ import { getMovieDetail } from '@/api/tmdb';
 import Image from 'next/image';
 import React from 'react';
 import MovieDetailBottomBar from './MovieDetailBottomBar';
-import { getRealTicketList } from '@/api/kobis';
+import { MovieGenre, MovieProvider } from '@/types/types';
 
 type Props = {
   movieId: string;
 };
+
 const baseImgUrl = process.env.NEXT_PUBLIC_TMDB_BASE_IMAGE_URL;
 
 const MovieDetailInfo = async ({ movieId }: Props) => {
   const movieData = await getMovieDetail(movieId);
-  const realTicketingRate = await getRealTicketList();
-  // console.log('무비이미지데이타=>>', movieData);
 
   return (
     <div>
-      <div className="absolute w-screen h-2/3 opacity-30 -z-50 left-0">
+      <div className="absolute w-screen h-2/3 opacity-50 -z-50 left-0">
         <Image
           src={`${baseImgUrl}w1920_and_h1080_bestv2${movieData.backdrop_path}`}
           alt=""
@@ -48,79 +47,54 @@ const MovieDetailInfo = async ({ movieId }: Props) => {
       </div>
 
       {movieData.watchProviders ? (
-        <div id="providers-cont" className="absolute bottom-1/3 right-12 flex flex-col gap-2">
+        <div id="providers-cont" className="absolute bottom-1/3 right-12 flex  gap-3 pb-2">
           {movieData.watchProviders?.rent && (
-            <div id="provider-rent" className="flex gap-2">
+            <div id="provider-rent" className="flex flex-col gap-1">
               <h5>Rent</h5>
-              {movieData.watchProviders.rent.map((provider: MovieProvider, idx: number) => {
-                return (
-                  <div key={idx}>
-                    <Image
-                      src={`${baseImgUrl}w100_and_h100_bestv2${provider.logo_path}`}
-                      alt=""
-                      width={80}
-                      height={80}
-                      quality={100}
-                      className=""
-                    />
-                  </div>
-                );
-              })}
+              <div className="flex gap-2">
+                {movieData.watchProviders.rent.map((provider: MovieProvider, idx: number) => {
+                  return (
+                    <div key={idx}>
+                      <Image
+                        src={`${baseImgUrl}w100_and_h100_bestv2${provider.logo_path}`}
+                        alt=""
+                        width={60}
+                        height={60}
+                        quality={100}
+                        className="rounded-xl"
+                      />
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           )}
           {movieData.watchProviders?.buy && (
-            <div id="provider-buy" className="flex gap-2 ml-1.5">
+            <div id="provider-buy" className="flex flex-col gap-1">
               <h5>Buy</h5>
-              {movieData.watchProviders.buy?.map((provider: MovieProvider, idx: number) => {
-                return (
-                  <div key={idx}>
-                    <Image
-                      src={`${baseImgUrl}w100_and_h100_bestv2${provider.logo_path}`}
-                      alt=""
-                      width={80}
-                      height={80}
-                      quality={100}
-                    />
-                  </div>
-                );
-              })}
+              <div className="flex gap-2">
+                {movieData.watchProviders.buy?.map((provider: MovieProvider, idx: number) => {
+                  return (
+                    <div key={idx}>
+                      <Image
+                        src={`${baseImgUrl}w100_and_h100_bestv2${provider.logo_path}`}
+                        alt=""
+                        width={60}
+                        height={60}
+                        quality={100}
+                        className="rounded-xl"
+                      />
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           )}
         </div>
       ) : (
         <div>{movieData.title}를 제공하는 곳이 없습니다.</div>
       )}
-      <div>
-        {movieData.trailerKeys?.map((key: string, idx: number) => {
-          if (idx < 3) {
-            return (
-              <iframe
-                key={idx}
-                src={`
-                    https://www.youtube.com/embed/${key}?autoplay=1&origin=https%3A%2F%2Fwww.themoviedb.org&hl=ko&modestbranding=1&fs=1&autohide=1`}
-                width={500}
-                height={300}
-              />
-            );
-          }
-        })}
-      </div>
-      <div>
-        {movieData.backdropImages.map((image: MovieBackdropImage, idx: number) => {
-          if (idx < 3)
-            return (
-              <Image
-                key={idx}
-                src={`${baseImgUrl}w533_and_h300_bestv2${image.file_path}`}
-                alt=""
-                width={533}
-                height={300}
-                quality={100}
-              />
-            );
-        })}
-      </div>
-      <MovieDetailBottomBar movieId={movieId} />
+      <MovieDetailBottomBar movieId={movieId} movieData={movieData} />
     </div>
   );
 };
