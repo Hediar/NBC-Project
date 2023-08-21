@@ -41,6 +41,13 @@ function SignUpPage() {
         <h1>Sign Up Page</h1>
         <input
           className="border border-slate-400 p-2 w-full rounded-md"
+          type="text"
+          name="username"
+          placeholder="username"
+          required
+        />
+        <input
+          className="border border-slate-400 p-2 w-full rounded-md"
           type="email"
           name="email"
           placeholder="email"
@@ -55,6 +62,7 @@ function SignUpPage() {
           pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
           required
           onChange={(e) => passwordOnChangeHandler(e, setPasswordValue)}
+          autoComplete="new-password"
         />
         <input
           className="border border-slate-400 p-2 w-full rounded-md "
