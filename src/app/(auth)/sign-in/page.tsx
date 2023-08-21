@@ -1,6 +1,7 @@
 import Link from 'next/link';
-import React from 'react';
+import React, { Suspense } from 'react';
 import Message from './message';
+import SubmitButton from '@/components/_Auth/SubmitButton';
 
 const SignInPage = () => {
   return (
@@ -26,11 +27,7 @@ const SignInPage = () => {
           pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
           required
         />
-        <input
-          className="border border-slate-900 p-2 cursor-pointer w-full rounded-md disabled:bg-slate-100 mt-5"
-          type="submit"
-          value={'로그인하기'}
-        />
+        <SubmitButton inputValue="로그인하기" loadingMessage="로그인 하는 중..." />
         <Link
           className="border border-slate-900 p-2 cursor-pointer w-full rounded-md flex justify-center "
           href={process.env.NEXT_PUBLIC_BASE_URL!}
