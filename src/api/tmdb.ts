@@ -1,3 +1,15 @@
+
+import { TrailerData } from '@/types/types';
+
+const tmdbOptions = {
+  method: 'GET',
+  headers: {
+    accept: 'application/json',
+    Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_ACCESS_TOKEN_AUTH}`
+  },
+  next: { revalidate: 3600 }
+};
+
 const options = {
   method: 'GET',
   headers: {
@@ -25,8 +37,10 @@ export const getMovieDetail = async (id: string) => {
     const backdropImages = imageData.backdrops;
 
     const movieDetailData = { ...detailData, trailerKeys, watchProviders, backdropImages };
+
     return movieDetailData;
   } catch (error) {
     console.error(error);
   }
 };
+export { tmdbOptions };
