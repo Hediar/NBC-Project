@@ -2,12 +2,13 @@
 import useUserInfoStore, { SavedUserInfo } from '@/app/(store)/saveCurrentUserData';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Session } from '@supabase/supabase-js';
-import React, { useEffect, useState } from 'react';
-
+import React, { useCallback, useEffect, useState } from 'react';
+import { debounce } from 'lodash';
 interface Props {
   session: Session;
 }
 
+// 세션은 AuthButtons에서 받습니다.
 const UserInfo = ({ session }: Props) => {
   const signedInUser = session.user;
   const supabase = createClientComponentClient();
@@ -40,7 +41,7 @@ const UserInfo = ({ session }: Props) => {
   const RequestUsername = () => {
     const [usernameValue, setUsernameValue] = useState<string>('');
 
-    const clickHandler = async () => {
+    const updateUsername = async () => {
       const { error, data } = await supabase
         .from('users')
         .update({ username: usernameValue })
@@ -52,6 +53,11 @@ const UserInfo = ({ session }: Props) => {
       }
       alert('업데이트 완료!');
     };
+
+    const clickHandler = useCallback(
+      debounce(() => updateUsername(), 300),
+      [updateUsername]
+    );
 
     return (
       <>
@@ -72,7 +78,11 @@ const UserInfo = ({ session }: Props) => {
                     onChange={(e) => setUsernameValue(e.target.value)}
                     className="text-center border border-slate-400 rounded-sm"
                   />
-                  <button className="text-center bg-slate-400 text-white p-1 rounded-sm" onClick={clickHandler}>
+                  <button
+                    className="text-center bg-slate-800 text-white p-1 rounded-sm disabled:bg-slate-300"
+                    onClick={clickHandler}
+                    disabled={usernameValue.length === 0}
+                  >
                     만들기
                   </button>
                 </div>
