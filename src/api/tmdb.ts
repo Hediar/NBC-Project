@@ -1,4 +1,4 @@
-const tmdbOptions = {
+export const tmdbOptions = {
   method: 'GET',
   headers: {
     accept: 'application/json',
@@ -6,6 +6,7 @@ const tmdbOptions = {
   },
   next: { revalidate: 3600 }
 };
+
 const options = {
   method: 'GET',
   headers: {
@@ -38,4 +39,3 @@ export const getMovieDetail = async (id: string) => {
     console.error(error);
   }
 };
->>>>>>>>> Temporary merge branch 2
