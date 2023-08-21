@@ -1,3 +1,5 @@
+import { TrailerData } from '@/types/types';
+
 const tmdbOptions = {
   method: 'GET',
   headers: {
@@ -38,7 +40,6 @@ export const getMovieDetail = async (id: string) => {
     const backdropImages = imageData.backdrops;
 
     const movieDetailData = { ...detailData, trailerKeys, watchProviders, backdropImages };
-    console.log(123123, detailRes);
     return movieDetailData;
   } catch (error) {
     console.error(error);
