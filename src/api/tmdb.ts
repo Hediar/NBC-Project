@@ -1,4 +1,7 @@
-export const tmdbOptions = {
+
+import { TrailerData } from '@/types/types';
+
+const tmdbOptions = {
   method: 'GET',
   headers: {
     accept: 'application/json',
@@ -34,8 +37,10 @@ export const getMovieDetail = async (id: string) => {
     const backdropImages = imageData.backdrops;
 
     const movieDetailData = { ...detailData, trailerKeys, watchProviders, backdropImages };
+
     return movieDetailData;
   } catch (error) {
     console.error(error);
   }
 };
+export { tmdbOptions };
