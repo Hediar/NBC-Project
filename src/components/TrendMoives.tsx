@@ -11,7 +11,7 @@ const TrendMoives = async () => {
   );
   const moviesData = await detailRes.json();
   const trendMoives = await moviesData.results;
-  console.log('movies', trendMoives);
+  // console.log('movies', trendMoives);
 
   // 매주마다 trend 영화가 살짝 바뀌니까 언제마다 데이터를 불러올지 생각해보기
 

@@ -1,7 +1,7 @@
-import { getMovieDetail } from '@/api/tmdb';
 import Image from 'next/image';
 import React from 'react';
 import MovieDetailBottomBar from './MovieDetailBottomBar';
+import { getMovieDetail } from '@/api/tmdb';
 
 type Props = {
   movieId: string;
@@ -12,7 +12,7 @@ const MovieDetailInfo = async ({ movieId }: Props) => {
   const movieData = await getMovieDetail(movieId);
 
   // console.log('무비이미지데이타=>>', movieData.backdropImages.length);
-
+  console.log(123123, movieData);
   return (
     <div>
       <div>

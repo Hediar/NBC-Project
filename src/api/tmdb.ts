@@ -18,6 +18,9 @@ const options = {
 export const getMovieDetail = async (id: string) => {
   try {
     const detailRes = await fetch(`${process.env.NEXT_PUBLIC_TMDB_BASE_URL}${id}?language=ko-KR`, options);
+    console.log(123, detailRes);
+    console.log(process.env.NEXT_PUBLIC_TMDB_ACCESS_TOKEN_AUTH);
+    console.log(`${process.env.NEXT_PUBLIC_TMDB_BASE_URL}${id}?language=ko-KR`);
     const detailData = await detailRes.json();
 
     const trailerRes = await fetch(`${process.env.NEXT_PUBLIC_TMDB_BASE_URL}${id}/videos?language=ko-KR`, options);
@@ -30,13 +33,16 @@ export const getMovieDetail = async (id: string) => {
     const imageData = await imageRes.json();
 
     const trailerKeys = trailerData.results.map((result: TrailerData) => result.key);
+
     const watchProviders = watchProviderData.results['KR'];
     const backdropImages = imageData.backdrops;
 
     const movieDetailData = { ...detailData, trailerKeys, watchProviders, backdropImages };
+    console.log(123123, detailRes);
     return movieDetailData;
   } catch (error) {
     console.error(error);
+    return error;
   }
 };
 export { tmdbOptions };
