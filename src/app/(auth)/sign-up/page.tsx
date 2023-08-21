@@ -3,6 +3,7 @@ import React, { Suspense, useEffect, useRef, useState } from 'react';
 import Message from './message';
 import Link from 'next/link';
 import SubmitButton from '@/components/_Auth/SubmitButton';
+import SocialButtons from '@/components/_Auth/SocialButtons';
 
 const passwordOnChangeHandler = (
   e: React.ChangeEvent<HTMLInputElement>,
@@ -81,9 +82,8 @@ function SignUpPage() {
         >
           돌아가기
         </Link>
-        <Suspense fallback={<p>Loading...</p>}>
-          <Message />
-        </Suspense>
+        <Message />
+        <SocialButtons />
       </form>
     </div>
   );
