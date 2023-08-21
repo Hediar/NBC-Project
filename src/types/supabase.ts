@@ -6,15 +6,15 @@ export interface Database {
       movielikes: {
         Row: {
           movieid: number;
-          users: string[];
+          userid: string[];
         };
         Insert: {
           movieid?: number;
-          users: string[];
+          userid: string[];
         };
         Update: {
           movieid?: number;
-          users?: string[];
+          userid?: string[];
         };
         Relationships: [];
       };

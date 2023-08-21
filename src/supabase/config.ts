@@ -1,7 +1,21 @@
 import { Database } from '@/types/supabase';
 import { createClient } from '@supabase/supabase-js';
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
+import { cookies } from 'next/headers';
 
-export const supabase = createClient<Database>(
+const options = {
+  auth: {
+    autoRefreshToken: true,
+    persistSession: true,
+    detectSessionInUrl: true
+  }
+};
+
+const supabase = createClient<Database>(
   process.env.NEXT_PUBLIC_SUPABASE_URL as string,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string,
+  { auth: { persistSession: false } }
 );
+// const supabase = createServerComponentClient({ cookies });
+
+export default supabase;
