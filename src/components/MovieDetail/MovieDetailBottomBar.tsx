@@ -1,6 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import MovieDetailQuickRating from './MovieDetailQuickRating';
+import MovieDetailTrailer from './MovieDetailTrailer';
 
 type Props = {
   movieId: string;
@@ -23,7 +24,7 @@ const MovieDetailBottomBar = ({ movieId }: Props) => {
       </div>
       {toShow === '주요정보' && <div>주요정보</div>}
       {toShow === '출연/제작' && <div>출연/제작</div>}
-      {toShow === '영상/포토' && <div>영상/포토</div>}
+      {toShow === '영상/포토' && <MovieDetailTrailer />}
       {toShow === '평점' && <MovieDetailQuickRating movieId={movieId} />}
       {toShow === '토론' && <div>토론</div>}
     </div>

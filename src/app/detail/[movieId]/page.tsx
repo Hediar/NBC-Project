@@ -1,4 +1,4 @@
-import MovieDetailInfo from '@/components/MovieDetailInfo';
+import MovieDetailInfo from '@/components/MovieDetail/MovieDetailInfo';
 import React from 'react';
 
 type Props = {
@@ -9,7 +9,7 @@ const MovieDetail = ({ params }: Props) => {
   const { movieId } = params;
 
   return (
-    <div>
+    <div style={{ width: '80%', margin: '0 auto' }}>
       <MovieDetailInfo movieId={movieId} />
     </div>
   );
