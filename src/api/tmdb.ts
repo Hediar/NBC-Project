@@ -19,36 +19,26 @@ const options = {
 
 export const getMovieDetail = async (id: string) => {
   try {
-    const detailRes = await fetch(`${process.env.NEXT_PUBLIC_TMDB_BASE_DETAIL_URL}${id}?language=ko-KR`, options);
-    const detailData = await detailRes.json();
+    const detailData = await getDetailData(id);
 
-    const trailerRes = await fetch(
-      `${process.env.NEXT_PUBLIC_TMDB_BASE_DETAIL_URL}${id}/videos?language=ko-KR`,
-      options
-    );
-    const trailerData = await trailerRes.json();
-
-    const watchProviderRes = await fetch(
-      `${process.env.NEXT_PUBLIC_TMDB_BASE_DETAIL_URL}${id}/watch/providers`,
-      options
-    );
-    const watchProviderData = await watchProviderRes.json();
-
-    const imageRes = await fetch(`${process.env.NEXT_PUBLIC_TMDB_BASE_DETAIL_URL}${id}/images`, options);
-    const imageData = await imageRes.json();
-
+    const trailerData = await getTrailerData(id);
     const trailerKeys = trailerData.results.map((result: TrailerData) => result.key);
+
+    const watchProviderData = await getProviderData(id);
     const watchProviders = watchProviderData.results['KR'];
+
+    const imageData = await getImageData(id);
     const backdropImages = imageData.backdrops;
 
-    const movieDetailData = { ...detailData, trailerKeys, watchProviders, backdropImages };
+    const { appearences, productions } = await getCreditsData(id);
+
+    const movieDetailData = { ...detailData, trailerKeys, watchProviders, backdropImages, appearences, productions };
 
     return movieDetailData;
   } catch (error) {
     console.error(error);
   }
 };
-
 const getDetailData = async (id: string) => {
   const detailRes = await fetch(`${process.env.NEXT_PUBLIC_TMDB_BASE_DETAIL_URL}${id}?language=ko-KR`, options);
   const detailData = await detailRes.json();
@@ -73,4 +63,14 @@ const getImageData = async (id: string) => {
 
   return imageData;
 };
+const getCreditsData = async (id: string) => {
+  const creditsRes = await fetch(
+    `${process.env.NEXT_PUBLIC_TMDB_BASE_DETAIL_URL}${id}/credits?language=ko-KR`,
+    options
+  );
+  const creditsData = await creditsRes.json();
+
+  return { appearences: creditsData.cast, productions: creditsData.crew };
+};
+
 export { tmdbOptions };

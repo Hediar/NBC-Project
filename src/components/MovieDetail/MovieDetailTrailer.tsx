@@ -83,7 +83,7 @@ const MovieDetailTrailer = ({ movieData }: Props) => {
                     alt=""
                     width={500}
                     height={300}
-                    src={`https://i.ytimg.com/vi/${videoKey}/hqdefault.jpg`}
+                    src={`${process.env.NEXT_PUBLIC_TMDB_TRAILER_THUMBNAIL_URL}${videoKey}/hqdefault.jpg`}
                     onClick={() => showTrailer(videoKey)}
                   />
                   <div
