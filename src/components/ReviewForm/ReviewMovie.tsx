@@ -11,7 +11,7 @@ type Props = {
 
 const baseImgUrl = process.env.NEXT_PUBLIC_TMDB_BASE_IMAGE_URL;
 
-const MovieInfo = async ({ movieId }: Props) => {
+const ReviewMovie = ({ movieId }: Props) => {
   // 엘리멘탈: 976573
   const [movieData, setMovieData] = React.useState<any>();
   React.useEffect(() => {
@@ -45,4 +45,4 @@ const MovieInfo = async ({ movieId }: Props) => {
   );
 };
 
-export default MovieInfo;
+export default ReviewMovie;
