@@ -42,6 +42,7 @@ const UserInfo = ({ session }: Props) => {
 
   // 로그인한 유저가 username이 없으면 추가하기
   const RequestUsername = () => {
+    const { userInfo, saveUserInfo } = useUserInfoStore();
     const [usernameValue, setUsernameValue] = useState<string>('');
     const router = useRouter();
     const updateUsername = async () => {
@@ -62,6 +63,7 @@ const UserInfo = ({ session }: Props) => {
         alert('에러가 발생했습니다. 잠시 후에 다시 시도해주세요.');
       }
       router.refresh();
+      saveUserInfo({ ...userInfo, username: usernameValue });
       alert('업데이트 완료!');
     };
 
