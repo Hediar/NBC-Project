@@ -19,8 +19,7 @@ const options = {
 
 export const getMovieDetail = async (id: string) => {
   try {
-    const detailRes = await fetch(`${process.env.NEXT_PUBLIC_TMDB_BASE_DETAIL_URL}${id}?language=ko-KR`, options);
-    const detailData = await detailRes.json();
+    const detailData = await getDetailData(id);
 
     const trailerData = await getTrailerData(id);
     const trailerKeys = trailerData.results.map((result: TrailerData) => result.key);
