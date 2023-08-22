@@ -16,22 +16,22 @@ const MovieDetailBottomBar = ({ movieId, movieData }: Props) => {
   const tags = ['주요정보', '출연/제작', '영상/포토', '평점', '토론'];
 
   return (
-    <div>
-      <div className="flex gap-7 py-5 mb-5">
+    <nav>
+      <ul className="flex gap-7 py-5 mb-5">
         {tags.map((tag, idx) => {
           return (
-            <button key={idx} onClick={() => setToShow(tag)}>
-              {tag}
-            </button>
+            <li key={idx}>
+              <button onClick={() => setToShow(tag)}>{tag === toShow ? <strong>{tag}</strong> : <p>{tag}</p>}</button>
+            </li>
           );
         })}
-      </div>
+      </ul>
       {toShow === '주요정보' && <KeyInfomation />}
       {toShow === '출연/제작' && <AppearanceProduction movieData={movieData} />}
       {toShow === '영상/포토' && <MovieDetailTrailer movieData={movieData} />}
       {toShow === '평점' && <MovieDetailQuickRating movieId={movieId} />}
       {toShow === '토론' && <div>토론</div>}
-    </div>
+    </nav>
   );
 };
 

@@ -19,8 +19,7 @@ const TrailerPlay = ({ trailerKey, closeBtn }: Props) => {
       </div>
       <iframe
         className="w-[80vw] h-[85vh]"
-        src={`
-                    https://www.youtube.com/embed/${trailerKey}?autoplay=1&origin=https%3A%2F%2Fwww.themoviedb.org&hl=ko&modestbranding=1&fs=1&autohide=1`}
+        src={`https://www.youtube.com/embed/${trailerKey}?autoplay=1&origin=https%3A%2F%2Fwww.themoviedb.org&hl=ko&modestbranding=1&fs=1&autohide=1`}
       />
     </div>
   );

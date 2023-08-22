@@ -22,6 +22,7 @@ const AppearanceProduction = ({ movieData }: Props) => {
                   alt=""
                   width={116}
                   height={168}
+                  style={{ backgroundColor: 'rgba(111,111,111,0.3)' }}
                 />
               </div>
 
@@ -44,6 +45,7 @@ const AppearanceProduction = ({ movieData }: Props) => {
                   alt=""
                   width={116}
                   height={168}
+                  style={{ backgroundColor: 'rgba(111,111,111,0.3)' }}
                 />
               </div>
 

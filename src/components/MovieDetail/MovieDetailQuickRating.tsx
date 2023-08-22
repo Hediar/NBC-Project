@@ -89,7 +89,6 @@ const MovieDetailQuickRating = ({ movieId }: Props) => {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            console.log('폼태그 테스트');
           }}
         >
           <input type="text" value={userReview} onChange={(e) => setUserReview(e.target.value)}></input>
