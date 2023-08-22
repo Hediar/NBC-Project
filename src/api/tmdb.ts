@@ -25,7 +25,7 @@ export const getTrendingMovies = async () => {
     );
     const movieData = await movies.json();
 
-    return { ...movieData.results };
+    return movieData;
   } catch (error) {
     console.error(error);
   }
