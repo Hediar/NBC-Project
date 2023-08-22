@@ -15,6 +15,7 @@ const UserInfo = ({ session }: Props) => {
   const { userInfo, saveUserInfo } = useUserInfoStore();
   const [isUserHasUsername, setIsUserHasUsername] = useState<boolean>(true);
 
+  // 유저 정보 zustand 스토어에 저장
   useEffect(() => {
     const getUserInfo = async () => {
       const { error, data } = await supabase.from('users').select().eq('id', signedInUser.id);
@@ -27,6 +28,7 @@ const UserInfo = ({ session }: Props) => {
     getUserInfo();
   }, [signedInUser.id, supabase, saveUserInfo]);
 
+  // 로그인한 유저가 username이 있는지 확인
   useEffect(() => {
     const getUsername = async () => {
       const { data } = await supabase.from('users').select('username').eq('id', signedInUser.id);
@@ -37,11 +39,18 @@ const UserInfo = ({ session }: Props) => {
     getUsername();
   }, [signedInUser.id, supabase]);
 
-  // ! 해당 컴포넌트는 구글 회원가입할 때 username을 받지 못하기 때문에, 로그인했을 때 username이 없으면 추가하는 로직입니다.
+  // 로그인한 유저가 username이 없으면 추가하기
   const RequestUsername = () => {
     const [usernameValue, setUsernameValue] = useState<string>('');
 
     const updateUsername = async () => {
+      const { data: usernames } = await supabase.from('users').select('username');
+
+      if (usernames?.some((user) => user.username === usernameValue)) {
+        alert('이미 등록된 유저이름입니다. 다른 유저이름을 만들어 주세요.');
+        return;
+      }
+
       const { error, data } = await supabase
         .from('users')
         .update({ username: usernameValue })
@@ -59,15 +68,31 @@ const UserInfo = ({ session }: Props) => {
       [updateUsername]
     );
 
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const newValue = e.target.value;
+      // 특수문자와 스페이스바를 제외한다
+      const sanitizedValue = newValue.replace(/[^\w\dㄱ-ㅎㅏ-ㅣ가-힣]/g, '');
+      setUsernameValue(sanitizedValue);
+    };
+
     return (
       <>
         {!isUserHasUsername && (
           <div className="absolute top-1/2 left-1/2 transform translate-x-[-50%] translate-y-[-50%] shadow-md shadow-slate-400 p-5 rounded-md flex flex-col gap-2 items-center">
-            <h1>{signedInUser.user_metadata.name}님, 환영합니다!</h1>
+            <h1>{signedInUser.user_metadata.name && `${signedInUser.user_metadata.name} 님, `}환영합니다!</h1>
             {
               <div>
                 <h2 className="mb-3 text-center">유저이름을 생성해주세요.</h2>
-                <div className="flex flex-col gap-3">
+                <p className="mb-3 text-center text-sm text-gray-600">
+                  특수문자나 띄어쓰기는 허용되지 않습니다.(최대 15자)
+                </p>
+                <form
+                  className="flex flex-col gap-3"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    clickHandler();
+                  }}
+                >
                   <input
                     type="text"
                     autoComplete="off"
@@ -75,17 +100,16 @@ const UserInfo = ({ session }: Props) => {
                     required
                     maxLength={15}
                     value={usernameValue}
-                    onChange={(e) => setUsernameValue(e.target.value)}
+                    onChange={(e) => handleChange(e)}
                     className="text-center border border-slate-400 rounded-sm"
                   />
                   <button
                     className="text-center bg-slate-800 text-white p-1 rounded-sm disabled:bg-slate-300"
-                    onClick={clickHandler}
                     disabled={usernameValue.length === 0}
                   >
                     만들기
                   </button>
-                </div>
+                </form>
               </div>
             }
           </div>
