@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import MovieDetailQuickRating from './MovieDetailQuickRating';
 import MovieDetailTrailer from './MovieDetailTrailer';
 import { MovieData } from '@/types/types';
+import KeyInfomation from './KeyInfomation';
+import AppearanceProduction from './AppearanceProduction';
 
 type Props = {
   movieId: string;
@@ -15,7 +17,7 @@ const MovieDetailBottomBar = ({ movieId, movieData }: Props) => {
 
   return (
     <div>
-      <div className="flex gap-7 p-5 mb-5">
+      <div className="flex gap-7 py-5 mb-5">
         {tags.map((tag, idx) => {
           return (
             <button key={idx} onClick={() => setToShow(tag)}>
@@ -24,8 +26,8 @@ const MovieDetailBottomBar = ({ movieId, movieData }: Props) => {
           );
         })}
       </div>
-      {toShow === '주요정보' && <div>주요정보</div>}
-      {toShow === '출연/제작' && <div>출연/제작</div>}
+      {toShow === '주요정보' && <KeyInfomation />}
+      {toShow === '출연/제작' && <AppearanceProduction movieData={movieData} />}
       {toShow === '영상/포토' && <MovieDetailTrailer movieData={movieData} />}
       {toShow === '평점' && <MovieDetailQuickRating movieId={movieId} />}
       {toShow === '토론' && <div>토론</div>}
