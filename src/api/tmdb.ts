@@ -22,23 +22,23 @@ export const getMovieDetail = async (id: string) => {
     const detailData = await getDetailData(id);
 
     const trailerData = await getTrailerData(id);
+    const trailerKeys = trailerData.results.map((result: TrailerData) => result.key);
 
     const watchProviderData = await getProviderData(id);
+    const watchProviders = watchProviderData.results['KR'];
 
     const imageData = await getImageData(id);
-
-    const trailerKeys = trailerData.results.map((result: TrailerData) => result.key);
-    const watchProviders = watchProviderData.results['KR'];
     const backdropImages = imageData.backdrops;
 
-    const movieDetailData = { ...detailData, trailerKeys, watchProviders, backdropImages };
+    const { appearences, productions } = await getCreditsData(id);
+
+    const movieDetailData = { ...detailData, trailerKeys, watchProviders, backdropImages, appearences, productions };
 
     return movieDetailData;
   } catch (error) {
     console.error(error);
   }
 };
-
 const getDetailData = async (id: string) => {
   const detailRes = await fetch(`${process.env.NEXT_PUBLIC_TMDB_BASE_DETAIL_URL}${id}?language=ko-KR`, options);
   const detailData = await detailRes.json();
@@ -63,4 +63,14 @@ const getImageData = async (id: string) => {
 
   return imageData;
 };
+const getCreditsData = async (id: string) => {
+  const creditsRes = await fetch(
+    `${process.env.NEXT_PUBLIC_TMDB_BASE_DETAIL_URL}${id}/credits?language=ko-KR`,
+    options
+  );
+  const creditsData = await creditsRes.json();
+
+  return { appearences: creditsData.cast, productions: creditsData.crew };
+};
+
 export { tmdbOptions };
