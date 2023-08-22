@@ -37,7 +37,7 @@ const MovieLikes = (props: any) => {
       {props.movieid}
       좋아요 개수: {likeusercnt}
       <br />
-      <button>좋아요</button>
+      <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">좋아요</button>
     </div>
   );
 };
