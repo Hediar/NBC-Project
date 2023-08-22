@@ -9,7 +9,7 @@ import supabase from '@/supabase/config';
  *
  */
 
-const MovieLikes = (props: any) => {
+const MovieLikes = (props: { movieid: number }) => {
   const [likeusercnt, setLikeusercnt] = useState(0); // 영화를 좋아하는 유저 수
   const [likecurrentuser, setLikecurrentuser] = useState(false); // 현재 유저가 좋아하는지 여부
 

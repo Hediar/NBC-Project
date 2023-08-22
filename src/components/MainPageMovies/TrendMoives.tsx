@@ -1,5 +1,5 @@
 import { tmdbOptions } from '@/api/tmdb';
-import MovieLikes from './MovieLikes/MovieLikes';
+import MovieLikes from '../MovieLikes/MovieLikes';
 import supabase from '@/supabase/config';
 import Image from 'next/image';
 import { MovieData } from '@/types/types';

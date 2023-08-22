@@ -1,7 +1,8 @@
+'usee client';
 import { getGenres } from '@/api/tmdb';
 import { MovieGenre } from '@/types/types';
 import React from 'react';
-import TrendMoives from '../TrendMoives';
+import TrendMoives from './TrendMoives';
 
 const MainPageMovies = async () => {
   const genres = await getGenres();
@@ -16,7 +17,7 @@ const MainPageMovies = async () => {
       {genreData.map((genre: MovieGenre, idx: number) => {
         return (
           <>
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold m-1 py-2 px-4 rounded ">
               # {genre.name}
             </button>
           </>
