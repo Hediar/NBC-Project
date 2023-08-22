@@ -3,6 +3,7 @@ import { cookies } from 'next/headers';
 import SignOutButton from './SignOutButton';
 import SignInButton from './SignInButton';
 import SignUpButton from './SignUpButton';
+import UserInfo from './UserInfo';
 
 const AuthButton = async () => {
   const supabase = createServerComponentClient({ cookies });
@@ -11,7 +12,12 @@ const AuthButton = async () => {
   } = await supabase.auth.getSession();
 
   if (session) {
-    return <SignOutButton />;
+    return (
+      <>
+        <SignOutButton />
+        <UserInfo session={session} />
+      </>
+    );
   } else {
     return (
       <>

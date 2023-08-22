@@ -1,11 +1,20 @@
 import React from 'react';
 import AuthButton from './_auth/AuthButtons';
+import HeaderUser from './HeaderUser';
+import { cookies } from 'next/headers';
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 
-const Header = () => {
+const Header = async () => {
+  const supabase = createServerComponentClient({ cookies });
+  const {
+    data: { session }
+  } = await supabase.auth.getSession();
+
   return (
     <div className="h-20 shadow-md shadow-gray-300 flex items-center px-4 justify-between bg-gray-500">
       <h1 className="text-white text-xl font-bold tracking-wider">무비바바</h1>
-      <div className="flex gap-3">
+      <div className="flex gap-3 items-center">
+        {session && <HeaderUser session={session} />}
         <AuthButton />
       </div>
     </div>
