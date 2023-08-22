@@ -1,5 +1,5 @@
 import { quickReviews } from '@/static/quickReviews';
-import { supabase } from '@/supabase/config';
+import supabase from '@/supabase/config';
 import React, { useState } from 'react';
 
 type Props = {
@@ -42,7 +42,7 @@ const MovieDetailQuickRating = ({ movieId }: Props) => {
         score: gaugeWidth / 10
       })
       .select();
-    console.log('movieLikes=>', res);
+
     setSeletedReviews([]);
     setUserReview('');
     setGaugeWidth(0);

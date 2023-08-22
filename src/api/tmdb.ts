@@ -1,4 +1,3 @@
-
 import { TrailerData } from '@/types/types';
 
 const tmdbOptions = {
@@ -20,17 +19,13 @@ const options = {
 
 export const getMovieDetail = async (id: string) => {
   try {
-    const detailRes = await fetch(`${process.env.NEXT_PUBLIC_TMDB_BASE_URL}${id}?language=ko-KR`, options);
-    const detailData = await detailRes.json();
+    const detailData = await getDetailData(id);
 
-    const trailerRes = await fetch(`${process.env.NEXT_PUBLIC_TMDB_BASE_URL}${id}/videos?language=ko-KR`, options);
-    const trailerData = await trailerRes.json();
+    const trailerData = await getTrailerData(id);
 
-    const watchProviderRes = await fetch(`${process.env.NEXT_PUBLIC_TMDB_BASE_URL}${id}/watch/providers`, options);
-    const watchProviderData = await watchProviderRes.json();
+    const watchProviderData = await getProviderData(id);
 
-    const imageRes = await fetch(`${process.env.NEXT_PUBLIC_TMDB_BASE_URL}${id}/images`, options);
-    const imageData = await imageRes.json();
+    const imageData = await getImageData(id);
 
     const trailerKeys = trailerData.results.map((result: TrailerData) => result.key);
     const watchProviders = watchProviderData.results['KR'];
@@ -42,5 +37,30 @@ export const getMovieDetail = async (id: string) => {
   } catch (error) {
     console.error(error);
   }
+};
+
+const getDetailData = async (id: string) => {
+  const detailRes = await fetch(`${process.env.NEXT_PUBLIC_TMDB_BASE_DETAIL_URL}${id}?language=ko-KR`, options);
+  const detailData = await detailRes.json();
+
+  return detailData;
+};
+const getTrailerData = async (id: string) => {
+  const trailerRes = await fetch(`${process.env.NEXT_PUBLIC_TMDB_BASE_DETAIL_URL}${id}/videos?language=ko-KR`, options);
+  const trailerData = await trailerRes.json();
+
+  return trailerData;
+};
+const getProviderData = async (id: string) => {
+  const watchProviderRes = await fetch(`${process.env.NEXT_PUBLIC_TMDB_BASE_DETAIL_URL}${id}/watch/providers`, options);
+  const watchProviderData = await watchProviderRes.json();
+
+  return watchProviderData;
+};
+const getImageData = async (id: string) => {
+  const imageRes = await fetch(`${process.env.NEXT_PUBLIC_TMDB_BASE_DETAIL_URL}${id}/images`, options);
+  const imageData = await imageRes.json();
+
+  return imageData;
 };
 export { tmdbOptions };
