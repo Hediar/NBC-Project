@@ -4,6 +4,7 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Session } from '@supabase/supabase-js';
 import React, { useCallback, useEffect, useState } from 'react';
 import { debounce } from 'lodash';
+import { useRouter } from 'next/navigation';
 interface Props {
   session: Session;
 }
@@ -42,7 +43,7 @@ const UserInfo = ({ session }: Props) => {
   // 로그인한 유저가 username이 없으면 추가하기
   const RequestUsername = () => {
     const [usernameValue, setUsernameValue] = useState<string>('');
-
+    const router = useRouter();
     const updateUsername = async () => {
       const { data: usernames } = await supabase.from('users').select('username');
 
@@ -60,6 +61,7 @@ const UserInfo = ({ session }: Props) => {
       if (error) {
         alert('에러가 발생했습니다. 잠시 후에 다시 시도해주세요.');
       }
+      router.refresh();
       alert('업데이트 완료!');
     };
 
