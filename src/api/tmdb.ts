@@ -48,4 +48,29 @@ export const getMovieDetail = async (id: string) => {
     console.error(error);
   }
 };
+
+const getDetailData = async (id: string) => {
+  const detailRes = await fetch(`${process.env.NEXT_PUBLIC_TMDB_BASE_DETAIL_URL}${id}?language=ko-KR`, options);
+  const detailData = await detailRes.json();
+
+  return detailData;
+};
+const getTrailerData = async (id: string) => {
+  const trailerRes = await fetch(`${process.env.NEXT_PUBLIC_TMDB_BASE_DETAIL_URL}${id}/videos?language=ko-KR`, options);
+  const trailerData = await trailerRes.json();
+
+  return trailerData;
+};
+const getProviderData = async (id: string) => {
+  const watchProviderRes = await fetch(`${process.env.NEXT_PUBLIC_TMDB_BASE_DETAIL_URL}${id}/watch/providers`, options);
+  const watchProviderData = await watchProviderRes.json();
+
+  return watchProviderData;
+};
+const getImageData = async (id: string) => {
+  const imageRes = await fetch(`${process.env.NEXT_PUBLIC_TMDB_BASE_DETAIL_URL}${id}/images`, options);
+  const imageData = await imageRes.json();
+
+  return imageData;
+};
 export { tmdbOptions };
