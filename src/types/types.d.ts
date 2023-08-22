@@ -40,17 +40,44 @@ interface MovieBackdropImage {
   width: number;
 }
 
-interface BTC {
+interface TMDBCreditCast {
+  adult: boolean;
+  gender: number;
   id: number;
+  known_for_department: string;
   name: string;
-  poster_path: string;
-  backdrop_path: string;
+  original_name: string;
+  popularity: number;
+  profile_path: string;
+  cast_id: number;
+  character: string;
+  credit_id: string;
+  order: number;
+}
+
+interface TMDBCreditCrew {
+  adult: boolean;
+  gender: number;
+  id: number;
+  known_for_department: string;
+  name: string;
+  original_name: string;
+  popularity: number;
+  profile_path: string;
+  credit_id: string;
+  department: string;
+  job: string;
 }
 
 interface MovieData {
   adult: boolean;
   backdrop_path: string;
-  belongs_to_collection: BTC;
+  belongs_to_collection: {
+    id: number;
+    name: string;
+    poster_path: string;
+    backdrop_path: string;
+  };
   budget: number;
   genres: MovieGenre[];
   homepage?: string;
@@ -76,4 +103,6 @@ interface MovieData {
   trailerKeys: string[];
   watchProviders: { link: string; buy: MovieProvider[]; rent: MovieProvider[] };
   backdropImages: MovieBackdropImage[];
+  appearences: TMDBCreditCast[];
+  productions: TMDBCreditCrew[];
 }

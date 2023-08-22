@@ -9,13 +9,12 @@ export const POST = async (request: Request) => {
   const formData = await request.formData();
   const email = String(formData.get('email'));
   const password = String(formData.get('password'));
-  const username = String(formData.get('username'));
-  //
+
   const supabase = createRouteHandlerClient({ cookies });
   const { error } = await supabase.auth.signUp({
     email,
     password,
-    options: { data: { username }, emailRedirectTo: `${requestUrl.origin}/auth/callback` }
+    options: { emailRedirectTo: `${requestUrl.origin}/auth/callback` }
   });
 
   if (error) {
