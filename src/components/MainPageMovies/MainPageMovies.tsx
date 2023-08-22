@@ -1,4 +1,4 @@
-'usee client';
+// 'use client';
 import { getGenres } from '@/api/tmdb';
 import { MovieGenre } from '@/types/types';
 import React from 'react';
