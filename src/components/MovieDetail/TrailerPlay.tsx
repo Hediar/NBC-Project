@@ -6,10 +6,6 @@ type Props = {
 };
 
 const TrailerPlay = ({ trailerKey, closeBtn }: Props) => {
-  useEffect(() => {
-    return;
-  }, []);
-
   return (
     <div
       className="w-[80vw] h-[90vh] z-10"
@@ -17,7 +13,7 @@ const TrailerPlay = ({ trailerKey, closeBtn }: Props) => {
     >
       <div className="w-[80vw] h-[5vh] bg-black flex justify-between items-center">
         <p className="text-white pl-5">예고편</p>
-        <button className="text-white pr-5" onClick={() => closeBtn(false)}>
+        <button className="text-white pr-5" onClick={() => closeBtn((prev) => !prev)}>
           x
         </button>
       </div>

@@ -15,6 +15,14 @@ const MovieDetailTrailer = ({ movieData }: Props) => {
   const slideRef = useRef<HTMLDivElement>(null);
   const len = trailerKeys.length;
   const infiniteSlides = [...trailerKeys.slice(len - 3), ...trailerKeys, ...trailerKeys.slice(0, 3)];
+  const [timer, setTimer] = useState<NodeJS.Timeout>();
+  const [isShow, setIsShow] = useState(false);
+  const [trailerKey, setTrailerKey] = useState('');
+
+  const showTrailer = (key: string) => {
+    setIsShow(!isShow);
+    setTrailerKey(key);
+  };
 
   const nextSlide = () => {
     if (slideIndex === len + 2) {
@@ -24,12 +32,13 @@ const MovieDetailTrailer = ({ movieData }: Props) => {
           slideRef.current.style.transition = '';
           setSlideIndex(3);
         }
-      }, 501);
+      }, 500);
     } else {
       if (slideRef.current) slideRef.current.style.transition = 'all 500ms ease-in-out';
       setSlideIndex((prevIndex) => prevIndex + 1);
     }
   };
+
   const prevSlide = () => {
     if (slideIndex === 1) {
       setSlideIndex((prevIndex) => prevIndex - 1);
@@ -44,11 +53,12 @@ const MovieDetailTrailer = ({ movieData }: Props) => {
       setSlideIndex((prevIndex) => prevIndex - 1);
     }
   };
-  const [isShow, setIsShow] = useState(false);
-  const [trailerKey, setTrailerKey] = useState('');
-  const showTrailer = (key: string) => {
-    setIsShow(!isShow);
-    setTrailerKey(key);
+  const debouncedSlide = (func: any) => {
+    if (timer) {
+      clearTimeout(timer);
+    }
+    const newTimer = setTimeout(func, 200);
+    setTimer(newTimer);
   };
 
   return (
@@ -99,10 +109,20 @@ const MovieDetailTrailer = ({ movieData }: Props) => {
               );
             })}
           </div>
-          <button className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-300 p-2" onClick={prevSlide}>
+          <button
+            className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-300 p-2"
+            onClick={() => {
+              debouncedSlide(prevSlide);
+            }}
+          >
             이전
           </button>
-          <button className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-300 p-2" onClick={nextSlide}>
+          <button
+            className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-300 p-2"
+            onClick={() => {
+              debouncedSlide(nextSlide);
+            }}
+          >
             다음
           </button>
         </div>
