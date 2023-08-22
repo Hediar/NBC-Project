@@ -36,7 +36,8 @@ export default async function Layout({
   const { data } = await supabase.from('users').select('username').eq('username', decodedUsername);
 
   if (data && data.length < 1) notFound();
-  return <main className="flex flex-col">{children}</main>;
+
+  return <main className="flex flex-col items-center bg-slate-50 h-[calc(100vh-80px)]">{children}</main>;
 }
 
 // const userData = getUser(userId);
