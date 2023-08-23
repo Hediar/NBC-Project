@@ -12,20 +12,15 @@ import { REVIEW_CATEGORY_LIST } from '@/static/review';
 import CategoryBox from '@/components/ReviewForm/CategoryBox';
 import HashTagBox from '@/components/ReviewForm/HashTagBox';
 import useUserInfoStore from '@/app/(store)/saveCurrentUserData';
-import { User } from '@supabase/supabase-js';
 
 type Props = {
   movieId: string;
-  user: User | null;
 };
 
-const ReviewForm = ({ movieId, user }: Props) => {
+const ReviewForm = ({ movieId }: Props) => {
   const router = useRouter();
 
-  //   const { userInfo } = useUserInfoStore();
-  //   console.log('유저 가져오라고1 => ', userInfo);
-
-  console.log('유저 가져오라고2 => ', user);
+  const { userInfo } = useUserInfoStore();
 
   const [selectedDate, setSelectedDate] = React.useState<Date | null>(null);
   const [review, setReview] = React.useState('');
@@ -43,11 +38,11 @@ const ReviewForm = ({ movieId, user }: Props) => {
   const addPost = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!user) return alert('로그인 정보가 없습니다.');
+    if (!userInfo) return alert('로그인 정보가 없습니다.');
 
     const newReview = {
       movieid: movieId,
-      userid: user!.id, // Q:: 유저 인증 막혀서 insert 정책을 true로 풀고 테스트 중
+      userid: userInfo.id, // Q:: 유저 인증 막혀서 insert 정책을 true로 풀고 테스트 중
       date: selectedDate,
       category: JSON.stringify(checkedListIndex), // Q:: db에 이렇게 넣어도 되나???????
       review,

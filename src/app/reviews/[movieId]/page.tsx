@@ -1,8 +1,6 @@
 import React from 'react';
 import ReviewMovie from '@/components/ReviewForm/ReviewMovie';
 import ReviewForm from '@/components/ReviewForm/ReviewForm';
-import { createServerActionClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
 
 interface Params {
   movieId: string;
@@ -15,15 +13,10 @@ type Props = {
 const ReviewPage = async ({ params }: Props) => {
   const { movieId } = params;
 
-  const supabase = createServerActionClient({ cookies });
-  const {
-    data: { user }
-  } = await supabase.auth.getUser();
-
   return (
     <>
       <ReviewMovie movieId={movieId} />
-      <ReviewForm movieId={movieId} user={user} />
+      <ReviewForm movieId={movieId} />
     </>
   );
 };
