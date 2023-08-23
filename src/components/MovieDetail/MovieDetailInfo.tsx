@@ -15,11 +15,11 @@ const MovieDetailInfo = async ({ movieId }: Props) => {
 
   return (
     <div>
-      <div className="absolute w-screen h-2/3 opacity-50 -z-50 left-0">
+      <div className="absolute w-full h-2/3 opacity-50 -z-50 left-0">
         <Image
           src={`${baseImgUrl}w1920_and_h1080_bestv2${movieData.backdrop_path}`}
           alt=""
-          width={1920}
+          width={1902}
           height={1080}
           quality={100}
           className="w-full h-full"

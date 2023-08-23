@@ -7,7 +7,11 @@ type Props = {
 
 const TrailerPlay = ({ trailerKey, closeBtn }: Props) => {
   return (
-    <div id="trailer-wrap" className="fixed left-0 top-0 w-screen h-screen z-10 bg-[rgba(0,0,0,0.8)]">
+    <div
+      id="trailer-wrap"
+      className="fixed left-0 top-0 w-screen h-screen z-20 bg-[rgba(0,0,0,0.8)]"
+      onClick={() => closeBtn((prev) => !prev)}
+    >
       <div
         className="fixed w-[80vw] h-[90vh]"
         style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)' }}
@@ -15,7 +19,13 @@ const TrailerPlay = ({ trailerKey, closeBtn }: Props) => {
         <div className=" w-[80vw] h-[90vh] bg-black flex flex-col justify-between items-center">
           <div className="flex w-full h-[5vh] justify-between items-center">
             <p className="text-white pl-5">예고편</p>
-            <button className="text-white pr-5" onClick={() => closeBtn((prev) => !prev)}>
+            <button
+              className="text-white pr-5"
+              onClick={(e) => {
+                e.stopPropagation();
+                closeBtn((prev) => !prev);
+              }}
+            >
               x
             </button>
           </div>
