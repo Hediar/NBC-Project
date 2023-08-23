@@ -1,10 +1,10 @@
+import UserPageMostWatchedGenres from '@/components/UserPage/UserInfo/MostWatchedGenres';
+import UserPagePersonalRecords from '@/components/UserPage/UserInfo/PersonalRecords/_PersonalRecords';
+import Fallback from '@/components/UserPage/UserInfo/PersonalRecords/_PersonalRecords.fallback';
+import UserPageSemiHeader from '@/components/UserPage/UserInfo/SemiHeader';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import { Suspense } from 'react';
-import UserPageSemiHeader from './SemiHeader';
-import Fallback from './PersonalRecords/_PersonalRecords.fallback';
-import UserPagePersonalRecords from './PersonalRecords/_PersonalRecords';
-import UserPageMostWatchedGenres from './MostWatchedGenres';
 
 interface Props {
   params: {
@@ -12,7 +12,7 @@ interface Props {
   };
 }
 
-const UserInfo = async ({ params }: Props) => {
+const UserInfoPage = async ({ params }: Props) => {
   const username = decodeURIComponent(params.username);
 
   const supabase = createServerComponentClient({ cookies });
@@ -30,4 +30,4 @@ const UserInfo = async ({ params }: Props) => {
   );
 };
 
-export default UserInfo;
+export default UserInfoPage;
