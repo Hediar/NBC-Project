@@ -17,10 +17,5 @@ export default async function layout({ children }: { children: React.ReactNode }
   if (session) {
     redirect('/');
   }
-  return (
-    <main className="w-full h-[calc(100vh-5rem)]">
-      <Header />
-      {children}
-    </main>
-  );
+  return <main className="w-full h-[calc(100vh-5rem)]">{children}</main>;
 }
