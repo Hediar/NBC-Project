@@ -1,12 +1,12 @@
-import TrendMoives from '@/components/TrendMoives';
+import Header from '@/components/Header/Header';
+import MainPageMovies from '@/components/MainPageMovies/MainPageMovies';
 
 export default async function Home() {
   return (
     <>
       <main>
-        <div>
-          <TrendMoives />
-        </div>
+        <Header />
+        <MainPageMovies />
       </main>
     </>
   );

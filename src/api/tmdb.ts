@@ -17,6 +17,31 @@ const options = {
   }
 };
 
+export const getTrendingMovies = async () => {
+  try {
+    const movies = await fetch(
+      `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}trending/movie/week?language=ko-KR`,
+      tmdbOptions
+    );
+    const movieData = await movies.json();
+
+    return movieData;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getGenres = async () => {
+  try {
+    const movies = await fetch(`${process.env.NEXT_PUBLIC_TMDB_BASE_URL}genre/movie/list?language=ko`, tmdbOptions);
+    const genre = await movies.json();
+
+    return genre;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const getMovieDetail = async (id: string) => {
   try {
     const detailData = await getDetailData(id);

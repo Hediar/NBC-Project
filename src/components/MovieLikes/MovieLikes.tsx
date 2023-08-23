@@ -9,7 +9,7 @@ import supabase from '@/supabase/config';
  *
  */
 
-const MovieLikes = (props: any) => {
+const MovieLikes = (props: { movieid: number }) => {
   const [likeusercnt, setLikeusercnt] = useState(0); // 영화를 좋아하는 유저 수
   const [likecurrentuser, setLikecurrentuser] = useState(false); // 현재 유저가 좋아하는지 여부
 
@@ -20,10 +20,6 @@ const MovieLikes = (props: any) => {
       setLikeusercnt(likeusers);
       // console.log(currentMovieLikeData);
     }
-  };
-
-  const movielikeHandler = () => {
-    let inputData = {};
   };
 
   useEffect(() => {
@@ -37,7 +33,7 @@ const MovieLikes = (props: any) => {
       {props.movieid}
       좋아요 개수: {likeusercnt}
       <br />
-      <button>좋아요</button>
+      <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">좋아요</button>
     </div>
   );
 };
