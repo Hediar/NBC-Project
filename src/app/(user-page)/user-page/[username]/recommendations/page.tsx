@@ -1,17 +1,25 @@
 import RecommendationList from '@/components/UserPage/RecommendationList/_RecommendationList';
 import React from 'react';
-
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
+import { cookies } from 'next/headers';
+import UserPageMostWatchedGenres from '@/components/UserPage/UserInfo/MostWatchedGenres';
 interface Props {
   params: {
     username: string;
   };
 }
 
-const RecommendationPage = ({ params }: Props) => {
+const RecommendationPage = async ({ params }: Props) => {
+  const username = decodeURIComponent(params.username);
+  const supabase = createServerComponentClient({ cookies });
+  const { data, error } = await supabase.from('users').select().eq('username', username);
+  const { id: userId, watched_movies } = data![0];
+
   return (
-    <div>
-      <RecommendationList params={params} />
-    </div>
+    <>
+      <UserPageMostWatchedGenres username={username} />
+      <RecommendationList username={username} />
+    </>
   );
 };
 

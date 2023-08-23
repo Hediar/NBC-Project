@@ -1,12 +1,10 @@
 import React from 'react';
 
 interface Props {
-  params: {
-    username: string;
-  };
+  username: string;
 }
 
-const RecommendationList = ({ params }: Props) => {
+const RecommendationList = ({ username }: Props) => {
   return <div>_RecommendationList</div>;
 };
 

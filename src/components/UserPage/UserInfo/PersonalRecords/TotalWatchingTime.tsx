@@ -1,23 +1,8 @@
+import getMovieDataWithMovieIds from '@/api/getMovieDataWithMovieIds';
 import React from 'react';
 
 const TotalWatchingTime = async ({ watched_movies }: { watched_movies: Array<string> }) => {
   const calculateMovieWatchedTime = async (watched_movies: Array<string>) => {
-    const options = {
-      method: 'GET',
-      headers: {
-        accept: 'application/json',
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_ACCESS_TOKEN_AUTH}`
-      }
-    };
-    const getMovieData = async () => {
-      const targetUrlToRequest = watched_movies.map(
-        (movieId) => `https://api.themoviedb.org/3/movie/${movieId}?language=en-US`
-      );
-      const fetchPromises = targetUrlToRequest.map((url) => fetch(url, options));
-      const responses = await Promise.all(fetchPromises);
-      const resArray = await Promise.all(responses.map((res) => res.json()));
-      return resArray;
-    };
     const getTotalMovieRuntime = (resArray: any) => {
       const movieRuntime = resArray.map((movie: any) => movie.runtime);
       const totalMovieRuntime = movieRuntime.reduce((a: number, b: number) => a + b, 0);
@@ -31,7 +16,7 @@ const TotalWatchingTime = async ({ watched_movies }: { watched_movies: Array<str
       return `${hours}시간 ${remainingMinutes}분`;
     };
 
-    const movieData = await getMovieData();
+    const movieData = await getMovieDataWithMovieIds(watched_movies);
     const movieTimeInMinutes = getTotalMovieRuntime(movieData);
     const formattedTotalMovieRuntime = formatTotalMovieRuntime(movieTimeInMinutes);
 

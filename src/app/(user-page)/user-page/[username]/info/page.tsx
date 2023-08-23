@@ -25,7 +25,7 @@ const UserInfoPage = async ({ params }: Props) => {
       <Suspense fallback={<Fallback />}>
         <UserPagePersonalRecords params={username} />
       </Suspense>
-      <UserPageMostWatchedGenres params={username} />
+      <UserPageMostWatchedGenres username={username} />
     </>
   );
 };
