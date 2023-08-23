@@ -3,7 +3,7 @@
 import supabase from '@/supabase/config';
 import { redirect } from 'next/navigation';
 import { useRouter } from 'next/navigation';
-import React from 'react';
+import React, { useEffect } from 'react';
 import ReactDatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { ko } from 'date-fns/esm/locale';
@@ -12,6 +12,8 @@ import { REVIEW_CATEGORY_LIST } from '@/static/review';
 import CategoryBox from '@/components/ReviewForm/CategoryBox';
 import HashTagBox from '@/components/ReviewForm/HashTagBox';
 import useUserInfoStore from '@/app/(store)/saveCurrentUserData';
+import { useReviewStore } from '@/app/(store)/useReviewStore';
+// import useStore from '@/hooks/useStore';
 
 type Props = {
   movieId: string;
@@ -20,17 +22,17 @@ type Props = {
 const ReviewForm = ({ movieId }: Props) => {
   const router = useRouter();
 
-  const { userInfo } = useUserInfoStore();
-
   const [selectedDate, setSelectedDate] = React.useState<Date | null>(null);
   const [review, setReview] = React.useState('');
   const [content, setContent] = React.useState('');
 
-  const [checkedListC1, checkHandlerC1] = useCheckbox();
-  const [checkedListC2, checkHandlerC2] = useCheckbox();
-  const [checkedListC3, checkHandlerC3] = useCheckbox();
+  const [checkedListC1, checkHandlerC1, setCheckedListC1] = useCheckbox();
+  const [checkedListC2, checkHandlerC2, setCheckedListC2] = useCheckbox();
+  const [checkedListC3, checkHandlerC3, setCheckedListC3] = useCheckbox();
   const checkedListIndex = [checkedListC1, checkedListC2, checkedListC3];
   const checkHandlerIndex = [checkHandlerC1, checkHandlerC2, checkHandlerC3];
+
+  const { userInfo } = useUserInfoStore();
 
   // 해시태그를 담을 배열
   const [tagList, setTagList] = React.useState<string[] | []>([]);
@@ -60,6 +62,35 @@ const ReviewForm = ({ movieId }: Props) => {
 
     // redirect('/');
   };
+
+  // 임시저장 기능
+  const { tempReview, saveTempReview }: any = useReviewStore();
+  const handleTempSave = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+
+    const newReview = {
+      movieid: movieId,
+      userid: userInfo.id,
+      date: selectedDate,
+      category: JSON.stringify(checkedListIndex),
+      review,
+      keyword: tagList,
+      content
+    };
+    saveTempReview(newReview);
+  };
+  useEffect(() => {
+    if (tempReview) {
+      const { date, keyword, category } = tempReview;
+      const categoryArr = JSON.parse(category);
+
+      setSelectedDate(new Date(date));
+      setTagList(keyword);
+      setCheckedListC1(categoryArr[0]);
+      setCheckedListC2(categoryArr[1]);
+      setCheckedListC3(categoryArr[2]);
+    }
+  }, []);
 
   const handleCancel = () => {
     router.back();
@@ -105,6 +136,7 @@ const ReviewForm = ({ movieId }: Props) => {
             name="review"
             type="text"
             placeholder="리뷰를 작성하세요"
+            defaultValue={tempReview?.review}
             onChange={(e) => setReview(e.target.value)}
           />
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="review">
@@ -121,10 +153,12 @@ const ReviewForm = ({ movieId }: Props) => {
             name="content"
             type="text"
             placeholder="내용을 작성하세요"
+            defaultValue={tempReview?.content}
             onChange={(e) => setContent(e.target.value)}
           />
-
-          {/* <button>임시저장</button> */}
+          <button onClick={handleTempSave}>임시저장</button>
+          <br />
+          <br />
           <button>리뷰 작성하기</button>
           {/* <button onClick={handleCancel}>돌아가기</button> */}
         </div>
