@@ -52,7 +52,7 @@ interface MovieData {
   backdrop_path: string;
   belongs_to_collection: BTC;
   budget: number;
-  genres: MovieGenre[];
+  genre_ids: number[];
   homepage?: string;
   id: number;
   imdb_id: string;

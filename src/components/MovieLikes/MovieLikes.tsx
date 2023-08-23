@@ -22,10 +22,6 @@ const MovieLikes = (props: { movieid: number }) => {
     }
   };
 
-  const movielikeHandler = () => {
-    let inputData = {};
-  };
-
   useEffect(() => {
     currentLikeUserStateCheck();
   }, []);
