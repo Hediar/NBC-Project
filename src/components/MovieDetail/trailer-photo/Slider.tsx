@@ -1,20 +1,17 @@
-import { MovieBackdropImage, MovieData } from '@/types/types';
+'use client';
 import Image from 'next/image';
 import React, { useState, useRef } from 'react';
 import TrailerPlay from './TrailerPlay';
 
 type Props = {
-  movieData: MovieData;
+  data: string[];
 };
 
-const baseImgUrl = process.env.NEXT_PUBLIC_TMDB_BASE_IMAGE_URL;
-
-const MovieDetailTrailer = ({ movieData }: Props) => {
-  const { trailerKeys, backdropImages } = movieData;
+const Slider = ({ data }: Props) => {
   const [slideIndex, setSlideIndex] = useState(3);
   const slideRef = useRef<HTMLDivElement>(null);
-  const len = trailerKeys.length;
-  const infiniteSlides = [...trailerKeys.slice(len - 3), ...trailerKeys, ...trailerKeys.slice(0, 3)];
+  const len = data.length;
+  const infiniteSlides = [...data.slice(len - 3), ...data, ...data.slice(0, 3)];
   const [timer, setTimer] = useState<NodeJS.Timeout>();
   const [isShow, setIsShow] = useState(false);
   const [trailerKey, setTrailerKey] = useState('');
@@ -65,7 +62,7 @@ const MovieDetailTrailer = ({ movieData }: Props) => {
     <div>
       {isShow && <TrailerPlay trailerKey={trailerKey} closeBtn={setIsShow} />}
       <div>
-        <p className="font-bold text-gray-500">영상 {trailerKeys?.length}</p>
+        <p className="font-bold text-gray-500">영상 {data?.length}</p>
         <div className="slider-container overflow-hidden relative">
           <div
             ref={slideRef}
@@ -127,25 +124,8 @@ const MovieDetailTrailer = ({ movieData }: Props) => {
           </button>
         </div>
       </div>
-      <div>
-        <p className="font-bold text-gray-500 mt-10">포토 {backdropImages?.length}</p>
-        <div className="flex flex-wrap gap-5">
-          {backdropImages.map((image: MovieBackdropImage, idx: number) => {
-            return (
-              <Image
-                key={idx}
-                src={`${baseImgUrl}w533_and_h300_bestv2${image.file_path}`}
-                alt=""
-                width={266}
-                height={150}
-                quality={100}
-              />
-            );
-          })}
-        </div>
-      </div>
     </div>
   );
 };
 
-export default MovieDetailTrailer;
+export default Slider;

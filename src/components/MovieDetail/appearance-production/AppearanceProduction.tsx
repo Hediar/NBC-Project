@@ -1,6 +1,7 @@
 import { MovieData } from '@/types/types';
 import Image from 'next/image';
 import React from 'react';
+import altImage from '../../../../public/anonymous-avatar-icon.png';
 
 type Props = {
   movieData: MovieData;
@@ -17,13 +18,16 @@ const AppearanceProduction = ({ movieData }: Props) => {
           return (
             <div key={idx} className="flex">
               <div>
-                <Image
-                  src={`${process.env.NEXT_PUBLIC_TMDB_BASE_PROFILE_IMG_URL}${cast.profile_path}`}
-                  alt=""
-                  width={116}
-                  height={168}
-                  style={{ backgroundColor: 'rgba(111,111,111,0.3)' }}
-                />
+                {cast.profile_path ? (
+                  <Image
+                    src={`${process.env.NEXT_PUBLIC_TMDB_BASE_PROFILE_IMG_URL + cast.profile_path}`}
+                    alt=""
+                    width={87}
+                    height={126}
+                  />
+                ) : (
+                  <Image src={altImage} alt="" width={87} height={126} />
+                )}
               </div>
 
               <div className="flex flex-col m-2">
@@ -40,18 +44,22 @@ const AppearanceProduction = ({ movieData }: Props) => {
           return (
             <div key={idx} className="flex">
               <div>
-                <Image
-                  src={`${process.env.NEXT_PUBLIC_TMDB_BASE_PROFILE_IMG_URL}${crew.profile_path}`}
-                  alt=""
-                  width={116}
-                  height={168}
-                  style={{ backgroundColor: 'rgba(111,111,111,0.3)' }}
-                />
+                {crew.profile_path ? (
+                  <Image
+                    src={`${process.env.NEXT_PUBLIC_TMDB_BASE_PROFILE_IMG_URL + crew.profile_path}`}
+                    alt=""
+                    width={87}
+                    height={126}
+                  />
+                ) : (
+                  <Image src={altImage} alt="" width={87} height={126} />
+                )}
               </div>
 
               <div className="flex flex-col m-2">
                 <span className="font-bold text-lg">{crew.name}</span>
                 <p className="text-base text-gray-500">{crew.department}</p>
+                <p className="text-sm text-gray-500">{crew.job}</p>
               </div>
             </div>
           );

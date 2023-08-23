@@ -1,36 +1,37 @@
 'use client';
-import React, { useState } from 'react';
-import MovieDetailQuickRating from './MovieDetailQuickRating';
-import MovieDetailTrailer from './MovieDetailTrailer';
+import React from 'react';
 import { MovieData } from '@/types/types';
-import KeyInfomation from './KeyInfomation';
-import AppearanceProduction from './AppearanceProduction';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 type Props = {
   movieId: string;
   movieData: MovieData;
 };
 
-const MovieDetailBottomBar = ({ movieId, movieData }: Props) => {
-  const [toShow, setToShow] = useState<string>('주요정보');
-  const tags = ['주요정보', '출연/제작', '영상/포토', '평점', '토론'];
+const MovieDetailBottomBar = ({ movieId }: Props) => {
+  const pathName = usePathname().split('/')[3];
+  const tags = [
+    { name: '주요정보', url: 'main' },
+    { name: '출연/제작', url: 'crew' },
+    { name: '영상/포토', url: 'trailer' },
+    { name: '평점', url: 'rating' },
+    { name: '토론', url: 'discussion' }
+  ];
 
   return (
     <nav>
-      <ul className="flex gap-7 py-5 mb-5">
+      <ul className="flex gap-7 py-5 pb-5">
         {tags.map((tag, idx) => {
           return (
             <li key={idx}>
-              <button onClick={() => setToShow(tag)}>{tag === toShow ? <strong>{tag}</strong> : <p>{tag}</p>}</button>
+              <Link href={`/detail/${movieId}/${tag.url}`}>
+                {tag.url === pathName ? <strong>{tag.name}</strong> : <p>{tag.name}</p>}
+              </Link>
             </li>
           );
         })}
       </ul>
-      {toShow === '주요정보' && <KeyInfomation />}
-      {toShow === '출연/제작' && <AppearanceProduction movieData={movieData} />}
-      {toShow === '영상/포토' && <MovieDetailTrailer movieData={movieData} />}
-      {toShow === '평점' && <MovieDetailQuickRating movieId={movieId} />}
-      {toShow === '토론' && <div>토론</div>}
     </nav>
   );
 };

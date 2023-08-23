@@ -12,7 +12,6 @@ const baseImgUrl = process.env.NEXT_PUBLIC_TMDB_BASE_IMAGE_URL;
 
 const MovieDetailInfo = async ({ movieId }: Props) => {
   const movieData = await getMovieDetail(movieId);
-  // console.log('프로필데이타==>>>', movieData.productions);
 
   return (
     <div>
