@@ -1,7 +1,9 @@
 'use client';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { Suspense, useEffect, useRef, useState } from 'react';
 import Message from './message';
 import Link from 'next/link';
+import SubmitButton from '@/components/_Auth/SubmitButton';
+import SocialButtons from '@/components/_Auth/SocialButtons';
 
 const passwordOnChangeHandler = (
   e: React.ChangeEvent<HTMLInputElement>,
@@ -41,13 +43,6 @@ function SignUpPage() {
         <h1>Sign Up Page</h1>
         <input
           className="border border-slate-400 p-2 w-full rounded-md"
-          type="text"
-          name="username"
-          placeholder="username"
-          required
-        />
-        <input
-          className="border border-slate-400 p-2 w-full rounded-md"
           type="email"
           name="email"
           placeholder="email"
@@ -73,12 +68,7 @@ function SignUpPage() {
           required
           onChange={(e) => passwordOnChangeHandler(e, setConfirmingPasswordValue)}
         />
-        <input
-          className="border border-slate-900 p-2 cursor-pointer w-full rounded-md disabled:bg-slate-100 mt-5"
-          type="submit"
-          value={'회원가입하기'}
-          disabled={!isPasswordMatch}
-        />
+        <SubmitButton inputValue="회원가입하기" loadingMessage="회원가입 요청 중..." shouldDisable={!isPasswordMatch} />
         <Link
           className="border border-slate-900 p-2 cursor-pointer w-full rounded-md flex justify-center "
           href={process.env.NEXT_PUBLIC_BASE_URL!}
@@ -86,6 +76,7 @@ function SignUpPage() {
           돌아가기
         </Link>
         <Message />
+        <SocialButtons />
       </form>
     </div>
   );
