@@ -1,41 +1,18 @@
 import getMovieDataWithMovieIds from '@/api/getMovieDataWithMovieIds';
+import { getMovieGenresByName, sortMostFrequentGenres } from '@/api/getMovieGernes';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 interface Props {
   username: string;
 }
 
-interface MovieGenres {
-  id: string;
-  name: string;
-}
-
 const UserPageMostWatchedGenres = async ({ username }: Props) => {
   const supabase = createServerComponentClient({ cookies });
   const { data, error } = await supabase.from('users').select().eq('username', username);
   const { id: userId, watched_movies } = data![0];
+
   const movieData = await getMovieDataWithMovieIds(watched_movies);
-
-  const getMovieGenres = () => {
-    const movieGenresMix: Array<Array<MovieGenres>> = movieData.map((movie) => movie.genres);
-    const allGenres = movieGenresMix.flatMap((genres) => genres.map((genre) => genre.name));
-    return allGenres;
-  };
-
-  const sortMostFrequentGenres = (allGenres: Array<string>, howManyGenres: number) => {
-    const genreCounts = {} as any;
-    allGenres.forEach((genre) => {
-      if (genreCounts[genre]) {
-        genreCounts[genre]++;
-      } else {
-        genreCounts[genre] = 1;
-      }
-    });
-    const sortedGenres = Object.keys(genreCounts).sort((a, b) => genreCounts[b] - genreCounts[a]);
-
-    return sortedGenres.slice(0, howManyGenres);
-  };
-  const totalGenres = getMovieGenres();
+  const totalGenres = getMovieGenresByName(movieData);
   const threeMostGenres = sortMostFrequentGenres(totalGenres, 3);
 
   return (
