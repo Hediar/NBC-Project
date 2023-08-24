@@ -1,6 +1,7 @@
 'use client';
 
 import { getMovieDetail } from '@/api/tmdb';
+import { useReviewMovieStore } from '@/app/(store)/useReviewStore';
 import { MovieGenre } from '@/types/types';
 import Image from 'next/image';
 import React from 'react';
@@ -13,13 +14,17 @@ const baseImgUrl = process.env.NEXT_PUBLIC_TMDB_BASE_IMAGE_URL;
 
 const ReviewMovie = ({ movieId }: Props) => {
   // 엘리멘탈: 976573
+  const { searchMovieId }: any = useReviewMovieStore();
+
   const [movieData, setMovieData] = React.useState<any>();
+
   React.useEffect(() => {
-    const fetchDate = async () => {
-      setMovieData(await getMovieDetail(movieId));
+    const fetchData = async () => {
+      const queryMovieId = searchMovieId ? searchMovieId : movieId;
+      setMovieData(await getMovieDetail(queryMovieId));
     };
-    fetchDate();
-  }, []);
+    fetchData();
+  }, [searchMovieId]);
 
   //   const movieData = await getMovieDetail(movieId);
 

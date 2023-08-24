@@ -12,3 +12,12 @@ export const useReviewStore = create(
     }
   )
 );
+
+export const useReviewMovieStore = create((set) => {
+  return {
+    searchMovieId: null,
+    saveSearchMovieId: (newMovieId: any) => {
+      set({ searchMovieId: newMovieId });
+    }
+  };
+});

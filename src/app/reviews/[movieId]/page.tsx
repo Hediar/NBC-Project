@@ -1,6 +1,7 @@
 import React from 'react';
 import ReviewMovie from '@/components/ReviewForm/ReviewMovie';
 import ReviewForm from '@/components/ReviewForm/ReviewForm';
+import SearchPopup from '@/components/ReviewForm/SearchPopup';
 
 interface Params {
   movieId: string;
@@ -15,6 +16,7 @@ const ReviewPage = async ({ params }: Props) => {
 
   return (
     <>
+      <SearchPopup />
       <ReviewMovie movieId={movieId} />
       <ReviewForm movieId={movieId} />
     </>
