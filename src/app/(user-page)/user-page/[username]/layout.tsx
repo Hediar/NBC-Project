@@ -39,7 +39,7 @@ export default async function Layout({
   if (data && data.length < 1) notFound();
 
   return (
-    <main className="flex flex-col items-center bg-slate-50 ">
+    <main className="flex flex-col items-center bg-slate-50 w-full">
       <UserPageTabs username={decodedUsername} />
       {children}
     </main>
