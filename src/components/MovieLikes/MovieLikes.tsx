@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import supabase from '@/supabase/config';
 import useUserInfoStore from '@/app/(store)/saveCurrentUserData';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { throttle } from 'lodash';
 
 /**영화id props로 내려받아서, 해당 영화 id가 존재할 때
  * 현재 유저의 좋아요가 있는지 확인하고 -> 현재 user는 zustand로 관리
@@ -53,19 +54,17 @@ const MovieLikes = (props: { movieid: number }) => {
     }
   );
 
-  const likeButtonHandler = async () => {
-    /**
-     * TODO
-     * 로그인확인
-     * 영화 id 기반으로 db 가져오기 -> 로그인한 id가 해당 db에 있는지 확인
-     * 있을 경우 - 제거
-     * 없을 경우 - 추가
-     *
-     * 영화 id가 db에 없을경우?
-     * 새로운 row 추가
-     */
-    userInfo.id ? mutation.mutate() : alert('로그인 해주세요!');
-  };
+  const likeButtonHandler = throttle(
+    async () => {
+      if (userInfo.id) {
+        await mutation.mutateAsync();
+      } else {
+        alert('로그인 해주세요!');
+      }
+    },
+    1000, // 스로틀링 간격 (여기서는 1000ms)
+    { trailing: false } // 마지막 호출 후 추가 호출 방지
+  );
 
   return (
     <div>
