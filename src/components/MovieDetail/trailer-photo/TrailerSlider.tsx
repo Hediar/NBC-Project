@@ -7,19 +7,22 @@ type Props = {
   slideData: string[];
   itemNum: number;
   gap: number;
+  count: number;
 };
 
-const TrailerSlider = ({ slideData, itemNum, gap }: Props) => {
+const TrailerSlider = ({ slideData, itemNum, gap, count = 1 }: Props) => {
+  const isDataOdd = slideData.length % 2 == 1 ? true : false;
+  const isCountOdd = count % 2 == 1 ? true : false;
+  console.log(isCountOdd);
   const PADDING_X = gap / 2;
   const ITEM_NUM = itemNum > slideData.length ? slideData.length : itemNum;
-  //스크롤바때문에 ..ㅠㅠ..
   const ITEM_WIDTH = ((window.innerWidth - 17) * 80) / (100 * ITEM_NUM);
   const ITEM_HEIGHT = ITEM_WIDTH * (300 / 533);
   const SCREEN_BAR_HEIGHT = (ITEM_WIDTH / 32) * 3;
   const [slideIndex, setSlideIndex] = useState(ITEM_NUM);
   const slideRef = useRef<HTMLDivElement>(null);
   const len = slideData.length;
-  const infiniteSlides = [...slideData, ...slideData, ...slideData];
+  const infiniteSlides = [...slideData.slice(len - itemNum), ...slideData, ...slideData.slice(0, itemNum)];
   const [timer, setTimer] = useState<NodeJS.Timeout>();
   const [isTrailerShow, setIsTrailerShow] = useState(false);
   const [isBtnShow, setIsBtnShow] = useState(false);
@@ -31,8 +34,8 @@ const TrailerSlider = ({ slideData, itemNum, gap }: Props) => {
   };
 
   const nextSlide = () => {
-    if (slideIndex === len + ITEM_NUM - 1) {
-      setSlideIndex((prevIndex) => prevIndex + 1);
+    if (slideIndex >= len + ITEM_NUM - count) {
+      setSlideIndex((prevIndex) => prevIndex + count);
       setTimeout(() => {
         if (slideRef.current) {
           slideRef.current.style.transition = '';
@@ -41,13 +44,13 @@ const TrailerSlider = ({ slideData, itemNum, gap }: Props) => {
       }, 500);
     } else {
       if (slideRef.current) slideRef.current.style.transition = 'all 500ms ease-in-out';
-      setSlideIndex((prevIndex) => prevIndex + 1);
+      setSlideIndex((prevIndex) => prevIndex + count);
     }
   };
 
   const prevSlide = () => {
-    if (slideIndex === 1) {
-      setSlideIndex((prevIndex) => prevIndex - 1);
+    if (slideIndex <= count) {
+      setSlideIndex((prevIndex) => prevIndex - count);
       setTimeout(() => {
         if (slideRef.current) {
           slideRef.current.style.transition = '';
@@ -56,7 +59,7 @@ const TrailerSlider = ({ slideData, itemNum, gap }: Props) => {
       }, 500);
     } else {
       if (slideRef.current) slideRef.current.style.transition = 'all 500ms ease-in-out';
-      setSlideIndex((prevIndex) => prevIndex - 1);
+      setSlideIndex((prevIndex) => prevIndex - count);
     }
   };
   const debouncedSlide = (func: any) => {
@@ -71,7 +74,6 @@ const TrailerSlider = ({ slideData, itemNum, gap }: Props) => {
     <div>
       {isTrailerShow && <TrailerPlay trailerKey={trailerKey} closeBtn={setIsTrailerShow} />}
       <div>
-        <p className="font-bold text-gray-500">트레일러 {slideData?.length}</p>
         <div className="slider-container overflow-hidden relative">
           <div
             className={`absolute left-0 top-0 bg-white w-full z-10`}

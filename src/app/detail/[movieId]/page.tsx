@@ -1,4 +1,5 @@
-import MovieDetailInfo from '@/components/MovieDetail/MovieDetailInfo';
+import { getMovieDetail } from '@/api/tmdb';
+import KeyInfomation from '@/components/MovieDetail/main/KeyInfomation';
 import { Params } from '@/types/types';
 import React from 'react';
 
@@ -6,10 +7,15 @@ type Props = {
   params: Params;
 };
 
-const MovieDetail = ({ params }: Props) => {
+const MovieDetail = async ({ params }: Props) => {
   const { movieId } = params;
+  const movieData = await getMovieDetail(movieId);
 
-  return <div></div>;
+  return (
+    <div>
+      <KeyInfomation movieData={movieData} />
+    </div>
+  );
 };
 
 export default MovieDetail;
