@@ -33,8 +33,8 @@ const ReviewForm = ({ movieId }: Props) => {
   const checkHandlerIndex = [checkHandlerC1, checkHandlerC2, checkHandlerC3];
 
   const { userInfo } = useUserInfoStore();
-  const { searchMovieId }: any = useReviewMovieStore();
-  const selectedMovieId = searchMovieId ? searchMovieId : movieId;
+  // const { searchMovieId }: any = useReviewMovieStore();
+  // const selectedMovieId = searchMovieId ? searchMovieId : movieId;
 
   // 해시태그를 담을 배열
   const [tagList, setTagList] = React.useState<string[] | []>([]);
@@ -45,7 +45,7 @@ const ReviewForm = ({ movieId }: Props) => {
     if (!userInfo) return alert('로그인 정보가 없습니다.');
 
     const newReview = {
-      movieid: selectedMovieId,
+      movieid: movieId,
       userid: userInfo.id, // Q:: 유저 인증 막혀서 insert 정책을 true로 풀고 테스트 중
       date: selectedDate,
       category: JSON.stringify(checkedListIndex), // Q:: db에 이렇게 넣어도 되나???????
@@ -73,7 +73,7 @@ const ReviewForm = ({ movieId }: Props) => {
     e.preventDefault();
 
     const newReview = {
-      movieid: selectedMovieId,
+      movieid: movieId,
       userid: userInfo.id,
       date: selectedDate,
       category: JSON.stringify(checkedListIndex),

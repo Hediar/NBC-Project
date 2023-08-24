@@ -4,9 +4,7 @@ import { searchReviewMovies } from '@/api/tmdb';
 import { useReviewMovieStore } from '@/app/(store)/useReviewStore';
 import React from 'react';
 
-type Props = {};
-
-const SearchPopup = (props: Props) => {
+const SearchPopup = () => {
   const [searchMovies, setSearchMovies] = React.useState<any>([]);
 
   const { saveSearchMovieId }: any = useReviewMovieStore();
