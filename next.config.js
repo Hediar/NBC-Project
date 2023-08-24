@@ -6,6 +6,9 @@ const nextConfig = {
 };
 
 module.exports = {
+  experimental: {
+    serverActions: true
+  },
   images: {
     formats: ['image/avif', 'image/webp'],
     pathname: '/**',

@@ -15,8 +15,8 @@ const UserPageSemiHeader = async ({ params: username, avatar_url }: Props) => {
             className="w-12 h-12"
             src={avatar_url}
             alt="user profile"
-            width={1}
-            height={1}
+            width={80}
+            height={80}
             placeholder="blur"
             blurDataURL={'/anonymous-avatar-icon.png'}
           />

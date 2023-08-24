@@ -25,3 +25,11 @@ body {
     )
     rgb(var(--background-start-rgb));
 } */
+/* 영화 보여주기에서 */
+.INLINE_BOX {
+  display: -webkit-inline-box;
+
+  /* &::-webkit-scrollbar {
+    display: none;
+  } */
+}
