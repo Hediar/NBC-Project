@@ -106,3 +106,8 @@ interface MovieData {
   appearences: TMDBCreditCast[];
   productions: TMDBCreditCrew[];
 }
+
+interface MovieLikesTable {
+  movieid: string | Number;
+  user_id: string[];
+}
