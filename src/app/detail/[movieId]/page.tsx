@@ -9,11 +9,7 @@ type Props = {
 const MovieDetail = ({ params }: Props) => {
   const { movieId } = params;
 
-  return (
-    <div style={{ width: '80%', margin: '0 auto' }}>
-      <MovieDetailInfo movieId={movieId} />
-    </div>
-  );
+  return <div></div>;
 };
 
 export default MovieDetail;

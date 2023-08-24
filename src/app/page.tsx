@@ -1,12 +1,10 @@
-import TrendMoives from '@/components/TrendMoives';
+import MainPageMovies from '@/components/MainPageMovies/MainPageMovies';
 
 export default async function Home() {
   return (
     <>
       <main>
-        <div>
-          <TrendMoives />
-        </div>
+        <MainPageMovies />
       </main>
     </>
   );

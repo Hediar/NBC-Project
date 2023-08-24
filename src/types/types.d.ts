@@ -79,7 +79,7 @@ interface MovieData {
     backdrop_path: string;
   };
   budget: number;
-  genres: MovieGenre[];
+  genre_ids: number[];
   homepage?: string;
   id: number;
   imdb_id: string;
