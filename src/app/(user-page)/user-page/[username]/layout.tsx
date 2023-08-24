@@ -3,6 +3,7 @@ import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { cookies } from 'next/headers';
+import UserPageTabs from '@/components/UserPage/UserPageTabs';
 
 interface Params {
   params: {
@@ -37,7 +38,12 @@ export default async function Layout({
 
   if (data && data.length < 1) notFound();
 
-  return <main className="flex flex-col items-center bg-slate-50 h-[calc(100vh-80px)]">{children}</main>;
+  return (
+    <main className="flex flex-col items-center bg-slate-50 ">
+      <UserPageTabs username={decodedUsername} />
+      {children}
+    </main>
+  );
 }
 
 // const userData = getUser(userId);
