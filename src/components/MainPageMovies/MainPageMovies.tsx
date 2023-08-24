@@ -3,6 +3,7 @@ import { getGenres } from '@/api/tmdb';
 
 export const GetGenres = async () => {
   const genres = await getGenres();
+  console.log(genres);
   const genreData = [{ name: '전체' }, ...genres.genres];
   // console.log(genreData);
   return genreData;

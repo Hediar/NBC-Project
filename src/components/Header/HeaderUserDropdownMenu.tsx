@@ -17,7 +17,7 @@ const HeaderUserDropdownMenu = ({ username, isMenuOpen, setIsMenuOpen }: Props) 
       <Link
         onClick={menuClickAndCloseMenu}
         className="text-center pb-2 hover:opacity-80"
-        href={`/user-page/${username}`}
+        href={`/user-page/${username}/info`}
       >
         유저 페이지
       </Link>
