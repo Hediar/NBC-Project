@@ -1,3 +1,4 @@
+'use client';
 import { quickReviews } from '@/static/quickReviews';
 import supabase from '@/supabase/config';
 import React, { useState } from 'react';
@@ -8,7 +9,7 @@ type Props = {
 
 const MovieDetailQuickRating = ({ movieId }: Props) => {
   const [gaugeWidth, setGaugeWidth] = useState<number>(0);
-  const [seletedReviews, setSeletedReviews] = useState<string[]>([]);
+  const [seletedQuickReviews, setSeletedQuickReviews] = useState<string[]>([]);
   const [userReview, setUserReview] = useState<string>('');
   const scores = [2, 4, 6, 8, 10];
 
@@ -17,14 +18,11 @@ const MovieDetailQuickRating = ({ movieId }: Props) => {
   };
 
   const updateReviews = (review: string) => {
-    if (!seletedReviews.includes(review)) {
-      setSeletedReviews([...seletedReviews, review]);
-      if (!userReview.includes(review)) {
-        setUserReview((prev) => (prev += review + ' '));
-      }
+    if (!seletedQuickReviews.includes(review)) {
+      setSeletedQuickReviews([...seletedQuickReviews, review]);
     } else {
-      const filteredReviews = seletedReviews.filter((seletedReview) => seletedReview != review);
-      setSeletedReviews(filteredReviews);
+      const filteredReviews = seletedQuickReviews.filter((seletedQuickReviews) => seletedQuickReviews != review);
+      setSeletedQuickReviews(filteredReviews);
     }
   };
 
@@ -38,12 +36,12 @@ const MovieDetailQuickRating = ({ movieId }: Props) => {
         movieId,
         userId: userId ?? null,
         review: userReview,
-        quick_reviews: seletedReviews,
+        quick_reviews: seletedQuickReviews,
         score: gaugeWidth / 10
       })
       .select();
 
-    setSeletedReviews([]);
+    setSeletedQuickReviews([]);
     setUserReview('');
     setGaugeWidth(0);
     alert('등록완료!');
@@ -89,9 +87,11 @@ const MovieDetailQuickRating = ({ movieId }: Props) => {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            console.log('폼태그 테스트');
           }}
         >
+          {seletedQuickReviews.map((quicReview, idx) => {
+            return <div key={idx}>{quicReview}</div>;
+          })}
           <input type="text" value={userReview} onChange={(e) => setUserReview(e.target.value)}></input>
           <button
             onClick={() => {
