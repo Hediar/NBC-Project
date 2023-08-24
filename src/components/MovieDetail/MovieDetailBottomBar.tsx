@@ -21,12 +21,16 @@ const MovieDetailBottomBar = ({ movieId }: Props) => {
 
   return (
     <nav>
-      <ul className="flex gap-7 py-5 pb-5">
+      <ul className="flex gap-7 p-3 mb-5">
         {tags.map((tag, idx) => {
           return (
             <li key={idx}>
               <Link href={`/detail/${movieId}/${tag.url}`}>
-                {tag.url === pathName ? <strong>{tag.name}</strong> : <p>{tag.name}</p>}
+                {tag.url === pathName ? (
+                  <strong className="pb-2 border-b-2 border-black">{tag.name}</strong>
+                ) : (
+                  <p className="pb-2 h:border-b-2 border-gray">{tag.name}</p>
+                )}
               </Link>
             </li>
           );

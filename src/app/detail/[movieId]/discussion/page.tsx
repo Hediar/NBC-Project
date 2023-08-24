@@ -1,3 +1,4 @@
+import Discussion from '@/components/MovieDetail/discussion/Discussion';
 import { Params } from '@/types/types';
 import React from 'react';
 
@@ -7,7 +8,7 @@ type Props = {
 
 const page = ({ params }: Props) => {
   const { movieId } = params;
-  return <div>page</div>;
+  return <div>{/* <Discussion /> */}</div>;
 };
 
 export default page;
