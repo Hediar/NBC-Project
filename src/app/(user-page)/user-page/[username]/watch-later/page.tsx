@@ -40,7 +40,6 @@ const ToWatchListPage = async ({ params }: Props) => {
   // movieList = ['1','2','3','4'] [...movieId]
   const movieList: [string] = watchLaterMovies[0].movies;
   const movieDetails = await getMovieDataWithMovieIds(movieList);
-  console.log(movieDetails);
 
   return (
     <div className="flex flex-col items-center w-full mt-10">
