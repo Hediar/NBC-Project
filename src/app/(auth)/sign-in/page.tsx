@@ -1,14 +1,60 @@
+'use client';
 import Link from 'next/link';
-import React, { Suspense } from 'react';
+import React, { useState } from 'react';
 import Message from './message';
 import SubmitButton from '@/components/_Auth/SubmitButton';
+import { useRouter } from 'next/navigation';
+import HCaptcha from '@hcaptcha/react-hcaptcha';
+
+interface Data {
+  error: boolean;
+  message: string;
+}
 
 const SignInPage = () => {
+  const [emailValue, setEmailValue] = useState<string>('');
+  const [passwordValue, setPasswordValue] = useState<string>('');
+  const router = useRouter();
+  const [captchaToken, setCaptchaToken] = useState<any>();
+  const [isError, setIsError] = useState<boolean>(false);
+
+  const signInHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append('email', emailValue);
+    formData.append('password', passwordValue);
+    formData.append('captchaToken', captchaToken);
+    const res = await fetch('/auth/sign-in', { method: 'post', body: formData });
+    const { error, message } = (await res.json()) as Data;
+    if (error) {
+      if (message.includes('captcha 오류')) {
+        setIsError(true);
+        router.refresh();
+        router.push(`http://localhost:3000/sign-in?error=captcha오류입니다. 다시 시도해주세요.`);
+      }
+      if (message.includes('틀립니다')) {
+        setIsError(true);
+        router.refresh();
+        router.push(`http://localhost:3000/sign-in?error=${message}`);
+      }
+      if (message.includes('에러가')) {
+        setIsError(true);
+        router.refresh();
+        router.push(`http://localhost:3000/sign-in?error=${message}`);
+      }
+      router.refresh();
+    } else {
+      router.refresh();
+      router.push(`http://localhost:3000`);
+    }
+  };
+
   return (
     <div className="flex justify-center items-center h-full bg-gray-200">
       <form
-        action="/auth/sign-in"
-        method="post"
+        // action="/auth/sign-in"
+        // method="post"
+        onSubmit={signInHandler}
         className="flex flex-col gap-3 shadow-lg shadow-gray-300 w-96 p-9 items-center bg-slate-50 rounded-md"
       >
         <h1>Sign In Page</h1>
@@ -17,6 +63,8 @@ const SignInPage = () => {
           type="email"
           name="email"
           placeholder="email"
+          value={emailValue}
+          onChange={(e) => setEmailValue(e.target.value)}
           required
         />
         <input
@@ -24,10 +72,24 @@ const SignInPage = () => {
           type="password"
           name="password"
           placeholder="password"
-          pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+          value={passwordValue}
+          onChange={(e) => setPasswordValue(e.target.value)}
+          // pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
           required
         />
-        <SubmitButton inputValue="로그인하기" loadingMessage="로그인 하는 중..." />
+        <HCaptcha
+          // sitekey="6c9d3095-7348-4fe3-bf72-1f2b2b7ef34d"
+          sitekey="10000000-ffff-ffff-ffff-000000000001"
+          onVerify={(token) => {
+            setCaptchaToken(token);
+          }}
+        />
+        <SubmitButton
+          inputValue="로그인하기"
+          loadingMessage="로그인 하는 중..."
+          isError={isError}
+          setIsError={setIsError}
+        />
         <Link
           className="border border-slate-900 p-2 cursor-pointer w-full rounded-md flex justify-center "
           href={process.env.NEXT_PUBLIC_BASE_URL!}

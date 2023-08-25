@@ -4,7 +4,7 @@ import SignOutButton from './SignOutButton';
 import SignInButton from './SignInButton';
 import SignUpButton from './SignUpButton';
 import UserInfo from './UserInfo';
-
+export const dynamic = 'force-dynamic';
 const AuthButton = async () => {
   const supabase = createServerComponentClient({ cookies });
   const {

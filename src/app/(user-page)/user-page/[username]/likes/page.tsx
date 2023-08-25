@@ -8,7 +8,7 @@ interface Props {
     username: string;
   };
 }
-
+export const dynamic = 'force-dynamic';
 interface Movie {
   adult: boolean;
   backdrop_path: string;

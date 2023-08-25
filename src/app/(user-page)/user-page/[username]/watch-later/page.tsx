@@ -3,6 +3,7 @@ import { cookies } from 'next/headers';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import getMovieDataWithMovieIds from '@/api/getMovieDataWithMovieIds';
 import DisplayMoviesWIthMovieIds from '@/components/common/_DisplayMoviesWithMovieIds';
+export const dynamic = 'force-dynamic';
 interface Props {
   params: {
     username: string;

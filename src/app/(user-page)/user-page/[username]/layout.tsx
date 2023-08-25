@@ -4,7 +4,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { cookies } from 'next/headers';
 import UserPageTabs from '@/components/UserPage/UserPageTabs';
-
+export const dynamic = 'force-dynamic';
 interface Params {
   params: {
     username: string;

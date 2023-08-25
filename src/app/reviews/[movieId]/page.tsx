@@ -3,7 +3,7 @@ import ReviewMovie from '@/components/ReviewForm/ReviewMovie';
 import ReviewForm from '@/components/ReviewForm/ReviewForm';
 import { createServerActionClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
-
+export const dynamic = 'force-dynamic';
 interface Params {
   movieId: string;
 }
