@@ -12,16 +12,14 @@ type Props = {
 const baseImgUrl = process.env.NEXT_PUBLIC_TMDB_BASE_IMAGE_URL;
 
 const ReviewMovie = ({ movieId }: Props) => {
-  // 엘리멘탈: 976573
   const [movieData, setMovieData] = React.useState<any>();
+
   React.useEffect(() => {
-    const fetchDate = async () => {
+    const fetchData = async () => {
       setMovieData(await getMovieDetail(movieId));
     };
-    fetchDate();
-  }, []);
-
-  //   const movieData = await getMovieDetail(movieId);
+    fetchData();
+  }, [movieId]);
 
   if (!movieData) return <div>로딩 중..</div>;
 
@@ -41,6 +39,7 @@ const ReviewMovie = ({ movieId }: Props) => {
       <div>{movieData.production_countries[0]['iso_3166_1']}</div>
       <div>{movieData.runtime}분</div>
       <div>{movieData.adult ? '청소년관람불가' : '전체관람가'}</div>
+      <button>영화 변경하기</button>
     </div>
   );
 };
