@@ -1,4 +1,5 @@
 import { getMovieDetail } from '@/api/tmdb';
+import UtilButtons from '@/components/ReviewForm/UtilButtons';
 import supabase from '@/supabase/config';
 import { MovieGenre } from '@/types/types';
 import Image from 'next/image';
@@ -17,11 +18,11 @@ const ReviewDetail = async ({ params }: Props) => {
 
   const { data: reviews, error } = await supabase.from('reviews').select('*').eq('reviewid', postId);
   const review = reviews![0];
-  console.log(review);
+  //   console.log(review);
 
   const { data: users } = await supabase.from('users').select('*').eq('id', review.userid);
   const user = users![0];
-  console.log(user);
+  //   console.log(user);
 
   const movieData = await getMovieDetail(review.movieid);
 
@@ -68,7 +69,7 @@ const ReviewDetail = async ({ params }: Props) => {
         <div>{review.review}</div>
         <label className="block text-gray-700 text-sm font-bold mb-2">메모</label>
         <div>{review.content}</div>
-        <button>삭제</button>
+        <UtilButtons postId={postId} userId={user.id} />
       </div>
     </div>
   );
