@@ -1,18 +1,26 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface Props {
   inputValue: string;
   loadingMessage: string;
   shouldDisable?: boolean;
+  isError: boolean;
+  setIsError: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const SubmitButton = ({ inputValue, loadingMessage, shouldDisable = false }: Props) => {
+const SubmitButton = ({ inputValue, loadingMessage, shouldDisable = false, isError, setIsError }: Props) => {
   const [isClicked, setIsClicked] = useState<boolean>(false);
 
   const clickHandler = () => {
     setIsClicked(!isClicked);
   };
+  useEffect(() => {
+    if (isError) {
+      setIsClicked(false);
+      setIsError(false);
+    }
+  }, [isError, setIsError]);
 
   const Spinner = () => {
     return (

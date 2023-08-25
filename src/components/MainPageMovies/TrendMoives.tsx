@@ -44,7 +44,7 @@ const TrendMoives = async ({ selectedGenreId }: TrendMoviesProps) => {
                   ></Image>
                 </Link>
               </div>
-              {/* <MovieLikes movieid={movie.id} /> */}
+              <MovieLikes movieid={movie.id} />
             </>
           );
         })}
