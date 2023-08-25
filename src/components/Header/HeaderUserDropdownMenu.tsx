@@ -13,11 +13,11 @@ const HeaderUserDropdownMenu = ({ username, isMenuOpen, setIsMenuOpen }: Props) 
     setIsMenuOpen(!isMenuOpen);
   };
   return (
-    <div className="absolute w-28 top-8 flex flex-col z-10 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 text-white p-4 ">
+    <div className="absolute w-28 top-8 flex flex-col z-10 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 p-4 ">
       <Link
         onClick={menuClickAndCloseMenu}
         className="text-center pb-2 hover:opacity-80"
-        href={`/user-page/${username}`}
+        href={`/user-page/${username}/info`}
       >
         유저 페이지
       </Link>

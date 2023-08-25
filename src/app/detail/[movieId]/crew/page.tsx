@@ -1,5 +1,5 @@
 import { getMovieDetail } from '@/api/tmdb';
-import KeyInfomation from '@/components/MovieDetail/main/KeyInfomation';
+import AppearanceProduction from '@/components/MovieDetail/appearance-production/AppearanceProduction';
 import { Params } from '@/types/types';
 import React from 'react';
 
@@ -7,15 +7,14 @@ type Props = {
   params: Params;
 };
 
-const MovieDetail = async ({ params }: Props) => {
+const page = async ({ params }: Props) => {
   const { movieId } = params;
   const movieData = await getMovieDetail(movieId);
-
   return (
     <div>
-      <KeyInfomation movieData={movieData} />
+      <AppearanceProduction movieData={movieData} />
     </div>
   );
 };
 
-export default MovieDetail;
+export default page;

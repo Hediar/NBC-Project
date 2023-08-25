@@ -79,7 +79,7 @@ interface MovieData {
     backdrop_path: string;
   };
   budget: number;
-  genres: MovieGenre[];
+  genre_ids: number[];
   homepage?: string;
   id: number;
   imdb_id: string;
@@ -105,4 +105,9 @@ interface MovieData {
   backdropImages: MovieBackdropImage[];
   appearences: TMDBCreditCast[];
   productions: TMDBCreditCrew[];
+}
+
+interface MovieLikesTable {
+  movieid: string | Number;
+  user_id: string[];
 }

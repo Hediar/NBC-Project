@@ -7,10 +7,9 @@ type Props = {
   params: Params;
 };
 
-const MovieDetail = async ({ params }: Props) => {
+const page = async ({ params }: Props) => {
   const { movieId } = params;
   const movieData = await getMovieDetail(movieId);
-
   return (
     <div>
       <KeyInfomation movieData={movieData} />
@@ -18,4 +17,4 @@ const MovieDetail = async ({ params }: Props) => {
   );
 };
 
-export default MovieDetail;
+export default page;
