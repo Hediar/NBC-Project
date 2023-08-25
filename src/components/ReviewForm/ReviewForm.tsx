@@ -12,7 +12,7 @@ import { REVIEW_CATEGORY_LIST } from '@/static/review';
 import CategoryBox from '@/components/ReviewForm/CategoryBox';
 import HashTagBox from '@/components/ReviewForm/HashTagBox';
 import useUserInfoStore from '@/store/saveCurrentUserData';
-import { useReviewMovieStore, useReviewStore } from '@/app/(store)/useReviewStore';
+import { useReviewMovieStore, useReviewStore } from '../../store/useReviewStore';
 // import useStore from '@/hooks/useStore';
 
 type Props = {
