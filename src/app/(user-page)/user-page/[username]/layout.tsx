@@ -4,7 +4,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { cookies } from 'next/headers';
 import UserPageTabs from '@/components/UserPage/UserPageTabs';
-
+export const dynamic = 'force-dynamic';
 interface Params {
   params: {
     username: string;
@@ -39,7 +39,7 @@ export default async function Layout({
   if (data && data.length < 1) notFound();
 
   return (
-    <main className="flex flex-col items-center bg-slate-50 ">
+    <main className="flex flex-col items-center bg-slate-50 w-full">
       <UserPageTabs username={decodedUsername} />
       {children}
     </main>

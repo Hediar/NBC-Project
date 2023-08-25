@@ -13,7 +13,7 @@ type Props = {
 const TrailerSlider = ({ slideData, itemNum, gap, count = 1 }: Props) => {
   const isDataOdd = slideData.length % 2 == 1 ? true : false;
   const isCountOdd = count % 2 == 1 ? true : false;
-  console.log(isCountOdd);
+
   const PADDING_X = gap / 2;
   const ITEM_NUM = itemNum > slideData.length ? slideData.length : itemNum;
   const ITEM_WIDTH = ((window.innerWidth - 17) * 80) / (100 * ITEM_NUM);

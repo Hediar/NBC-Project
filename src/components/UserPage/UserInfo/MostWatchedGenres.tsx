@@ -2,6 +2,7 @@ import getMovieDataWithMovieIds from '@/api/getMovieDataWithMovieIds';
 import { getMovieGenresByName, sortMostFrequentGenres } from '@/api/getMovieGernes';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
+export const dynamic = 'force-dynamic';
 interface Props {
   username: string;
 }

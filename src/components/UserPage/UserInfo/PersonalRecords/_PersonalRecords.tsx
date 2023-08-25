@@ -3,7 +3,7 @@ import { cookies } from 'next/headers';
 import NumberOfReviews from './NumberOfReviews';
 import TotalWatchingTime from './TotalWatchingTime';
 import NumberOfMoviesWatched from './NumberOfMoviesWatched';
-
+export const dynamic = 'force-dynamic';
 interface Props {
   params: string;
 }

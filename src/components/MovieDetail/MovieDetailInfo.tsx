@@ -22,9 +22,10 @@ const MovieDetailInfo = async ({ movieId }: Props) => {
           <div
             className="w-full h-full "
             style={{
-              backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.4), rgba(0, 0, 0, 0.8)),
+              backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.2), rgba(0, 0, 0, 0.8)),
                   url("${baseImgUrl}w1920_and_h1080_bestv2${movieData.backdrop_path}")`,
-              backgroundSize: '100% 100%'
+              backgroundSize: '100% 100%',
+              filter: 'brightness(1.35)'
             }}
           ></div>
 
@@ -90,7 +91,7 @@ const MovieDetailInfo = async ({ movieId }: Props) => {
               )}
             </div>
           ) : (
-            <div>{movieData.title}를 제공하는 곳이 없습니다.</div>
+            <div>{movieData.title} 제공 사가 없습니다.</div>
           )}
         </div>
       </div>

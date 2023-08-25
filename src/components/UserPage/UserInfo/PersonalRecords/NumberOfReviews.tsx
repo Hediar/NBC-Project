@@ -1,6 +1,8 @@
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 
+export const dynamic = 'force-dynamic';
+
 const NumberOfReviews = async ({ userId }: { userId: string }) => {
   const supabase = createServerComponentClient({ cookies });
   const { data: reviewData, error: reviewError } = await supabase

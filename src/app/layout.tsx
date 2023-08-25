@@ -8,13 +8,13 @@ export const metadata: Metadata = {
   description: '무비바바에 오신것을 환영합니다!'
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout(props: { children: React.ReactNode; keywordmovies: React.ReactNode }) {
   return (
     <html>
       <body>
         <ReactQueryProvider>
           <Header />
-          {children}
+          {props.children}
         </ReactQueryProvider>
       </body>
     </html>

@@ -1,8 +1,7 @@
 'use client';
-import Image from 'next/image';
+/* eslint-disable @next/next/no-img-element */
 import Link from 'next/link';
-import { UIEvent, useEffect, useState } from 'react';
-import InfiniteScroll from 'react-infinite-scroll-component';
+import { useEffect, useState } from 'react';
 
 interface Movie {
   adult: boolean;

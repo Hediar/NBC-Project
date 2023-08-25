@@ -5,6 +5,8 @@ import Link from 'next/link';
 import SubmitButton from '@/components/_Auth/SubmitButton';
 import SocialButtons from '@/components/_Auth/SocialButtons';
 
+import HCaptcha from '@hcaptcha/react-hcaptcha';
+import { useRouter } from 'next/navigation';
 const passwordOnChangeHandler = (
   e: React.ChangeEvent<HTMLInputElement>,
   set: React.Dispatch<React.SetStateAction<string>>
@@ -16,9 +18,10 @@ function SignUpPage() {
   const emailValue = useRef<string>('');
   const [passwordValue, setPasswordValue] = useState<string>('');
   const [confirmingPasswordValue, setConfirmingPasswordValue] = useState<string>('');
-
+  const router = useRouter();
+  const [captchaToken, setCaptchaToken] = useState<any>();
   const [isPasswordMatch, setIsPasswordMatch] = useState<boolean>(false);
-
+  const [isError, setIsError] = useState<boolean>(false);
   useEffect(() => {
     if (!passwordValue || !confirmingPasswordValue) {
       setIsPasswordMatch(false);
@@ -33,11 +36,38 @@ function SignUpPage() {
     }
   }, [passwordValue, confirmingPasswordValue]);
 
+  const signupHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append('email', emailValue.current);
+    formData.append('password', passwordValue);
+    formData.append('captchaToken', captchaToken);
+    const res = await fetch('/auth/sign-up', { method: 'post', body: formData });
+    if (res) {
+      const data = await res.json();
+      if (data.message === 'User already registered.') {
+        setIsError(true);
+        router.refresh();
+        router.push(`http://localhost:3000/sign-up?error=이미 등록된 메일입니다.`);
+      }
+      if (data.message.includes('captcha 오류')) {
+        setIsError(true);
+        router.refresh();
+        router.push(`http://localhost:3000/sign-up?error=captcha오류입니다. 다시 시도해주세요.`);
+      }
+      router.refresh();
+    } else {
+      router.refresh();
+      router.push(`http://localhost:3000`);
+    }
+  };
+
   return (
     <div className="flex justify-center items-center h-full bg-gray-200">
       <form
-        action="/auth/sign-up"
-        method="post"
+        // action="/auth/sign-up"
+        // method="post"
+        onSubmit={signupHandler}
         className="flex flex-col gap-3 shadow-lg shadow-gray-300 w-96 p-9 items-center bg-slate-50 rounded-md "
       >
         <h1>Sign Up Page</h1>
@@ -54,7 +84,7 @@ function SignUpPage() {
           type="password"
           name="password"
           placeholder="password"
-          pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+          // pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
           required
           onChange={(e) => passwordOnChangeHandler(e, setPasswordValue)}
           autoComplete="new-password"
@@ -64,11 +94,25 @@ function SignUpPage() {
           type="password"
           name="confirming password"
           placeholder="confirm password"
-          pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+          // pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
           required
           onChange={(e) => passwordOnChangeHandler(e, setConfirmingPasswordValue)}
         />
-        <SubmitButton inputValue="회원가입하기" loadingMessage="회원가입 요청 중..." shouldDisable={!isPasswordMatch} />
+        <HCaptcha
+          // sitekey="6c9d3095-7348-4fe3-bf72-1f2b2b7ef34d"
+          sitekey="10000000-ffff-ffff-ffff-000000000001"
+          onVerify={(token) => {
+            setCaptchaToken(token);
+          }}
+        />
+
+        <SubmitButton
+          inputValue="회원가입하기"
+          loadingMessage="회원가입 요청 중..."
+          shouldDisable={!isPasswordMatch}
+          isError={isError}
+          setIsError={setIsError}
+        />
         <Link
           className="border border-slate-900 p-2 cursor-pointer w-full rounded-md flex justify-center "
           href={process.env.NEXT_PUBLIC_BASE_URL!}

@@ -5,7 +5,7 @@ import UserPageSemiHeader from '@/components/UserPage/UserInfo/SemiHeader';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import { Suspense } from 'react';
-
+export const dynamic = 'force-dynamic';
 interface Props {
   params: {
     username: string;

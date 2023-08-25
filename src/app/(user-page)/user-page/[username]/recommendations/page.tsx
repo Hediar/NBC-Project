@@ -3,7 +3,7 @@ import React from 'react';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import UserPageMostWatchedGenres from '@/components/UserPage/UserInfo/MostWatchedGenres';
-import { MovieDetail } from '@/api/getMovieGernes';
+export const dynamic = 'force-dynamic';
 interface Props {
   params: {
     username: string;
