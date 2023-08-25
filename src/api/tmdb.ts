@@ -43,7 +43,7 @@ export const getGenres = async () => {
 };
 
 // 장르별로 검색
-export const fetchTrendMoviesByGenre = async (genreId: number) => {
+export const fetchTrendMoviesByGenre = async (genreId: number | string) => {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}discover/movie?include_adult=false&include_video=false&language=ko-KR&page=1&sort_by=popularity.desc&with_genres=${genreId}`,

@@ -6,7 +6,6 @@ import React, { useState, useEffect } from 'react';
 
 const KeywordButtons = () => {
   const [genres, setGenres] = useState([]);
-  const [selectedGenreId, setSelectedGenreId] = useState<number | null>(null);
   const params = useParams();
   const router = useRouter();
 
@@ -24,11 +23,9 @@ const KeywordButtons = () => {
     };
 
     fetchData();
-    console.log(params);
   }, []);
 
   const handleGenreClick = (genreId: number | null) => {
-    setSelectedGenreId(genreId);
     genreId === undefined ? router.push('/') : router.push(`/${genreId}`);
   };
 
@@ -40,7 +37,9 @@ const KeywordButtons = () => {
             <button
               key={genre.id}
               className={`bg-blue-500 hover:bg-blue-700 text-white font-bold m-1 py-2 px-4 rounded ${
-                Number(params.genreId) === genre.id ? 'bg-blue-700' : ''
+                (params.genreId === undefined && genre.name === '전체') || Number(params.genreId) === genre.id
+                  ? 'bg-blue-700'
+                  : ''
               }`}
               onClick={() => handleGenreClick(genre.id)}
             >

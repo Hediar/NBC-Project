@@ -1,4 +1,5 @@
 import KeywordButtons from '@/components/MainPageMovies/KeywordButtons';
+import TrendMoives from '@/components/MainPageMovies/TrendMoives';
 
 export default async function Home() {
   return (
@@ -6,6 +7,7 @@ export default async function Home() {
       <main>
         {/* <MainPageMovies /> */}
         <KeywordButtons />
+        <TrendMoives genreId={'all'} />
       </main>
     </>
   );
