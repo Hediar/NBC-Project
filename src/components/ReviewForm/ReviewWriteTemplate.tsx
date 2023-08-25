@@ -4,7 +4,7 @@ import React from 'react';
 import SearchPopup from './SearchPopup';
 import ReviewMovie from './ReviewMovie';
 import ReviewForm from './ReviewForm';
-import { useReviewMovieStore } from '@/app/(store)/useReviewStore';
+import { useReviewMovieStore } from '../../store/useReviewStore';
 
 type Props = {
   paramMovieId: string;

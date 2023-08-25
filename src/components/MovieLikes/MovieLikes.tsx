@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import supabase from '@/supabase/config';
-import useUserInfoStore from '@/app/(store)/saveCurrentUserData';
+import useUserInfoStore from '@/store/saveCurrentUserData';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { throttle } from 'lodash';
 import { useRouter } from 'next/navigation';
