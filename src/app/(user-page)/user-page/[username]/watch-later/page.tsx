@@ -1,10 +1,7 @@
 import React from 'react';
-
 import { cookies } from 'next/headers';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import getMovieDataWithMovieIds from '@/api/getMovieDataWithMovieIds';
-import DisplayMovies from '@/components/common/_DisplayMovies';
-import DisplayInfiniteMovies from '@/components/common/_DisplayMoviesInfiniteScroll';
 import DisplayMoviesWIthMovieIds from '@/components/common/_DisplayMoviesWithMovieIds';
 interface Props {
   params: {
