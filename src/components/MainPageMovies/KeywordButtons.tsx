@@ -11,7 +11,6 @@ const KeywordButtons = () => {
 
   const GetGenres = async () => {
     const genres = await getGenres();
-    console.log(genres);
     const genreData = [{ name: '전체' }, ...genres.genres];
     return genreData;
   };
