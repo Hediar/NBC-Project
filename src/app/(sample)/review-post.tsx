@@ -1,6 +1,6 @@
 import { createServerActionClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
-
+export const dynamic = 'force-dynamic';
 /**
  * 리뷰 올릴 때 다음과 같이 작성 부탁드립니다.
  * user확인 후, 로그인된 유저만 리뷰 작성 가능합니다.

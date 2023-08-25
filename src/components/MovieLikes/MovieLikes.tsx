@@ -4,10 +4,12 @@ import supabase from '@/supabase/config';
 import useUserInfoStore from '@/app/(store)/saveCurrentUserData';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { throttle } from 'lodash';
+import { useRouter } from 'next/navigation';
 
 const MovieLikes = (props: { movieid: number }) => {
   const [likecurrentuser, setLikecurrentuser] = useState(false); // 현재 유저가 좋아하는지 여부
   const queryClient = useQueryClient();
+  const router = useRouter();
 
   const { data: currentMovieLikeData } = useQuery<any>({
     queryKey: ['movieLikes', props.movieid],
@@ -43,6 +45,7 @@ const MovieLikes = (props: { movieid: number }) => {
       // 성공 시에 캐시 업데이트
       onSuccess: () => {
         queryClient.invalidateQueries(['movieLikes', props.movieid]);
+        router.refresh();
       }
     }
   );
