@@ -3,6 +3,9 @@ import { StringLiteral } from 'typescript';
 //
 interface Params {
   movieId: string;
+  pageNum: string;
+  search: string;
+  discussionId: string;
 }
 
 interface TrailerData {
