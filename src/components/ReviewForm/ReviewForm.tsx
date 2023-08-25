@@ -11,7 +11,7 @@ import useCheckbox from '@/hooks/useCheckbox';
 import { REVIEW_CATEGORY_LIST } from '@/static/review';
 import CategoryBox from '@/components/ReviewForm/CategoryBox';
 import HashTagBox from '@/components/ReviewForm/HashTagBox';
-import useUserInfoStore from '@/app/(store)/saveCurrentUserData';
+import useUserInfoStore from '@/store/saveCurrentUserData';
 import { User } from '@supabase/supabase-js';
 
 type Props = {
