@@ -42,6 +42,20 @@ export const getGenres = async () => {
   }
 };
 
+// 장르별로 검색
+export const fetchTrendMoviesByGenre = async (genreId: number) => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}discover/movie?include_adult=false&include_video=false&language=ko-KR&page=1&sort_by=popularity.desc&with_genres=${genreId}`,
+      tmdbOptions
+    );
+    const genreMovieData = await response.json();
+    return genreMovieData;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const getMovieDetail = async (id: string) => {
   try {
     const detailData = await getDetailData(id);
