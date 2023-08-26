@@ -1,4 +1,4 @@
-import { tmdbOptions } from '@/api/tmdb';
+import { fetchTrendMoviesByGenre, getTrendingMovies, tmdbOptions } from '@/api/tmdb';
 import MovieLikes from '../MovieLikes/MovieLikes';
 import Image from 'next/image';
 import { MovieData } from '@/types/types';
@@ -6,32 +6,24 @@ import Link from 'next/link';
 
 export const revalidate = 0;
 
-interface TrendMoviesProps {
-  selectedGenreId: number | null;
-}
+const TrendMoives = async ({ genreId }: { genreId: string }) => {
+  let trendMovies;
+  if (genreId === 'all') {
+    trendMovies = await getTrendingMovies();
+  } else {
+    trendMovies = await fetchTrendMoviesByGenre(genreId);
+  }
+  const filteredMovies = trendMovies.results;
 
-const TrendMoives = async ({ selectedGenreId }: TrendMoviesProps) => {
-  const detailRes = await fetch(
-    `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}trending/movie/week?language=ko-KR`,
-    tmdbOptions
-  );
-  const moviesData = await detailRes.json();
-  const trendMoives = await moviesData.results;
-  // console.log('movies', trendMoives);
-
-  // 매주마다 trend 영화가 살짝 바뀌니까 언제마다 데이터를 불러올지 생각해보기
-  const filteredMovies = selectedGenreId
-    ? trendMoives.filter((movie: MovieData) => movie.genre_ids?.includes(selectedGenreId))
-    : trendMoives;
   return (
     <>
       <div>TrendMoives</div>
 
-      <div>
+      <div className="w-10/12 flex flex-wrap gap-5 gap-y-10 mt-10 justify-center">
         {filteredMovies?.map((movie: MovieData, idx: number) => {
           return (
             <>
-              <div key={idx}>
+              <div key={idx} className="">
                 <div>{movie.title}</div>
                 <div>{movie.id}</div>
                 <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/detail/${movie.id}/main`}>
@@ -43,8 +35,9 @@ const TrendMoives = async ({ selectedGenreId }: TrendMoviesProps) => {
                     priority={false}
                   ></Image>
                 </Link>
+
+                {/* <MovieLikes movieid={movie.id} /> */}
               </div>
-              <MovieLikes movieid={movie.id} />
             </>
           );
         })}

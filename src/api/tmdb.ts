@@ -42,6 +42,20 @@ export const getGenres = async () => {
   }
 };
 
+// 장르별로 검색
+export const fetchTrendMoviesByGenre = async (genreId: number | string) => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}discover/movie?include_adult=false&include_video=false&language=ko-KR&page=1&sort_by=popularity.desc&with_genres=${genreId}`,
+      tmdbOptions
+    );
+    const genreMovieData = await response.json();
+    return genreMovieData;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const getMovieDetail = async (id: string) => {
   try {
     const detailData = await getDetailData(id);
@@ -96,6 +110,16 @@ const getCreditsData = async (id: string) => {
   const creditsData = await creditsRes.json();
 
   return { appearences: creditsData.cast, productions: creditsData.crew };
+};
+
+export const searchReviewMovies = async (query: string) => {
+  const searchRes = await fetch(
+    `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}search/movie?query=${query}&include_adult=true&language=ko-KR&page=1`,
+    options
+  );
+  const searchData = await searchRes.json();
+
+  return searchData;
 };
 
 export { tmdbOptions };

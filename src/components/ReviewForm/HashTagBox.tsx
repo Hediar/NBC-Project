@@ -10,6 +10,7 @@ const HashTagBox = ({ tagList, setTagList }: Props) => {
   const [tagItem, setTagItem] = React.useState<string | ''>('');
 
   const onKeyUp = (e: any) => {
+    e.preventDefault();
     // key(keyCode): Enter(13) spacebar(32) 쉼표(188)
     const isSubmitKey = e.keyCode === 13 || e.keyCode === 32 || e.keyCode === 188;
     if (isSubmitKey && e.target.value.length !== 0) {
