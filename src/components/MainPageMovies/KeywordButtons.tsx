@@ -1,11 +1,10 @@
 'use client';
-import { fetchTrendMoviesByGenre, getGenres } from '@/api/tmdb';
-import { MovieGenre } from '@/types/types';
+import { getGenres } from '@/api/tmdb';
 import { useParams, useRouter } from 'next/navigation';
 import React, { useState, useEffect } from 'react';
 
 const KeywordButtons = () => {
-  const [genres, setGenres] = useState([]);
+  const [genres, setGenres] = useState<MovieGenre[]>([]);
   const params = useParams();
   const router = useRouter();
 
@@ -17,10 +16,9 @@ const KeywordButtons = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data: any = await GetGenres();
+      const data: MovieGenre[] = await GetGenres();
       setGenres(data);
     };
-
     fetchData();
   }, []);
 

@@ -1,5 +1,3 @@
-import { TrailerData } from '@/types/types';
-
 const tmdbOptions = {
   method: 'GET',
   headers: {
