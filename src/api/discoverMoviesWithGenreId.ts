@@ -1,6 +1,6 @@
 // movieGenres = ['1', '2', '3'] 1, 2, 3은 movie 장르 ID
 
-const discoverMoviesWithGenreId = async (movieGenres: Array<string>, page: number = 1) => {
+const discoverMoviesWithGenreId = async (movieGenres: string[], page: number = 1): Promise<MovieFetchResult[]> => {
   'use server';
   const options = {
     method: 'GET',
@@ -16,7 +16,8 @@ const discoverMoviesWithGenreId = async (movieGenres: Array<string>, page: numbe
   );
   const fetchPromises = targetUrlToRequest.map((url) => fetch(url, options));
   const responses = await Promise.all(fetchPromises);
-  const resArray = await Promise.all(responses.map((res) => res.json()));
+  const resArray: MovieFetchResult[] = await Promise.all(responses.map((res) => res.json()));
+
   return resArray;
 };
 

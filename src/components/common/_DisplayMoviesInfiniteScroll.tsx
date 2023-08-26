@@ -1,33 +1,18 @@
-'use client';
 /* eslint-disable @next/next/no-img-element */
+
+'use client';
+
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
-interface Movie {
-  adult: boolean;
-  backdrop_path: string;
-  genre_ids: [];
-  id: number;
-  original_language: string;
-  original_title: string;
-  overview: string;
-  popularity: number;
-  poster_path: string;
-  release_date: string;
-  title: string;
-  video: boolean;
-  vote_average: number;
-  vote_count: number;
-}
-
 interface Props {
-  movieData: any;
-  loadMoreFunction: any;
-  genreIdArray?: string[];
+  movieData: MovieFetchResult;
+  discoverMoviesWithGenreId: (movieGenres: string[], page: number) => Promise<MovieFetchResult[]>;
+  genreIdArray: string[];
 }
 
-const DisplayInfiniteMovies = ({ movieData, loadMoreFunction, genreIdArray }: Props) => {
-  const [dataToProject, setDataToProject] = useState<any>([]);
+const DisplayInfiniteMovies = ({ movieData, discoverMoviesWithGenreId, genreIdArray }: Props) => {
+  const [dataToProject, setDataToProject] = useState<MovieData[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
 
   const handleScroll = (e: any) => {
@@ -36,9 +21,10 @@ const DisplayInfiniteMovies = ({ movieData, loadMoreFunction, genreIdArray }: Pr
       setCurrentPage(currentPage + 1);
     }
   };
+
   useEffect(() => {
     const getMoreData = async (page: number) => {
-      const data = await loadMoreFunction(genreIdArray, page);
+      const data = await discoverMoviesWithGenreId(genreIdArray, page);
       const results = data[0].results;
       setDataToProject([...dataToProject, ...results]);
     };
@@ -47,7 +33,7 @@ const DisplayInfiniteMovies = ({ movieData, loadMoreFunction, genreIdArray }: Pr
 
   if (!dataToProject) return <>nothing</>;
 
-  const content = dataToProject.map((movie: Movie) => {
+  const content = dataToProject.map((movie) => {
     return (
       <Link href={'/detail/' + movie.id} key={movie.id} className="w-56 h-full flex flex-col gap-2 items-center">
         <img
@@ -76,27 +62,3 @@ const DisplayInfiniteMovies = ({ movieData, loadMoreFunction, genreIdArray }: Pr
 };
 
 export default DisplayInfiniteMovies;
-
-/**
- * 
- * loadMoreFunction()의 결과
- * (discoverMoviesWithGenreId)
- * [
-  {
-    page: 2,
-    results: [
-      [Object], [Object], [Object],
-      [Object], [Object], [Object],
-      [Object], [Object], [Object],
-      [Object], [Object], [Object],
-      [Object], [Object], [Object],
-      [Object], [Object], [Object],
-      [Object], [Object]
-    ],
-    total_pages: 1010,
-    total_results: 20199
-  }
-]
- * 
- * 
- */

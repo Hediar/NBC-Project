@@ -126,25 +126,25 @@ declare global {
         };
         users: {
           Row: {
-            avatar_url: string | null;
+            avatar_url: string;
             id: string;
             name: string | null;
             username: string | null;
-            watched_movies: Json;
+            watched_movies: string[];
           };
           Insert: {
-            avatar_url?: string | null;
+            avatar_url?: string;
             id: string;
             name?: string | null;
             username?: string | null;
-            watched_movies?: Json;
+            watched_movies?: string[];
           };
           Update: {
-            avatar_url?: string | null;
+            avatar_url?: string;
             id?: string;
             name?: string | null;
             username?: string | null;
-            watched_movies?: Json;
+            watched_movies?: string[];
           };
           Relationships: [
             {

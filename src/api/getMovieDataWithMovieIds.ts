@@ -1,5 +1,3 @@
-// watched_movies = ['1', '2', '3'] 1, 2, 3은 movieId
-
 const getMovieDataWithMovieIds = async (watched_movies: Array<string>) => {
   const options = {
     method: 'GET',
@@ -15,7 +13,8 @@ const getMovieDataWithMovieIds = async (watched_movies: Array<string>) => {
   const fetchPromises = targetUrlToRequest.map((url) => fetch(url, options));
   const responses = await Promise.all(fetchPromises);
   const resArray = await Promise.all(responses.map((res) => res.json()));
-  return resArray;
+
+  return resArray as MovieData[];
 };
 
 export default getMovieDataWithMovieIds;
