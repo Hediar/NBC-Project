@@ -1,5 +1,5 @@
 'use client';
-import useUserInfoStore from '@/app/(store)/saveCurrentUserData';
+import useUserInfoStore from '@/store/saveCurrentUserData';
 import { Session } from '@supabase/supabase-js';
 import Image from 'next/image';
 import React, { useState } from 'react';

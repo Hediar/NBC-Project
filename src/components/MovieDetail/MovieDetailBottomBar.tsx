@@ -1,13 +1,12 @@
 'use client';
 import React from 'react';
-import { MovieData } from '@/types/types';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-type Props = {
+interface Props {
   movieId: string;
   movieData: MovieData;
-};
+}
 
 const MovieDetailBottomBar = ({ movieId }: Props) => {
   const pathName = usePathname().split('/')[3];

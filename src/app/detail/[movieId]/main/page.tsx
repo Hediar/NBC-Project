@@ -1,13 +1,14 @@
 import { getMovieDetail } from '@/api/tmdb';
 import KeyInfomation from '@/components/MovieDetail/main/KeyInfomation';
-import { Params } from '@/types/types';
 import React from 'react';
 
-type Props = {
-  params: Params;
-};
+interface Props {
+  params: {
+    movieId: string;
+  };
+}
 
-const page = async ({ params }: Props) => {
+const DetailMainPage = async ({ params }: Props) => {
   const { movieId } = params;
   const movieData = await getMovieDetail(movieId);
   return (
@@ -17,4 +18,4 @@ const page = async ({ params }: Props) => {
   );
 };
 
-export default page;
+export default DetailMainPage;

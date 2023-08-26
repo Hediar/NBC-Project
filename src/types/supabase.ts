@@ -1,65 +1,180 @@
 export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[];
-
 declare global {
   interface Database {
     public: {
       Tables: {
-        movielikes: {
+        ignored_movies: {
           Row: {
-            movieid: number;
-            userid: string[];
+            created_at: string;
+            id: number;
+            movie_id: string;
+            user_id: string;
           };
           Insert: {
-            movieid?: number;
-            userid: string[];
+            created_at?: string;
+            id?: number;
+            movie_id?: string;
+            user_id: string;
           };
           Update: {
-            movieid?: number;
-            userid?: string[];
+            created_at?: string;
+            id?: number;
+            movie_id?: string;
+            user_id?: string;
+          };
+          Relationships: [
+            {
+              foreignKeyName: 'ignored_movies_user_id_fkey';
+              columns: ['user_id'];
+              referencedRelation: 'users';
+              referencedColumns: ['id'];
+            }
+          ];
+        };
+        movie_reviews: {
+          Row: {
+            created_at: string;
+            id: number;
+            movieId: string;
+            quick_reviews: string[] | null;
+            review: string | null;
+            score: number | null;
+            userId: string;
+          };
+          Insert: {
+            created_at?: string;
+            id?: number;
+            movieId: string;
+            quick_reviews?: string[] | null;
+            review?: string | null;
+            score?: number | null;
+            userId: string;
+          };
+          Update: {
+            created_at?: string;
+            id?: number;
+            movieId?: string;
+            quick_reviews?: string[] | null;
+            review?: string | null;
+            score?: number | null;
+            userId?: string;
+          };
+          Relationships: [
+            {
+              foreignKeyName: 'movie_reviews_userId_fkey';
+              columns: ['userId'];
+              referencedRelation: 'users';
+              referencedColumns: ['id'];
+            }
+          ];
+        };
+        movielikes: {
+          Row: {
+            movieid: string;
+            user_id: string[];
+          };
+          Insert: {
+            movieid: string;
+            user_id: string[];
+          };
+          Update: {
+            movieid?: string;
+            user_id?: string[];
           };
           Relationships: [];
         };
         reviews: {
           Row: {
-            content: string | null;
-            movieid: string | null;
+            category: Json | null;
+            content: string;
+            date: string | null;
+            keyword: string[] | null;
+            movieid: string;
+            review: string;
             reviewid: string;
             userid: string;
           };
           Insert: {
-            content?: string | null;
-            movieid?: string | null;
+            category?: Json | null;
+            content: string;
+            date?: string | null;
+            keyword?: string[] | null;
+            movieid: string;
+            review: string;
             reviewid?: string;
             userid: string;
           };
           Update: {
-            content?: string | null;
-            movieid?: string | null;
+            category?: Json | null;
+            content?: string;
+            date?: string | null;
+            keyword?: string[] | null;
+            movieid?: string;
+            review?: string;
             reviewid?: string;
             userid?: string;
           };
-          Relationships: [];
+          Relationships: [
+            {
+              foreignKeyName: 'reviews_userid_fkey';
+              columns: ['userid'];
+              referencedRelation: 'users';
+              referencedColumns: ['id'];
+            }
+          ];
         };
         users: {
           Row: {
-            email: string;
+            avatar_url: string | null;
+            id: string;
             name: string | null;
-            profile: string | null;
+            username: string | null;
+            watched_movies: Json;
+          };
+          Insert: {
+            avatar_url?: string | null;
+            id: string;
+            name?: string | null;
+            username?: string | null;
+            watched_movies?: Json;
+          };
+          Update: {
+            avatar_url?: string | null;
+            id?: string;
+            name?: string | null;
+            username?: string | null;
+            watched_movies?: Json;
+          };
+          Relationships: [
+            {
+              foreignKeyName: 'users_id_fkey';
+              columns: ['id'];
+              referencedRelation: 'users';
+              referencedColumns: ['id'];
+            }
+          ];
+        };
+        watch_later: {
+          Row: {
+            movies: string[];
             userid: string;
           };
           Insert: {
-            email: string;
-            name?: string | null;
-            profile?: string | null;
+            movies: string[];
             userid: string;
           };
           Update: {
-            email?: string;
-            name?: string | null;
-            profile?: string | null;
+            movies?: string[];
             userid?: string;
           };
-          Relationships: [];
+          Relationships: [
+            {
+              foreignKeyName: 'watch_later_userid_fkey';
+              columns: ['userid'];
+              referencedRelation: 'users';
+              referencedColumns: ['id'];
+            }
+          ];
         };
       };
       Views: {
