@@ -11,8 +11,8 @@ type Props = {
 };
 
 const ReviewWriteTemplate = ({ paramMovieId }: Props) => {
-  const { searchMovieId }: any = useReviewMovieStore();
-  const movieId = searchMovieId ? searchMovieId : paramMovieId;
+  const { searchMovieId } = useReviewMovieStore();
+  const movieId = searchMovieId ? (searchMovieId as string) : paramMovieId;
 
   return (
     <>

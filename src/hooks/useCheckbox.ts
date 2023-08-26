@@ -1,5 +1,5 @@
-// import { useState } from 'react';
-import { Dispatch, SetStateAction, useCallback, useState, ChangeEvent } from 'react';
+'use client';
+import { Dispatch, SetStateAction, useState } from 'react';
 
 /**
  *
@@ -11,26 +11,30 @@ import { Dispatch, SetStateAction, useCallback, useState, ChangeEvent } from 're
         value={item}
     />
  */
-// type ReturnTypes = [T, (e: ChangeEvent) => void, Dispatch<SetStateAction>];
-const useCheckbox = () => {
+type ReturnTypes = [
+  string[],
+  (e: React.ChangeEvent<HTMLInputElement>, value: string) => void,
+  Dispatch<SetStateAction<string[]>>
+];
+const useCheckbox = (): ReturnTypes => {
   // state
-  const [checkedList, setCheckedList] = useState<any[]>([]);
-  const [isChecked, setIsChecked] = useState<any>([]);
+  const [checkedList, setCheckedList] = useState<string[]>([]);
+  const [isChecked, setIsChecked] = useState(false);
 
   // handler
-  const checkedItemHandler = (value: any, isChecked: any) => {
+  const checkedItemHandler = (value: string, isChecked: boolean) => {
     if (isChecked) {
-      setCheckedList((prev: any): any => [...prev, value]);
+      setCheckedList((prev) => [...prev, value]);
     } else if (!isChecked && checkedList.includes(value)) {
       setCheckedList(checkedList.filter((item) => item !== value));
     }
   };
-  const checkHandler = (e: any, value: any) => {
+  const checkHandler = (e: React.ChangeEvent<HTMLInputElement>, value: string) => {
     setIsChecked(!isChecked);
     checkedItemHandler(value, e.target.checked);
   };
 
-  return [checkedList as any, checkHandler as any, setCheckedList as any];
+  return [checkedList, checkHandler, setCheckedList];
 };
 
 export default useCheckbox;

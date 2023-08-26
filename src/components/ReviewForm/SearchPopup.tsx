@@ -2,14 +2,15 @@
 
 import { searchReviewMovies } from '@/api/tmdb';
 import { useReviewMovieStore } from '@/app/(store)/useReviewStore';
+import { TMDBSearchMovie } from '@/types/types';
 import React from 'react';
 
 const SearchPopup = () => {
-  const [searchMovies, setSearchMovies] = React.useState<any>([]);
+  const [searchMovies, setSearchMovies] = React.useState<TMDBSearchMovie[]>([]);
 
-  const { saveSearchMovieId }: any = useReviewMovieStore();
+  const { saveSearchMovieId } = useReviewMovieStore();
 
-  const searchMovie = (e: any) => {
+  const searchMovie = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
 
     if (!value) return;
@@ -20,7 +21,7 @@ const SearchPopup = () => {
     fetchDate();
   };
 
-  const handleClick = (movieId: any) => {
+  const handleClick = (movieId: number) => {
     saveSearchMovieId(movieId);
   };
 
@@ -35,7 +36,7 @@ const SearchPopup = () => {
         onChange={searchMovie}
       />
       <ul>
-        {searchMovies.map((movie: any, i: number) => (
+        {searchMovies.map((movie, i: number) => (
           <li key={'searchMovieKey' + i}>
             <button type="button" onClick={() => handleClick(movie.id)}>
               {movie.title}
