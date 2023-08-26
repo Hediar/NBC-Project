@@ -1,10 +1,11 @@
 'use client';
+
 import Link from 'next/link';
 import React, { useState } from 'react';
-import Message from './message';
 import SubmitButton from '@/components/_Auth/SubmitButton';
 import { useRouter } from 'next/navigation';
 import HCaptcha from '@hcaptcha/react-hcaptcha';
+import Message from '@/components/_Auth/Message';
 
 interface Data {
   error: boolean;
@@ -12,9 +13,9 @@ interface Data {
 }
 
 const SignInPage = () => {
+  const router = useRouter();
   const [emailValue, setEmailValue] = useState<string>('');
   const [passwordValue, setPasswordValue] = useState<string>('');
-  const router = useRouter();
   const [captchaToken, setCaptchaToken] = useState<any>();
   const [isError, setIsError] = useState<boolean>(false);
 
@@ -24,8 +25,11 @@ const SignInPage = () => {
     formData.append('email', emailValue);
     formData.append('password', passwordValue);
     formData.append('captchaToken', captchaToken);
+
     const res = await fetch('/auth/sign-in', { method: 'post', body: formData });
+
     const { error, message } = (await res.json()) as Data;
+
     if (error) {
       if (message.includes('captcha 오류')) {
         setIsError(true);
@@ -52,8 +56,6 @@ const SignInPage = () => {
   return (
     <div className="flex justify-center items-center h-full bg-gray-200">
       <form
-        // action="/auth/sign-in"
-        // method="post"
         onSubmit={signInHandler}
         className="flex flex-col gap-3 shadow-lg shadow-gray-300 w-96 p-9 items-center bg-slate-50 rounded-md"
       >

@@ -82,7 +82,7 @@ const UserInfo = ({ session }: Props) => {
     return (
       <>
         {!isUserHasUsername && (
-          <div className="absolute top-1/2 left-1/2 transform translate-x-[-50%] translate-y-[-50%] shadow-md shadow-slate-400 p-5 rounded-md flex flex-col gap-2 items-center">
+          <div className="absolute top-1/2 left-1/2 transform translate-x-[-50%] translate-y-[-50%] shadow-md shadow-slate-400 p-5 rounded-md flex flex-col gap-2 items-center bg-slate-50">
             <h1>{signedInUser.user_metadata.name && `${signedInUser.user_metadata.name} 님, `}환영합니다!</h1>
             {
               <div>

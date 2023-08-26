@@ -1,6 +1,6 @@
 'use client';
+
 import { useSearchParams } from 'next/navigation';
-import React from 'react';
 
 function Message() {
   const params = useSearchParams();
