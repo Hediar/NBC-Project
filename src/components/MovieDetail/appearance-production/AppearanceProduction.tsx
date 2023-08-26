@@ -1,11 +1,10 @@
-import { MovieData } from '@/types/types';
 import Image from 'next/image';
 import React from 'react';
 import altImage from '../../../../public/anonymous-avatar-icon.png';
 
-type Props = {
+interface Props {
   movieData: MovieData;
-};
+}
 
 const AppearanceProduction = ({ movieData }: Props) => {
   const { appearences, productions } = movieData;

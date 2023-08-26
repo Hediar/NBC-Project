@@ -1,10 +1,10 @@
 import React from 'react';
 
-type Props = {};
+interface Props {}
 
-const page = (props: Props) => {
+const DiscussionRegistPage = (props: Props) => {
   //user 작성부:discussionTopic, topicExplanation, compare A,B...
   return <div>page</div>;
 };
 
-export default page;
+export default DiscussionRegistPage;

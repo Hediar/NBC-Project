@@ -1,5 +1,3 @@
-import { TrailerData } from '@/types/types';
-
 const tmdbOptions = {
   method: 'GET',
   headers: {
@@ -56,19 +54,25 @@ export const fetchTrendMoviesByGenre = async (genreId: number | string) => {
   }
 };
 
+//추후 리팩토링!!
 export const getMovieDetail = async (id: string) => {
   try {
+    //Details
     const detailData = await getDetailData(id);
 
+    //Videos
     const trailerData = await getTrailerData(id);
     const trailerKeys = trailerData.results.map((result: TrailerData) => result.key);
 
+    //Watch Providers
     const watchProviderData = await getProviderData(id);
     const watchProviders = watchProviderData.results['KR'];
 
+    //Images
     const imageData = await getImageData(id);
     const backdropImages = imageData.backdrops;
 
+    //Credits
     const { appearences, productions } = await getCreditsData(id);
 
     const movieDetailData = { ...detailData, trailerKeys, watchProviders, backdropImages, appearences, productions };
@@ -78,30 +82,35 @@ export const getMovieDetail = async (id: string) => {
     console.error(error);
   }
 };
+
 const getDetailData = async (id: string) => {
   const detailRes = await fetch(`${process.env.NEXT_PUBLIC_TMDB_BASE_DETAIL_URL}${id}?language=ko-KR`, options);
   const detailData = await detailRes.json();
 
   return detailData;
 };
+
 const getTrailerData = async (id: string) => {
   const trailerRes = await fetch(`${process.env.NEXT_PUBLIC_TMDB_BASE_DETAIL_URL}${id}/videos?language=ko-KR`, options);
   const trailerData = await trailerRes.json();
 
   return trailerData;
 };
+
 const getProviderData = async (id: string) => {
   const watchProviderRes = await fetch(`${process.env.NEXT_PUBLIC_TMDB_BASE_DETAIL_URL}${id}/watch/providers`, options);
   const watchProviderData = await watchProviderRes.json();
 
   return watchProviderData;
 };
+
 const getImageData = async (id: string) => {
   const imageRes = await fetch(`${process.env.NEXT_PUBLIC_TMDB_BASE_DETAIL_URL}${id}/images`, options);
   const imageData = await imageRes.json();
 
   return imageData;
 };
+
 const getCreditsData = async (id: string) => {
   const creditsRes = await fetch(
     `${process.env.NEXT_PUBLIC_TMDB_BASE_DETAIL_URL}${id}/credits?language=ko-KR`,
