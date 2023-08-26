@@ -1,8 +1,7 @@
 'use client';
 
 import { searchReviewMovies } from '@/api/tmdb';
-import { useReviewMovieStore } from '@/app/(store)/useReviewStore';
-import { TMDBSearchMovie } from '@/types/types';
+import { useReviewMovieStore } from '@/store/useReviewStore';
 import React from 'react';
 
 const SearchPopup = () => {
