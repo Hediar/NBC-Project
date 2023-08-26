@@ -2,16 +2,14 @@
 import React, { useState } from 'react';
 import supabase from '@/supabase/config';
 import useUserInfoStore from '@/store/saveCurrentUserData';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { throttle } from 'lodash';
-import { useRouter } from 'next/navigation';
+import { useMovieLikesMutation } from '@/hooks/useMovieLikesMutation';
 
 const MovieLikes = (props: { movieid: number }) => {
   const [likecurrentuser, setLikecurrentuser] = useState(false); // 현재 유저가 좋아하는지 여부
-  const queryClient = useQueryClient();
-  const router = useRouter();
 
-  const { data: currentMovieLikeData } = useQuery<any>({
+  const { data: currentMovieLikeData } = useQuery({
     queryKey: ['movieLikes', props.movieid],
     queryFn: async () => {
       const response = await supabase.from('movielikes').select('*').eq('movieid', props.movieid);
@@ -22,33 +20,7 @@ const MovieLikes = (props: { movieid: number }) => {
 
   const { userInfo } = useUserInfoStore();
 
-  const mutation = useMutation(
-    async () => {
-      const { data: likesTable } = await supabase.from('movielikes').select('*').eq('movieid', props.movieid);
-
-      if (likesTable?.length) {
-        if (likesTable[0]?.user_id.includes(userInfo.id)) {
-          const { data: users } = await supabase.from('movielikes').select('user_id').eq('movieid', props.movieid);
-          const newUsers = users![0].user_id.filter((id: string) => id !== userInfo.id);
-          await supabase.from('movielikes').update({ user_id: newUsers }).eq('movieid', props.movieid);
-        } else {
-          const { data: users } = await supabase.from('movielikes').select('user_id').eq('movieid', props.movieid);
-          const newUsers = [...users![0].user_id, userInfo.id];
-          await supabase.from('movielikes').update({ user_id: newUsers }).eq('movieid', props.movieid);
-        }
-      } else {
-        const newUsers = { movieid: props.movieid, user_id: [userInfo.id] };
-        await supabase.from('movielikes').insert(newUsers);
-      }
-    },
-    {
-      // 성공 시에 캐시 업데이트
-      onSuccess: () => {
-        queryClient.invalidateQueries(['movieLikes', props.movieid]);
-        router.refresh();
-      }
-    }
-  );
+  const mutation = useMovieLikesMutation(props.movieid, userInfo.id);
 
   // 좋아요 버튼
   const likeButtonHandler = throttle(

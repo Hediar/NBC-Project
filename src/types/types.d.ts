@@ -105,7 +105,7 @@ declare global {
   }
 
   interface MovieLikesTable {
-    movieid: string | Number;
+    movieid: string | number;
     user_id: string[];
   }
 }

@@ -35,7 +35,7 @@ const TrendMoives = async ({ genreId }: { genreId: string }) => {
                   ></Image>
                 </Link>
 
-                {/* <MovieLikes movieid={movie.id} /> */}
+                <MovieLikes movieid={movie.id} />
               </div>
             </>
           );

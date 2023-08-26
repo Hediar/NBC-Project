@@ -7,7 +7,6 @@ export default async function Home() {
   return (
     <>
       <main>
-        {/* <MainPageMovies /> */}
         <KeywordButtons />
         <TrendMoives genreId={'all'} />
       </main>
