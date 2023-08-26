@@ -3,9 +3,9 @@ import { quickReviews } from '@/static/quickReviews';
 import supabase from '@/supabase/config';
 import React, { useState } from 'react';
 
-type Props = {
+interface Props {
   movieId: string;
-};
+}
 
 const MovieDetailQuickRating = ({ movieId }: Props) => {
   const [gaugeWidth, setGaugeWidth] = useState<number>(0);

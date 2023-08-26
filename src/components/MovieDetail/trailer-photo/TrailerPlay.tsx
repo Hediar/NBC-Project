@@ -1,9 +1,9 @@
 import React from 'react';
 
-type Props = {
+interface Props {
   trailerKey: string;
   closeBtn: React.Dispatch<React.SetStateAction<boolean>>;
-};
+}
 
 const TrailerPlay = ({ trailerKey, closeBtn }: Props) => {
   return (

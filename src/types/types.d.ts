@@ -1,13 +1,7 @@
 import { StringLiteral } from 'typescript';
 
+//
 declare global {
-  interface Params {
-    movieId: string;
-    pageNum: string;
-    search: string;
-    discussionId: string;
-  }
-
   interface TrailerData {
     iso_639_1: string;
     iso_3166_1: string;

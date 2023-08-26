@@ -2,12 +2,11 @@ import { getMovieDetail } from '@/api/tmdb';
 import Image from 'next/image';
 import React from 'react';
 import MovieDetailBottomBar from './MovieDetailBottomBar';
-import { MovieGenre, MovieProvider } from '@/types/types';
 import MovieLikes from '../MovieLikes/MovieLikes';
 
-type Props = {
+interface Props {
   movieId: string;
-};
+}
 
 const baseImgUrl = process.env.NEXT_PUBLIC_TMDB_BASE_IMAGE_URL;
 
