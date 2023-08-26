@@ -1,8 +1,8 @@
 import React from 'react';
 
-type Props = {
+interface Props {
   discussionId: string;
-};
+}
 
 const DiscussionDetail = ({ discussionId }: Props) => {
   //discussionId 조회해서 db에서 내용 가져오기.

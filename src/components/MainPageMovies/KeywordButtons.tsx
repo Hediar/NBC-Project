@@ -1,6 +1,5 @@
 'use client';
 import { fetchTrendMoviesByGenre, getGenres } from '@/api/tmdb';
-import { MovieGenre } from '@/types/types';
 import { useParams, useRouter } from 'next/navigation';
 import React, { useState, useEffect } from 'react';
 

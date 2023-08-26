@@ -1,12 +1,11 @@
-import { MovieData } from '@/types/types';
 import Image from 'next/image';
 import React from 'react';
 import altImage from '../../../../public/anonymous-avatar-icon.png';
 import Link from 'next/link';
 
-type Props = {
+interface Props {
   movieData: MovieData;
-};
+}
 const baseImgUrl = process.env.NEXT_PUBLIC_TMDB_BASE_IMAGE_URL;
 const KeyInfomation = ({ movieData }: Props) => {
   const { id: movieId, poster_path, overview, tagline, vote_average, appearences, productions } = movieData;
