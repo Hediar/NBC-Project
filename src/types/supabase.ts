@@ -1,77 +1,79 @@
 export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[];
 
-export interface Database {
-  public: {
-    Tables: {
-      movielikes: {
-        Row: {
-          movieid: number;
-          userid: string[];
+declare global {
+  interface Database {
+    public: {
+      Tables: {
+        movielikes: {
+          Row: {
+            movieid: number;
+            userid: string[];
+          };
+          Insert: {
+            movieid?: number;
+            userid: string[];
+          };
+          Update: {
+            movieid?: number;
+            userid?: string[];
+          };
+          Relationships: [];
         };
-        Insert: {
-          movieid?: number;
-          userid: string[];
+        reviews: {
+          Row: {
+            content: string | null;
+            movieid: string | null;
+            reviewid: string;
+            userid: string;
+          };
+          Insert: {
+            content?: string | null;
+            movieid?: string | null;
+            reviewid?: string;
+            userid: string;
+          };
+          Update: {
+            content?: string | null;
+            movieid?: string | null;
+            reviewid?: string;
+            userid?: string;
+          };
+          Relationships: [];
         };
-        Update: {
-          movieid?: number;
-          userid?: string[];
+        users: {
+          Row: {
+            email: string;
+            name: string | null;
+            profile: string | null;
+            userid: string;
+          };
+          Insert: {
+            email: string;
+            name?: string | null;
+            profile?: string | null;
+            userid: string;
+          };
+          Update: {
+            email?: string;
+            name?: string | null;
+            profile?: string | null;
+            userid?: string;
+          };
+          Relationships: [];
         };
-        Relationships: [];
       };
-      reviews: {
-        Row: {
-          content: string | null;
-          movieid: string | null;
-          reviewid: string;
-          userid: string;
-        };
-        Insert: {
-          content?: string | null;
-          movieid?: string | null;
-          reviewid?: string;
-          userid: string;
-        };
-        Update: {
-          content?: string | null;
-          movieid?: string | null;
-          reviewid?: string;
-          userid?: string;
-        };
-        Relationships: [];
+      Views: {
+        [_ in never]: never;
       };
-      users: {
-        Row: {
-          email: string;
-          name: string | null;
-          profile: string | null;
-          userid: string;
-        };
-        Insert: {
-          email: string;
-          name?: string | null;
-          profile?: string | null;
-          userid: string;
-        };
-        Update: {
-          email?: string;
-          name?: string | null;
-          profile?: string | null;
-          userid?: string;
-        };
-        Relationships: [];
+      Functions: {
+        [_ in never]: never;
+      };
+      Enums: {
+        [_ in never]: never;
+      };
+      CompositeTypes: {
+        [_ in never]: never;
       };
     };
-    Views: {
-      [_ in never]: never;
-    };
-    Functions: {
-      [_ in never]: never;
-    };
-    Enums: {
-      [_ in never]: never;
-    };
-    CompositeTypes: {
-      [_ in never]: never;
-    };
-  };
+  }
 }

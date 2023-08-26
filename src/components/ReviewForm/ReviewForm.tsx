@@ -15,14 +15,14 @@ import useUserInfoStore from '@/app/(store)/saveCurrentUserData';
 import { useReviewMovieStore, useReviewStore } from '@/app/(store)/useReviewStore';
 // import useStore from '@/hooks/useStore';
 
-type Props = {
+interface Props {
   movieId: string;
-};
+}
 
 const ReviewForm = ({ movieId }: Props) => {
   const router = useRouter();
 
-  const [selectedDate, setSelectedDate] = React.useState<Date | null>(null);
+  const [selectedDate, setSelectedDate] = React.useState<string | Date | null>(null);
   const [review, setReview] = React.useState('');
   const [content, setContent] = React.useState('');
 
@@ -33,8 +33,6 @@ const ReviewForm = ({ movieId }: Props) => {
   const checkHandlerIndex = [checkHandlerC1, checkHandlerC2, checkHandlerC3];
 
   const { userInfo } = useUserInfoStore();
-  // const { searchMovieId }: any = useReviewMovieStore();
-  // const selectedMovieId = searchMovieId ? searchMovieId : movieId;
 
   // 해시태그를 담을 배열
   const [tagList, setTagList] = React.useState<string[] | []>([]);
@@ -67,8 +65,8 @@ const ReviewForm = ({ movieId }: Props) => {
   };
 
   // 임시저장 기능
-  const { tempReview, saveTempReview }: any = useReviewStore();
-  const { saveSearchMovieId }: any = useReviewMovieStore();
+  const { tempReview, saveTempReview } = useReviewStore();
+  const { saveSearchMovieId } = useReviewMovieStore();
   const handleTempSave = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
 
@@ -92,8 +90,8 @@ const ReviewForm = ({ movieId }: Props) => {
       const { movieid, date, keyword, category } = tempReview;
       const categoryArr = JSON.parse(category);
 
-      setSelectedDate(new Date(date));
-      setTagList(keyword);
+      setSelectedDate(new Date(date!));
+      setTagList(keyword!);
       setCheckedListC1(categoryArr[0]);
       setCheckedListC2(categoryArr[1]);
       setCheckedListC3(categoryArr[2]);
@@ -122,7 +120,7 @@ const ReviewForm = ({ movieId }: Props) => {
             shouldCloseOnSelect // 날짜를 선택하면 datepicker가 자동으로 닫힘
             minDate={new Date('2000-01-01')} // minDate 이전 날짜 선택 불가
             maxDate={new Date()} // maxDate 이후 날짜 선택 불가
-            selected={selectedDate}
+            selected={selectedDate as Date}
             placeholderText="YYYY/MM/DD"
             onChange={(date) => setSelectedDate(date)}
           />
