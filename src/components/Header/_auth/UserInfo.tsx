@@ -1,5 +1,5 @@
 'use client';
-import useUserInfoStore, { SavedUserInfo } from '@/app/(store)/saveCurrentUserData';
+import useUserInfoStore, { SavedUserInfo } from '@/store/saveCurrentUserData';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Session } from '@supabase/supabase-js';
 import React, { useCallback, useEffect, useState } from 'react';

@@ -1,6 +1,6 @@
 'use client';
 
-import useUserInfoStore from '@/app/(store)/saveCurrentUserData';
+import useUserInfoStore from '@/store/saveCurrentUserData';
 import { usePathname, useRouter } from 'next/navigation';
 
 const SignOutButton = () => {

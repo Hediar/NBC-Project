@@ -18,11 +18,11 @@ const TrendMoives = async ({ genreId }: { genreId: string }) => {
     <>
       <div>TrendMoives</div>
 
-      <div>
+      <div className="w-10/12 flex flex-wrap gap-5 gap-y-10 mt-10 justify-center">
         {filteredMovies?.map((movie: MovieData, idx: number) => {
           return (
             <>
-              <div key={idx}>
+              <div key={idx} className="">
                 <div>{movie.title}</div>
                 <div>{movie.id}</div>
                 <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/detail/${movie.id}/main`}>
@@ -34,8 +34,9 @@ const TrendMoives = async ({ genreId }: { genreId: string }) => {
                     priority={false}
                   ></Image>
                 </Link>
+
+                {/* <MovieLikes movieid={movie.id} /> */}
               </div>
-              <MovieLikes movieid={movie.id} />
             </>
           );
         })}

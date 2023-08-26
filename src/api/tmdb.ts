@@ -121,4 +121,14 @@ const getCreditsData = async (id: string) => {
   return { appearences: creditsData.cast, productions: creditsData.crew };
 };
 
+export const searchReviewMovies = async (query: string) => {
+  const searchRes = await fetch(
+    `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}search/movie?query=${query}&include_adult=true&language=ko-KR&page=1`,
+    options
+  );
+  const searchData = await searchRes.json();
+
+  return searchData;
+};
+
 export { tmdbOptions };
