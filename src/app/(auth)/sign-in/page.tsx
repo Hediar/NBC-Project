@@ -74,7 +74,7 @@ const SignInPage = () => {
           placeholder="password"
           value={passwordValue}
           onChange={(e) => setPasswordValue(e.target.value)}
-          // pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+          pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
           required
         />
         <HCaptcha

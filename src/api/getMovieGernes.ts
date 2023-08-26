@@ -6,14 +6,14 @@ interface MovieGenres {
 export interface MovieDetail {
   adult: boolean;
   backdrop_path: string;
-  belongs_to_collection: null;
+  belongs_to_collection: any;
   budget: number;
   genres: {
     id: number;
     name: string;
   }[];
   homepage: string;
-  id: 3;
+  id: string | number;
   imdb_id: string;
   original_language: string;
   original_title: string;
