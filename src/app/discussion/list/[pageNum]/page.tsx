@@ -1,4 +1,4 @@
-import DiscussionList from '@/components/Discussion/DiscussionList';
+import DiscussionList from '@/components/Discussion/list/DiscussionList';
 import React from 'react';
 
 interface Props {

@@ -22,7 +22,7 @@ const TrendMoives = async ({ genreId }: { genreId: string }) => {
         {filteredMovies?.map((movie: MovieData, idx: number) => {
           return (
             <>
-              <div key={idx} className="">
+              <div key={idx}>
                 <div>{movie.title}</div>
                 <div>{movie.id}</div>
                 <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/detail/${movie.id}/main`}>

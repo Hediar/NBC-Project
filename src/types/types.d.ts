@@ -137,4 +137,19 @@ declare global {
     vote_average: number;
     vote_count: number;
   }
+
+  interface DiscussionPost {
+    post_id: number;
+    created_at: string;
+    user_id: string;
+    title: string;
+    content: string;
+  }
+
+  interface DiscussionOption {
+    option_id: number;
+    post_id: number;
+    content: string;
+    count: number;
+  }
 }
