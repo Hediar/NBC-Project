@@ -5,8 +5,8 @@ type Props = {
     title: string;
     options: string[];
   };
-  checkedList: any;
-  checkHandler: any;
+  checkedList: string[];
+  checkHandler: (e: React.ChangeEvent<HTMLInputElement>, value: string) => void;
 };
 
 const CategoryBox = ({ CATEGORY, checkedList, checkHandler }: Props) => {

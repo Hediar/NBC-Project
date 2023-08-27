@@ -11,7 +11,7 @@ type Props = {
 const baseImgUrl = process.env.NEXT_PUBLIC_TMDB_BASE_IMAGE_URL;
 
 const ReviewMovie = ({ movieId }: Props) => {
-  const [movieData, setMovieData] = React.useState<any>();
+  const [movieData, setMovieData] = React.useState<MovieData>();
 
   React.useEffect(() => {
     const fetchData = async () => {
