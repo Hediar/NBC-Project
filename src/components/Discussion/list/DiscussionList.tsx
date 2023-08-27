@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import DiscussionPost from './DiscussionPost';
 import { getDiscussionPost } from '@/api/supabase-discussion';
+import { useQuery } from '@tanstack/react-query';
 
 interface Props {
   pageNum: number;
@@ -10,28 +11,17 @@ interface Props {
 
 const DiscussionList = ({ pageNum, searchVal }: Props) => {
   //전체 Discussion 다 가져오고, pageNum, searchVal에 따라 필터해서 보여줌.
-  const [data, setData] = useState<DiscussionPost[]>([]);
+  const { isLoading, isError, data: postData } = useQuery(['discussion_post'], getDiscussionPost);
 
-  useEffect(() => {
-    const getData = async () => {
-      const { data: postData } = await getDiscussionPost();
-
-      setData(postData as DiscussionPost[]);
-    };
-    getData();
-  }, []);
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div>
-      {data.length ? (
-        <>
-          {data?.map((post: DiscussionPost) => {
-            return <DiscussionPost key={post.post_id} post={post} />;
-          })}
-        </>
-      ) : (
-        <></>
-      )}
+      {postData?.map((post: DiscussionPost) => {
+        return <DiscussionPost key={post.post_id} post={post} />;
+      })}
 
       {pageNum}
       {searchVal && searchVal}

@@ -1,10 +1,10 @@
-import { deleteDiscussionPost, getDiscussionPostDetail } from '@/api/supabase-discussion';
+import { deleteDiscussionPost, getDiscussionPost } from '@/api/supabase-discussion';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-const useDiscussionPostQuery = (postId: number) => {
+const useDiscussionPostQuery = () => {
   const queryClient = useQueryClient();
 
-  const { isLoading, isError, data } = useQuery(['discussion_post', postId], () => getDiscussionPostDetail(postId));
+  const { isLoading, isError, data } = useQuery(['discussion_post'], getDiscussionPost);
 
   const deletePostMutation = useMutation(deleteDiscussionPost, {
     onSuccess: () => {
