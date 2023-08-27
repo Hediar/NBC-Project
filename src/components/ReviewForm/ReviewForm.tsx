@@ -13,13 +13,13 @@ import CategoryBox from '@/components/ReviewForm/CategoryBox';
 import HashTagBox from '@/components/ReviewForm/HashTagBox';
 import useUserInfoStore from '@/store/saveCurrentUserData';
 import { useReviewMovieStore, useReviewStore } from '../../store/useReviewStore';
-// import useStore from '@/hooks/useStore';
 
 interface Props {
-  movieId: string;
+  movieId?: string;
+  editReview?: ReviewsTable;
 }
 
-const ReviewForm = ({ movieId }: Props) => {
+const ReviewForm = ({ movieId, editReview }: Props) => {
   const router = useRouter();
 
   const [selectedDate, setSelectedDate] = React.useState<string | Date | null>(null);
@@ -40,13 +40,23 @@ const ReviewForm = ({ movieId }: Props) => {
   const addPost = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    // const testData = await supabase
+    //   .from('reviews')
+    //   .update({ content: '진짜루? -> 변경' })
+    //   .eq('reviewid', editReview!.reviewid);
+
+    // const testData = await supabase.from('reviews').update({ date: '수정테스트123' }).eq('movieid', '123').select();
+
+    // console.log('왜안돼 게시글id⭐ => ', editReview!.reviewid);
+    // console.log('왜안돼 결과⭐⭐⭐⭐🤬🤬🤬 => ', testData);
+
     if (!userInfo) return alert('로그인 정보가 없습니다.');
 
     const newReview = {
       movieid: movieId,
       userid: userInfo.id, // Q:: 유저 인증 막혀서 insert 정책을 true로 풀고 테스트 중
       date: selectedDate,
-      category: JSON.stringify(checkedListIndex), // Q:: db에 이렇게 넣어도 되나???????
+      category: JSON.stringify(checkedListIndex),
       review,
       keyword: tagList,
       content
@@ -54,9 +64,24 @@ const ReviewForm = ({ movieId }: Props) => {
     console.log('newReview => ', newReview);
 
     try {
-      const { error } = await supabase.from('reviews').insert([newReview]);
+      const updateReviewData = async () => {
+        const fetchData = await supabase
+          .from('reviews')
+          .update(newReview)
+          .eq('reviewid', editReview!.reviewid)
+          .select();
+        return fetchData;
+      };
+
+      const insertReviewData = async () => {
+        const fetchData = supabase.from('reviews').insert([newReview]);
+        return fetchData;
+      };
+
+      const { data, error } = editReview ? await updateReviewData() : await insertReviewData();
       if (error) return alert('오류가 발생하였습니다. 죄송합니다.');
 
+      console.log(data);
       saveTempReview();
       alert('저장 완');
     } catch (error) {
@@ -81,13 +106,24 @@ const ReviewForm = ({ movieId }: Props) => {
     };
     saveTempReview(newReview);
   };
+
+  // form에 내용 채우기
+  const GetReviewForm = () => {
+    const TEMP_CONFIRM_TEXT = '작성 중이던 내용이 있습니다. 이어서 작성하시겠습니까?';
+    const isEditTempReview =
+      editReview && tempReview && editReview.reviewid == tempReview.reviewid && confirm(TEMP_CONFIRM_TEXT);
+    const isTempReview = tempReview && userInfo.id == tempReview.userid && confirm(TEMP_CONFIRM_TEXT);
+
+    if (isEditTempReview) return tempReview;
+    else if (editReview) return editReview;
+    else if (isTempReview) return tempReview;
+  };
+  const { movieid, date, category, review: HTMLReview, keyword, content: HTMLContent } = GetReviewForm();
+
   useEffect(() => {
-    if (
-      tempReview &&
-      userInfo.id == tempReview.userid &&
-      confirm('작성 중이던 내용이 있습니다. 이어서 작성하시겠습니까?')
-    ) {
-      const { movieid, date, keyword, category } = tempReview;
+    if (editReview || tempReview) {
+      let test = GetReviewForm();
+      console.log('test뭐갖고오냐 ====> ', test);
       const categoryArr = JSON.parse(category);
 
       setSelectedDate(new Date(date!));
@@ -102,6 +138,16 @@ const ReviewForm = ({ movieId }: Props) => {
 
   const handleCancel = () => {
     router.back();
+  };
+  const handleEditTest = async () => {
+    const testData = await supabase
+      .from('reviews')
+      .update({ movieid: '수정테스트123' })
+      .eq('reviewid', 'ce5fa276-f69e-48ba-9ec4-d1b553b7fbc3')
+      .select();
+
+    console.log('왜안돼 게시글id⭐ => ', editReview!.reviewid);
+    console.log('왜안돼 결과⭐⭐⭐⭐🤬🤬🤬 => ', testData);
   };
 
   return (
@@ -144,7 +190,7 @@ const ReviewForm = ({ movieId }: Props) => {
             name="review"
             type="text"
             placeholder="리뷰를 작성하세요"
-            defaultValue={tempReview?.review}
+            defaultValue={HTMLReview}
             onChange={(e) => setReview(e.target.value)}
           />
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="review">
@@ -161,14 +207,19 @@ const ReviewForm = ({ movieId }: Props) => {
             name="content"
             type="text"
             placeholder="내용을 작성하세요"
-            defaultValue={tempReview?.content}
+            defaultValue={HTMLContent}
             onChange={(e) => setContent(e.target.value)}
           />
           <button onClick={handleTempSave}>임시저장</button>
           <br />
           <br />
-          <button>리뷰 작성하기</button>
+          <button>{editReview ? '리뷰 수정하기' : '리뷰 작성하기'}</button>
           {/* <button onClick={handleCancel}>돌아가기</button> */}
+          <br />
+          <br />
+          <br />
+          <br />
+          <button onClick={handleEditTest}>테스트 수정버튼</button>
         </div>
       </form>
     </>

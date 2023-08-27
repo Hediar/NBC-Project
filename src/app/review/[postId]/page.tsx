@@ -1,7 +1,6 @@
 import { getMovieDetail } from '@/api/tmdb';
 import UtilButtons from '@/components/ReviewForm/UtilButtons';
 import supabase from '@/supabase/config';
-import { MovieGenre } from '@/types/types';
 import Image from 'next/image';
 import React from 'react';
 
