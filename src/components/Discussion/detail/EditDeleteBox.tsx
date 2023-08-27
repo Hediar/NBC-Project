@@ -10,12 +10,11 @@ type Props = {
 
 const EditDeleteBox = ({ postId }: Props) => {
   const router = useRouter();
-  const { deletePostMutation } = useDiscussionPostQuery(postId);
+  const { deletePostMutation } = useDiscussionPostQuery();
 
   const deletePost = async (check: boolean) => {
     if (!check) return;
     try {
-      //FK 이용한 보다 성능좋은 기능 있을지?
       deletePostMutation.mutate(postId);
 
       router.push('/discussion/list/1');

@@ -9,7 +9,7 @@ interface Props {
 
 const OptionVote = ({ postId }: Props) => {
   const optionMark = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
-  const [selectedOption, setSelectedOption] = useState<DiscussionOption>();
+  const [selectedOption, setSelectedOption] = useState<DiscussionOption | null>();
   const {
     userInfo: { id: userId }
   } = useUserInfoStore();
@@ -18,6 +18,8 @@ const OptionVote = ({ postId }: Props) => {
     if (!selectedOption || !userId) return;
 
     updateVoteMutation.mutate(selectedOption);
+
+    setSelectedOption(null);
   };
 
   if (isLoading) {

@@ -3,19 +3,25 @@ import supabase from '@/supabase/config';
 export const getDiscussionPost = async () => {
   const { data } = await supabase.from('discussion_post').select('*').order('post_id', { ascending: false });
 
-  return { data };
-};
-
-export const getDiscussionPostDetail = async (postId: number) => {
-  const { data } = await supabase.from('discussion_post').select('*').eq('post_id', postId);
-
   return data;
 };
 
-export const getDiscussionPostOption = async (postId: number) => {
-  const { data } = await supabase.from('discussion_option').select('*').eq('post_id', postId).order('option_id');
+export const getDiscussionPostDetail = async (postId: number): Promise<DiscussionPost | undefined> => {
+  try {
+    const { data } = await supabase.from('discussion_post').select('*').eq('post_id', postId);
 
-  return data;
+    const postData: DiscussionPost = data![0];
+    return postData;
+  } catch (error) {}
+};
+
+export const getDiscussionPostOption = async (postId: number): Promise<DiscussionOption[] | undefined> => {
+  try {
+    const { data } = await supabase.from('discussion_option').select('*').eq('post_id', postId).order('option_id');
+
+    const optionData: DiscussionOption[] = data!;
+    return optionData;
+  } catch (error) {}
 };
 
 //update요청
@@ -34,6 +40,10 @@ export const updateDiscussionOptionVote = async (selectedOption: DiscussionOptio
   } catch (error) {}
 };
 
+export const updateDiscussionPost = async () => {
+  try {
+  } catch (error) {}
+};
 //delete요청
 export const deleteDiscussionPost = async (postId: number) => {
   try {
