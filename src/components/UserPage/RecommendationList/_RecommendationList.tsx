@@ -1,6 +1,6 @@
 import getMovieDataWithMovieIds from '@/api/getMovieDataWithMovieIds';
 import { getMovieGenresById, getMovieGenresByName, sortMostFrequentGenres } from '@/api/getMovieGernes';
-import DisplayInfiniteMovies from '@/components/common/_DisplayMoviesInfiniteScroll';
+import DisplayInfiniteMovies from '@/components/common/DisplayMoviesInfiniteScroll';
 import discoverMoviesWithGenreId from '@/api/discoverMoviesWithGenreId';
 
 interface Props {

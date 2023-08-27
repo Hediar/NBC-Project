@@ -1,8 +1,9 @@
 'use client';
-import useUserInfoStore, { SavedUserInfo } from '@/store/saveCurrentUserData';
+
+import useUserInfoStore from '@/store/saveCurrentUserData';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Session } from '@supabase/supabase-js';
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { debounce } from 'lodash';
 import { useRouter } from 'next/navigation';
 interface Props {
@@ -12,19 +13,19 @@ interface Props {
 // 세션은 AuthButtons에서 받습니다.
 const UserInfo = ({ session }: Props) => {
   const signedInUser = session.user;
-  const supabase = createClientComponentClient();
+  const supabase = createClientComponentClient<Database>();
   const { userInfo, saveUserInfo } = useUserInfoStore();
   const [isUserHasUsername, setIsUserHasUsername] = useState<boolean>(true);
 
   // 유저 정보 zustand 스토어에 저장
   useEffect(() => {
     const getUserInfo = async () => {
-      const { error, data } = await supabase.from('users').select().eq('id', signedInUser.id);
+      const { error, data } = await supabase.from('users').select().eq('id', signedInUser.id).single();
       if (error) {
         console.log('getUserInfo함수 에러 발생, components/Header/_auth/Userinfo.tsx 확인 요망');
         return;
       }
-      saveUserInfo(data[0]); // zustand store에 유저 정보 저장
+      saveUserInfo(data); // zustand store에 유저 정보 저장
     };
     getUserInfo();
   }, [signedInUser.id, supabase, saveUserInfo]);
@@ -67,10 +68,7 @@ const UserInfo = ({ session }: Props) => {
       alert('업데이트 완료!');
     };
 
-    const clickHandler = useCallback(
-      debounce(() => updateUsername(), 300),
-      [updateUsername]
-    );
+    const clickHandler = debounce(() => updateUsername(), 300);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const newValue = e.target.value;

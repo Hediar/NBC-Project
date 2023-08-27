@@ -1,31 +1,27 @@
 'use client';
+
 import useUserInfoStore from '@/store/saveCurrentUserData';
 import { Session } from '@supabase/supabase-js';
 import Image from 'next/image';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import HeaderUserDropdownMenu from './HeaderUserDropdownMenu';
 
 const HeaderUser = ({ session }: { session: Session }) => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+
   const {
-    userInfo: { avatar_url, id, name, username }
+    userInfo: { avatar_url, username }
   } = useUserInfoStore();
-  let photoURL: string;
-  if (!avatar_url) {
-    photoURL = '/anonymous-avatar-icon.png';
-  } else {
-    photoURL = avatar_url;
-  }
 
   return (
     <div className="flex gap-5 items-center mr-4">
       <h3 className="text-white">{username}</h3>
-      {photoURL && username && (
+      {avatar_url && username && (
         <>
           <div className="rounded-full overflow-hidden">
             <Image
               className="w-10 h-10"
-              src={photoURL}
+              src={avatar_url}
               alt="user profile"
               width={40}
               height={40}

@@ -2,9 +2,9 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import Message from '@/components/_Auth/Message';
-import SubmitButton from '@/components/_Auth/SubmitButton';
-import SocialButtons from '@/components/_Auth/SocialButtons';
+import Message from '@/components/Auth/Message';
+import SubmitButton from '@/components/Auth/SubmitButton';
+import SocialButtons from '@/components/Auth/SocialButtons';
 import HCaptcha from '@hcaptcha/react-hcaptcha';
 import { useRouter } from 'next/navigation';
 

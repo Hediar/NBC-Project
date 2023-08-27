@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+// 현재는 영화 장르 코드가 있어야 작동합니다. 추후 업데이트 예정
 
 'use client';
 
@@ -15,8 +16,8 @@ const DisplayInfiniteMovies = ({ movieData, discoverMoviesWithGenreId, genreIdAr
   const [dataToProject, setDataToProject] = useState<MovieData[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
 
-  const handleScroll = (e: any) => {
-    const container = e.target;
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const container = e.target as HTMLDivElement;
     if (container.scrollLeft + container.clientWidth >= container.scrollWidth * 0.8) {
       setCurrentPage(currentPage + 1);
     }

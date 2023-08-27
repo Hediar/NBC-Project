@@ -2,10 +2,10 @@
 
 import Link from 'next/link';
 import React, { useState } from 'react';
-import SubmitButton from '@/components/_Auth/SubmitButton';
+import SubmitButton from '@/components/Auth/SubmitButton';
 import { useRouter } from 'next/navigation';
 import HCaptcha from '@hcaptcha/react-hcaptcha';
-import Message from '@/components/_Auth/Message';
+import Message from '@/components/Auth/Message';
 
 interface Data {
   error: boolean;

@@ -2,15 +2,19 @@ import getMovieDataWithMovieIds from '@/api/getMovieDataWithMovieIds';
 import { getMovieGenresByName, sortMostFrequentGenres } from '@/api/getMovieGernes';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
+
 export const dynamic = 'force-dynamic';
 interface Props {
   username: string;
 }
 
 const UserPageMostWatchedGenres = async ({ username }: Props) => {
-  const supabase = createServerComponentClient({ cookies });
-  const { data, error } = await supabase.from('users').select().eq('username', username);
-  const { id: userId, watched_movies } = data![0];
+  const supabase = createServerComponentClient<Database>({ cookies });
+  const { data } = await supabase.from('users').select('watched_movies').eq('username', username).single();
+
+  const watched_movies = data!.watched_movies;
+
+  if (!watched_movies.length) return <></>;
 
   const movieData = await getMovieDataWithMovieIds(watched_movies);
   const totalGenres = getMovieGenresByName(movieData);

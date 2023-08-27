@@ -1,7 +1,7 @@
 import { cookies } from 'next/headers';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import getMovieDataWithMovieIds from '@/api/getMovieDataWithMovieIds';
-import DisplayMoviesWIthMovieIds from '@/components/common/_DisplayMoviesWithMovieIds';
+import DisplayMoviesWIthMovieIds from '@/components/common/DisplayMoviesWithMovieIds';
 
 export const dynamic = 'force-dynamic';
 
