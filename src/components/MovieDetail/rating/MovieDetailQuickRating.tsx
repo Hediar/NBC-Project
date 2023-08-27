@@ -78,7 +78,7 @@ const MovieDetailQuickRating = ({ movieId }: Props) => {
         <div id="quick-review-cont" className="flex flex-wrap gap-5">
           {quickReviews.map((quickReview, idx) => {
             return (
-              <button className="" key={idx} onClick={() => updateReviews(quickReview)}>
+              <button key={idx} onClick={() => updateReviews(quickReview)}>
                 <p>{quickReview}</p>
               </button>
             );

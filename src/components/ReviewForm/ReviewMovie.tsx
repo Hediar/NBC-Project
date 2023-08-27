@@ -1,7 +1,6 @@
 'use client';
 
 import { getMovieDetail } from '@/api/tmdb';
-import { MovieGenre } from '@/types/types';
 import Image from 'next/image';
 import React from 'react';
 

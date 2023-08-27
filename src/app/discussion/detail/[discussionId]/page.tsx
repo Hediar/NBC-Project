@@ -1,4 +1,4 @@
-import DiscussionDetail from '@/components/Discussion/DiscussionDetail';
+import DiscussionDetail from '@/components/Discussion/detail/DiscussionDetail';
 import React from 'react';
 
 interface Props {

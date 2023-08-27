@@ -108,4 +108,19 @@ declare global {
     movieid: string | number;
     user_id: string[];
   }
+
+  interface DiscussionPost {
+    post_id: number;
+    created_at: string;
+    user_id: string;
+    title: string;
+    content: string;
+  }
+
+  interface DiscussionOption {
+    option_id: number;
+    post_id: number;
+    content: string;
+    count: number;
+  }
 }
