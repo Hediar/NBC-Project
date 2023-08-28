@@ -10,9 +10,10 @@ interface Props {
   movieData: MovieFetchResult;
   discoverMoviesWithGenreId: (movieGenres: string[], page: number) => Promise<MovieFetchResult[]>;
   genreIdArray: string[];
+  ignoredList: string[];
 }
 
-const DisplayInfiniteMovies = ({ movieData, discoverMoviesWithGenreId, genreIdArray }: Props) => {
+const DisplayInfiniteMovies = ({ movieData, discoverMoviesWithGenreId, genreIdArray, ignoredList }: Props) => {
   const [dataToProject, setDataToProject] = useState<MovieData[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
 
@@ -27,7 +28,9 @@ const DisplayInfiniteMovies = ({ movieData, discoverMoviesWithGenreId, genreIdAr
     const getMoreData = async (page: number) => {
       const data = await discoverMoviesWithGenreId(genreIdArray, page);
       const results = data[0].results;
-      setDataToProject([...dataToProject, ...results]);
+      const filteredResults = results.filter((movie) => !ignoredList.includes(movie.id.toString()));
+      console.log(ignoredList);
+      setDataToProject([...dataToProject, ...filteredResults]);
     };
     getMoreData(currentPage);
   }, [currentPage]);

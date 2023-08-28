@@ -24,7 +24,9 @@ const TrendMoives = async ({ genreId }: { genreId: string }) => {
             <>
               <div className="flex-none py-6 px-3 first:pl-6 last:pr-6"></div>
               <div key={movie.id}>
-                <div>{movie.title}</div>
+                <div>
+                  {movie.title} {movie.id}
+                </div>
                 <Link
                   href={`${process.env.NEXT_PUBLIC_BASE_URL}/detail/${movie.id}/main`}
                   className="w-56 h-full flex flex-col gap-2 items-center"
