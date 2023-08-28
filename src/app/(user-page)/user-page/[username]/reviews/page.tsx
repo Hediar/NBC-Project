@@ -4,6 +4,7 @@ import { getReviews } from '@/api/review';
 import ReviewItem from '@/components/ReviewList/ReviewItem';
 import ReviewListEmpty from '@/components/ReviewList/ReviewListEmpty';
 import useUserInfoStore from '@/store/saveCurrentUserData';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 // import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
@@ -77,11 +78,10 @@ const MyReviewPage = ({ params, searchParams }: Props) => {
 
   return (
     <div>
-      {/* <MyReviewsTemplate /> */}
       <ul>
         <li>
           테스트
-          {/* <Link href={`/review/write`}>+ 리뷰작성버튼</Link> */}
+          <Link href={`/review/write`}>+ 리뷰작성버튼</Link>
         </li>
 
         {/* {dataToProject.map((review: ReviewsTable) => {
