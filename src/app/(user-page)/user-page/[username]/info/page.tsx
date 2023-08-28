@@ -1,23 +1,21 @@
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
+import { cookies } from 'next/headers';
+import { Suspense } from 'react';
 import UserPageMostWatchedGenres from '@/components/UserPage/UserInfo/MostWatchedGenres';
 import UserPagePersonalRecords from '@/components/UserPage/UserInfo/PersonalRecords/_PersonalRecords';
 import Fallback from '@/components/UserPage/UserInfo/PersonalRecords/_PersonalRecords.fallback';
 import UserPageSemiHeader from '@/components/UserPage/UserInfo/SemiHeader';
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
-import { Suspense } from 'react';
+
 export const dynamic = 'force-dynamic';
-interface Props {
-  params: {
-    username: string;
-  };
-}
 
-const UserInfoPage = async ({ params }: Props) => {
+const UserInfoPage = async ({ params }: { params: { username: string } }) => {
   const username = decodeURIComponent(params.username);
+  const supabase = createServerComponentClient<Database>({ cookies });
 
-  const supabase = createServerComponentClient({ cookies });
-  const { data, error } = await supabase.from('users').select().eq('username', username);
-  const { id, name, avatar_url } = data![0];
+  const { data: userInfo } = await supabase.from('users').select().eq('username', username);
+
+  // layout에서 검증을 하므로 data는 확실하여 !사용
+  const { avatar_url } = userInfo![0];
 
   return (
     <>

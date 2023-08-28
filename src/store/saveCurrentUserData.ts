@@ -1,12 +1,6 @@
 import { create } from 'zustand';
 
-export interface SavedUserInfo {
-  avatar_url: string;
-  id: string;
-  name: string;
-  username: string;
-}
-
+type SavedUserInfo = Database['public']['Tables']['users']['Update'];
 interface SaveUserInfoState {
   userInfo: SavedUserInfo;
   saveUserInfo: (userInfo: SavedUserInfo) => void;

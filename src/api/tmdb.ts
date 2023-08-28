@@ -7,7 +7,7 @@ const tmdbOptions = {
   next: { revalidate: 3600 }
 };
 
-const options = {
+export const options = {
   method: 'GET',
   headers: {
     accept: 'application/json',

@@ -6,7 +6,7 @@ export const dynamic = 'force-dynamic';
 
 export const POST = async (request: Request) => {
   const requestUrl = new URL(request.url);
-  const supabase = createRouteHandlerClient({ cookies });
+  const supabase = createRouteHandlerClient<Database>({ cookies });
 
   const data = await supabase.auth.signInWithOAuth({
     provider: 'google',

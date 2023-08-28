@@ -3,15 +3,16 @@ import { cookies } from 'next/headers';
 import NumberOfReviews from './NumberOfReviews';
 import TotalWatchingTime from './TotalWatchingTime';
 import NumberOfMoviesWatched from './NumberOfMoviesWatched';
+
 export const dynamic = 'force-dynamic';
 interface Props {
   params: string;
 }
 
 const UserPagePersonalRecords = async ({ params: username }: Props) => {
-  const supabase = createServerComponentClient({ cookies });
-  const { data, error } = await supabase.from('users').select().eq('username', username);
-  const { id: userId, watched_movies } = data![0];
+  const supabase = createServerComponentClient<Database>({ cookies });
+  const { data: userInfo } = await supabase.from('users').select().eq('username', username);
+  const { id: userId, watched_movies } = userInfo![0];
 
   const numberOfMoviesWatched = watched_movies.length;
 
@@ -20,7 +21,7 @@ const UserPagePersonalRecords = async ({ params: username }: Props) => {
       <div className="flex gap-4 w-8/12">
         <NumberOfReviews userId={userId} />
         <TotalWatchingTime watched_movies={watched_movies} />
-        <NumberOfMoviesWatched numberOfMoviesWatched={numberOfMoviesWatched} />
+        <NumberOfMoviesWatched numberOfMoviesWatched={numberOfMoviesWatched} username={username} />
       </div>
       <div className="absolute bottom-0 border-b-2 border-slate-200 w-full"></div>
     </div>

@@ -1,12 +1,13 @@
 'use client';
-import React, { Suspense, useEffect, useRef, useState } from 'react';
-import Message from './message';
-import Link from 'next/link';
-import SubmitButton from '@/components/_Auth/SubmitButton';
-import SocialButtons from '@/components/_Auth/SocialButtons';
 
+import React, { useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
+import Message from '@/components/Auth/Message';
+import SubmitButton from '@/components/Auth/SubmitButton';
+import SocialButtons from '@/components/Auth/SocialButtons';
 import HCaptcha from '@hcaptcha/react-hcaptcha';
 import { useRouter } from 'next/navigation';
+
 const passwordOnChangeHandler = (
   e: React.ChangeEvent<HTMLInputElement>,
   set: React.Dispatch<React.SetStateAction<string>>
@@ -15,13 +16,14 @@ const passwordOnChangeHandler = (
 };
 
 function SignUpPage() {
+  const router = useRouter();
   const emailValue = useRef<string>('');
   const [passwordValue, setPasswordValue] = useState<string>('');
   const [confirmingPasswordValue, setConfirmingPasswordValue] = useState<string>('');
-  const router = useRouter();
-  const [captchaToken, setCaptchaToken] = useState<any>();
   const [isPasswordMatch, setIsPasswordMatch] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
+  const [captchaToken, setCaptchaToken] = useState<any>();
+
   useEffect(() => {
     if (!passwordValue || !confirmingPasswordValue) {
       setIsPasswordMatch(false);
@@ -42,7 +44,9 @@ function SignUpPage() {
     formData.append('email', emailValue.current);
     formData.append('password', passwordValue);
     formData.append('captchaToken', captchaToken);
+
     const res = await fetch('/auth/sign-up', { method: 'post', body: formData });
+
     if (res) {
       const data = await res.json();
       if (data.message === 'User already registered.') {
