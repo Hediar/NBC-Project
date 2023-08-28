@@ -5,11 +5,17 @@
 import POSTWatchLater from '@/api/POSTWatchLater';
 import MovieLikes from '../MovieLikes/MovieLikes';
 import { useRouter } from 'next/navigation';
+import useUserInfoStore from '@/store/saveCurrentUserData';
 
 const DisplayMoviesWIthMovieIds = ({ movieData }: { movieData: MovieData[] }) => {
   const router = useRouter();
+  const { userInfo } = useUserInfoStore();
 
   const watchLaterClickHandler = async (movieId: number) => {
+    if (!userInfo.id) {
+      router.push('/sign-in');
+      return;
+    }
     await POSTWatchLater(movieId);
     router.refresh();
     return;
