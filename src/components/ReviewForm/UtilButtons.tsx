@@ -18,9 +18,13 @@ const UtilButtons = ({ postId, userId }: Props) => {
     router.push(`/review/edit/${postId}`);
   };
   const delButtonHandler = async () => {
-    const test1 = await supabase.from('reviews').delete().eq('reviewid', postId);
-    console.log('삭제테스트reviewid =>', postId);
-    console.log('삭제테스트 =>', test1);
+    if (confirm('정말 삭제하시겠습니까?')) {
+      const { data, error } = await supabase.from('reviews').delete().eq('reviewid', postId);
+      if (error) return alert('오류가 발생했습니다.');
+
+      alert('삭제되었습니다.');
+      router.push('/');
+    }
   };
 
   return (

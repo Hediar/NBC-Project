@@ -25,7 +25,7 @@ const ReviewPage = async ({ params }: Props) => {
   return (
     <>
       <ReviewMovie movieId={movieId} />
-      <ReviewForm movieId={movieId} user={user} />
+      {/* <ReviewForm movieId={movieId} user={user} /> */}
     </>
   );
 };
