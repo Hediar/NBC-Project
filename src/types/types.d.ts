@@ -130,6 +130,10 @@ declare global {
     movieid: string | Number;
     user_id: string[];
   }
+  interface MovieIgnoredTable {
+    userid: string;
+    ignored_movies: string[];
+  }
   interface MovieFetchResult {
     page: number;
     results: MovieData[];

@@ -167,6 +167,7 @@ declare global {
           Row: {
             category: Json | null;
             content: string;
+            created_at: string;
             date: string | null;
             keyword: string[] | null;
             movieid: string;
@@ -177,6 +178,7 @@ declare global {
           Insert: {
             category?: Json | null;
             content: string;
+            created_at?: string;
             date?: string | null;
             keyword?: string[] | null;
             movieid: string;
@@ -187,6 +189,7 @@ declare global {
           Update: {
             category?: Json | null;
             content?: string;
+            created_at?: string;
             date?: string | null;
             keyword?: string[] | null;
             movieid?: string;

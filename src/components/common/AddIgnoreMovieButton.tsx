@@ -14,7 +14,7 @@ const AddIgnoreMovieButton = (props: { movieid: number }) => {
       console.log(newignoreList, userInfo.id);
       await supabase.from('ignored_movies').update({ ignored_movies: newignoreList }).eq('userid', userInfo.id);
     } else {
-      const newignoreList = { userid: userInfo.id, ignored_movies: [props.movieid.toString()] };
+      const newignoreList: MovieIgnoredTable = { userid: userInfo.id!, ignored_movies: [props.movieid.toString()] }; // type 확인 필요
       await supabase.from('ignored_movies').insert(newignoreList);
     }
     alert('무시 db확인');
