@@ -3,8 +3,6 @@ import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import UserPageTabsClient from './UserPageTabsClient';
 
 const UserPageTabs = async ({ username }: { username: string }) => {
-  console.log(username);
-
   const supabase = createServerComponentClient<Database>({ cookies });
   const { data: signedInUserData, error: userNotSignedIn } = await supabase.auth.getUser();
 
