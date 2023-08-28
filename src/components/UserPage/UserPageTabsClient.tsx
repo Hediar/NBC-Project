@@ -2,7 +2,7 @@
 
 import useUserInfoStore from '@/store/saveCurrentUserData';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { AuthError, User } from '@supabase/supabase-js';
+import { User } from '@supabase/supabase-js';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -13,7 +13,7 @@ const onSelectedStyle = 'border-b-2 border-slate-600';
 interface Props {
   username: string;
   signedInUserData: { user: User } | { user: null };
-  userNotSignedIn: AuthError | null;
+  userNotSignedIn: { isError: boolean };
 }
 const UserPageTabsClient = ({ username, signedInUserData, userNotSignedIn }: Props) => {
   const { userInfo } = useUserInfoStore();

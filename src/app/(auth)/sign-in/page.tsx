@@ -115,8 +115,8 @@ const SignInPage = () => {
         >
           돌아가기
         </Link>
-        <SocialButtons />
         <Message />
+        <SocialButtons />
       </form>
     </div>
   );
