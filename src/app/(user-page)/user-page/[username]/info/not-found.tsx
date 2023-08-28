@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   description: '해당 유저네임을 갖은 유저가 존재하지 않습니다.'
 };
 
+//해당 not-found가 info, likes, recommendations, reviews, settings, watch-later 전부를 포괄함. 다른쪽에서 not-found에러가 나면 이것을 사용함.
 const NotFound = () => {
   return (
     <>

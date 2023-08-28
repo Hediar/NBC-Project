@@ -1,36 +1,27 @@
-'use client';
-import POSTWatchLater from '@/api/POSTWatchLater';
 /* eslint-disable @next/next/no-img-element */
+
+'use client';
+
+import POSTWatchLater from '@/api/POSTWatchLater';
 import MovieLikes from '../MovieLikes/MovieLikes';
 import { useRouter } from 'next/navigation';
+import useUserInfoStore from '@/store/saveCurrentUserData';
 
-interface Movie {
-  adult: boolean;
-  backdrop_path: string;
-  genre_ids: [];
-  id: number;
-  original_language: string;
-  original_title: string;
-  overview: string;
-  popularity: number;
-  poster_path: string;
-  release_date: string;
-  title: string;
-  video: boolean;
-  vote_average: number;
-  vote_count: number;
-}
-
-const DisplayMoviesWIthMovieIds = ({ movieData }: { movieData: [Movie] }) => {
+const DisplayMoviesWIthMovieIds = ({ movieData }: { movieData: MovieData[] }) => {
   const router = useRouter();
+  const { userInfo } = useUserInfoStore();
 
   const watchLaterClickHandler = async (movieId: number) => {
+    if (!userInfo.id) {
+      router.push('/sign-in');
+      return;
+    }
     await POSTWatchLater(movieId);
     router.refresh();
     return;
   };
 
-  const content = movieData.map((movie: Movie) => {
+  const content = movieData.map((movie) => {
     return (
       <div key={movie.id} className="w-56 h-full flex flex-col gap-2 z-0">
         <div className="rounded-lg h-2/3 overflow-hidden relative ">

@@ -1,10 +1,11 @@
 'use client';
+
 import Link from 'next/link';
 import React, { useState } from 'react';
-import Message from './message';
-import SubmitButton from '@/components/_Auth/SubmitButton';
+import SubmitButton from '@/components/Auth/SubmitButton';
 import { useRouter } from 'next/navigation';
 import HCaptcha from '@hcaptcha/react-hcaptcha';
+import Message from '@/components/Auth/Message';
 
 interface Data {
   error: boolean;
@@ -12,20 +13,37 @@ interface Data {
 }
 
 const SignInPage = () => {
+  const router = useRouter();
   const [emailValue, setEmailValue] = useState<string>('');
   const [passwordValue, setPasswordValue] = useState<string>('');
-  const router = useRouter();
+  const [passwordError, setPasswordError] = useState<string | null>(null);
+  const [shouldDisable, setShouldDisable] = useState<boolean>(false);
   const [captchaToken, setCaptchaToken] = useState<any>();
   const [isError, setIsError] = useState<boolean>(false);
 
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newPassword = e.target.value;
+    setPasswordValue(newPassword);
+
+    if (!/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/.test(newPassword)) {
+      setPasswordError('비밀번호는 최소 8자 이상이어야 하며, 최소 하나의 대문자, 소문자, 숫자가 포함되어야 합니다.');
+    } else {
+      setPasswordError(null);
+    }
+  };
+
   const signInHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     const formData = new FormData();
     formData.append('email', emailValue);
     formData.append('password', passwordValue);
     formData.append('captchaToken', captchaToken);
+
     const res = await fetch('/auth/sign-in', { method: 'post', body: formData });
+
     const { error, message } = (await res.json()) as Data;
+
     if (error) {
       if (message.includes('captcha 오류')) {
         setIsError(true);
@@ -52,8 +70,6 @@ const SignInPage = () => {
   return (
     <div className="flex justify-center items-center h-full bg-gray-200">
       <form
-        // action="/auth/sign-in"
-        // method="post"
         onSubmit={signInHandler}
         className="flex flex-col gap-3 shadow-lg shadow-gray-300 w-96 p-9 items-center bg-slate-50 rounded-md"
       >
@@ -73,8 +89,8 @@ const SignInPage = () => {
           name="password"
           placeholder="password"
           value={passwordValue}
-          onChange={(e) => setPasswordValue(e.target.value)}
-          // pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+          onChange={(e) => handlePasswordChange(e)}
+          pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
           required
         />
         <HCaptcha
@@ -87,8 +103,10 @@ const SignInPage = () => {
         <SubmitButton
           inputValue="로그인하기"
           loadingMessage="로그인 하는 중..."
+          shouldDisable={shouldDisable}
           isError={isError}
           setIsError={setIsError}
+          passwordError={passwordError}
         />
         <Link
           className="border border-slate-900 p-2 cursor-pointer w-full rounded-md flex justify-center "

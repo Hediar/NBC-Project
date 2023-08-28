@@ -1,26 +1,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-interface Movie {
-  adult: boolean;
-  backdrop_path: string;
-  genre_ids: [];
-  id: number;
-  original_language: string;
-  original_title: string;
-  overview: string;
-  popularity: number;
-  poster_path: string;
-  release_date: string;
-  title: string;
-  video: boolean;
-  vote_average: number;
-  vote_count: number;
-}
-
-const DisplayMovies = ({ movieData }: { movieData: any }) => {
-  const movies: Movie[] = movieData.results;
-  const content = movies.map((movie: Movie) => {
+const DisplayMovies = ({ movieData }: { movieData: MovieFetchResult }) => {
+  const movies = movieData.results;
+  const content = movies.map((movie) => {
     return (
       <Link href={'/detail/' + movie.id} key={movie.id} className="w-56 h-full flex flex-col gap-2 ">
         <Image
