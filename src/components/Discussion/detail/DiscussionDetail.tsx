@@ -8,6 +8,8 @@ interface Props {
   discussionId: string;
 }
 
+export const revalidate = 0;
+
 const DiscussionDetail = async ({ discussionId }: Props) => {
   //discussionId 조회해서 db에서 내용 가져오기.
   const postData = await getDiscussionPostDetail(+discussionId);
