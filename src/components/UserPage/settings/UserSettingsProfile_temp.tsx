@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 'use client';
 
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
@@ -9,9 +10,10 @@ interface Props {
   userPrevEmail: string;
 }
 
-const ChangeEmail = ({ appMetadata, userPrevEmail }: Props) => {
+const UserSettingsProfileT = ({ appMetadata, userPrevEmail }: Props) => {
   const [emailValue, setEmailValue] = useState<string>(userPrevEmail);
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
+  const [showEmailHover, setShowEmailHover] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
@@ -68,7 +70,7 @@ const ChangeEmail = ({ appMetadata, userPrevEmail }: Props) => {
   };
 
   return (
-    <div className="w-3/4">
+    <div className="w-10/12">
       <h1>이메일 변경하기</h1>
       <form action={editHandler}>
         <h2>메인 이메일 주소</h2>
@@ -85,4 +87,4 @@ const ChangeEmail = ({ appMetadata, userPrevEmail }: Props) => {
   );
 };
 
-export default ChangeEmail;
+export default UserSettingsProfileT;

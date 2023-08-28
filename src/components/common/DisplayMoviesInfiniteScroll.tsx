@@ -13,6 +13,7 @@ interface Props {
 }
 
 const DisplayInfiniteMovies = ({ movieData, discoverMoviesWithGenreId, genreIdArray }: Props) => {
+  console.log(movieData);
   const [dataToProject, setDataToProject] = useState<MovieData[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
 
