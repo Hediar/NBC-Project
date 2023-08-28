@@ -1,12 +1,13 @@
-import DiscussionDetail from '@/components/Discussion/DiscussionDetail';
-import { Params } from '@/types/types';
+import DiscussionDetail from '@/components/Discussion/detail/DiscussionDetail';
 import React from 'react';
 
-type Props = {
-  params: Params;
-};
+interface Props {
+  params: {
+    discussionId: string;
+  };
+}
 
-const page = ({ params }: Props) => {
+const DiscussionDetailPage = ({ params }: Props) => {
   const { discussionId } = params;
   return (
     <div>
@@ -15,4 +16,4 @@ const page = ({ params }: Props) => {
   );
 };
 
-export default page;
+export default DiscussionDetailPage;

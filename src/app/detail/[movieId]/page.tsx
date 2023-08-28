@@ -1,11 +1,12 @@
 import { getMovieDetail } from '@/api/tmdb';
 import KeyInfomation from '@/components/MovieDetail/main/KeyInfomation';
-import { Params } from '@/types/types';
 import React from 'react';
 
-type Props = {
-  params: Params;
-};
+interface Props {
+  params: {
+    movieId: string;
+  };
+}
 
 const MovieDetail = async ({ params }: Props) => {
   const { movieId } = params;

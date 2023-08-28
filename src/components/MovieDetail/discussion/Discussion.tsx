@@ -1,6 +1,6 @@
 import React from 'react';
 
-type Props = {};
+interface Props {}
 
 const Discussion = (props: Props) => {
   return <div>discussion</div>;

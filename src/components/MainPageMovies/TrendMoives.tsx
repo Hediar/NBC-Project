@@ -1,7 +1,6 @@
 import { fetchTrendMoviesByGenre, getTrendingMovies, tmdbOptions } from '@/api/tmdb';
 import MovieLikes from '../MovieLikes/MovieLikes';
 import Image from 'next/image';
-import { MovieData } from '@/types/types';
 import Link from 'next/link';
 
 export const revalidate = 0;
@@ -23,7 +22,7 @@ const TrendMoives = async ({ genreId }: { genreId: string }) => {
         {filteredMovies?.map((movie: MovieData, idx: number) => {
           return (
             <>
-              <div key={idx} className="">
+              <div key={idx}>
                 <div>{movie.title}</div>
                 <div>{movie.id}</div>
                 <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/detail/${movie.id}/main`}>
@@ -36,7 +35,7 @@ const TrendMoives = async ({ genreId }: { genreId: string }) => {
                   ></Image>
                 </Link>
 
-                {/* <MovieLikes movieid={movie.id} /> */}
+                <MovieLikes movieid={movie.id} />
               </div>
             </>
           );

@@ -1,12 +1,11 @@
 import MovieDetailQuickRating from '@/components/MovieDetail/rating/MovieDetailQuickRating';
-import { Params } from '@/types/types';
 import React from 'react';
 
-type Props = {
-  params: Params;
-};
+interface Props {
+  params: { movieId: string };
+}
 
-const page = ({ params }: Props) => {
+const DetailRatingPage = ({ params }: Props) => {
   const { movieId } = params;
 
   return (
@@ -16,4 +15,4 @@ const page = ({ params }: Props) => {
   );
 };
 
-export default page;
+export default DetailRatingPage;

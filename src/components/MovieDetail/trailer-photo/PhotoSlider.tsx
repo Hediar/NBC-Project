@@ -2,12 +2,12 @@
 import Image from 'next/image';
 import React, { useState, useRef } from 'react';
 
-type Props = {
+interface Props {
   slideData: string[];
   itemNum: number;
   gap: number;
   count: number;
-};
+}
 
 const baseImgUrl = process.env.NEXT_PUBLIC_TMDB_BASE_IMAGE_URL;
 
@@ -53,7 +53,7 @@ const PhotoSlider = ({ slideData, itemNum, gap, count = 1 }: Props) => {
       setSlideIndex((prevIndex) => prevIndex - count);
     }
   };
-  const debouncedSlide = (func: any) => {
+  const debouncedSlide = (func: () => void) => {
     if (timer) {
       clearTimeout(timer);
     }

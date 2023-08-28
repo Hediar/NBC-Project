@@ -1,12 +1,11 @@
-import DiscussionList from '@/components/Discussion/DiscussionList';
-import { Params } from '@/types/types';
+import DiscussionList from '@/components/Discussion/list/DiscussionList';
 import React from 'react';
 
-type Props = {
-  params: Params;
-};
+interface Props {
+  params: { pageNum: string };
+}
 
-const page = ({ params }: Props) => {
+const DiscussionListPage = ({ params }: Props) => {
   const { pageNum } = params;
 
   return (
@@ -16,4 +15,4 @@ const page = ({ params }: Props) => {
   );
 };
 
-export default page;
+export default DiscussionListPage;

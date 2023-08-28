@@ -1,5 +1,5 @@
 'use client';
-import useUserInfoStore from '@/app/(store)/saveCurrentUserData';
+import useUserInfoStore from '@/store/saveCurrentUserData';
 import supabase from '@/supabase/config';
 import { useRouter } from 'next/navigation';
 import React from 'react';
@@ -18,7 +18,9 @@ const UtilButtons = ({ postId, userId }: Props) => {
     router.push(`/review/edit/${postId}`);
   };
   const delButtonHandler = async () => {
-    const { error } = await supabase.from('reviews').delete().eq('id', userId);
+    const test1 = await supabase.from('reviews').delete().eq('reviewid', postId);
+    console.log('삭제테스트reviewid =>', postId);
+    console.log('삭제테스트 =>', test1);
   };
 
   return (

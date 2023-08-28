@@ -4,7 +4,7 @@ import Link from 'next/link';
 import React from 'react';
 
 interface Props {
-  review: any;
+  review: ReviewsTable;
 }
 
 const ReviewItem = async ({ review }: Props) => {

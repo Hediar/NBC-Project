@@ -3,9 +3,9 @@ import { quickReviews } from '@/static/quickReviews';
 import supabase from '@/supabase/config';
 import React, { useState } from 'react';
 
-type Props = {
+interface Props {
   movieId: string;
-};
+}
 
 const MovieDetailQuickRating = ({ movieId }: Props) => {
   const [gaugeWidth, setGaugeWidth] = useState<number>(0);
@@ -78,7 +78,7 @@ const MovieDetailQuickRating = ({ movieId }: Props) => {
         <div id="quick-review-cont" className="flex flex-wrap gap-5">
           {quickReviews.map((quickReview, idx) => {
             return (
-              <button className="" key={idx} onClick={() => updateReviews(quickReview)}>
+              <button key={idx} onClick={() => updateReviews(quickReview)}>
                 <p>{quickReview}</p>
               </button>
             );
