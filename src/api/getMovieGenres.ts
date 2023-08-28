@@ -15,16 +15,18 @@ export const getMovieGenresById = (movieData: Partial<MovieData>[]) => {
   return allGenres;
 };
 
-export const sortMostFrequentGenres = (allGenres: Array<string>, howManyGenres: number) => {
-  const genreCounts = {} as any;
-  allGenres.forEach((genre) => {
-    if (genreCounts[genre]) {
-      genreCounts[genre]++;
+export const sortByMostFrequent = (target: Array<string>, showNumber: number) => {
+  const countsObject = {} as any;
+
+  target.forEach((element) => {
+    if (countsObject[element]) {
+      countsObject[element]++;
     } else {
-      genreCounts[genre] = 1;
+      countsObject[element] = 1;
     }
   });
-  const sortedGenres = Object.keys(genreCounts).sort((a, b) => genreCounts[b] - genreCounts[a]);
 
-  return sortedGenres.slice(0, howManyGenres);
+  const sortedData = Object.keys(countsObject).sort((a, b) => countsObject[b] - countsObject[a]);
+
+  return sortedData.slice(0, showNumber);
 };

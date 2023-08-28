@@ -129,21 +129,21 @@ declare global {
             id: string;
             name: string | null;
             username: string | null;
-            watched_movies: Json;
+            watched_movies: string[];
           };
           Insert: {
             avatar_url?: string | null;
             id: string;
             name?: string | null;
             username?: string | null;
-            watched_movies?: Json;
+            watched_movies?: string[];
           };
           Update: {
             avatar_url?: string | null;
             id?: string;
             name?: string | null;
             username?: string | null;
-            watched_movies?: Json;
+            watched_movies?: string[];
           };
           Relationships: [
             {

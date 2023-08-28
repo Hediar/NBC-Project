@@ -1,5 +1,5 @@
 import getMovieDataWithMovieIds from '@/api/getMovieDataWithMovieIds';
-import { getMovieGenresById, getMovieGenresByName, sortMostFrequentGenres } from '@/api/getMovieGernes';
+import { getMovieGenresById, getMovieGenresByName, sortByMostFrequent } from '@/api/getMovieGenres';
 import DisplayInfiniteMovies from '@/components/common/DisplayMoviesInfiniteScroll';
 import discoverMoviesWithGenreId from '@/api/discoverMoviesWithGenreId';
 
@@ -16,14 +16,14 @@ const RecommendationList = async ({ username, watched_movies }: Props) => {
   // 영화 데이터들에서 [장르 이름]을 추출
   const totalGenresName = getMovieGenresByName(movieData);
 
-  // 추출한 장르 id[]에서 가장 많이 나온 순서대로 나열한 뒤 3개를 가져옴(sortMostFrequentGenres함수의 2번째 인자)
-  const threeMostGenresId = sortMostFrequentGenres(totalGenresId, 3);
+  // 추출한 장르 id[]에서 가장 많이 나온 순서대로 나열한 뒤 3개를 가져옴(sortByMostFrequent함수의 2번째 인자)
+  const threeMostGenresId = sortByMostFrequent(totalGenresId, 3);
   // 3개의 가장 많이 보는 장르 id
   const [genreId1, genreId2, genreId3] = threeMostGenresId;
   //
 
   // 추출한 장르 이름[]에서 가장 많이 나온 순서대로 나열한 뒤 3개를 가져옴
-  const threeMostGenresName = sortMostFrequentGenres(totalGenresName, 3);
+  const threeMostGenresName = sortByMostFrequent(totalGenresName, 3);
   // 3개의 가장 많이 보는 장르 이름
   const [GerneName_A, GerneName_B, GerneName_C] = threeMostGenresName.map((gerneName) => gerneName);
   //

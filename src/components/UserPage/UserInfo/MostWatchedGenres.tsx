@@ -1,9 +1,10 @@
 import getMovieDataWithMovieIds from '@/api/getMovieDataWithMovieIds';
-import { getMovieGenresByName, sortMostFrequentGenres } from '@/api/getMovieGernes';
+import { getMovieGenresByName, sortByMostFrequent } from '@/api/getMovieGenres';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 
 export const dynamic = 'force-dynamic';
+
 interface Props {
   username: string;
 }
@@ -18,7 +19,7 @@ const UserPageMostWatchedGenres = async ({ username }: Props) => {
 
   const movieData = await getMovieDataWithMovieIds(watched_movies);
   const totalGenres = getMovieGenresByName(movieData);
-  const threeMostGenres = sortMostFrequentGenres(totalGenres, 3);
+  const threeMostGenres = sortByMostFrequent(totalGenres, 3);
 
   return (
     <div className="w-full h-60  flex  flex-col gap-4 justify-center items-center relative">
