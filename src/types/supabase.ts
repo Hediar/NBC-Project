@@ -1,8 +1,86 @@
 export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[];
+
 declare global {
   interface Database {
     public: {
       Tables: {
+        discussion_option: {
+          Row: {
+            content: string | null;
+            count: number | null;
+            option_id: number;
+            post_id: number;
+          };
+          Insert: {
+            content?: string | null;
+            count?: number | null;
+            option_id?: number;
+            post_id: number;
+          };
+          Update: {
+            content?: string | null;
+            count?: number | null;
+            option_id?: number;
+            post_id?: number;
+          };
+          Relationships: [
+            {
+              foreignKeyName: 'discussion_option_post_id_fkey';
+              columns: ['post_id'];
+              referencedRelation: 'discussion_post';
+              referencedColumns: ['post_id'];
+            }
+          ];
+        };
+        discussion_post: {
+          Row: {
+            content: string | null;
+            created_at: string;
+            post_id: number;
+            title: string | null;
+            user_id: string | null;
+          };
+          Insert: {
+            content?: string | null;
+            created_at?: string;
+            post_id?: number;
+            title?: string | null;
+            user_id?: string | null;
+          };
+          Update: {
+            content?: string | null;
+            created_at?: string;
+            post_id?: number;
+            title?: string | null;
+            user_id?: string | null;
+          };
+          Relationships: [];
+        };
+        discussion_user: {
+          Row: {
+            id: number;
+            option_id: number | null;
+            user_id: string | null;
+          };
+          Insert: {
+            id?: number;
+            option_id?: number | null;
+            user_id?: string | null;
+          };
+          Update: {
+            id?: number;
+            option_id?: number | null;
+            user_id?: string | null;
+          };
+          Relationships: [
+            {
+              foreignKeyName: 'discussion_user_option_id_fkey';
+              columns: ['option_id'];
+              referencedRelation: 'discussion_option';
+              referencedColumns: ['option_id'];
+            }
+          ];
+        };
         ignored_movies: {
           Row: {
             created_at: string;

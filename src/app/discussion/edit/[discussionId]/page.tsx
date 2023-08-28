@@ -1,7 +1,7 @@
 'use client';
 import { getDiscussionPostDetail, getDiscussionPostOption } from '@/api/supabase-discussion';
+import useDiscussionPostQuery from '@/hooks/useDiscussionPostQuery';
 import useUserInfoStore from '@/store/saveCurrentUserData';
-import supabase from '@/supabase/config';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
 
@@ -13,7 +13,6 @@ interface Props {
 
 const DiscussionEditPage = ({ params }: Props) => {
   const { discussionId } = params;
-  const [fetchedOptions, setFetchedOptions] = useState<DiscussionOption[]>();
   const {
     userInfo: { id: userId }
   } = useUserInfoStore();
@@ -23,6 +22,8 @@ const DiscussionEditPage = ({ params }: Props) => {
   const [options, setOptions] = useState<string[]>([]);
   const optionInputRef = useRef<HTMLInputElement>(null);
   const [optionValueCheck, setOptionValueCheck] = useState<boolean>(false);
+  const initOptionLengthRef = useRef<number>(0);
+  const { updatePostMutation } = useDiscussionPostQuery();
 
   useEffect(() => {
     const getInitData = async () => {
@@ -33,7 +34,7 @@ const DiscussionEditPage = ({ params }: Props) => {
       const initOptionData = await getDiscussionPostOption(+discussionId);
       const initOptions = initOptionData?.map((option) => option.content);
       setOptions([...initOptions!]);
-      setFetchedOptions([...initOptionData!]);
+      initOptionLengthRef.current = initOptions!.length;
     };
     getInitData();
   }, []);
@@ -58,35 +59,18 @@ const DiscussionEditPage = ({ params }: Props) => {
   const handleSubmit = async () => {
     if (!userId) return;
     try {
-      const newPost = {
-        user_id: userId,
+      updatePostMutation.mutate({
+        userId,
         title,
-        content
-      };
-      const { data } = await supabase.from('discussion_post').update(newPost).eq('post_id', discussionId).select();
+        content,
+        options,
+        postId: discussionId,
+        startNum: initOptionLengthRef.current
+      });
 
-      for (let i = 0; i < options.length; i++) {
-        if (i < fetchedOptions!.length) {
-          const newOption = {
-            post_id: data![0].post_id,
-            content: options[i],
-            count: 0
-          };
+      alert('토론글이 수정되었습니다');
 
-          await supabase.from('discussion_option').update(newOption).eq('option_id', fetchedOptions![i].option_id);
-        } else if (i >= fetchedOptions!.length) {
-          const newOption = {
-            post_id: data![0].post_id,
-            content: options[i],
-            count: 0
-          };
-
-          await supabase.from('discussion_option').insert(newOption).select();
-        }
-      }
-
-      alert('토론글이 작성되었습니다');
-
+      router.refresh();
       router.push(`/discussion/detail/${discussionId}`);
     } catch (error) {}
   };
@@ -118,8 +102,16 @@ const DiscussionEditPage = ({ params }: Props) => {
           {options.map((option, idx) => {
             return (
               <div key={idx} className="flex gap-2">
-                <p>{option}</p>
-                <div onClick={() => deleteOption(idx)}>삭제</div>
+                {idx < initOptionLengthRef.current ? (
+                  <>
+                    <p className="text-gray-500">{option}</p>
+                  </>
+                ) : (
+                  <>
+                    <p>{option}</p>
+                    <div onClick={() => deleteOption(idx)}>삭제</div>
+                  </>
+                )}
               </div>
             );
           })}
