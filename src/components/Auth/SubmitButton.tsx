@@ -8,7 +8,7 @@ interface Props {
   shouldDisable?: boolean;
   isError: boolean;
   setIsError: React.Dispatch<React.SetStateAction<boolean>>;
-  passwordError: string | null;
+  passwordError?: string | null;
 }
 
 const SubmitButton = ({ inputValue, loadingMessage, shouldDisable, isError, setIsError, passwordError }: Props) => {

@@ -6,6 +6,7 @@ import SubmitButton from '@/components/Auth/SubmitButton';
 import { useRouter } from 'next/navigation';
 import HCaptcha from '@hcaptcha/react-hcaptcha';
 import Message from '@/components/Auth/Message';
+import SocialButtons from '@/components/Auth/SocialButtons';
 
 interface Data {
   error: boolean;
@@ -114,6 +115,7 @@ const SignInPage = () => {
         >
           돌아가기
         </Link>
+        <SocialButtons />
         <Message />
       </form>
     </div>

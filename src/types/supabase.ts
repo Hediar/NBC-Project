@@ -60,16 +60,19 @@ declare global {
           Row: {
             id: number;
             option_id: number | null;
+            post_id: number | null;
             user_id: string | null;
           };
           Insert: {
             id?: number;
             option_id?: number | null;
+            post_id?: number | null;
             user_id?: string | null;
           };
           Update: {
             id?: number;
             option_id?: number | null;
+            post_id?: number | null;
             user_id?: string | null;
           };
           Relationships: [
@@ -78,32 +81,32 @@ declare global {
               columns: ['option_id'];
               referencedRelation: 'discussion_option';
               referencedColumns: ['option_id'];
+            },
+            {
+              foreignKeyName: 'discussion_user_post_id_fkey';
+              columns: ['post_id'];
+              referencedRelation: 'discussion_post';
+              referencedColumns: ['post_id'];
             }
           ];
         };
         ignored_movies: {
           Row: {
-            created_at: string;
-            id: number;
-            movie_id: string;
-            user_id: string;
+            ignored_movies: string[];
+            userid: string;
           };
           Insert: {
-            created_at?: string;
-            id?: number;
-            movie_id?: string;
-            user_id: string;
+            ignored_movies: string[];
+            userid: string;
           };
           Update: {
-            created_at?: string;
-            id?: number;
-            movie_id?: string;
-            user_id?: string;
+            ignored_movies?: string[];
+            userid?: string;
           };
           Relationships: [
             {
-              foreignKeyName: 'ignored_movies_user_id_fkey';
-              columns: ['user_id'];
+              foreignKeyName: 'ignored_movies_userid_fkey';
+              columns: ['userid'];
               referencedRelation: 'users';
               referencedColumns: ['id'];
             }
@@ -165,6 +168,7 @@ declare global {
           Row: {
             category: Json | null;
             content: string;
+            created_at: string;
             date: string | null;
             keyword: string[] | null;
             movieid: string;
@@ -175,6 +179,7 @@ declare global {
           Insert: {
             category?: Json | null;
             content: string;
+            created_at?: string;
             date?: string | null;
             keyword?: string[] | null;
             movieid: string;
@@ -185,6 +190,7 @@ declare global {
           Update: {
             category?: Json | null;
             content?: string;
+            created_at?: string;
             date?: string | null;
             keyword?: string[] | null;
             movieid?: string;
