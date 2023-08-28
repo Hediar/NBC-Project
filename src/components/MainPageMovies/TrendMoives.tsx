@@ -22,23 +22,24 @@ const TrendMoives = async ({ genreId }: { genreId: string }) => {
         {filteredMovies?.map((movie: MovieData, idx: number) => {
           return (
             <>
-              <div className="flex-none py-6 px-3 first:pl-6 last:pr-6"></div>
-              <div key={movie.id}>
-                <div>{movie.title}</div>
-                <Link
-                  href={`${process.env.NEXT_PUBLIC_BASE_URL}/detail/${movie.id}/main`}
-                  className="w-56 h-full flex flex-col gap-2 items-center"
-                >
-                  <Image
-                    src={`${process.env.NEXT_PUBLIC_TMDB_BASE_IMAGE_URL}t/p/w200${movie.poster_path}`}
-                    alt=""
-                    width={200}
-                    height={420}
-                    priority={false}
-                  ></Image>
-                </Link>
+              <div className="flex-none py-6 px-3 first:pl-6 last:pr-6">
+                <div key={movie.id}>
+                  <div>{movie.title}</div>
+                  <Link
+                    href={`${process.env.NEXT_PUBLIC_BASE_URL}/detail/${movie.id}/main`}
+                    className="w-56 flex flex-col gap-2 items-center"
+                  >
+                    <Image
+                      src={`${process.env.NEXT_PUBLIC_TMDB_BASE_IMAGE_URL}t/p/w200${movie.poster_path}`}
+                      alt=""
+                      width={200}
+                      height={420}
+                      priority={false}
+                    ></Image>
+                  </Link>
 
-                <MovieLikes movieid={movie.id} />
+                  <MovieLikes movieid={movie.id} />
+                </div>
               </div>
             </>
           );
