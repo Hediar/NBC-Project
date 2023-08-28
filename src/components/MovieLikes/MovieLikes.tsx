@@ -20,7 +20,7 @@ const MovieLikes = (props: { movieid: number }) => {
 
   const { userInfo } = useUserInfoStore();
 
-  const mutation = useMovieLikesMutation(props.movieid, userInfo.id);
+  const mutation = useMovieLikesMutation(props.movieid, userInfo.id!);
 
   // 좋아요 버튼
   const likeButtonHandler = throttle(

@@ -18,24 +18,28 @@ const TrendMoives = async ({ genreId }: { genreId: string }) => {
     <>
       <div>TrendMoives</div>
 
-      <div className="w-10/12 flex flex-wrap gap-5 gap-y-10 mt-10 justify-center">
+      <div className="overflow-x-scroll flex">
         {filteredMovies?.map((movie: MovieData, idx: number) => {
           return (
             <>
-              <div key={idx}>
-                <div>{movie.title}</div>
-                <div>{movie.id}</div>
-                <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/detail/${movie.id}/main`}>
-                  <Image
-                    src={`${process.env.NEXT_PUBLIC_TMDB_BASE_IMAGE_URL}t/p/w200${movie.poster_path}`}
-                    alt=""
-                    width={200}
-                    height={420}
-                    priority={false}
-                  ></Image>
-                </Link>
+              <div className="flex-none py-6 px-3 first:pl-6 last:pr-6">
+                <div key={movie.id}>
+                  <div>{movie.title}</div>
+                  <Link
+                    href={`${process.env.NEXT_PUBLIC_BASE_URL}/detail/${movie.id}/main`}
+                    className="w-56 flex flex-col gap-2 items-center"
+                  >
+                    <Image
+                      src={`${process.env.NEXT_PUBLIC_TMDB_BASE_IMAGE_URL}t/p/w200${movie.poster_path}`}
+                      alt=""
+                      width={200}
+                      height={420}
+                      priority={false}
+                    ></Image>
+                  </Link>
 
-                <MovieLikes movieid={movie.id} />
+                  <MovieLikes movieid={movie.id} />
+                </div>
               </div>
             </>
           );
