@@ -152,9 +152,14 @@ declare global {
     content: string;
     count: number;
   }
+
   interface MovieLikesTable {
     movieid: string | Number;
     user_id: string[];
+  }
+  interface MovieIgnoredTable {
+    userid: string;
+    ignored_movies: string[];
   }
   interface MovieFetchResult {
     page: number;
