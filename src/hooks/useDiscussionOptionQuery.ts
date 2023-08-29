@@ -1,4 +1,4 @@
-import { getDiscussionPostOption, updateDiscussionOptionVote } from '@/api/supabase-discussion';
+import { getDiscussionPostOption, addDiscussionOptionVote, revoteDiscussionOption } from '@/api/supabase-discussion';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import React, { useEffect } from 'react';
 
@@ -7,12 +7,18 @@ const useDiscussionOptionQuery = (postId: number) => {
 
   const { isLoading, isError, data } = useQuery(['discussion_option', postId], () => getDiscussionPostOption(postId));
 
-  const updateVoteMutation = useMutation(updateDiscussionOptionVote, {
+  const addVoteMutation = useMutation(addDiscussionOptionVote, {
     onSuccess: () => {
-      queryClient.invalidateQueries(['discussion_option']);
+      queryClient.invalidateQueries(['discussion_option', postId]);
     }
   });
-  return { isLoading, isError, data, updateVoteMutation };
+
+  const revoteMutation = useMutation(revoteDiscussionOption, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['discussion_option', postId]);
+    }
+  });
+  return { isLoading, isError, data, addVoteMutation, revoteMutation };
 };
 
 export default useDiscussionOptionQuery;

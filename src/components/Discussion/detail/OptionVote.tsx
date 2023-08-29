@@ -14,18 +14,22 @@ const OptionVote = ({ postId }: Props) => {
   const {
     userInfo: { id: userId }
   } = useUserInfoStore();
-  const { isLoading, data: optionData, updateVoteMutation } = useDiscussionOptionQuery(postId);
+  const { isLoading, data: optionData, addVoteMutation, revoteMutation } = useDiscussionOptionQuery(postId);
   const [isVoted, setIsVoted] = useState<boolean>(false);
-
+  const [votedOption, setVotedOption] = useState<DiscussionUser>();
   let sumCount = 0;
   optionData?.forEach((option) => (sumCount += option.count));
 
   useEffect(() => {
     const fetchUserData = async () => {
       const { data: userData } = await supabase.from('discussion_user').select('*').eq('post_id', postId);
-      const check = userData?.filter((data) => data.user_id === userId).length ? true : false;
+      const votedOption = userData?.filter((data) => data.user_id === userId);
+      const check = votedOption?.length ? true : false;
 
-      setIsVoted(check);
+      if (votedOption) {
+        setIsVoted(check);
+        setVotedOption(votedOption[0]);
+      }
     };
 
     fetchUserData();
@@ -33,8 +37,24 @@ const OptionVote = ({ postId }: Props) => {
 
   const handleVoteCount = () => {
     if (!selectedOption || !userId) return;
+    const userData = {
+      user_id: userId,
+      option_id: selectedOption.option_id,
+      post_id: postId
+    };
+    addVoteMutation.mutate(userData);
 
-    updateVoteMutation.mutate({ selectedOption, userId, postId });
+    setSelectedOption(null);
+  };
+
+  const handleRevoteCount = () => {
+    if (!selectedOption || !userId) return;
+    const userData = {
+      user_id: userId,
+      option_id: selectedOption.option_id,
+      post_id: postId
+    };
+    revoteMutation.mutate({ optionId: votedOption!.option_id, userId, userData });
 
     setSelectedOption(null);
   };
@@ -48,7 +68,9 @@ const OptionVote = ({ postId }: Props) => {
       {optionData?.map((option, idx) => {
         return (
           <div key={idx} className="w-full h-[4rem] flex items-center" onClick={() => setSelectedOption(option)}>
-            <span className="p-2 w-1/5">{optionMark[idx]}</span>
+            <span className="p-2 w-1/5">
+              {votedOption?.option_id === option.option_id ? optionMark[idx] + '투표됨' : optionMark[idx]}
+            </span>
             <span className="p-2 w-3/5">
               {selectedOption?.option_id === option.option_id ? option.content + '체크' : option.content}
             </span>
@@ -69,9 +91,15 @@ const OptionVote = ({ postId }: Props) => {
       {optionData?.length ? (
         <div className="flex justify-between p-2">
           <span>총투표수: {sumCount}</span>
-          <button className="pr-10" onClick={handleVoteCount}>
-            {isVoted ? '재투표하기' : '투표하기'}
-          </button>
+          {isVoted ? (
+            <button className="pr-10" onClick={handleRevoteCount}>
+              재투표하기
+            </button>
+          ) : (
+            <button className="pr-10" onClick={handleVoteCount}>
+              투표하기
+            </button>
+          )}
         </div>
       ) : null}
     </div>
