@@ -6,9 +6,10 @@ import React, { useEffect, useState } from 'react';
 
 interface Props {
   postId: number;
+  voteCount: number;
 }
 
-const OptionVote = ({ postId }: Props) => {
+const OptionVote = ({ postId, voteCount }: Props) => {
   const optionMark = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
   const [selectedOption, setSelectedOption] = useState<DiscussionOption | null>();
   const {
@@ -17,8 +18,8 @@ const OptionVote = ({ postId }: Props) => {
   const { isLoading, data: optionData, addVoteMutation, revoteMutation } = useDiscussionOptionQuery(postId);
   const [isVoted, setIsVoted] = useState<boolean>(false);
   const [votedOption, setVotedOption] = useState<DiscussionUser>();
-  let sumCount = 0;
-  optionData?.forEach((option) => (sumCount += option.count));
+  let sumCount = voteCount;
+  // optionData?.forEach((option) => (sumCount += option.count));
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -35,7 +36,7 @@ const OptionVote = ({ postId }: Props) => {
     fetchUserData();
   }, [optionData]);
 
-  const handleVoteCount = () => {
+  const handleVoteCount = async () => {
     if (!selectedOption || !userId) return;
     const userData = {
       user_id: userId,
@@ -44,6 +45,11 @@ const OptionVote = ({ postId }: Props) => {
     };
     addVoteMutation.mutate(userData);
 
+    await supabase
+      .from('discussion_post')
+      .update({ vote_count: sumCount + 1 })
+      .eq('post_id', userData.post_id)
+      .select();
     setSelectedOption(null);
   };
 

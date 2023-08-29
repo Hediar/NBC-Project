@@ -21,7 +21,6 @@ export const POST = async (request: Request) => {
   }
   const userId = userData.user.id;
   //
-
   // watch_later DB에서 해당 유저의 찜하기 리스트를 가져오기
   const { data: watchLaterData, error: supabaseWatchLaterError } = await supabase
     .from('watch_later')
@@ -30,6 +29,19 @@ export const POST = async (request: Request) => {
     .single<WatchLater>();
 
   if (supabaseWatchLaterError) {
+    if (supabaseWatchLaterError.message === 'JSON object requested, multiple (or no) rows returned') {
+      // 아직 등록된 리스트가 없으면, 추가하기
+      const newMovieList = [];
+      newMovieList.push(movieId);
+      const { data: newlyInsertedData, error: newlyInsertedDataError } = await supabase
+        .from('watch_later')
+        .insert({ userid: userId, movies: newMovieList })
+        .select();
+      if (newlyInsertedDataError) {
+        return NextResponse.json({ message: 'fail to insert new movie list for new user!' });
+      }
+      return NextResponse.json({ message: 'success!' });
+    }
     console.log(supabaseWatchLaterError);
     return NextResponse.redirect(baseUrl.origin, { status: 301 });
   }
