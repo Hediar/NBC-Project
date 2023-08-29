@@ -2,6 +2,7 @@
 
 import useUserInfoStore from '@/store/saveCurrentUserData';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 
 interface Props {
@@ -16,6 +17,7 @@ const AvatarPhoto = ({ avatarUrl, userId, username }: Props) => {
   const [photo, setPhoto] = useState<File | null>(null);
   const fileInputRef = useRef<any>(null);
   const { userInfo, saveUserInfo } = useUserInfoStore();
+  const router = useRouter();
 
   useEffect(() => {
     if (avatarUrl) {
@@ -67,6 +69,7 @@ const AvatarPhoto = ({ avatarUrl, userId, username }: Props) => {
       setPhoto(null);
       setIsDisabled(true);
       fileInputRef.current.value = null;
+      router.refresh();
       alert('업데이트 완료되었습니다.');
     }
   };

@@ -1,5 +1,5 @@
 import AvatarPhoto from './Profile/AvatarPhoto';
-import PersonalDetails from './Profile/PersonalDetails';
+import UpdateUsername from './Profile/UpdateUsername';
 interface Props {
   avatarUrl: string;
   userId: string;
@@ -10,7 +10,7 @@ const UserSettingsProfile = ({ avatarUrl, userId, username }: Props) => {
   return (
     <div className="w-10/12 bg-white shadow-md shadow-gray-300 p-8">
       <AvatarPhoto avatarUrl={avatarUrl} userId={userId} username={username} />
-      <PersonalDetails />
+      <UpdateUsername userId={userId} />
     </div>
   );
 };
