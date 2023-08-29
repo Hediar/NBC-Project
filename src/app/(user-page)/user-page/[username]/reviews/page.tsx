@@ -59,7 +59,7 @@ const MyReviewPage = ({ params, searchParams }: Props) => {
 
   useEffect(() => {
     const getMoreData = async (page: number) => {
-      const { data, error } = await getReviews({ userid: userInfo.id, page });
+      const { data, error } = await getReviews({ userid: userInfo.id!, page });
       console.log('데이터가져와', data);
       setReviews([...reviews, ...(data as ReviewsTable[])]);
 
