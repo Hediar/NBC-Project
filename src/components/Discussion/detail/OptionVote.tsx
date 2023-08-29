@@ -18,7 +18,7 @@ const OptionVote = ({ postId, voteCount }: Props) => {
   const { isLoading, data: optionData, addVoteMutation, revoteMutation } = useDiscussionOptionQuery(postId);
   const [isVoted, setIsVoted] = useState<boolean>(false);
   const [votedOption, setVotedOption] = useState<DiscussionUser>();
-  let sumCount = voteCount;
+  const [sumCount, setSumCount] = useState<number>(voteCount);
   // optionData?.forEach((option) => (sumCount += option.count));
 
   useEffect(() => {
@@ -50,6 +50,8 @@ const OptionVote = ({ postId, voteCount }: Props) => {
       .update({ vote_count: sumCount + 1 })
       .eq('post_id', userData.post_id)
       .select();
+
+    setSumCount((sumCount) => (sumCount += 1));
     setSelectedOption(null);
   };
 

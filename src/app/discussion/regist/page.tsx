@@ -64,7 +64,7 @@ const DiscussionRegistPage = (props: Props) => {
         comment_count: 0
       };
       const { data } = await supabase.from('discussion_post').insert(newPost).select();
-      console.log('선택지기능사용=>', isOpen);
+
       if (isOpen) {
         console.log('디버깅중!');
         for (let i = 0; i < options.length; i++) {

@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import DiscussionPost from './DiscussionPost';
 import { getDiscussionPost } from '@/api/supabase-discussion';
 import { useQuery } from '@tanstack/react-query';
