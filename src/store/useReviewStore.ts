@@ -1,4 +1,3 @@
-import { ReviewsTable } from '@/types/types';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
@@ -20,13 +19,30 @@ export const useReviewStore = create(
 
 interface ReturnMovieTypes {
   searchMovieId: number | string | null;
-  saveSearchMovieId: (newMovieId: number | string | null) => void;
+  saveSearchMovieId: (newMovieId?: number | string | null) => void;
 }
 export const useReviewMovieStore = create<ReturnMovieTypes>((set) => {
   return {
     searchMovieId: null,
-    saveSearchMovieId: (newMovieId) => {
+    saveSearchMovieId: (newMovieId?) => {
       set({ searchMovieId: newMovieId });
+    }
+  };
+});
+
+interface ReturnSearchModalTypes {
+  isSearchModalOpen: boolean;
+  openSearchModal: () => void;
+  closeSearchModal: () => void;
+}
+export const useSearchModalStore = create<ReturnSearchModalTypes>((set) => {
+  return {
+    isSearchModalOpen: false,
+    openSearchModal: () => {
+      set({ isSearchModalOpen: true });
+    },
+    closeSearchModal: () => {
+      set({ isSearchModalOpen: false });
     }
   };
 });
