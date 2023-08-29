@@ -1,4 +1,5 @@
 import { getMovieDetail } from '@/api/tmdb';
+import StarBox from '@/components/ReviewForm/StarBox';
 import UtilButtons from '@/components/ReviewForm/UtilButtons';
 import supabase from '@/supabase/config';
 import Image from 'next/image';
@@ -66,6 +67,11 @@ const ReviewDetail = async ({ params }: Props) => {
         </div>
         <label className="block text-gray-700 text-sm font-bold mb-2">리뷰 한줄평</label>
         <div>{review.review}</div>
+        <label className="block text-gray-700 text-sm font-bold mb-2">별점</label>
+        <div>
+          <StarBox rating={review.rating} readOnly={true} />
+          {review.rating}
+        </div>
         <label className="block text-gray-700 text-sm font-bold mb-2">메모</label>
         <div>{review.content}</div>
         <UtilButtons postId={postId} userId={user.id} />

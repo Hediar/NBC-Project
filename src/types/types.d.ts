@@ -110,6 +110,16 @@ declare global {
     appearences: TMDBCreditCast[];
     productions: TMDBCreditCrew[];
   }
+
+  interface MovieDataGenres extends MovieData {
+    genres: MovieGenre[];
+  }
+
+  interface MovieLikesTable {
+    movieid: string | number;
+    user_id: string[];
+  }
+
   interface ReviewsTable {
     category: Json | null;
     content: string;
@@ -119,6 +129,7 @@ declare global {
     review: string;
     reviewid?: string;
     userid: string;
+    rating: number;
   }
 
   interface TMDBSearchMovie {

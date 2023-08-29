@@ -2,7 +2,7 @@
 
 import { getMovieDetail } from '@/api/tmdb';
 import Image from 'next/image';
-import React from 'react';
+import { useEffect, useState } from 'react';
 
 type Props = {
   movieId: string;
@@ -11,9 +11,9 @@ type Props = {
 const baseImgUrl = process.env.NEXT_PUBLIC_TMDB_BASE_IMAGE_URL;
 
 const ReviewMovie = ({ movieId }: Props) => {
-  const [movieData, setMovieData] = React.useState<MovieData>();
+  const [movieData, setMovieData] = useState<MovieDataGenres>();
 
-  React.useEffect(() => {
+  useEffect(() => {
     const fetchData = async () => {
       setMovieData(await getMovieDetail(movieId));
     };
