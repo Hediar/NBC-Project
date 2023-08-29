@@ -75,7 +75,7 @@ const AvatarPhoto = ({ avatarUrl, userId, username }: Props) => {
   };
 
   return (
-    <div className="flex gap-8">
+    <div className="flex gap-8 w-full">
       <div>
         <Image className="w-24 h-24 rounded-full" width={200} height={200} src={photoURLValue} alt="avatar" />
       </div>

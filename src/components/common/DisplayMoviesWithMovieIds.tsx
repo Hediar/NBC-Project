@@ -6,14 +6,16 @@ import POSTWatchLater from '@/api/POSTWatchLater';
 import MovieLikes from '../MovieLikes/MovieLikes';
 import { useRouter } from 'next/navigation';
 import useUserInfoStore from '@/store/saveCurrentUserData';
+import useToggleSignInModal from '@/store/toggleSignInModal';
 
 const DisplayMoviesWIthMovieIds = ({ movieData }: { movieData: MovieData[] }) => {
   const router = useRouter();
   const { userInfo } = useUserInfoStore();
+  const { isSignInModalOpen, setIsSignInModalOpen } = useToggleSignInModal();
 
   const watchLaterClickHandler = async (movieId: number) => {
     if (!userInfo.id) {
-      router.push('/sign-in');
+      setIsSignInModalOpen(isSignInModalOpen);
       return;
     }
     await POSTWatchLater(movieId);
