@@ -13,6 +13,8 @@ type Props = {
   params: Params;
 };
 
+export const dynamic = 'force-dynamic';
+
 const ReviewDetail = async ({ params }: Props) => {
   const { postId } = params;
 

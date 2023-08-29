@@ -18,34 +18,46 @@ export const getDiscussionPostDetail = async (postId: number) => {
 export const getDiscussionPostOption = async (postId: number) => {
   try {
     const { data } = await supabase.from('discussion_option').select('*').eq('post_id', postId).order('option_id');
+    const { data: voteCountData } = await supabase.from('discussion_user').select('*').eq('post_id', postId);
 
-    const optionData = data!;
+    const optionData = data?.map((option) => {
+      return { ...option, count: voteCountData?.filter((vote) => vote.option_id === option.option_id).length };
+    });
+
     return optionData;
   } catch (error) {}
 };
 
-//update요청
-
-interface UpdateDiscussionOption {
-  selectedOption: DiscussionOption;
-  userId: string;
-  postId: number;
+interface AddUserData {
+  user_id: string;
+  option_id: number;
+  post_id: number;
 }
-export const updateDiscussionOptionVote = async ({ selectedOption, userId, postId }: UpdateDiscussionOption) => {
-  try {
-    await supabase
-      .from('discussion_option')
-      .update({ ...selectedOption, count: selectedOption.count + 1 })
-      .eq('option_id', selectedOption.option_id);
 
-    const userData = {
-      user_id: userId,
-      option_id: selectedOption.option_id,
-      post_id: postId
-    };
+export const addDiscussionOptionVote = async (userData: AddUserData) => {
+  try {
     await supabase.from('discussion_user').insert(userData).select();
   } catch (error) {}
 };
+
+export const revoteDiscussionOption = async ({
+  optionId,
+  userId,
+  userData
+}: {
+  optionId: number;
+  userId: string;
+  userData: AddUserData;
+}) => {
+  try {
+    const { error } = await supabase.from('discussion_user').delete().eq('option_id', optionId).eq('user_id', userId);
+
+    await addDiscussionOptionVote(userData);
+  } catch (error) {
+    // console.log(error.message)
+  }
+};
+//update요청
 
 interface UpdateDiscussionPost {
   userId: string;
@@ -74,8 +86,7 @@ export const updateDiscussionPost = async ({
     for (let i = startNum; i < options.length; i++) {
       const newOption = {
         post_id: data![0].post_id,
-        content: options[i],
-        count: 0
+        content: options[i]
       };
 
       await supabase.from('discussion_option').insert(newOption).select();

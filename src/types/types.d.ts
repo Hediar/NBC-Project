@@ -164,6 +164,13 @@ declare global {
     count: number;
   }
 
+  interface DiscussionUser {
+    id: number;
+    user_id: string;
+    option_id: number;
+    post_id: number;
+  }
+
   interface MovieLikesTable {
     movieid: string | Number;
     user_id: string[];

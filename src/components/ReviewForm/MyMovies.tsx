@@ -2,7 +2,7 @@
 
 import getMovieDataWithMovieIds from '@/api/getMovieDataWithMovieIds';
 import useUserInfoStore from '@/store/saveCurrentUserData';
-import { useReviewMovieStore } from '@/store/useReviewStore';
+import { useReviewMovieStore, useSearchModalStore } from '@/store/useReviewStore';
 import supabase from '@/supabase/config';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
@@ -12,6 +12,7 @@ type Props = {};
 const MyMovies = (props: Props) => {
   const { userInfo } = useUserInfoStore();
   const { saveSearchMovieId } = useReviewMovieStore();
+  const { closeSearchModal } = useSearchModalStore();
 
   const [likesList, setLikesList] = useState<any>([]);
   const [watchLaterList, setWatchLaterList] = useState<any>([]);
@@ -21,6 +22,7 @@ const MyMovies = (props: Props) => {
 
   const handleClick = (movieId: number) => {
     saveSearchMovieId(movieId);
+    closeSearchModal();
   };
 
   useEffect(() => {
@@ -75,7 +77,7 @@ const MyMovies = (props: Props) => {
           </button>
         </li>
       </ul>
-      <div>
+      <div className="overflow-auto h-96">
         {[likesList, watchLaterList][tab].map((movie: any, i: number) => (
           <li key={movie.title + i}>
             <button type="button" onClick={() => handleClick(movie.id)} className="cursor-pointer">
