@@ -5,40 +5,25 @@ import { NextResponse } from 'next/server';
 export const dynamic = 'force-dynamic';
 
 export const POST = async (request: Request) => {
-  const supabase = createRouteHandlerClient({ cookies });
-  const fileName = Date.now().toString();
-  const formData = await request.formData();
+  try {
+    const supabase = createRouteHandlerClient({ cookies });
+    const formData = await request.formData();
 
-  const userId = formData.get('userId');
-  const file = formData.get('file');
+    const userId = formData.get('userId');
+    const file = formData.get('file');
+    const fileName = Date.now().toString();
 
-  const { data: uploadedPhotoData, error } = await supabase.storage
-    .from(`users/avatar/${userId}`)
-    .upload(fileName, file as File);
+    const uploadPath = `users/avatar/${userId}`;
+    const { data: uploadedPhotoData } = await supabase.storage.from(uploadPath).upload(fileName, file as File);
 
-  if (error) {
-    console.log('error:', error);
+    const { data: publicUrlData } = supabase.storage.from(uploadPath).getPublicUrl(fileName);
+    const publicUrl = publicUrlData.publicUrl;
+
+    await supabase.from('users').update({ avatar_url: publicUrl }).eq('id', userId);
+
+    return NextResponse.json({ isSuccess: true, isError: false, data: publicUrl });
+  } catch (error) {
+    console.error('Error uploading and updating:', error);
     return NextResponse.json({ isSuccess: false, isError: true, data: null });
   }
-
-  console.log('success!', uploadedPhotoData);
-
-  const { data: url } = supabase.storage.from(`users/avatar/${userId}`).getPublicUrl(fileName);
-
-  // Handle success
-  console.log('url retrieval success!', url.publicUrl);
-  const uploadedPhotoUrl = url.publicUrl;
-
-  const { data: uploadingToUserDB, error: uploadingToUserDBError } = await supabase
-    .from('users')
-    .update({ avatar_url: uploadedPhotoUrl })
-    .eq('id', userId)
-    .select('avatar_url');
-
-  if (uploadingToUserDBError) {
-    console.log(uploadingToUserDBError);
-    return NextResponse.json({ isSuccess: false, isError: true, data: null });
-  }
-
-  return NextResponse.json({ isSuccess: true, isError: false, data: url.publicUrl });
 };

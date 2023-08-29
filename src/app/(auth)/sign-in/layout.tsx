@@ -3,6 +3,7 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 import type { Metadata } from 'next';
+import Modal from '@/components/common/Modal';
 
 export const dynamic = 'force-dynamic';
 
@@ -21,5 +22,9 @@ export default async function layout({ children }: { children: React.ReactNode }
   if (session) {
     redirect('/');
   }
-  return <main className="w-full h-[calc(100vh-5rem)]">{children}</main>;
+  return (
+    <main className="w-full h-[calc(100vh-5rem)]">
+      <Modal>{children}</Modal>
+    </main>
+  );
 }
