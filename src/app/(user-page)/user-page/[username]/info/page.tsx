@@ -19,7 +19,7 @@ const UserInfoPage = async ({ params }: { params: { username: string } }) => {
 
   return (
     <>
-      <UserPageSemiHeader params={username} avatar_url={avatar_url} />
+      <UserPageSemiHeader params={username} avatar_url={avatar_url!} />
       <Suspense fallback={<Fallback />}>
         <UserPagePersonalRecords params={username} />
       </Suspense>

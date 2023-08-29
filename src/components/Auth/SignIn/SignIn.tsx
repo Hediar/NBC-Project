@@ -1,19 +1,18 @@
 'use client';
 
-import Link from 'next/link';
 import React, { useState } from 'react';
 import SubmitButton from '@/components/Auth/SubmitButton';
 import { useRouter } from 'next/navigation';
 import HCaptcha from '@hcaptcha/react-hcaptcha';
-import Message from '@/components/Auth/Message';
 import SocialButtons from '@/components/Auth/SocialButtons';
+import useToggleSignInModal from '@/store/toggleSignInModal';
 
 interface Data {
   error: boolean;
   message: string;
 }
 
-const SignInPage = () => {
+const SignIn = () => {
   const router = useRouter();
   const [emailValue, setEmailValue] = useState<string>('');
   const [passwordValue, setPasswordValue] = useState<string>('');
@@ -21,6 +20,8 @@ const SignInPage = () => {
   const [shouldDisable, setShouldDisable] = useState<boolean>(false);
   const [captchaToken, setCaptchaToken] = useState<any>();
   const [isError, setIsError] = useState<boolean>(false);
+  const { isSignInModalOpen, setIsSignInModalOpen } = useToggleSignInModal();
+  const [message, setMessage] = useState<string>('');
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newPassword = e.target.value;
@@ -48,23 +49,18 @@ const SignInPage = () => {
     if (error) {
       if (message.includes('captcha 오류')) {
         setIsError(true);
-        router.refresh();
-        router.push(`http://localhost:3000/sign-in?error=captcha오류입니다. 다시 시도해주세요.`);
+        setMessage('captcha오류입니다. 다시 시도해주세요.');
       }
       if (message.includes('틀립니다')) {
         setIsError(true);
-        router.refresh();
-        router.push(`http://localhost:3000/sign-in?error=${message}`);
+        setMessage('이메일이나 비밀번호가 틀립니다.');
       }
       if (message.includes('에러가')) {
         setIsError(true);
-        router.refresh();
-        router.push(`http://localhost:3000/sign-in?error=${message}`);
+        setMessage('에러가 발생했습니다. 다시 시도해주세요.');
       }
-      router.refresh();
     } else {
       router.refresh();
-      router.push(`http://localhost:3000`);
     }
   };
 
@@ -109,17 +105,18 @@ const SignInPage = () => {
           setIsError={setIsError}
           passwordError={passwordError}
         />
-        <Link
-          className="border border-slate-900 p-2 cursor-pointer w-full rounded-md flex justify-center "
-          href={process.env.NEXT_PUBLIC_BASE_URL!}
+        <button
+          className="border border-slate-900 p-2 cursor-pointer w-full rounded-md flex justify-center"
+          type="button"
+          onClick={() => setIsSignInModalOpen(isSignInModalOpen)}
         >
           돌아가기
-        </Link>
-        <Message />
+        </button>
+        <span>{message}</span>
         <SocialButtons />
       </form>
     </div>
   );
 };
 
-export default SignInPage;
+export default SignIn;
