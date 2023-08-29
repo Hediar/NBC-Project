@@ -119,6 +119,7 @@ declare global {
     review: string;
     reviewid?: string;
     userid: string;
+    rating: number;
   }
 
   interface TMDBSearchMovie {

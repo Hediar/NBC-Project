@@ -14,6 +14,7 @@ import HashTagBox from '@/components/ReviewForm/HashTagBox';
 import useUserInfoStore from '@/store/saveCurrentUserData';
 import { useReviewMovieStore, useReviewStore } from '../../store/useReviewStore';
 import { addReview, updateReview } from '@/api/review';
+import StarBox from './StarBox';
 
 interface Props {
   movieId?: string;
@@ -27,6 +28,7 @@ const ReviewForm = ({ movieId, editReview }: Props) => {
   const [selectedDate, setSelectedDate] = React.useState<string | Date | null>(null);
   const [review, setReview] = React.useState('');
   const [content, setContent] = React.useState('');
+  const [rating, setRating] = React.useState(0);
 
   const [checkedListC1, checkHandlerC1, setCheckedListC1] = useCheckbox();
   const [checkedListC2, checkHandlerC2, setCheckedListC2] = useCheckbox();
@@ -48,6 +50,7 @@ const ReviewForm = ({ movieId, editReview }: Props) => {
       date: selectedDate,
       category: JSON.stringify(checkedListIndex),
       review,
+      rating,
       keyword: tagList,
       content
     } as ReviewsTable;
@@ -78,6 +81,7 @@ const ReviewForm = ({ movieId, editReview }: Props) => {
       date: selectedDate,
       category: JSON.stringify(checkedListIndex),
       review,
+      rating,
       keyword: tagList,
       content
     };
@@ -103,7 +107,7 @@ const ReviewForm = ({ movieId, editReview }: Props) => {
       const reviewForm = GetReviewForm();
       if (!reviewForm) return;
 
-      const { movieid, date, category, review, keyword, content } = reviewForm;
+      const { movieid, date, category, review, keyword, rating, content } = reviewForm;
       const categoryArr = JSON.parse(category);
 
       setSelectedDate(new Date(date!));
@@ -113,6 +117,7 @@ const ReviewForm = ({ movieId, editReview }: Props) => {
       setReview(review);
       setTagList(keyword!);
       setContent(content);
+      setRating(rating || 0);
 
       saveSearchMovieId(movieid);
     }
@@ -165,6 +170,13 @@ const ReviewForm = ({ movieId, editReview }: Props) => {
             value={review}
             onChange={(e) => setReview(e.target.value)}
           />
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="review">
+            별점
+          </label>
+          <div>
+            <StarBox rating={rating} setRating={setRating} />
+            {rating}
+          </div>
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="review">
             키워드
           </label>
