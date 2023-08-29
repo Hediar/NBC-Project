@@ -15,6 +15,7 @@ import useUserInfoStore from '@/store/saveCurrentUserData';
 import { useReviewMovieStore, useReviewStore } from '../../store/useReviewStore';
 import { addReview, updateReview } from '@/api/review';
 import StarBox from './StarBox';
+import Modal from '../common/Modal';
 
 interface Props {
   movieId?: string;
@@ -24,6 +25,8 @@ interface Props {
 const ReviewForm = ({ movieId, editReview }: Props) => {
   const router = useRouter();
   const { userInfo } = useUserInfoStore();
+  const [showModal, setShowModal] = React.useState(false);
+  const [onConfirm, setOnConfirm] = React.useState(false);
 
   const [selectedDate, setSelectedDate] = React.useState<string | Date | null>(null);
   const [review, setReview] = React.useState('');
@@ -84,7 +87,7 @@ const ReviewForm = ({ movieId, editReview }: Props) => {
       rating,
       keyword: tagList,
       content
-    };
+    } as ReviewsTable;
     saveTempReview(newReview);
 
     alert('임시저장 완료');
@@ -94,10 +97,12 @@ const ReviewForm = ({ movieId, editReview }: Props) => {
   useEffect(() => {
     if (editReview || tempReview) {
       const GetReviewForm = () => {
-        const TEMP_CONFIRM_TEXT = '작성 중이던 내용이 있습니다. 이어서 작성하시겠습니까?';
-        const isEditTempReview =
-          editReview && tempReview && editReview.reviewid == tempReview.reviewid && confirm(TEMP_CONFIRM_TEXT);
-        const isTempReview = tempReview && userInfo.id == tempReview.userid && confirm(TEMP_CONFIRM_TEXT);
+        const getConfirm = () => {
+          !onConfirm && setShowModal(true);
+          return onConfirm;
+        };
+        const isEditTempReview = editReview && tempReview && editReview.reviewid == tempReview.reviewid && getConfirm();
+        const isTempReview = tempReview && userInfo.id == tempReview.userid && getConfirm();
 
         if (isEditTempReview) return tempReview;
         else if (editReview) return editReview;
@@ -121,7 +126,7 @@ const ReviewForm = ({ movieId, editReview }: Props) => {
 
       saveSearchMovieId(movieid);
     }
-  }, [userInfo]);
+  }, [userInfo, onConfirm]);
 
   const handleCancel = () => {
     router.back();
@@ -201,6 +206,34 @@ const ReviewForm = ({ movieId, editReview }: Props) => {
           {/* <button onClick={handleCancel}>돌아가기</button> */}
         </div>
       </form>
+
+      {showModal && (
+        <Modal>
+          <p>
+            작성 중이던 내용이 있습니다
+            <br />
+            이어서 작성하시겠습니까?
+          </p>
+          <div>
+            <button
+              onClick={() => {
+                setShowModal(false);
+                setOnConfirm(false);
+              }}
+            >
+              취소
+            </button>
+            <button
+              onClick={() => {
+                setShowModal(false);
+                setOnConfirm(true);
+              }}
+            >
+              확인
+            </button>
+          </div>
+        </Modal>
+      )}
     </>
   );
 };

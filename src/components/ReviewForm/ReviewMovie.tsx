@@ -1,6 +1,7 @@
 'use client';
 
 import { getMovieDetail } from '@/api/tmdb';
+import { useSearchModalStore } from '@/store/useReviewStore';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
@@ -12,6 +13,8 @@ const baseImgUrl = process.env.NEXT_PUBLIC_TMDB_BASE_IMAGE_URL;
 
 const ReviewMovie = ({ movieId }: Props) => {
   const [movieData, setMovieData] = useState<MovieDataGenres>();
+
+  const { openSearchModal } = useSearchModalStore();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,7 +41,13 @@ const ReviewMovie = ({ movieId }: Props) => {
       <div>{movieData.production_countries[0]['iso_3166_1']}</div>
       <div>{movieData.runtime}분</div>
       <div>{movieData.adult ? '청소년관람불가' : '전체관람가'}</div>
-      <button>영화 변경하기</button>
+      <button
+        onClick={() => {
+          openSearchModal();
+        }}
+      >
+        영화 변경하기
+      </button>
     </div>
   );
 };

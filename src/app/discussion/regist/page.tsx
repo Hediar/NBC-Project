@@ -1,5 +1,8 @@
 'use client';
+import ReviewMovie from '@/components/ReviewForm/ReviewMovie';
+import SearchPopup from '@/components/ReviewForm/SearchPopup';
 import useUserInfoStore from '@/store/saveCurrentUserData';
+import { useReviewMovieStore, useSearchModalStore } from '@/store/useReviewStore';
 import supabase from '@/supabase/config';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
@@ -8,6 +11,13 @@ interface Props {}
 
 //+추가해야할것: 무비 검색해서 movieId 가져오는기능~
 const DiscussionRegistPage = (props: Props) => {
+  const { isSearchModalOpen, openSearchModal } = useSearchModalStore();
+  const { searchMovieId: movieId, saveSearchMovieId } = useReviewMovieStore();
+
+  useEffect(() => {
+    return saveSearchMovieId();
+  }, []);
+
   const {
     userInfo: { id: userId }
   } = useUserInfoStore();
@@ -45,7 +55,8 @@ const DiscussionRegistPage = (props: Props) => {
       const newPost = {
         user_id: userId,
         title,
-        content
+        content,
+        movie_id: movieId
       };
       const { data } = await supabase.from('discussion_post').insert(newPost).select();
 
@@ -77,6 +88,23 @@ const DiscussionRegistPage = (props: Props) => {
 
   return (
     <div className="p-5">
+      {/* S:: 영화 선택 */}
+      <div>
+        {movieId ? (
+          <ReviewMovie movieId={movieId as string} />
+        ) : (
+          <button
+            onClick={() => {
+              openSearchModal();
+            }}
+          >
+            리뷰 남길 콘텐츠 고르기
+          </button>
+        )}
+        {isSearchModalOpen && <SearchPopup />}
+      </div>
+      {/* E:: 영화 선택 */}
+
       <div className="flex flex-col gap-5">
         <div className="flex gap-2">
           <label htmlFor="topic">주제</label>
