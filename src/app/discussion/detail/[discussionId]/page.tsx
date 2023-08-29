@@ -6,6 +6,8 @@ interface Props {
     discussionId: string;
   };
 }
+// export const revalidate = 0;
+export const dynamic = 'force-dynamic';
 
 const DiscussionDetailPage = ({ params }: Props) => {
   const { discussionId } = params;

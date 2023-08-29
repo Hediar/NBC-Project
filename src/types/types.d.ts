@@ -152,14 +152,60 @@ declare global {
     content: string;
     count: number;
   }
+
   interface MovieLikesTable {
     movieid: string | Number;
     user_id: string[];
+  }
+  interface MovieIgnoredTable {
+    userid: string;
+    ignored_movies: string[];
   }
   interface MovieFetchResult {
     page: number;
     results: MovieData[];
     total_pages: number;
     total_results: number;
+  }
+  interface ReviewsTable {
+    category: Json | null;
+    content: string;
+    date: Date | string | null;
+    keyword: string[] | [] | undefined;
+    movieid: string;
+    review: string;
+    reviewid?: string;
+    userid: string;
+  }
+
+  interface TMDBSearchMovie {
+    adult: boolean;
+    backdrop_path: string;
+    genre_ids: number[];
+    id: number;
+    original_language: string;
+    original_title: string;
+    overview: string;
+    popularity: number;
+    poster_path: string;
+    release_date: string;
+    title: string;
+    video: boolean;
+    vote_average: number;
+    vote_count: number;
+  }
+
+  interface DiscussionPost {
+    post_id: number;
+    created_at: string;
+    user_id: string;
+    title: string;
+    content: string;
+  }
+  interface DiscussionOption {
+    option_id: number;
+    post_id: number;
+    content: string;
+    count: number;
   }
 }

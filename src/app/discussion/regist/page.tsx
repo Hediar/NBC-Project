@@ -17,6 +17,7 @@ const DiscussionRegistPage = (props: Props) => {
   const [options, setOptions] = useState<string[]>([]);
   const optionInputRef = useRef<HTMLInputElement>(null);
   const [optionValueCheck, setOptionValueCheck] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const router = useRouter();
 
@@ -36,7 +37,10 @@ const DiscussionRegistPage = (props: Props) => {
   };
 
   const handleSubmit = async () => {
-    if (!userId) return;
+    if (!userId) {
+      alert('로그인 해주세요');
+      return router.push('/sign-in');
+    }
     try {
       const newPost = {
         user_id: userId,
@@ -45,14 +49,16 @@ const DiscussionRegistPage = (props: Props) => {
       };
       const { data } = await supabase.from('discussion_post').insert(newPost).select();
 
-      for (let i = 0; i < options.length; i++) {
-        const newOption = {
-          post_id: data![0].post_id,
-          content: options[i],
-          count: 0
-        };
+      if (isOpen) {
+        for (let i = 0; i < options.length; i++) {
+          const newOption = {
+            post_id: data![0].post_id,
+            content: options[i],
+            count: 0
+          };
 
-        await supabase.from('discussion_option').insert(newOption);
+          await supabase.from('discussion_option').insert(newOption);
+        }
       }
 
       alert('토론글이 작성되었습니다');
@@ -94,26 +100,52 @@ const DiscussionRegistPage = (props: Props) => {
         }}
       >
         <div className="m-5">
-          {options.map((option, idx) => {
-            return (
-              <div key={idx} className="flex gap-2">
-                <p>{option}</p>
-                <div onClick={() => deleteOption(idx)}>삭제</div>
-              </div>
-            );
-          })}
-          <input
-            ref={optionInputRef}
-            type="text"
-            placeholder="선택지를 추가하세요"
-            name="addOption"
-            value={optionContent}
-            onChange={(e) => setOptionContent(e.target.value)}
-            onClick={() => setOptionValueCheck(false)}
-          ></input>
-          {optionValueCheck && <p className="absolute z-10 text-xs text-red-300">내용을 입력해주세요</p>}
+          {isOpen ? (
+            <>
+              <p>{'투표기능(선택지 최대 10개)'}</p>
+              {options.map((option, idx) => {
+                return (
+                  <div key={idx} className="flex gap-2">
+                    <p>{option}</p>
+                    <div onClick={() => deleteOption(idx)}>삭제</div>
+                  </div>
+                );
+              })}
 
-          <button onClick={addOption}>+</button>
+              {options.length < 10 && (
+                <>
+                  <input
+                    ref={optionInputRef}
+                    type="text"
+                    placeholder="선택지를 추가하세요"
+                    name="addOption"
+                    value={optionContent}
+                    onChange={(e) => setOptionContent(e.target.value)}
+                    onClick={() => setOptionValueCheck(false)}
+                  ></input>
+                  {optionValueCheck && <p className="absolute z-10 text-xs text-red-300">내용을 입력해주세요</p>}
+                  <button onClick={addOption}>+</button>
+                </>
+              )}
+              <div className="mt-5">
+                <button
+                  onClick={() => {
+                    setIsOpen(false);
+                  }}
+                >
+                  투표기능 사용안하기
+                </button>
+              </div>
+            </>
+          ) : (
+            <button
+              onClick={() => {
+                setIsOpen(true);
+              }}
+            >
+              투표기능 사용하기
+            </button>
+          )}
         </div>
       </form>
       <button onClick={handleSubmit}>작성</button>
