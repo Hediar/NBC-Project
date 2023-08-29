@@ -1,10 +1,11 @@
-// import supabase from '@/api/supabase-public';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { cookies } from 'next/headers';
 import UserPageTabs from '@/components/UserPage/UserPageTabs';
+
 export const dynamic = 'force-dynamic';
+
 interface Params {
   params: {
     username: string;
@@ -13,12 +14,13 @@ interface Params {
 
 export const generateMetadata = async ({ params: { username } }: Params): Promise<Metadata> => {
   const decodedUsername = decodeURIComponent(username);
-  const supabase = createServerComponentClient({ cookies });
-  const { data } = await supabase.from('users').select('username').eq('username', decodedUsername);
+  const supabase = createServerComponentClient<Database>({ cookies });
+  const { data: usernameData } = await supabase.from('users').select('username').eq('username', decodedUsername);
 
-  if (data && data.length < 1) {
+  if (usernameData && usernameData.length < 1) {
     return { title: '존재하지 않는 유저입니다.', description: '존재하지 않는 유저의 페이지입니다.' };
   }
+
   return {
     title: `${decodedUsername}의 페이지 | 영화를 봅시다`,
     description: `${decodedUsername}의 마이 페이지에 오신걸 환영합니다!`
@@ -33,10 +35,10 @@ export default async function Layout({
   params: { username: string };
 }) {
   const decodedUsername = decodeURIComponent(params.username);
-  const supabase = createServerComponentClient({ cookies });
-  const { data } = await supabase.from('users').select('username').eq('username', decodedUsername);
+  const supabase = createServerComponentClient<Database>({ cookies });
+  const { data: usernameData } = await supabase.from('users').select('username').eq('username', decodedUsername);
 
-  if (data && data.length < 1) notFound();
+  if (usernameData && usernameData.length === 0) notFound();
 
   return (
     <main className="flex flex-col items-center bg-slate-50 w-full">

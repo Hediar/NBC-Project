@@ -1,31 +1,112 @@
 export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[];
+
 declare global {
   interface Database {
     public: {
       Tables: {
-        ignored_movies: {
+        discussion_option: {
           Row: {
-            created_at: string;
-            id: number;
-            movie_id: string;
-            user_id: string;
+            content: string | null;
+            count: number | null;
+            option_id: number;
+            post_id: number;
           };
           Insert: {
-            created_at?: string;
-            id?: number;
-            movie_id?: string;
-            user_id: string;
+            content?: string | null;
+            count?: number | null;
+            option_id?: number;
+            post_id: number;
           };
           Update: {
-            created_at?: string;
-            id?: number;
-            movie_id?: string;
-            user_id?: string;
+            content?: string | null;
+            count?: number | null;
+            option_id?: number;
+            post_id?: number;
           };
           Relationships: [
             {
-              foreignKeyName: 'ignored_movies_user_id_fkey';
-              columns: ['user_id'];
+              foreignKeyName: 'discussion_option_post_id_fkey';
+              columns: ['post_id'];
+              referencedRelation: 'discussion_post';
+              referencedColumns: ['post_id'];
+            }
+          ];
+        };
+        discussion_post: {
+          Row: {
+            content: string | null;
+            created_at: string;
+            post_id: number;
+            title: string | null;
+            user_id: string | null;
+          };
+          Insert: {
+            content?: string | null;
+            created_at?: string;
+            post_id?: number;
+            title?: string | null;
+            user_id?: string | null;
+          };
+          Update: {
+            content?: string | null;
+            created_at?: string;
+            post_id?: number;
+            title?: string | null;
+            user_id?: string | null;
+          };
+          Relationships: [];
+        };
+        discussion_user: {
+          Row: {
+            id: number;
+            option_id: number | null;
+            post_id: number | null;
+            user_id: string | null;
+          };
+          Insert: {
+            id?: number;
+            option_id?: number | null;
+            post_id?: number | null;
+            user_id?: string | null;
+          };
+          Update: {
+            id?: number;
+            option_id?: number | null;
+            post_id?: number | null;
+            user_id?: string | null;
+          };
+          Relationships: [
+            {
+              foreignKeyName: 'discussion_user_option_id_fkey';
+              columns: ['option_id'];
+              referencedRelation: 'discussion_option';
+              referencedColumns: ['option_id'];
+            },
+            {
+              foreignKeyName: 'discussion_user_post_id_fkey';
+              columns: ['post_id'];
+              referencedRelation: 'discussion_post';
+              referencedColumns: ['post_id'];
+            }
+          ];
+        };
+        ignored_movies: {
+          Row: {
+            ignored_movies: string[];
+            userid: string;
+          };
+          Insert: {
+            ignored_movies: string[];
+            userid: string;
+          };
+          Update: {
+            ignored_movies?: string[];
+            userid?: string;
+          };
+          Relationships: [
+            {
+              foreignKeyName: 'ignored_movies_userid_fkey';
+              columns: ['userid'];
               referencedRelation: 'users';
               referencedColumns: ['id'];
             }
@@ -87,6 +168,7 @@ declare global {
           Row: {
             category: Json | null;
             content: string;
+            created_at: string;
             date: string | null;
             keyword: string[] | null;
             movieid: string;
@@ -97,6 +179,7 @@ declare global {
           Insert: {
             category?: Json | null;
             content: string;
+            created_at?: string;
             date?: string | null;
             keyword?: string[] | null;
             movieid: string;
@@ -107,6 +190,7 @@ declare global {
           Update: {
             category?: Json | null;
             content?: string;
+            created_at?: string;
             date?: string | null;
             keyword?: string[] | null;
             movieid?: string;
@@ -129,21 +213,21 @@ declare global {
             id: string;
             name: string | null;
             username: string | null;
-            watched_movies: Json;
+            watched_movies: string[];
           };
           Insert: {
             avatar_url?: string | null;
             id: string;
             name?: string | null;
             username?: string | null;
-            watched_movies?: Json;
+            watched_movies?: string[];
           };
           Update: {
             avatar_url?: string | null;
             id?: string;
             name?: string | null;
             username?: string | null;
-            watched_movies?: Json;
+            watched_movies?: string[];
           };
           Relationships: [
             {

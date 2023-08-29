@@ -20,6 +20,7 @@ const KeywordButtons = () => {
       setGenres(data);
     };
     fetchData();
+    router.prefetch('/');
   }, []);
 
   const handleGenreClick = (genreId: number | null) => {
@@ -29,6 +30,7 @@ const KeywordButtons = () => {
   return (
     <div>
       {genres.map((genre: MovieGenre, idx: number) => {
+        router.prefetch(`/${genre.id}`);
         return (
           <>
             <button

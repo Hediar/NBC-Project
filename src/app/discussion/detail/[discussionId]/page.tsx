@@ -1,4 +1,4 @@
-import DiscussionDetail from '@/components/Discussion/DiscussionDetail';
+import DiscussionDetail from '@/components/Discussion/detail/DiscussionDetail';
 import React from 'react';
 
 interface Props {
@@ -6,6 +6,8 @@ interface Props {
     discussionId: string;
   };
 }
+// export const revalidate = 0;
+export const dynamic = 'force-dynamic';
 
 const DiscussionDetailPage = ({ params }: Props) => {
   const { discussionId } = params;

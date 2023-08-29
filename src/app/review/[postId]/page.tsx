@@ -38,7 +38,7 @@ const ReviewDetail = async ({ params }: Props) => {
         영화정보
         <Image
           src={`${baseImgUrl}w300_and_h450_bestv2${movieData.backdrop_path}`}
-          alt=""
+          alt="이미지없음"
           width={300}
           height={450}
           quality={100}

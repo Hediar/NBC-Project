@@ -41,7 +41,7 @@ const DragDrop = ({ setFiles }: Props) => {
       </div>
 
       {previewFiles.map((el, idx) => (
-        <Image key={el + idx} src={el} width="50" height="50" alt="" />
+        <Image key={el + idx} src={el} width="50" height="50" alt="이미지없음" />
       ))}
     </>
   );

@@ -21,25 +21,19 @@ export const POST = async (request: Request) => {
   if (error) {
     console.log(error);
     if (error.message === 'User already registered') {
-      console.log(true);
       return NextResponse.json({ error: true, message: 'User already registered.' });
     }
 
     if (error.message.includes('captcha protection: request disallowed')) {
-      console.log(true);
       return NextResponse.json({ error: true, message: 'captcha 오류.' });
     }
-    console.log(error.cause);
-    console.log(error.message);
-    console.log(error.name);
-    console.log(error.stack);
-    console.log(error.status);
+    // console.log(error.cause);
+    // console.log(error.message);
+    // console.log(error.name);
+    // console.log(error.stack);
+    // console.log(error.status);
     return NextResponse.redirect(`${requestUrl.origin}/sign-up?error=에러가 발생했습니다.`, { status: 301 });
   }
 
-  return NextResponse.json({ error: false, message: '회원가입에 성공' });
-  // return NextResponse.redirect(
-  //   `${requestUrl.origin}/sign-up?success=이메일을 확인해주세요. 이 창은 닫으셔도 좋습니다. `,
-  //   { status: 301 }
-  // );
+  return NextResponse.json({ error: false, message: '회원가입 성공' });
 };
