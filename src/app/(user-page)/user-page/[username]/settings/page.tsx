@@ -19,7 +19,7 @@ const UserSettingsPage = async () => {
   return (
     <div className="flex w-8/12 pt-10 h-[calc(100vh-134px)] gap-8 pb-8">
       <UserSettingsTabs />
-      <UserSettingsProfile avatarUrl={avatarUrl} userId={user!.id} username={username} />
+      <UserSettingsProfile user={user!} avatarUrl={avatarUrl} userId={user!.id} username={username} />
     </div>
   );
 };
