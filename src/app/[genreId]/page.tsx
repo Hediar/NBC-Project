@@ -1,5 +1,5 @@
-import KeywordButtons from '@/components/MainPageMovies/KeywordButtons';
-import TrendMoives from '@/components/MainPageMovies/TrendMoives';
+import KeywordButtons from '@/components/MainPage/MainPageMovies/KeywordButtons';
+import TrendMoives from '@/components/MainPage/MainPageMovies/TrendMoives';
 import React from 'react';
 
 const GenreMovies = ({ params }: { params: { genreId: string } }) => {
