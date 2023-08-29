@@ -7,12 +7,12 @@ import React from 'react';
 const GenreMovies = ({ params }: { params: { genreId: string } }) => {
   const { genreId } = params;
   return (
-    <div>
+    <main>
       <KeywordButtons />
       <TrendMoives genreId={genreId} />
       <LatestReviews />
       <LatestMovies />
-    </div>
+    </main>
   );
 };
 
