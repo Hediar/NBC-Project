@@ -1,9 +1,9 @@
 import { fetchTrendMoviesByGenre, getTrendingMovies, tmdbOptions } from '@/api/tmdb';
-import MovieLikes from '../../MovieLikes/MovieLikes';
+import MovieLikes from '../MovieLikes/MovieLikes';
 import Image from 'next/image';
 import Link from 'next/link';
-import DisplayMovies from '../../common/DisplayMovies';
-import AddIgnoreMovieButton from '../../common/AddIgnoreMovieButton';
+import DisplayMovies from '../common/DisplayMovies';
+import AddIgnoreMovieButton from '../common/AddIgnoreMovieButton';
 
 export const revalidate = 0;
 
