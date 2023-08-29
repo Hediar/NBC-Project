@@ -10,8 +10,14 @@ export default async function Home() {
     <main>
       <KeywordButtons />
       <TrendMoives genreId={'all'} />
-      <LatestReviews />
-      <LatestMovies />
+      <div className="flex-wrap">
+        <div className="basis-1/2">
+          <LatestReviews />
+        </div>
+        <div className="basis-1/2">
+          <LatestMovies />
+        </div>
+      </div>
     </main>
   );
 }

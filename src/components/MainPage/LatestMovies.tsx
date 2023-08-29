@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 const LatestMovies = () => {
   const [newMovies, setmovieData] = useState([]);
   useEffect(() => {
-    const test = async () => {
+    const fetchData = async () => {
       const currentDate = dayjs();
       const oneMonthPrev = currentDate.subtract(1, 'month');
 
@@ -17,12 +17,11 @@ const LatestMovies = () => {
       const data = await getNewMovies(formattedCurrentDate, formattedOneMonthPrev);
       setmovieData(data.results);
     };
-    test();
-    // const newMovies = test().results;
+    fetchData();
   }, []);
 
   return (
-    <div>
+    <div className="p-5">
       <h2 className="text-2xl">최신 영화</h2>
       <div className="p-5">
         <div className="overflow-x-scroll flex">
