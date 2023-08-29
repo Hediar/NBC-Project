@@ -29,6 +29,27 @@ export const getTrendingMovies = async () => {
   }
 };
 
+export const getNewMovies = async () => {
+  try {
+    const currentDate = new Date();
+    const oneMonthPrev = new Date();
+    oneMonthPrev.setMonth(oneMonthPrev.getMonth() - 1);
+
+    const formattedCurrentDate = currentDate.toISOString().split('T')[0];
+    const formattedOneMonthPrev = oneMonthPrev.toISOString().split('T')[0];
+
+    const movies = await fetch(
+      `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}discover/movie?include_adult=false&include_video=false&language=ko-KR&page=1&release_date.gte=${formattedOneMonthPrev}&release_date.lte=${formattedCurrentDate}&sort_by=popularity.desc`,
+      tmdbOptions
+    );
+    const movieData = await movies.json();
+
+    return movieData;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const getGenres = async () => {
   try {
     const movies = await fetch(`${process.env.NEXT_PUBLIC_TMDB_BASE_URL}genre/movie/list?language=ko`, tmdbOptions);
