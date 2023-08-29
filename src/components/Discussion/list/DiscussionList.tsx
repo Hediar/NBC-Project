@@ -19,7 +19,7 @@ const DiscussionList = ({ pageNum, searchVal }: Props) => {
 
   return (
     <div>
-      {postData?.map((post: DiscussionPost) => {
+      {postData?.map((post) => {
         return <DiscussionPost key={post.post_id} post={post} />;
       })}
 

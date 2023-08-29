@@ -22,7 +22,7 @@ const DiscussionDetail = async ({ discussionId }: Props) => {
           <p className="text-xl">{postData.content}</p>
         </div>
 
-        <OptionVote postId={postData.post_id} />
+        <OptionVote postId={postData.post_id} voteCount={postData.vote_count} />
       </div>
 
       {/* 작성자랑 유저id랑 같을때만 기능하도록 */}

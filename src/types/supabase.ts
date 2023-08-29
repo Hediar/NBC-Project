@@ -33,23 +33,38 @@ declare global {
           Row: {
             content: string | null;
             created_at: string;
+            movie_id: string | null;
+            movie_title: string | null;
             post_id: number;
             title: string | null;
             user_id: string | null;
+            view_count: number | null;
+            vote_count: number | null;
+            comment_count: number | null;
           };
           Insert: {
             content?: string | null;
             created_at?: string;
+            movie_id?: string | null;
+            movie_title?: string | null;
             post_id?: number;
             title?: string | null;
             user_id?: string | null;
+            view_count?: number | null;
+            vote_count?: number | null;
+            comment_count: number | null;
           };
           Update: {
             content?: string | null;
             created_at?: string;
+            movie_id?: string | null;
+            movie_title?: string | null;
             post_id?: number;
             title?: string | null;
             user_id?: string | null;
+            view_count?: number | null;
+            vote_count?: number | null;
+            comment_count: number | null;
           };
           Relationships: [];
         };

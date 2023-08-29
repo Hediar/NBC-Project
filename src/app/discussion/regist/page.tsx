@@ -1,5 +1,6 @@
 'use client';
 import useUserInfoStore from '@/store/saveCurrentUserData';
+import useToggleSignInModal from '@/store/toggleSignInModal';
 import supabase from '@/supabase/config';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
@@ -18,6 +19,7 @@ const DiscussionRegistPage = (props: Props) => {
   const optionInputRef = useRef<HTMLInputElement>(null);
   const [optionValueCheck, setOptionValueCheck] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const { isSignInModalOpen, setIsSignInModalOpen } = useToggleSignInModal();
 
   const router = useRouter();
 
@@ -39,17 +41,21 @@ const DiscussionRegistPage = (props: Props) => {
   const handleSubmit = async () => {
     if (!userId) {
       alert('로그인 해주세요');
-      return router.push('/sign-in');
+      return setIsSignInModalOpen(isSignInModalOpen);
     }
     try {
       const newPost = {
         user_id: userId,
         title,
-        content
+        content,
+        vote_count: 0,
+        view_count: 0,
+        comment_count: 0
       };
       const { data } = await supabase.from('discussion_post').insert(newPost).select();
-
+      console.log('선택지기능사용=>', isOpen);
       if (isOpen) {
+        console.log('디버깅중!');
         for (let i = 0; i < options.length; i++) {
           const newOption = {
             post_id: data![0].post_id,
