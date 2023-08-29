@@ -7,19 +7,16 @@ declare global {
         discussion_option: {
           Row: {
             content: string | null;
-            count: number | null;
             option_id: number;
             post_id: number;
           };
           Insert: {
             content?: string | null;
-            count?: number | null;
             option_id?: number;
             post_id: number;
           };
           Update: {
             content?: string | null;
-            count?: number | null;
             option_id?: number;
             post_id?: number;
           };
@@ -172,6 +169,7 @@ declare global {
             date: string | null;
             keyword: string[] | null;
             movieid: string;
+            rating: number | null;
             review: string;
             reviewid: string;
             userid: string;
@@ -183,6 +181,7 @@ declare global {
             date?: string | null;
             keyword?: string[] | null;
             movieid: string;
+            rating?: number | null;
             review: string;
             reviewid?: string;
             userid: string;
@@ -194,6 +193,7 @@ declare global {
             date?: string | null;
             keyword?: string[] | null;
             movieid?: string;
+            rating?: number | null;
             review?: string;
             reviewid?: string;
             userid?: string;

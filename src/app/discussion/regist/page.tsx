@@ -53,8 +53,7 @@ const DiscussionRegistPage = (props: Props) => {
         for (let i = 0; i < options.length; i++) {
           const newOption = {
             post_id: data![0].post_id,
-            content: options[i],
-            count: 0
+            content: options[i]
           };
 
           await supabase.from('discussion_option').insert(newOption);
