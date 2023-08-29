@@ -17,7 +17,6 @@ const SearchMovies = () => {
     const fetchDate = async () => {
       const { results } = await searchReviewMovies(value);
       setSearchMovies(results);
-      console.log('검색 테스트 ========> ', results);
     };
     fetchDate();
   };
