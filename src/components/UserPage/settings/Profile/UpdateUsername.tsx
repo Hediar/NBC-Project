@@ -71,7 +71,7 @@ const UpdateUsername = ({ userData }: Props) => {
       {showFormatError && <p>{formatError}</p>}
       <div className="flex  gap-6">
         <div>
-          <h2>유저이름</h2>
+          <h2>닉네임</h2>
           <div className="flex gap-4">
             <input
               className="py-1 px-3 shadow-sm shadow-gray-400"

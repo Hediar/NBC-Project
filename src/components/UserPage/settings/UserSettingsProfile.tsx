@@ -5,6 +5,7 @@ import Miscellaneous from './Profile/Miscellaneous';
 import UpdateEmail from './Profile/UpdateEmail';
 import UpdateName from './Profile/UpdateName';
 import UpdatePassword from './Profile/UpdatePassword';
+import DeleteUser from './Profile/DeleteUser';
 
 interface Props {
   user: User;
@@ -22,6 +23,7 @@ const UserSettingsProfile = ({ user, userData }: Props) => {
       <UpdateUsername userData={userData} />
       <UpdateName userData={userData} />
       <UpdatePassword />
+      <DeleteUser />
     </div>
   );
 };

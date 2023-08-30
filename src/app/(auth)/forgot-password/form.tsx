@@ -33,6 +33,7 @@ const ChangePasswordFromMail = () => {
           className="border border-gray-400 py-1 px-2"
           type="password"
           name="password"
+          pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
           value={newPassword}
           onChange={(e) => setNewPassword(e.target.value)}
         />
