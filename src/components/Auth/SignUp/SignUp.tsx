@@ -1,20 +1,11 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import Link from 'next/link';
-import Message from '@/components/Auth/Message';
 import SubmitButton from '@/components/Auth/SubmitButton';
 import SocialButtons from '@/components/Auth/SocialButtons';
 import HCaptcha from '@hcaptcha/react-hcaptcha';
 import { useRouter } from 'next/navigation';
 import useToggleSignUpModal from '@/store/toggleSignUpModal';
-
-const passwordOnChangeHandler = (
-  e: React.ChangeEvent<HTMLInputElement>,
-  set: React.Dispatch<React.SetStateAction<string>>
-) => {
-  set(e.target.value);
-};
 
 function SignUp() {
   const router = useRouter();
@@ -26,6 +17,21 @@ function SignUp() {
   const [captchaToken, setCaptchaToken] = useState<any>();
   const { isSignUpModalOpen, setIsSignUpModalOpen } = useToggleSignUpModal();
   const [message, setMessage] = useState<string>('');
+  const [passwordError, setPasswordError] = useState<string | null>(null);
+
+  const handlePasswordChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    set: React.Dispatch<React.SetStateAction<string>>
+  ) => {
+    const newPassword = e.target.value;
+    set(newPassword);
+
+    if (!/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/.test(newPassword)) {
+      setPasswordError('비밀번호는 최소 8자 이상이어야 하며, 최소 하나의 대문자, 소문자, 숫자가 포함되어야 합니다.');
+    } else {
+      setPasswordError(null);
+    }
+  };
 
   useEffect(() => {
     if (!passwordValue || !confirmingPasswordValue) {
@@ -88,7 +94,7 @@ function SignUp() {
           placeholder="password"
           pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
           required
-          onChange={(e) => passwordOnChangeHandler(e, setPasswordValue)}
+          onChange={(e) => handlePasswordChange(e, setPasswordValue)}
           autoComplete="new-password"
         />
         <input
@@ -98,7 +104,7 @@ function SignUp() {
           placeholder="confirm password"
           pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
           required
-          onChange={(e) => passwordOnChangeHandler(e, setConfirmingPasswordValue)}
+          onChange={(e) => handlePasswordChange(e, setConfirmingPasswordValue)}
         />
         <HCaptcha
           // sitekey="6c9d3095-7348-4fe3-bf72-1f2b2b7ef34d"
@@ -114,6 +120,7 @@ function SignUp() {
           shouldDisable={!isPasswordMatch}
           isError={isError}
           setIsError={setIsError}
+          passwordError={passwordError}
         />
         <button
           className="border border-slate-900 p-2 cursor-pointer w-full rounded-md flex justify-center "

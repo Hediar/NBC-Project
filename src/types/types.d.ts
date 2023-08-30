@@ -23,7 +23,7 @@ declare global {
   }
 
   interface MovieGenre {
-    id: number;
+    id: number | string;
     name: string;
   }
 
@@ -168,6 +168,9 @@ declare global {
     user_id: string;
     title: string;
     content: string;
+    view_count: number;
+    vote_count: number;
+    comment_count: number;
   }
 
   interface DiscussionOption {

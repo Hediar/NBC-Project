@@ -34,3 +34,24 @@ export const getReviews = async ({
     .range(rangeFrom, rangeTo);
   return fetchData;
 };
+
+export const getLatestReviews = async () => {
+  const fetchData = await supabase
+    .from('reviews')
+    .select('*')
+    .order('date', { ascending: false }) // 날짜 기준으로 내림차순 정렬
+    .limit(4); // 가져올 개수 제한
+
+  return fetchData;
+};
+
+// userid기반으로 닉네임 찾아야함
+export const getUserName = async (userid: string) => {
+  const { data: userName } = await supabase.from('users').select('username').eq('id', userid);
+
+  if (userName && userName.length > 0) {
+    return userName[0].username;
+  }
+
+  return null; // 사용자가 없을 경우 또는 데이터가 올바르지 않을 경우
+};
