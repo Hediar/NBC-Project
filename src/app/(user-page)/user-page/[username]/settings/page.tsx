@@ -9,17 +9,12 @@ const UserSettingsPage = async () => {
     data: { user }
   } = await supabase.auth.getUser();
 
-  const { data: userData } = await supabase.from('users').select('*').eq('id', user!.id);
-  const avatarUrl = userData![0].avatar_url!;
-  const username = userData![0].username!;
-
-  const userEmail = user!.email as string;
-  const appMetadata = user!.app_metadata;
+  const { data: userData } = await supabase.from('users').select('*').eq('id', user!.id).single();
 
   return (
     <div className="flex w-8/12 pt-10 h-[calc(100vh-134px)] gap-8 pb-8">
       <UserSettingsTabs />
-      <UserSettingsProfile user={user!} avatarUrl={avatarUrl} userId={user!.id} username={username} />
+      <UserSettingsProfile user={user!} userData={userData!} />
     </div>
   );
 };

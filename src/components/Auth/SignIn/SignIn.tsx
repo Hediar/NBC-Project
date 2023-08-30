@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import HCaptcha from '@hcaptcha/react-hcaptcha';
 import SocialButtons from '@/components/Auth/SocialButtons';
 import useToggleSignInModal from '@/store/toggleSignInModal';
+import useToggleForgotPassword from '@/store/toggleForgotPassword';
 
 interface Data {
   error: boolean;
@@ -21,6 +22,7 @@ const SignIn = () => {
   const [captchaToken, setCaptchaToken] = useState<any>();
   const [isError, setIsError] = useState<boolean>(false);
   const { isSignInModalOpen, setIsSignInModalOpen } = useToggleSignInModal();
+  const { isForgotPasswordOpen, setIsForgotPasswordOpen } = useToggleForgotPassword();
   const [message, setMessage] = useState<string>('');
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -90,13 +92,16 @@ const SignIn = () => {
           pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
           required
         />
-        <HCaptcha
-          // sitekey="6c9d3095-7348-4fe3-bf72-1f2b2b7ef34d"
-          sitekey="10000000-ffff-ffff-ffff-000000000001"
-          onVerify={(token) => {
-            setCaptchaToken(token);
-          }}
-        />
+        {!isForgotPasswordOpen && (
+          <HCaptcha
+            // sitekey="6c9d3095-7348-4fe3-bf72-1f2b2b7ef34d"
+            sitekey="10000000-ffff-ffff-ffff-000000000001"
+            onVerify={(token) => {
+              setCaptchaToken(token);
+            }}
+          />
+        )}
+
         <SubmitButton
           inputValue="로그인하기"
           loadingMessage="로그인 하는 중..."
@@ -111,6 +116,15 @@ const SignIn = () => {
           onClick={() => setIsSignInModalOpen(isSignInModalOpen)}
         >
           돌아가기
+        </button>
+        <button
+          type="button"
+          onClick={() => {
+            setIsForgotPasswordOpen(isForgotPasswordOpen);
+          }}
+          className="text-sm"
+        >
+          비밀번호를 잊어버리셨나요?
         </button>
         <span>{message}</span>
         <SocialButtons />

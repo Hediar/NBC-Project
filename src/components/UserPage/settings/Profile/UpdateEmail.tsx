@@ -1,16 +1,19 @@
-/* eslint-disable react/no-unescaped-entities */
 'use client';
 
+/* eslint-disable react/no-unescaped-entities */
+
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { UserAppMetadata } from '@supabase/supabase-js';
+import { User } from '@supabase/supabase-js';
 import { useRef, useState } from 'react';
 
 interface Props {
-  appMetadata: UserAppMetadata;
-  userPrevEmail: string;
+  user: User;
 }
 
-const UserSettingsProfileT = ({ appMetadata, userPrevEmail }: Props) => {
+const UpdateEmail = ({ user }: Props) => {
+  const userPrevEmail = user.email as string;
+  const appMetadata = user.app_metadata;
+
   const [emailValue, setEmailValue] = useState<string>(userPrevEmail);
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
   const [showEmailHover, setShowEmailHover] = useState(false);
@@ -27,7 +30,7 @@ const UserSettingsProfileT = ({ appMetadata, userPrevEmail }: Props) => {
   }
 
   const editHandler = async () => {
-    if (buttonRef.current && buttonRef.current.innerText === '수정하기') {
+    if (buttonRef.current && buttonRef.current.innerText === '수정') {
       if (confirm('수정하시겠습니까?')) {
         setIsDisabled(false);
         if (inputRef.current) {
@@ -63,7 +66,7 @@ const UserSettingsProfileT = ({ appMetadata, userPrevEmail }: Props) => {
 
         setIsDisabled(true);
         if (inputRef.current) {
-          buttonRef.current!.innerText = '수정하기';
+          buttonRef.current!.innerText = '수정';
         }
       }
     }
@@ -71,20 +74,22 @@ const UserSettingsProfileT = ({ appMetadata, userPrevEmail }: Props) => {
 
   return (
     <div className="w-10/12">
-      <h1>이메일 변경하기</h1>
-      <form action={editHandler}>
-        <h2>메인 이메일 주소</h2>
+      <h2>이메일</h2>
+      <form action={editHandler} className="flex gap-4">
         <input
+          className="py-1 px-3 shadow-sm shadow-gray-400"
           ref={inputRef}
           type="email"
           value={emailValue}
           onChange={(e) => setEmailValue(e.target.value)}
           disabled={isDisabled}
         />
-        <button ref={buttonRef}>수정하기</button>
+        <button className="py-1 px-3 shadow-sm shadow-gray-400" ref={buttonRef}>
+          수정
+        </button>
       </form>
     </div>
   );
 };
 
-export default UserSettingsProfileT;
+export default UpdateEmail;
