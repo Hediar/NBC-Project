@@ -24,7 +24,7 @@ const KeywordButtons = ({ params }: { params: string }) => {
   //   console.log(genres);
   // }, []);
   const genres = MOVIE_GENRES;
-  console.log('흠', params);
+
   return (
     <div className="p-5 overflow-scroll flex ">
       {/* {genres.map((genre: MovieGenre, idx: number) => {
