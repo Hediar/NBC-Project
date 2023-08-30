@@ -137,10 +137,11 @@ const ReviewForm = ({ movieId, editReview }: Props) => {
       <form onSubmit={addPost}>
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="date">
-            영화 본 날짜
+            콘텐츠 본 날짜
+            <abbr title="required">*</abbr>
           </label>
           <ReactDatePicker
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-"
+            className="mt-2 flex h-12 w-full items-center justify-center rounded-md border bg-white/0 p-3 text-sm outline-none border-gray-200"
             id="selectedDate"
             name="selectedDate"
             locale={ko}
@@ -152,8 +153,12 @@ const ReviewForm = ({ movieId, editReview }: Props) => {
             placeholderText="YYYY/MM/DD"
             onChange={(date) => setSelectedDate(date)}
           />
+          <p className="text-green-500 font-medium text-sm ml-3">성공메세지</p>
+          <p className="text-red-500 font-medium text-sm ml-3">오류메세지</p>
+
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="review">
             어떤 점이 좋았나요?
+            <abbr title="required">*</abbr>
           </label>
           {REVIEW_CATEGORY_LIST.map((category, i) => (
             <CategoryBox
@@ -165,6 +170,7 @@ const ReviewForm = ({ movieId, editReview }: Props) => {
           ))}
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="review">
             리뷰 한줄평
+            <abbr title="required">*</abbr>
           </label>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-"
@@ -177,6 +183,7 @@ const ReviewForm = ({ movieId, editReview }: Props) => {
           />
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="review">
             별점
+            <abbr title="required">*</abbr>
           </label>
           <div>
             <StarBox rating={rating} setRating={setRating} />

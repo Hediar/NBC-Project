@@ -13,14 +13,18 @@ export const updateReview = async (id: string, post: ReviewsTable) => {
 export const getReviews = async ({
   userid,
   page = 1,
-  limit = 4
+  limit = 3
 }: {
   userid: string;
   page?: number;
   limit?: number;
 }) => {
-  const rangeFrom = page == 1 ? 0 : limit * (page - 1) + 1;
-  const rangeTo = limit * page;
+  const initFrom = 0;
+  const initTo = limit - 1;
+  const rangeFrom = page == 1 ? initFrom : (limit + 1) * (page - 1) - 1;
+  const rangeTo = (limit + 1) * page - initTo;
+
+  // console.log(rangeFrom, '~', rangeTo);
 
   const fetchData = await supabase
     .from('reviews')
