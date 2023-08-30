@@ -6,12 +6,14 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 
 interface Props {
-  avatarUrl: string;
-  userId: string;
-  username: string;
+  userData: Database['public']['Tables']['users']['Row'];
 }
 
-const AvatarPhoto = ({ avatarUrl, userId, username }: Props) => {
+const AvatarPhoto = ({ userData }: Props) => {
+  const avatarUrl = userData.avatar_url!;
+  const userId = userData.id!;
+  const username = userData.username!;
+
   const [photoURLValue, setPhotoURLValue] = useState<string>(avatarUrl);
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
   const [photo, setPhoto] = useState<File | null>(null);

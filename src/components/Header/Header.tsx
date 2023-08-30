@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import AuthButton from './_auth/AuthButtons';
 import HeaderUser from './HeaderUser';
 import { cookies } from 'next/headers';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import Link from 'next/link';
+
 export const dynamic = 'force-dynamic';
+
 const Header = async () => {
   const supabase = createServerComponentClient({ cookies });
   const {

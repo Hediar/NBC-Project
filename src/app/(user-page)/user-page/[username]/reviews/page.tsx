@@ -47,7 +47,7 @@ const MyReviewPage = ({ params, searchParams }: Props) => {
   // const { data: reviews, error: reviewsError } = await getReviews({ userid, page, limit });
   //////////////////////////////////////////////////////////////////
   const { userInfo } = useUserInfoStore();
-  console.log(userInfo);
+  // console.log(userInfo);
 
   const [reviews, setReviews] = useState<ReviewsTable[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
