@@ -3,7 +3,7 @@ import { getDiscussionPostOption } from '@/api/supabase-discussion';
 import supabase from '@/supabase/config';
 import Link from 'next/link';
 import React from 'react';
-
+import altImage from '../../../../public/anonymous-avatar-icon.png';
 interface Props {
   post: DiscussionPost;
 }
@@ -21,7 +21,7 @@ const DiscussionPost = async ({ post }: Props) => {
 
       <div className="h-[5.5rem] w-[5%]">
         {/* 선택된 토론대상무비 이미지 넣을부분. */}
-        <img src="" alt="테스트" className="w-4/5 h-4/5 m-2 border" />
+        <img src={`${altImage}`} alt="테스트" className="w-4/5 h-4/5 m-2 border" />
       </div>
       <Link href={`/discussion/detail/${post.post_id}`} className="hover:cursor-pointer w-4/5">
         <p className="text-sm">콘텐츠제목표기</p>
