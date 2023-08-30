@@ -29,6 +29,20 @@ export const getTrendingMovies = async () => {
   }
 };
 
+export const getNewMovies = async (formattedCurrentDate: string, formattedOneMonthPrev: string) => {
+  try {
+    const movies = await fetch(
+      `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}discover/movie?include_adult=false&include_video=false&language=ko-KR&page=1&release_date.gte=${formattedOneMonthPrev}&release_date.lte=${formattedCurrentDate}&sort_by=popularity.desc`,
+      tmdbOptions
+    );
+    const movieData = await movies.json();
+
+    return movieData;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const getGenres = async () => {
   try {
     const movies = await fetch(`${process.env.NEXT_PUBLIC_TMDB_BASE_URL}genre/movie/list?language=ko`, tmdbOptions);
@@ -121,9 +135,9 @@ const getCreditsData = async (id: string) => {
   return { appearences: creditsData.cast, productions: creditsData.crew };
 };
 
-export const searchReviewMovies = async (query: string) => {
+export const searchReviewMovies = async (query: string, currentPage: number = 1) => {
   const searchRes = await fetch(
-    `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}search/movie?query=${query}&include_adult=true&language=ko-KR&page=1`,
+    `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}search/movie?query=${query}&include_adult=true&language=ko-KR&page=${currentPage}`,
     options
   );
   const searchData = await searchRes.json();

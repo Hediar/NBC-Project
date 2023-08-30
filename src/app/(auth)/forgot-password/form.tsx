@@ -10,19 +10,23 @@ const ChangePasswordFromMail = () => {
   const [newPassword, setNewPassword] = useState<string>('');
   const router = useRouter();
   const { isSignInModalOpen, setIsSignInModalOpen } = useToggleSignInModal();
+
   //
   const updatePasswordHandler = async () => {
     const { data, error } = await supabase.auth.updateUser({
       password: newPassword
     });
     if (error) {
-      console.log(error);
+      if (error.message.includes('should be different')) {
+        alert('예전 비밀번호와 같습니다. 다른 비밀번호를 입력해주세요.');
+        return;
+      }
       alert('에러가 발생했습니다. 다시 시도해주세요.');
-      router.replace(`${process.env.NEXT_PUBLIC_BASE_URL}`);
-      setIsSignInModalOpen(isSignInModalOpen);
+      // router.replace(`${process.env.NEXT_PUBLIC_BASE_URL}`);
       return;
     }
     alert('성공했습니다');
+    router.refresh();
     router.replace(`${process.env.NEXT_PUBLIC_BASE_URL}`);
   };
   return (

@@ -2,28 +2,18 @@
 
 import getMovieDataWithMovieIds from '@/api/getMovieDataWithMovieIds';
 import useUserInfoStore from '@/store/saveCurrentUserData';
-import { useReviewMovieStore, useSearchModalStore } from '@/store/useReviewStore';
 import supabase from '@/supabase/config';
-import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import MyMoviesSwiper from './MyMoviesSwiper';
 
 type Props = {};
 
 const MyMovies = (props: Props) => {
   const { userInfo } = useUserInfoStore();
-  const { saveSearchMovieId } = useReviewMovieStore();
-  const { closeSearchModal } = useSearchModalStore();
 
   const [likesList, setLikesList] = useState<any>([]);
   const [watchLaterList, setWatchLaterList] = useState<any>([]);
   const [tab, setTab] = useState(0);
-
-  const baseImgUrl = process.env.NEXT_PUBLIC_TMDB_BASE_IMAGE_URL;
-
-  const handleClick = (movieId: number) => {
-    saveSearchMovieId(movieId);
-    closeSearchModal();
-  };
 
   useEffect(() => {
     const getLikesList = async () => {
@@ -78,21 +68,12 @@ const MyMovies = (props: Props) => {
         </li>
       </ul>
       <div className="overflow-auto h-96">
-        {[likesList, watchLaterList][tab].map((movie: any, i: number) => (
-          <li key={movie.title + i}>
-            <button type="button" onClick={() => handleClick(movie.id)} className="cursor-pointer">
-              <Image
-                src={`${baseImgUrl}w342${movie.poster_path}`}
-                alt=""
-                width={342}
-                height={450}
-                quality={100}
-                className="rounded-lg"
-              />
-              <span>{movie.title}</span>
-            </button>
-          </li>
-        ))}
+        {
+          [
+            <MyMoviesSwiper dataList={likesList} spaceBetween={20} slidesPerView={4} />,
+            <MyMoviesSwiper dataList={watchLaterList} spaceBetween={20} slidesPerView={4} />
+          ][tab]
+        }
       </div>
     </div>
   );

@@ -23,7 +23,7 @@ declare global {
   }
 
   interface MovieGenre {
-    id: number;
+    id: number | string;
     name: string;
   }
 
@@ -120,16 +120,29 @@ declare global {
     user_id: string[];
   }
 
+  // interface ReviewsTable {
+  //   category: Json | null;
+  //   content: string;
+  //   date: Date | string | null;
+  //   keyword: string[] | [] | undefined;
+  //   movieid: string;
+  //   review: string;
+  //   reviewid?: string;
+  //   userid: string;
+  //   rating: number;
+  //   created_at: string;
+  // }
   interface ReviewsTable {
     category: Json | null;
     content: string;
-    date: Date | string | null;
-    keyword: string[] | [] | undefined;
+    created_at: string;
+    date: string | null;
+    keyword: string[] | null;
     movieid: string;
+    rating: number | null;
     review: string;
-    reviewid?: string;
+    reviewid: string;
     userid: string;
-    rating: number;
   }
 
   interface TMDBSearchMovie {
@@ -155,6 +168,11 @@ declare global {
     user_id: string;
     title: string;
     content: string;
+    movie_id: string;
+    movie_title: string;
+    vote_count: number;
+    view_count: number;
+    comment_count: number;
   }
 
   interface DiscussionOption {

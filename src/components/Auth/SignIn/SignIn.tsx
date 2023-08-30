@@ -120,7 +120,6 @@ const SignIn = () => {
         <button
           type="button"
           onClick={() => {
-            // setIsSignInModalOpen(isSignInModalOpen);
             setIsForgotPasswordOpen(isForgotPasswordOpen);
           }}
           className="text-sm"

@@ -3,6 +3,7 @@ import ReviewMovie from '@/components/ReviewForm/ReviewMovie';
 import SearchPopup from '@/components/ReviewForm/SearchPopup';
 import useUserInfoStore from '@/store/saveCurrentUserData';
 import { useReviewMovieStore, useSearchModalStore } from '@/store/useReviewStore';
+import useToggleSignInModal from '@/store/toggleSignInModal';
 import supabase from '@/supabase/config';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
@@ -28,6 +29,7 @@ const DiscussionRegistPage = (props: Props) => {
   const optionInputRef = useRef<HTMLInputElement>(null);
   const [optionValueCheck, setOptionValueCheck] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const { isSignInModalOpen, setIsSignInModalOpen } = useToggleSignInModal();
 
   const router = useRouter();
 
@@ -49,14 +51,17 @@ const DiscussionRegistPage = (props: Props) => {
   const handleSubmit = async () => {
     if (!userId) {
       alert('로그인 해주세요');
-      return router.push('/sign-in');
+      return setIsSignInModalOpen(isSignInModalOpen);
     }
     try {
       const newPost = {
         user_id: userId,
         title,
         content,
-        movie_id: movieId
+        movie_id: movieId,
+        vote_count: 0,
+        view_count: 0,
+        comment_count: 0
       };
       const { data } = await supabase.from('discussion_post').insert(newPost).select();
 

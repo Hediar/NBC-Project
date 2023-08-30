@@ -3,8 +3,13 @@
 import { searchReviewMovies } from '@/api/tmdb';
 import { useReviewMovieStore, useSearchModalStore } from '@/store/useReviewStore';
 import React from 'react';
+import Paging from '../common/Paging';
 
 const SearchMovies = () => {
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const [totalPages, setTotalPages] = React.useState(1);
+  const dataPerPage: number = 3;
+
   const [searchMovies, setSearchMovies] = React.useState<TMDBSearchMovie[]>();
 
   const { saveSearchMovieId } = useReviewMovieStore();
@@ -14,11 +19,14 @@ const SearchMovies = () => {
     const value = e.target.value;
 
     if (!value) return;
-    const fetchDate = async () => {
+    const fetchData = async () => {
       const { results } = await searchReviewMovies(value);
+
+      const total_pages = Math.ceil(results.length / dataPerPage);
       setSearchMovies(results);
+      setTotalPages(total_pages);
     };
-    fetchDate();
+    fetchData();
   };
 
   const handleClick = (movieId: number) => {
@@ -43,14 +51,18 @@ const SearchMovies = () => {
         {!isSearchStart && <li>리뷰 남기실 콘텐츠를 검색해 주세요</li>}
         {isSearchNull && <li>검색결과가 없습니다</li>}
         {isSearchStart &&
-          searchMovies.map((movie, i: number) => (
-            <li key={'searchMovieKey' + i}>
-              <button type="button" onClick={() => handleClick(movie.id)}>
-                {movie.title}
-              </button>
-            </li>
-          ))}
+          searchMovies
+            .slice(currentPage * dataPerPage - dataPerPage, currentPage * dataPerPage)
+            .map((movie, i: number) => (
+              <li key={'searchMovieKey' + i}>
+                <button type="button" onClick={() => handleClick(movie.id)}>
+                  {movie.title}
+                </button>
+              </li>
+            ))}
       </ul>
+
+      <Paging currentPage={currentPage} setCurrentPage={setCurrentPage} totalPages={totalPages} />
     </div>
   );
 };

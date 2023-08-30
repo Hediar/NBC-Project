@@ -31,25 +31,40 @@ declare global {
         };
         discussion_post: {
           Row: {
+            comment_count: number | null;
             content: string | null;
             created_at: string;
+            movie_id: string | null;
+            movie_title: string | null;
             post_id: number;
             title: string | null;
             user_id: string | null;
+            view_count: number | null;
+            vote_count: number | null;
           };
           Insert: {
+            comment_count?: number | null;
             content?: string | null;
             created_at?: string;
+            movie_id?: string | null;
+            movie_title?: string | null;
             post_id?: number;
             title?: string | null;
             user_id?: string | null;
+            view_count?: number | null;
+            vote_count?: number | null;
           };
           Update: {
+            comment_count?: number | null;
             content?: string | null;
             created_at?: string;
+            movie_id?: string | null;
+            movie_title?: string | null;
             post_id?: number;
             title?: string | null;
             user_id?: string | null;
+            view_count?: number | null;
+            vote_count?: number | null;
           };
           Relationships: [];
         };
