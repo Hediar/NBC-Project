@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
 import { getDiscussionPostOption } from '@/api/supabase-discussion';
-import supabase from '@/supabase/config';
 import Link from 'next/link';
 import React from 'react';
 import altImage from '../../../../public/anonymous-avatar-icon.png';
@@ -10,10 +9,11 @@ interface Props {
 
 const DiscussionPost = async ({ post }: Props) => {
   const optionData = await getDiscussionPostOption(post.post_id);
+  // const movieData = await getMovieDetail(post.movie_Id)
   // const { data: optionData } = await supabase.from('discussion_option').select('*').eq('post_id', post.post_id);
 
   return (
-    <div className="w-full flex p-5 items-center">
+    <div className="w-full flex p-5 items-center border-b">
       <div className="flex flex-col justify-center items-center gap-2 w-[5%]">
         <p className="text-sm">글번호</p>
         <p className="mx-3 text-sm">{post.post_id}</p>

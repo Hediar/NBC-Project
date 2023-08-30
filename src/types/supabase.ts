@@ -31,6 +31,7 @@ declare global {
         };
         discussion_post: {
           Row: {
+            comment_count: number | null;
             content: string | null;
             created_at: string;
             movie_id: string | null;
@@ -40,9 +41,9 @@ declare global {
             user_id: string | null;
             view_count: number | null;
             vote_count: number | null;
-            comment_count: number | null;
           };
           Insert: {
+            comment_count?: number | null;
             content?: string | null;
             created_at?: string;
             movie_id?: string | null;
@@ -52,9 +53,9 @@ declare global {
             user_id?: string | null;
             view_count?: number | null;
             vote_count?: number | null;
-            comment_count: number | null;
           };
           Update: {
+            comment_count?: number | null;
             content?: string | null;
             created_at?: string;
             movie_id?: string | null;
@@ -64,7 +65,6 @@ declare global {
             user_id?: string | null;
             view_count?: number | null;
             vote_count?: number | null;
-            comment_count: number | null;
           };
           Relationships: [];
         };

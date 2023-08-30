@@ -66,7 +66,6 @@ const DiscussionRegistPage = (props: Props) => {
       const { data } = await supabase.from('discussion_post').insert(newPost).select();
 
       if (isOpen) {
-        console.log('디버깅중!');
         for (let i = 0; i < options.length; i++) {
           const newOption = {
             post_id: data![0].post_id,
