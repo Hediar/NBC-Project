@@ -47,7 +47,7 @@ const KeywordButtons = ({ params }: { params: string }) => {
           );
         }
       })} */}
-      {genres.map((genre: MovieGenre, idx: number) => {
+      {genres?.map((genre: MovieGenre, idx: number) => {
         {
           return (
             <Link
