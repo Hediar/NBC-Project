@@ -1,14 +1,10 @@
-import Search from '@/components/common/Search';
-import Sort from '@/components/contents/Sort';
+import MovieList from '@/components/contents/MovieList';
 
 const MovieListPage = () => {
   return (
     <div>
       MovieListPage
-      <div className="flex justify-between">
-        <Sort />
-        <Search />
-      </div>
+      <MovieList />
     </div>
   );
 };

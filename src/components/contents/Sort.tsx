@@ -1,17 +1,21 @@
 'use client';
-import React, { useState } from 'react';
+import React from 'react';
 import Sorting from '../common/Sorting';
 
-const Sort = () => {
-  const [sortingOption, setSortingOption] = useState('popularity');
-
+const Sort = ({
+  sortingOption,
+  setSortingOption
+}: {
+  sortingOption: string;
+  setSortingOption: React.Dispatch<React.SetStateAction<string>>;
+}) => {
   const handleSortingChange = (value: string) => {
     setSortingOption(value);
   };
 
   const sortingOptions = [
+    { value: 'release_date', label: '최신순' },
     { value: 'popularity', label: '인기순' },
-    { value: 'release_date', label: '개봉일순' },
     { value: 'vote_average', label: '별점순' }
   ];
 

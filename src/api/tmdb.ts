@@ -29,6 +29,7 @@ export const getTrendingMovies = async () => {
   }
 };
 
+// 최신 영화
 export const getNewMovies = async (formattedCurrentDate: string, formattedOneMonthPrev: string) => {
   try {
     const movies = await fetch(
@@ -145,6 +146,7 @@ export const searchReviewMovies = async (query: string) => {
   return searchData;
 };
 
+// 참여한 사람이 들어간 영화 목록 가져오기
 export const searchParticipatedMovies = async (query: string) => {
   const searchRes = await fetch(
     `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}search/person?query=${query}&include_adult=true&language=ko-KR&page=1`,
@@ -152,6 +154,12 @@ export const searchParticipatedMovies = async (query: string) => {
   );
   const searchData = await searchRes.json();
 
+  return searchData;
+};
+export const searchTMDB = async (query: string, searchType: string) => {
+  const url = `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}search/${searchType}?query=${query}&include_adult=true&language=ko-KR&page=1`;
+  const searchRes = await fetch(url, options);
+  const searchData = await searchRes.json();
   return searchData;
 };
 
