@@ -1,9 +1,4 @@
 'use client';
-interface SortingProps {
-  options: { value: string; label: string }[];
-  selectedOption: string;
-  onChange: (value: string) => void;
-}
 
 const Sorting: React.FC<SortingProps> = ({ options, selectedOption, onChange }) => {
   return (

@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import Sorting from './Sorting';
+import Sorting from '../common/Sorting';
 
 const Sort = () => {
   const [sortingOption, setSortingOption] = useState('popularity');

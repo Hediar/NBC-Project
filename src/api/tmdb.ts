@@ -145,4 +145,14 @@ export const searchReviewMovies = async (query: string) => {
   return searchData;
 };
 
+export const searchParticipatedMovies = async (query: string) => {
+  const searchRes = await fetch(
+    `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}search/person?query=${query}&include_adult=true&language=ko-KR&page=1`,
+    options
+  );
+  const searchData = await searchRes.json();
+
+  return searchData;
+};
+
 export { tmdbOptions };

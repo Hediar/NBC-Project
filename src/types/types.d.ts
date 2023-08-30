@@ -229,4 +229,10 @@ declare global {
     content: string;
     count: number;
   }
+
+  interface SortingProps {
+    options: { value: string; label: string }[];
+    selectedOption: string;
+    onChange: (value: string) => void;
+  }
 }
