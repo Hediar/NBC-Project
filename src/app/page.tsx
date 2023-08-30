@@ -8,16 +8,10 @@ export const dynamic = 'force-dynamic';
 export default async function Home() {
   return (
     <main>
-      <KeywordButtons />
+      <KeywordButtons params={'all'} />
       <TrendMoives genreId={'all'} />
-      <div className="flex-wrap">
-        <div className="basis-1/2">
-          <LatestReviews />
-        </div>
-        <div className="basis-1/2">
-          <LatestMovies />
-        </div>
-      </div>
+      <LatestReviews />
+      <LatestMovies />
     </main>
   );
 }

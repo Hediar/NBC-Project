@@ -23,7 +23,7 @@ declare global {
   }
 
   interface MovieGenre {
-    id: number;
+    id: number | string;
     name: string;
   }
 

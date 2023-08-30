@@ -8,7 +8,7 @@ const GenreMovies = ({ params }: { params: { genreId: string } }) => {
   const { genreId } = params;
   return (
     <main>
-      <KeywordButtons />
+      <KeywordButtons params={params.genreId} />
       <TrendMoives genreId={genreId} />
       <LatestReviews />
       <LatestMovies />
