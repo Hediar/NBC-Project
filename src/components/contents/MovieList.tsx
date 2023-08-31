@@ -82,13 +82,12 @@ const MovieList = () => {
       // 초기화
       setDataList([]);
       setCurrentPage(1);
-      fetchMovieData(1);
     }
   }, [sortingOption, searchMovieValue]);
-  console.log('showdata', filteredData);
 
   useEffect(() => {
     fetchMovieData(currentPage);
+    console.log('검색', searchMovieValue);
   }, [currentPage, searchMovieValue]);
 
   let contents;
