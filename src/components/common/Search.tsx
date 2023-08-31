@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import debounce from 'lodash/debounce';
-import { searchReviewMovies, searchTMDB } from '@/api/tmdb';
+import { searchTMDB } from '@/api/tmdb';
 
 const Search = ({
   searchMovieValue,
@@ -53,10 +53,8 @@ const Search = ({
 
   const handleClick = (item: any) => {
     if (searchType === 'movie') {
-      setSearchMovieValue(item.title);
       setSearchInput(item.title);
     } else if (searchType === 'person') {
-      setSearchMovieValue(item.name);
       setSearchInput(item.name);
     }
     setSearchResults([]);
