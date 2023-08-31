@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import SubmitButton from '@/components/Auth/SubmitButton';
 import { useRouter } from 'next/navigation';
 import HCaptcha from '@hcaptcha/react-hcaptcha';
@@ -24,6 +24,21 @@ const SignIn = () => {
   const { isSignInModalOpen, setIsSignInModalOpen } = useToggleSignInModal();
   const { isForgotPasswordOpen, setIsForgotPasswordOpen } = useToggleForgotPassword();
   const [message, setMessage] = useState<string>('');
+  const [showCaptcha, setShowCaptcha] = useState<boolean>(false);
+  const saveEmailCheckboxRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const savedEmail = localStorage.getItem('saved_email');
+    if (savedEmail) {
+      setEmailValue(savedEmail);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (emailValue.length > 6 && passwordValue.length > 6) {
+      setShowCaptcha(true);
+    }
+  }, [emailValue, passwordValue]);
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newPassword = e.target.value;
@@ -62,22 +77,29 @@ const SignIn = () => {
         setMessage('에러가 발생했습니다. 다시 시도해주세요.');
       }
     } else {
+      if (saveEmailCheckboxRef.current!.checked) {
+        localStorage.setItem('saved_email', emailValue);
+      }
+      setIsSignInModalOpen(isSignInModalOpen);
       router.refresh();
     }
   };
 
   return (
-    <div className="flex justify-center items-center h-full bg-gray-200">
+    <div className="flex justify-center items-center h-full bg-gray-200 rounded-lg overflow-hidden">
       <form
         onSubmit={signInHandler}
-        className="flex flex-col gap-3 shadow-lg shadow-gray-300 w-96 p-9 items-center bg-slate-50 rounded-md"
+        className="flex flex-col gap-4 shadow-lg shadow-gray-300 w-96 p-9 items-center bg-slate-50 "
       >
-        <h1>Sign In Page</h1>
+        <div className="flex flex-col gap-3 mb-4 text-center">
+          <h1 className="text-xl font-semibold">무비바바</h1>
+          <h2 className="text-lg ">로그인</h2>
+        </div>
         <input
           className="border border-slate-400 p-2 w-full rounded-md"
           type="email"
           name="email"
-          placeholder="email"
+          placeholder="이메일 주소"
           value={emailValue}
           onChange={(e) => setEmailValue(e.target.value)}
           required
@@ -86,13 +108,17 @@ const SignIn = () => {
           className="border border-slate-400 p-2 w-full rounded-md"
           type="password"
           name="password"
-          placeholder="password"
+          placeholder="비밀번호"
           value={passwordValue}
           onChange={(e) => handlePasswordChange(e)}
           pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
           required
         />
-        {!isForgotPasswordOpen && (
+        <div className="flex justify-end w-full text-sm gap-2">
+          <input ref={saveEmailCheckboxRef} type="checkbox" name="save-id" id="save-id" />
+          <label htmlFor="save-id">이메일 저장 </label>
+        </div>
+        {showCaptcha && (
           <HCaptcha
             // sitekey="6c9d3095-7348-4fe3-bf72-1f2b2b7ef34d"
             sitekey="10000000-ffff-ffff-ffff-000000000001"
