@@ -34,7 +34,7 @@ declare global {
             comment_count: number | null;
             content: string | null;
             created_at: string;
-            movie_genreIds: string[] | null;
+            movie_genreIds: number[] | null;
             movie_id: string | null;
             movie_imgUrl: string | null;
             movie_title: string | null;

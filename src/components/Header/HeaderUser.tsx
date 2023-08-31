@@ -5,15 +5,16 @@ import { Session } from '@supabase/supabase-js';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import HeaderUserDropdownMenu from './HeaderUserDropdownMenu';
+import { useRouter } from 'next/navigation';
 
 const HeaderUser = ({ session }: { session: Session }) => {
-  const { userInfo } = useUserInfoStore();
+  const { userInfo, saveUserInfo } = useUserInfoStore();
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [username, setUsername] = useState<string>();
   const [avatar_url, setAvatar_url] = useState<string>();
 
   useEffect(() => {
-    if (!userInfo) {
+    if (!userInfo.id) {
       setUsername('');
       setAvatar_url('');
     } else {

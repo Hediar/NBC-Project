@@ -29,6 +29,16 @@ export const getDiscussionPostOption = async (postId: number) => {
   } catch (error) {}
 };
 
+export const getRelatedDiscussionPost = async ({ genreIds, movieId }: { genreIds: number[]; movieId: number }) => {
+  const { data: relatedPostData } = await supabase
+    .from('discussion_post')
+    .select('*')
+    .neq('movie_id', movieId)
+    .containedBy('movie_genreIds', genreIds);
+
+  return relatedPostData;
+};
+
 interface AddUserData {
   user_id: string;
   option_id: number;

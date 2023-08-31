@@ -8,12 +8,12 @@ const useDiscussionPostQuery = (page: string) => {
 
   const updatePostMutation = useMutation(updateDiscussionPost, {
     onSuccess: () => {
-      queryClient.invalidateQueries(['discussion_post']);
+      queryClient.invalidateQueries(['discussion_post', page]);
     }
   });
   const deletePostMutation = useMutation(deleteDiscussionPost, {
     onSuccess: () => {
-      queryClient.invalidateQueries(['discussion_post']);
+      queryClient.invalidateQueries(['discussion_post', page]);
     }
   });
 
