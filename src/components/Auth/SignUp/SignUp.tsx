@@ -6,6 +6,7 @@ import SocialButtons from '@/components/Auth/SocialButtons';
 import HCaptcha from '@hcaptcha/react-hcaptcha';
 import { useRouter } from 'next/navigation';
 import useToggleSignUpModal from '@/store/toggleSignUpModal';
+import useToggleSignInModal from '@/store/toggleSignInModal';
 
 function SignUp() {
   const router = useRouter();
@@ -17,6 +18,8 @@ function SignUp() {
   const [captchaToken, setCaptchaToken] = useState<any>();
   const [message, setMessage] = useState<string>('');
   const [passwordError, setPasswordError] = useState<string | null>(null);
+  const { isSignInModalOpen, setIsSignInModalOpen } = useToggleSignInModal();
+  const { isSignUpModalOpen, setIsSignUpModalOpen } = useToggleSignUpModal();
 
   const handlePasswordChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -79,7 +82,7 @@ function SignUp() {
       >
         <h1>Sign Up Page</h1>
         <input
-          className="border border-slate-400 p-2 w-full rounded-md"
+          className="custom_input"
           type="email"
           name="email"
           placeholder="email"
@@ -87,7 +90,7 @@ function SignUp() {
           required
         />
         <input
-          className="border border-slate-400 p-2 w-full rounded-md"
+          className="custom_input"
           type="password"
           name="password"
           placeholder="password"
@@ -97,7 +100,7 @@ function SignUp() {
           autoComplete="new-password"
         />
         <input
-          className="border border-slate-400 p-2 w-full rounded-md "
+          className="custom_input "
           type="password"
           name="confirming password"
           placeholder="confirm password"
@@ -121,6 +124,18 @@ function SignUp() {
           setIsError={setIsError}
           passwordError={passwordError}
         />
+        <div className="flex gap-2 items-center">
+          <p className="text-sm">이미 아이디가 있으신가요?</p>
+          <button
+            onClick={() => {
+              setIsSignUpModalOpen(isSignUpModalOpen);
+              setIsSignInModalOpen(isSignInModalOpen);
+            }}
+            className="hover:underline"
+          >
+            로그인하기
+          </button>
+        </div>
         <>{message}</>
         <SocialButtons />
       </form>

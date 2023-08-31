@@ -35,12 +35,12 @@ const SubmitButton = ({ inputValue, loadingMessage, shouldDisable, isError, setI
 
   return (
     <>
-      {showPasswordFormatError && <span className="text-sm text-red-400">{passwordError}</span>}
+      {showPasswordFormatError && <span className="text-center text-sm text-red-400">{passwordError}</span>}
       <input
         onClick={clickHandler}
         type="submit"
         value={!isClicked ? inputValue : loadingMessage}
-        className="border border-slate-900 p-2 cursor-pointer w-full rounded-md disabled:bg-slate-200 mt-5"
+        className="custom_button"
         disabled={shouldDisable}
       />
       {isClicked && <LoadingSpinner />}

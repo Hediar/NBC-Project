@@ -60,10 +60,10 @@ const ForgotPasswordModal = () => {
   };
   return (
     <Modal>
-      <form className="p-8 flex flex-col gap-4 bg-white" onSubmit={(e) => submitHandler(e)}>
+      <form className="p-8 flex flex-col gap-4 bg-white rounded-md" onSubmit={(e) => submitHandler(e)}>
         <h1 className="text-center font-semibold text-xl">비밀번호 찾기</h1>
-        <p>등록하신 이메일을 입력해주세요.</p>
-        <input className="border border-gray-700" type="email" onChange={(e) => (emailRef.current = e.target.value)} />
+        <p className="text-center text-sm">등록하신 이메일을 입력해주세요.</p>
+        <input className="custom_input" type="email" onChange={(e) => (emailRef.current = e.target.value)} />
         <HCaptcha
           // sitekey="6c9d3095-7348-4fe3-bf72-1f2b2b7ef34d"
           sitekey="10000000-ffff-ffff-ffff-000000000001"
@@ -72,14 +72,10 @@ const ForgotPasswordModal = () => {
           }}
         />
         <div className="flex gap-2 w-full">
-          <button type="submit" className="border border-gray-700 w-1/2 text-sm text-white bg-gray-700 py-1 px-2">
+          <button type="submit" className="custom_button">
             확인
           </button>
-          <button
-            onClick={cancelHandler}
-            type="button"
-            className="border border-gray-700 w-1/2 text-sm text-white bg-gray-700 py-1 px-2"
-          >
+          <button onClick={cancelHandler} type="button" className="custom_button_cancel">
             취소
           </button>
         </div>

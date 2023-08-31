@@ -23,7 +23,7 @@ const OverlaidModal = ({ children, toggle, value, optional_toggle, optional_valu
   return (
     <div
       ref={overlayRef}
-      onClick={(e) => {
+      onMouseDown={(e) => {
         if (e.target === overlayRef.current) {
           overlayRef.current.style.opacity = '0';
           setTimeout(() => {
