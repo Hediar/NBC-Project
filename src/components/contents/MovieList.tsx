@@ -55,6 +55,19 @@ const MovieList = () => {
     }
   };
 
+  const sortData = (data: TMDBSearchMovie[], sortingOption: string): TMDBSearchMovie[] => {
+    switch (sortingOption) {
+      case 'popularity':
+        return data.slice().sort((a, b) => b.popularity - a.popularity);
+      case 'primary_release_date':
+        return data.slice().sort((a, b) => dayjs(b.release_date).diff(dayjs(a.release_date)));
+      case 'vote_average':
+        return data.slice().sort((a, b) => b.vote_average - a.vote_average);
+      default:
+        return data;
+    }
+  };
+
   const fetchMore = () => {
     if (currentPage < dataList!.total_pages) {
       setCurrentPage((prevPage) => prevPage + 1);
@@ -62,12 +75,17 @@ const MovieList = () => {
   };
 
   useEffect(() => {
-    // 초기화
-    setDataList([]);
-    setCurrentPage(1);
-    fetchMovieData(1);
+    if (searchMovieValue) {
+      const sortedMovies = sortData(filteredData, sortingOption);
+      setFilterefData(sortedMovies);
+    } else {
+      // 초기화
+      setDataList([]);
+      setCurrentPage(1);
+      fetchMovieData(1);
+    }
   }, [sortingOption, searchMovieValue]);
-  // console.log('showdata', filteredData);
+  console.log('showdata', filteredData);
 
   useEffect(() => {
     fetchMovieData(currentPage);
