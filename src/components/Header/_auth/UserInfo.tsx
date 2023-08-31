@@ -103,12 +103,9 @@ const UserInfo = ({ session }: Props) => {
                     maxLength={15}
                     value={usernameValue}
                     onChange={(e) => handleChange(e)}
-                    className="text-center border border-slate-400 rounded-sm"
+                    className="custom_input"
                   />
-                  <button
-                    className="text-center bg-slate-800 text-white p-1 rounded-sm disabled:bg-slate-300"
-                    disabled={usernameValue.length === 0}
-                  >
+                  <button className="custom_button" disabled={usernameValue.length === 0}>
                     만들기
                   </button>
                 </form>
