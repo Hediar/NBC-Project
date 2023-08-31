@@ -8,6 +8,8 @@ import SocialButtons from '@/components/Auth/SocialButtons';
 import useToggleSignInModal from '@/store/toggleSignInModal';
 import useToggleForgotPassword from '@/store/toggleForgotPassword';
 import useToggleSignUpModal from '@/store/toggleSignUpModal';
+import SVG_ShowPassword from '@/styles/svg/SVG_ShowPassword';
+import SVG_HidePassword from '@/styles/svg/SVG_HidePassword';
 
 interface Data {
   error: boolean;
@@ -28,6 +30,8 @@ const SignIn = () => {
   const [message, setMessage] = useState<string>('');
   const [showCaptcha, setShowCaptcha] = useState<boolean>(false);
   const saveEmailCheckboxRef = useRef<HTMLInputElement>(null);
+  const [showPassword, setShowPassword] = useState(false);
+  const outerDivRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const savedEmail = localStorage.getItem('saved_email');
@@ -111,16 +115,35 @@ const SignIn = () => {
           onChange={(e) => setEmailValue(e.target.value)}
           required
         />
-        <input
-          className="custom_input"
-          type="password"
-          name="password"
-          placeholder="비밀번호"
-          value={passwordValue}
-          onChange={(e) => handlePasswordChange(e)}
-          pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-          required
-        />
+        <div ref={outerDivRef} className="outer_div">
+          <input
+            className="inner_input"
+            type={showPassword ? 'text' : 'password'}
+            name="password"
+            placeholder="비밀번호"
+            value={passwordValue}
+            onChange={(e) => handlePasswordChange(e)}
+            onFocus={() => {
+              outerDivRef.current?.classList.add('outer_div_on_focus');
+            }}
+            onBlur={() => {
+              outerDivRef.current?.classList.remove('outer_div_on_focus');
+            }}
+            onInvalid={() => {
+              outerDivRef.current?.classList.add('outer_div_on_invalid');
+            }}
+            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+            required
+          />
+          <button type="button" onClick={() => setShowPassword(!showPassword)}>
+            {showPassword ? (
+              <SVG_HidePassword className="w-6 h-6 opacity-30 hover:opacity-80 transform ease-in-out duration-200" />
+            ) : (
+              <SVG_ShowPassword className="w-6 h-6 opacity-30 hover:opacity-80 transform ease-in-out duration-200" />
+            )}
+          </button>
+        </div>
+
         <div className="flex justify-end w-full text-sm gap-2">
           <input ref={saveEmailCheckboxRef} type="checkbox" name="save-id" id="save-id" />
           <label htmlFor="save-id">이메일 저장 </label>
