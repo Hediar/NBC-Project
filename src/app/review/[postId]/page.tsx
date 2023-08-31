@@ -4,6 +4,7 @@ import UtilButtons from '@/components/ReviewForm/UtilButtons';
 import supabase from '@/supabase/config';
 import Image from 'next/image';
 import React from 'react';
+import dayjs from 'dayjs';
 
 interface Params {
   postId: string;
@@ -28,55 +29,67 @@ const ReviewDetail = async ({ params }: Props) => {
 
   const movieData = await getMovieDetail(review.movieid);
 
-  let reviewCategories = JSON.parse(review.category);
-  reviewCategories = [].concat(...reviewCategories);
-
+  const reviewCategories = [].concat(...JSON.parse(review.category));
+  const reviewKeywords = review.keyword!.map((item: string) => JSON.parse(item));
   const baseImgUrl = process.env.NEXT_PUBLIC_TMDB_BASE_IMAGE_URL;
 
   return (
     <div>
-      ReviewDetail postId: {postId}
-      <div className="mb-4">
-        영화정보
-        <Image
-          src={`${baseImgUrl}w300_and_h450_bestv2${movieData.backdrop_path}`}
-          alt="이미지없음"
-          width={300}
-          height={450}
-          quality={100}
-          className="rounded-lg"
-        />
-        <strong>{movieData.title}</strong>
-        <div>{movieData.release_date.slice(0, 4)}</div>
-        <div>{movieData.genres.map((genre: MovieGenre) => `${genre.name} `)}</div>
-        <div>{movieData.production_countries[0]['iso_3166_1']}</div>
-        <div>{movieData.runtime}분</div>
-        <div>{movieData.adult ? '청소년관람불가' : '전체관람가'}</div>
-      </div>
-      <div className="mb-4">
-        리뷰내용
-        <div>작성자: {user.username}</div>
-        <div>작성일: {}</div>
-        <label className="block text-gray-700 text-sm font-bold mb-2">영화 본 날짜</label>
-        <div>{review.date}</div>
-        <label className="block text-gray-700 text-sm font-bold mb-2">어떤 점이 좋았나요?</label>
-        <div>
-          <ul>
-            {reviewCategories.map((category: string, i: number) => (
-              <li key={category + i}>{category}</li>
-            ))}
-          </ul>
-        </div>
-        <label className="block text-gray-700 text-sm font-bold mb-2">리뷰 한줄평</label>
-        <div>{review.review}</div>
-        <label className="block text-gray-700 text-sm font-bold mb-2">별점</label>
-        <div>
-          <StarBox rating={review.rating} readOnly={true} />
-          {review.rating}
-        </div>
-        <label className="block text-gray-700 text-sm font-bold mb-2">메모</label>
-        <div>{review.content}</div>
+      <div className="flex justify-between">
+        <h2>리뷰 상세</h2>
         <UtilButtons postId={postId} userId={user.id} />
+      </div>
+      <div className="flex items-center w-full h-44 p-5 bg-slate-100 rounded-md">
+        <div className="h-full relative">
+          <Image
+            src={`${baseImgUrl}w300_and_h450_bestv2${movieData.backdrop_path}`}
+            alt="이미지없음"
+            width={300}
+            height={450}
+            quality={100}
+            className="object-cover w-auto h-full rounded-lg"
+          />
+        </div>
+        <div className="flex flex-col justify-between lg:ml-3 text-left">
+          <strong>{movieData.title}</strong>
+          <div>{movieData.release_date.slice(0, 4)}</div>
+          <div>{movieData.genres.map((genre: MovieGenre) => `${genre.name} `)}</div>
+          <div>{movieData.production_countries[0]['iso_3166_1']}</div>
+          <div>{movieData.runtime}분</div>
+          <div>{movieData.adult ? '청소년관람불가' : '전체관람가'}</div>
+        </div>
+      </div>
+
+      <div className="mb-4">
+        {/* <div>작성자: {user.username}</div> */}
+        <div>{dayjs(review.date).format('YYYY/MM/DD')}</div>
+
+        <ul className="flex flex-wrap">
+          {reviewCategories.map((category: string, i: number) => (
+            <li
+              key={category + i}
+              className="m-1 rounded-full text-teal-700 bg-teal-100 border border-teal-300 py-1 px-2 text-xs font-medium"
+            >
+              {category}
+            </li>
+          ))}
+          {reviewKeywords.map((keyword: { value: string }, i: number) => (
+            <li
+              key={i}
+              className="m-1 rounded-full  text-cyan-700 bg-cyan-100 border border-cyan-300 py-1 px-2 text-xs font-medium"
+            >
+              {keyword.value}
+            </li>
+          ))}
+        </ul>
+
+        <div>{review.review}</div>
+
+        <div>
+          <StarBox defaultValue={review.rating} readOnly={true} />
+        </div>
+
+        <div>{review.content}</div>
       </div>
     </div>
   );

@@ -24,7 +24,7 @@ const CategoryBox = ({ CATEGORY, boxIndex, checkedList, checkHandler }: Props) =
               checked={checkedList.includes(item)}
               onChange={(e) => checkHandler(e, item)}
               value={item}
-              className="hidden peer"
+              className="peer sr-only"
               id={`${cateName}_${i}`}
               name={cateName}
             />

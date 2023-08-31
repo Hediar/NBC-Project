@@ -1,11 +1,16 @@
-import React from 'react';
+'use client';
+
+import React, { useEffect } from 'react';
 
 type Props = {
   fieldArray?: any;
+  defaultValue: any[];
 };
 
-const HashTagBox = ({ fieldArray }: Props) => {
-  const { fields, append, remove } = fieldArray;
+const HashTagBox = ({ fieldArray, defaultValue }: Props) => {
+  const { fields, append, remove, replace } = fieldArray;
+
+  console.log('defaultValue => ', defaultValue);
 
   // onChange로 관리할 문자열
   const [tagItem, setTagItem] = React.useState<string | ''>('');
@@ -29,6 +34,10 @@ const HashTagBox = ({ fieldArray }: Props) => {
   const deleteTagItem = (targetIndex: number) => {
     remove(targetIndex);
   };
+
+  useEffect(() => {
+    replace(defaultValue || []);
+  }, [defaultValue]);
 
   return (
     <div className="flex shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-">

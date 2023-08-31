@@ -2,7 +2,7 @@
 
 import { redirect } from 'next/navigation';
 import { useRouter } from 'next/navigation';
-import React, { forwardRef, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import ReactDatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { ko } from 'date-fns/esm/locale';
@@ -31,8 +31,6 @@ const ReviewForm = ({ movieId, editReview, movieButtonRef }: Props) => {
   const [showModal, setShowModal] = React.useState(false);
   const [onConfirm, setOnConfirm] = React.useState(false);
 
-  const [rating, setRating] = React.useState(0);
-
   const [checkedListC1, checkHandlerC1, setCheckedListC1] = useCheckbox();
   const [checkedListC2, checkHandlerC2, setCheckedListC2] = useCheckbox();
   const [checkedListC3, checkHandlerC3, setCheckedListC3] = useCheckbox();
@@ -53,7 +51,7 @@ const ReviewForm = ({ movieId, editReview, movieButtonRef }: Props) => {
     name: 'tagList' // 폼 필드 배열의 이름
   });
 
-  const addPost = async ({ selectedDate, review, content, tagList }: any) => {
+  const addPost = async ({ selectedDate, review, content, tagList, rating }: any) => {
     if (!userInfo) return alert('로그인 정보가 없습니다.');
     if (!movieId && movieButtonRef.current !== null) {
       alert('선택된 영화가 없습니다.');
@@ -91,7 +89,8 @@ const ReviewForm = ({ movieId, editReview, movieButtonRef }: Props) => {
   const handleTempSave = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
 
-    const { selectedDate, review, content, tagList } = getValues();
+    const { selectedDate, review, content, tagList, rating } = getValues();
+    console.log('임시저장 내용 => ', getValues());
 
     const newReview = {
       movieid: movieId,
@@ -130,16 +129,17 @@ const ReviewForm = ({ movieId, editReview, movieButtonRef }: Props) => {
 
       const { movieid, date, category, review, keyword, rating, content } = reviewForm;
       const categoryArr = JSON.parse(category);
+      const keywordArr = keyword!.map((item: string) => JSON.parse(item));
 
       setCheckedListC1(categoryArr[0]);
       setCheckedListC2(categoryArr[1]);
       setCheckedListC3(categoryArr[2]);
-      setRating(rating || 0);
 
-      setValue('date', date);
+      setValue('selectedDate', new Date(date as string));
       setValue('review', review);
-      setValue('keyword', keyword);
+      setValue('keyword', keywordArr);
       setValue('content', content);
+      setValue('rating', rating || 0);
 
       saveSearchMovieId(movieid);
     }
@@ -176,6 +176,7 @@ const ReviewForm = ({ movieId, editReview, movieButtonRef }: Props) => {
                 locale={ko}
                 dateFormat="yyyy/MM/dd" // 날짜 형태
                 placeholderText="YYYY/MM/DD"
+                autoComplete="off"
               />
             )}
           />
@@ -222,13 +223,12 @@ const ReviewForm = ({ movieId, editReview, movieButtonRef }: Props) => {
             <abbr title="required">*</abbr>
           </label>
           <div>
-            <StarBox rating={rating} setRating={setRating} />
-            {rating}
+            <StarBox fieldName="rating" setValue={setValue} defaultValue={getValues().rating} />
           </div>
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="review">
             키워드
           </label>
-          <HashTagBox fieldArray={fieldArray} />
+          <HashTagBox fieldArray={fieldArray} defaultValue={getValues().keyword} />
           <small>쉼표 혹은 스페이스바를 입력하여 태그를 등록 할 수 있습니다. 등록된 태그를 클릭하면 삭제됩니다.</small>
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="content">
             메모

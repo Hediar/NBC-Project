@@ -97,14 +97,14 @@ export const getMovieDetail = async (id: string) => {
   }
 };
 
-const getDetailData = async (id: string) => {
+export const getDetailData = async (id: string) => {
   const detailRes = await fetch(`${process.env.NEXT_PUBLIC_TMDB_BASE_DETAIL_URL}${id}?language=ko-KR`, options);
   const detailData = await detailRes.json();
 
   return detailData;
 };
 
-const getTrailerData = async (id: string) => {
+const getTrailerData: any = async (id: string) => {
   const trailerRes = await fetch(`${process.env.NEXT_PUBLIC_TMDB_BASE_DETAIL_URL}${id}/videos?language=ko-KR`, options);
   const trailerData = await trailerRes.json();
 
