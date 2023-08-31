@@ -82,6 +82,7 @@ const MovieList = () => {
       // 초기화
       setDataList([]);
       setCurrentPage(1);
+      fetchMovieData(1);
     }
   }, [sortingOption, searchMovieValue]);
 

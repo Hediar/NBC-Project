@@ -33,7 +33,7 @@ export const getTrendingMovies = async () => {
 export const getNewMovies = async (formattedCurrentDate: string, formattedOneMonthPrev: string) => {
   try {
     const movies = await fetch(
-      `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}discover/movie?include_adult=false&include_video=false&language=ko-KR&page=1&release_date.gte=${formattedOneMonthPrev}&release_date.lte=${formattedCurrentDate}&sort_by=popularity.desc`,
+      `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}discover/movie?include_adult=false&include_video=false&language=ko-KR&page=1&release_date.gte=${formattedOneMonthPrev}&release_date.lte=${formattedCurrentDate}&region=KR&sort_by=primary_release_date.desc&vote_count.gte=100`,
       tmdbOptions
     );
     const movieData = await movies.json();
