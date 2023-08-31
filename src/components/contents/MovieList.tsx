@@ -25,12 +25,22 @@ const MovieList = () => {
       // 검색 했을 때
       const data = await contentPageGetDataSearch(searchMovieValue, searchType, page);
       setDataList(data);
-      const results = data.results;
 
-      if (page === 1) {
-        setFilterefData([...results]);
+      if (searchType === 'movie') {
+        const results = data.results;
+        if (page === 1) {
+          setFilterefData([...results]);
+        } else {
+          setFilterefData([...filteredData, ...results]);
+        }
       } else {
-        setFilterefData([...filteredData, ...results]);
+        const results = data.results[0].known_for;
+        if (page === 1) {
+          setFilterefData([...results]);
+        } else {
+          setFilterefData([...filteredData, ...results]);
+        }
+        console.log('영화데이터', results);
       }
     } else {
       // 검색 x
@@ -57,7 +67,7 @@ const MovieList = () => {
     setCurrentPage(1);
     fetchMovieData(1);
   }, [sortingOption, searchMovieValue]);
-  console.log('showdata', filteredData);
+  // console.log('showdata', filteredData);
 
   useEffect(() => {
     fetchMovieData(currentPage);
