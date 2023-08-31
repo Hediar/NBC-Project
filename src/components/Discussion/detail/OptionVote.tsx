@@ -19,7 +19,6 @@ const OptionVote = ({ postId, voteCount }: Props) => {
   const [isVoted, setIsVoted] = useState<boolean>(false);
   const [votedOption, setVotedOption] = useState<DiscussionUser>();
   const [sumCount, setSumCount] = useState<number>(voteCount);
-  // optionData?.forEach((option) => (sumCount += option.count));
 
   useEffect(() => {
     const fetchUserData = async () => {

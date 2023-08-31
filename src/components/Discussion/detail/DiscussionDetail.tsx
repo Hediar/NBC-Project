@@ -3,12 +3,11 @@ import OptionVote from './OptionVote';
 import DiscussionCommentContainer from './comment/DiscussionCommentContainer';
 import EditDeleteBox from './EditDeleteBox';
 import { getDiscussionPostDetail } from '@/api/supabase-discussion';
+import DiscussionContent from './DiscussionContent';
 
 interface Props {
   discussionId: string;
 }
-
-export const dynamic = 'force-dynamic';
 
 const DiscussionDetail = async ({ discussionId }: Props) => {
   //discussionId 조회해서 db에서 내용 가져오기.
@@ -16,6 +15,8 @@ const DiscussionDetail = async ({ discussionId }: Props) => {
 
   return (
     <div className="flex flex-col justify-center mx-auto">
+      <DiscussionContent movieId={postData?.movie_id} />
+
       <div className="min-h-[60vh] flex flex-col items-center">
         <div className="flex flex-col justify-center mx-auto">
           <h3 className="text-3xl font-bold m-5">{postData?.title}</h3>

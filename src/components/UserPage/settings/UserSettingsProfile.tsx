@@ -1,25 +1,29 @@
 import { User } from '@supabase/supabase-js';
 import AvatarPhoto from './Profile/AvatarPhoto';
-import UpdateOtherInfo from './Profile/UpdateOtherInfo';
 import UpdateUsername from './Profile/UpdateUsername';
 import Miscellaneous from './Profile/Miscellaneous';
+import UpdateEmail from './Profile/UpdateEmail';
+import UpdateName from './Profile/UpdateName';
+import UpdatePassword from './Profile/UpdatePassword';
+import DeleteUser from './Profile/DeleteUser';
+
 interface Props {
   user: User;
-  avatarUrl: string;
-  userId: string;
-  username: string;
+  userData: Database['public']['Tables']['users']['Row'];
 }
 
-const UserSettingsProfile = ({ user, avatarUrl, userId, username }: Props) => {
+const UserSettingsProfile = ({ user, userData }: Props) => {
   return (
     <div className="w-10/12 bg-white shadow-md shadow-gray-300 p-8">
       <div className="flex gap-4 justify-between w-full">
-        <AvatarPhoto avatarUrl={avatarUrl} userId={userId} username={username} />
+        <AvatarPhoto userData={userData} />
         <Miscellaneous user={user} />
       </div>
-
-      <UpdateUsername user={user} userId={userId} />
-      <UpdateOtherInfo />
+      <UpdateEmail user={user} />
+      <UpdateUsername userData={userData} />
+      <UpdateName userData={userData} />
+      <UpdatePassword user={user} />
+      <DeleteUser />
     </div>
   );
 };

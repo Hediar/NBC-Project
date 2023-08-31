@@ -85,6 +85,7 @@ declare global {
     budget: number;
     genre_ids: number[];
     homepage?: string;
+    genres: MovieGenre[];
     id: number;
     imdb_id: string;
     original_language: string;
@@ -111,25 +112,34 @@ declare global {
     productions: TMDBCreditCrew[];
   }
 
-  interface MovieDataGenres extends MovieData {
-    genres: MovieGenre[];
-  }
-
   interface MovieLikesTable {
     movieid: string | number;
     user_id: string[];
   }
 
+  // interface ReviewsTable {
+  //   category: Json | null;
+  //   content: string;
+  //   date: Date | string | null;
+  //   keyword: string[] | [] | undefined;
+  //   movieid: string;
+  //   review: string;
+  //   reviewid?: string;
+  //   userid: string;
+  //   rating: number;
+  //   created_at: string;
+  // }
   interface ReviewsTable {
     category: Json | null;
     content: string;
-    date: Date | string | null;
-    keyword: string[] | [] | undefined;
+    created_at: string;
+    date: string | null;
+    keyword: string[] | null;
     movieid: string;
+    rating: number | null;
     review: string;
-    reviewid?: string;
+    reviewid: string;
     userid: string;
-    rating: number;
   }
 
   interface TMDBSearchMovie {
@@ -155,8 +165,12 @@ declare global {
     user_id: string;
     title: string;
     content: string;
-    view_count: number;
+    movie_id: string;
+    movie_title: string;
+    movie_imgUrl: string;
+    movie_genreIds: number[];
     vote_count: number;
+    view_count: number;
     comment_count: number;
   }
 

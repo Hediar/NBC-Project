@@ -6,12 +6,14 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 
 interface Props {
-  avatarUrl: string;
-  userId: string;
-  username: string;
+  userData: Database['public']['Tables']['users']['Row'];
 }
 
-const AvatarPhoto = ({ avatarUrl, userId, username }: Props) => {
+const AvatarPhoto = ({ userData }: Props) => {
+  const avatarUrl = userData.avatar_url!;
+  const userId = userData.id!;
+  const username = userData.username!;
+
   const [photoURLValue, setPhotoURLValue] = useState<string>(avatarUrl);
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
   const [photo, setPhoto] = useState<File | null>(null);
@@ -87,7 +89,13 @@ const AvatarPhoto = ({ avatarUrl, userId, username }: Props) => {
         <div className="mt-4 flex flex-col gap-3 justify-start items-start">
           <input
             ref={fileInputRef}
-            className="text-xs"
+            className="text-sm text-slate-500
+            file:mr-4 file:py-2 file:px-4
+            file:rounded-full file:border-0
+            file:text-sm file:font-semibold
+            file:bg-violet-50 file:text-violet-700
+            hover:file:bg-violet-100
+      "
             type="file"
             name="avatar"
             onChange={(e) => handleFileChange(e)}
