@@ -26,9 +26,7 @@ const SearchMovies = () => {
       setSearchMovies(results);
       setTotalPages(total_pages);
     };
-
-    fetchDate();
-    setSearchValue(value);
+    fetchData();
   };
 
   const handleClick = (movieId: number) => {
