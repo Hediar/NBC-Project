@@ -137,13 +137,6 @@ const SignIn = () => {
           passwordError={passwordError}
         />
         <button
-          className="border border-slate-900 p-2 cursor-pointer w-full rounded-md flex justify-center"
-          type="button"
-          onClick={() => setIsSignInModalOpen(isSignInModalOpen)}
-        >
-          돌아가기
-        </button>
-        <button
           type="button"
           onClick={() => {
             setIsForgotPasswordOpen(isForgotPasswordOpen);

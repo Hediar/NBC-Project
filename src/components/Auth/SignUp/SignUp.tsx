@@ -15,7 +15,6 @@ function SignUp() {
   const [isPasswordMatch, setIsPasswordMatch] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
   const [captchaToken, setCaptchaToken] = useState<any>();
-  const { isSignUpModalOpen, setIsSignUpModalOpen } = useToggleSignUpModal();
   const [message, setMessage] = useState<string>('');
   const [passwordError, setPasswordError] = useState<string | null>(null);
 
@@ -122,13 +121,6 @@ function SignUp() {
           setIsError={setIsError}
           passwordError={passwordError}
         />
-        <button
-          className="border border-slate-900 p-2 cursor-pointer w-full rounded-md flex justify-center "
-          type="button"
-          onClick={() => setIsSignUpModalOpen(isSignUpModalOpen)}
-        >
-          돌아가기
-        </button>
         <>{message}</>
         <SocialButtons />
       </form>
