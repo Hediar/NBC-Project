@@ -14,8 +14,8 @@ const Sort = ({
   };
 
   const sortingOptions = [
-    { value: 'primary_release_date', label: '최신순' },
     { value: 'popularity', label: '인기순' },
+    { value: 'primary_release_date', label: '최신순' },
     { value: 'vote_average', label: '별점순' }
   ];
 

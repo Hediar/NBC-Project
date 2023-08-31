@@ -71,7 +71,7 @@ const Search = ({
   const isSearchStart = !!searchResults;
 
   return (
-    <div>
+    <div className="w-1/3">
       <form onSubmit={handleSubmit} className="flex">
         <select value={searchType} onChange={handleSelectChange} className="border rounded px-2 py-1">
           <option value="movie">영화</option>
@@ -90,7 +90,11 @@ const Search = ({
           검색
         </button>
       </form>
-      <ul className="overflow-auto h-44">
+      <ul
+        className={`overflow-auto h-44 absolute w-full bg-${
+          searchInput ? 'white' : 'transparent'
+        }  rounded z-10 transition-colors duration-300`}
+      >
         {isSearchStart &&
           searchResults.map((result, i: number) => (
             <li key={`searchResultKey_${i}`}>
