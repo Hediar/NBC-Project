@@ -6,14 +6,17 @@ import { searchReviewMovies, searchTMDB } from '@/api/tmdb';
 
 const Search = ({
   searchMovieValue,
-  setSearchMovieValue
+  setSearchMovieValue,
+  searchType,
+  setSearchType
 }: {
   searchMovieValue: string;
   setSearchMovieValue: React.Dispatch<React.SetStateAction<string>>;
+  searchType: string;
+  setSearchType: React.Dispatch<React.SetStateAction<string>>;
 }) => {
   const [searchResults, setSearchResults] = React.useState<any[]>();
   const [searchInput, setSearchInput] = useState('');
-  const [searchType, setSearchType] = useState('movie'); // Default search type is 'movie'
 
   const debouncedHandleChange = debounce(async (value: string) => {
     if (!value) {
@@ -62,7 +65,7 @@ const Search = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     debouncedHandleChange(searchInput);
-    setSearchMovieValue(searchInput);
+    setSearchMovieValue(searchInput); // 상위에서 사용하기 위해 set하는 값
   };
 
   const isSearchStart = !!searchResults;
