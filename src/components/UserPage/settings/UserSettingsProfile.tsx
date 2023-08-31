@@ -22,7 +22,7 @@ const UserSettingsProfile = ({ user, userData }: Props) => {
       <UpdateEmail user={user} />
       <UpdateUsername userData={userData} />
       <UpdateName userData={userData} />
-      <UpdatePassword />
+      <UpdatePassword user={user} />
       <DeleteUser />
     </div>
   );
