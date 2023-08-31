@@ -1,9 +1,15 @@
 'use client';
 
+import { User } from '@supabase/supabase-js';
 import axios from 'axios';
 import { useRef, useState } from 'react';
 
-const UpdatePassword = () => {
+interface Props {
+  user: User;
+}
+
+const UpdatePassword = ({ user }: Props) => {
+  const appMetadata = user.app_metadata;
   const [passwordValue, setPasswordValue] = useState<string>('');
   const [nonceValue, setNonceValue] = useState<string>('');
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
@@ -11,7 +17,14 @@ const UpdatePassword = () => {
   const passwordInputRef = useRef<HTMLInputElement>(null);
   const nonceInputRef = useRef<HTMLInputElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
-
+  if (appMetadata.provider !== 'email') {
+    return (
+      <>
+        소셜 로그인을 이용중입니다. <br />
+        소셜 로그인 사용자는 비밀번호를 변경할 수 없습니다.
+      </>
+    );
+  }
   const clickHandler = async () => {
     if (buttonRef.current?.innerText === '수정') {
       setIsDisabled(false);
