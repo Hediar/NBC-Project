@@ -1,6 +1,7 @@
 'use client';
 
 import useUserInfoStore from '@/store/saveCurrentUserData';
+import axios from 'axios';
 import { useRouter } from 'next/navigation';
 
 const SignOutButton = () => {
@@ -9,7 +10,7 @@ const SignOutButton = () => {
 
   const clickHandler = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    await fetch('/auth/sign-out', { method: 'post' });
+    await axios.post('/auth/sign-out');
     router.refresh();
     deleteUserInfo();
   };

@@ -12,7 +12,7 @@ type Props = {
 
 const EditDeleteBox = ({ postId, authorId }: Props) => {
   const router = useRouter();
-  const { deletePostMutation } = useDiscussionPostQuery();
+  const { deletePostMutation } = useDiscussionPostQuery('EditDeleteBox');
   const {
     userInfo: { id: userId }
   } = useUserInfoStore();
