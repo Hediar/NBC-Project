@@ -1,12 +1,12 @@
 import React from 'react';
 
 type Props = {
-  tagList: string[] | [];
-  setTagList: React.Dispatch<React.SetStateAction<string[] | []>>;
-  // register?: any;
+  fieldArray?: any;
 };
 
-const HashTagBox = ({ tagList, setTagList }: Props) => {
+const HashTagBox = ({ fieldArray }: Props) => {
+  const { fields, append, remove } = fieldArray;
+
   // onChange로 관리할 문자열
   const [tagItem, setTagItem] = React.useState<string | ''>('');
 
@@ -21,25 +21,25 @@ const HashTagBox = ({ tagList, setTagList }: Props) => {
 
   const submitTagItem = () => {
     const newTagItem = tagItem.trim().replaceAll(',', '');
-    setTagList((prev) => [...prev!, newTagItem]);
+    append({ value: newTagItem });
+
     setTagItem('');
   };
 
   const deleteTagItem = (targetIndex: number) => {
-    const filteredTagList = tagList!.filter((_, i) => i !== targetIndex);
-    setTagList(filteredTagList);
+    remove(targetIndex);
   };
 
   return (
     <div className="flex shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-">
       <ul className="flex flex-wrap">
-        {tagList.map((tag, i) => (
+        {fields.map(({ value }: { value: string }, i: number) => (
           <li
-            key={tag + i}
+            key={value + i}
             onClick={() => deleteTagItem(i)}
             className="m-1 rounded-full  text-cyan-700 bg-cyan-100 border border-cyan-300 py-1 px-2 text-xs font-medium"
           >
-            {tag}
+            {value}
           </li>
         ))}
       </ul>

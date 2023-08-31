@@ -4,7 +4,7 @@ import SearchPopup from './SearchPopup';
 import ReviewMovie from './ReviewMovie';
 import ReviewForm from './ReviewForm';
 import { useReviewMovieStore, useSearchModalStore } from '../../store/useReviewStore';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 type Props = {
   paramMovieId?: string;
@@ -16,6 +16,8 @@ const ReviewWriteTemplate = ({ paramMovieId, editReview }: Props) => {
 
   const { searchMovieId, saveSearchMovieId } = useReviewMovieStore();
   const movieId = searchMovieId ? (searchMovieId as string) : paramMovieId;
+
+  const movieButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     return saveSearchMovieId();
@@ -31,6 +33,7 @@ const ReviewWriteTemplate = ({ paramMovieId, editReview }: Props) => {
             onClick={() => {
               openSearchModal();
             }}
+            ref={movieButtonRef}
             className="mt-4 border border-indigo-500 bg-indigo-500 text-white rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-indigo-600 focus:outline-none focus:shadow-outline"
           >
             리뷰 남길 콘텐츠 고르기
@@ -39,7 +42,7 @@ const ReviewWriteTemplate = ({ paramMovieId, editReview }: Props) => {
       </div>
       {isSearchModalOpen && <SearchPopup />}
 
-      <ReviewForm movieId={movieId} editReview={editReview} />
+      <ReviewForm movieId={movieId} editReview={editReview} movieButtonRef={movieButtonRef} />
     </>
   );
 };
