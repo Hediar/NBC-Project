@@ -180,7 +180,7 @@ export const contentPageGetDataDiscover = async (
   pageParam: number = 1
 ) => {
   const searchRes = await fetch(
-    `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}discover/movie?include_adult=false&include_video=false&language=ko-Kr&page=${pageParam}&primary_release_date.lte=${formattedCurrentDate}&region=KR&sort_by=${sortType}.desc`,
+    `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}discover/movie?include_adult=false&include_video=false&language=ko-Kr&page=${pageParam}&primary_release_date.lte=${formattedCurrentDate}&region=KR&sort_by=${sortType}.desc&vote_count.gte=100`,
     tmdbOptions
   );
   const sortData = await searchRes.json();
