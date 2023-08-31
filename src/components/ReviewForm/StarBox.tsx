@@ -14,7 +14,7 @@ const StarBox = ({ rating, setRating, readOnly = false }: Props) => {
       ★★★★★
       <span
         style={{ width: `${rating * 20}%` }}
-        className={`absolute left-0 w-[${rating * 20}%] text-red-600 overflow-hidden pointer-events-none`}
+        className={`absolute left-0 w-[${rating * 20}%] text-rose-500 overflow-hidden pointer-events-none`}
       >
         ★★★★★
       </span>

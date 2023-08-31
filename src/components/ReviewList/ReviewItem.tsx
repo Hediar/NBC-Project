@@ -52,7 +52,7 @@ const ReviewItem = ({ review }: Props) => {
               {reviewCategories.map((category: string, i: number) => (
                 <li
                   key={category + i}
-                  className="m-1 rounded-full  text-teal-700 bg-teal-100 border border-teal-300 py-1 px-2 text-xs font-medium"
+                  className="m-1 rounded-full text-teal-700 bg-teal-100 border border-teal-300 py-1 px-2 text-xs font-medium"
                 >
                   {category}
                 </li>
@@ -61,7 +61,7 @@ const ReviewItem = ({ review }: Props) => {
                 review.keyword.map((keyword: string, i: number) => (
                   <li
                     key={keyword + i}
-                    className="m-1 rounded-full   text-cyan-700 bg-cyan-100 border border-cyan-300 py-1 px-2 text-xs font-medium"
+                    className="m-1 rounded-full  text-cyan-700 bg-cyan-100 border border-cyan-300 py-1 px-2 text-xs font-medium"
                   >
                     {keyword}
                   </li>

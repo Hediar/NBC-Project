@@ -3,6 +3,7 @@ import React from 'react';
 type Props = {
   tagList: string[] | [];
   setTagList: React.Dispatch<React.SetStateAction<string[] | []>>;
+  // register?: any;
 };
 
 const HashTagBox = ({ tagList, setTagList }: Props) => {
@@ -30,16 +31,20 @@ const HashTagBox = ({ tagList, setTagList }: Props) => {
   };
 
   return (
-    <div>
-      <ul>
+    <div className="flex shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-">
+      <ul className="flex flex-wrap">
         {tagList.map((tag, i) => (
-          <li key={tag + i} onClick={() => deleteTagItem(i)}>
+          <li
+            key={tag + i}
+            onClick={() => deleteTagItem(i)}
+            className="m-1 rounded-full  text-cyan-700 bg-cyan-100 border border-cyan-300 py-1 px-2 text-xs font-medium"
+          >
             {tag}
           </li>
         ))}
       </ul>
       <input
-        className="HashInput"
+        className="flex-1 HashInput"
         type="text"
         value={tagItem}
         onChange={(e) => setTagItem(e.target.value)}
