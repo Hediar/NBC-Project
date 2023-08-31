@@ -202,6 +202,12 @@ declare global {
     total_pages: number;
     total_results: number;
   }
+  interface PersonFetchResult {
+    page: number;
+    results: TMDBSearchPerson[];
+    total_pages: number;
+    total_results: number;
+  }
   interface ReviewsTable {
     category: Json | null;
     content: string;
@@ -242,5 +248,42 @@ declare global {
     post_id: number;
     content: string;
     count: number;
+  }
+
+  interface SortingProps {
+    options: { value: string; label: string }[];
+    selectedOption: string;
+    onChange: (value: string) => void;
+  }
+
+  interface TMDBSearchPersonMovie {
+    adult: boolean;
+    backdrop_path: string;
+    first_air_date: string;
+    genre_ids: number[];
+    id: number;
+    media_type: string;
+    name: string;
+    origin_country: string[];
+    original_language: string;
+    original_name: string;
+    overview: string;
+    popularity: number;
+    poster_path: string;
+    vote_average: number;
+    vote_count: number;
+  }
+
+  interface TMDBSearchPerson {
+    adult: boolean;
+    gender: number;
+    id: number;
+    known_for: TMDBSearchPersonMovie[];
+    known_for_department: string;
+    name: string;
+    original_name: string;
+    popularity: number;
+
+    profile_path: string;
   }
 }
