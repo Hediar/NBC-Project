@@ -18,7 +18,10 @@ const TrendMoives = async ({ genreId }: { genreId: string }) => {
 
   return (
     <>
-      <div>TrendMoives</div>
+      <div className="p-5 felx ">
+        <h2 className="text-2xl">인기 영화</h2>
+        <Link href={'/movielist'}>더보기 &gt;</Link>
+      </div>
 
       {/* <DisplayMovies movieData={trendMovies} /> */}
 

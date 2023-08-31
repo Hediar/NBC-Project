@@ -39,7 +39,7 @@ const MovieDetailInfo = async ({ movieId }: Props) => {
                 )}
               </span>
               <span style={{ fontSize: '0.5px' }}>●</span>
-              <span>{movieData.production_countries[0]['iso_3166_1']}</span>
+              {movieData.production_countries.length && <span>{movieData.production_countries[0]['iso_3166_1']}</span>}
             </div>
             <div>평점: {movieData.vote_average}</div>
             <div>상영시간: {movieData.runtime}분</div>

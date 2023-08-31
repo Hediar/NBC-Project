@@ -11,7 +11,7 @@ const SearchMovies = () => {
   const dataPerPage: number = 3;
 
   const [searchMovies, setSearchMovies] = React.useState<TMDBSearchMovie[]>();
-
+  const [searchValue, setSearchValue] = useState('');
   const { saveSearchMovieId } = useReviewMovieStore();
   const { closeSearchModal } = useSearchModalStore();
 
@@ -46,6 +46,7 @@ const SearchMovies = () => {
         name="search"
         type="text"
         placeholder="영화 검색"
+        value={searchValue}
         onChange={handleChange}
       />
       <ul className="overflow-auto h-44">
