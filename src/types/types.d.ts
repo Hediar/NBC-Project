@@ -85,6 +85,7 @@ declare global {
     budget: number;
     genre_ids: number[];
     homepage?: string;
+    genres: MovieGenre[];
     id: number;
     imdb_id: string;
     original_language: string;
@@ -109,10 +110,6 @@ declare global {
     backdropImages: MovieBackdropImage[];
     appearences: TMDBCreditCast[];
     productions: TMDBCreditCrew[];
-  }
-
-  interface MovieDataGenres extends MovieData {
-    genres: MovieGenre[];
   }
 
   interface MovieLikesTable {
@@ -170,6 +167,8 @@ declare global {
     content: string;
     movie_id: string;
     movie_title: string;
+    movie_imgUrl: string;
+    movie_genreIds: number[];
     vote_count: number;
     view_count: number;
     comment_count: number;

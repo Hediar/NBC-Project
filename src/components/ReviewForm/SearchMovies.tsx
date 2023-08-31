@@ -31,6 +31,7 @@ const SearchMovies = () => {
 
   const handleClick = (movieId: number) => {
     saveSearchMovieId(movieId);
+
     closeSearchModal();
   };
 

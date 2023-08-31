@@ -47,8 +47,7 @@ const DiscussionList = ({ pageNum }: Props) => {
             post.content.includes(searchQuery)
         );
       case 'movie_title':
-        return data;
-      // return data.filter((post) => post.movie_title?.includes(searchQuery));
+        return data.filter((post) => post.movie_title?.includes(searchQuery));
       case 'discussion_title':
         return data.filter((post) => post.title.includes(searchQuery));
       case 'discussion_content':

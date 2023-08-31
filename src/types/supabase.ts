@@ -34,7 +34,9 @@ declare global {
             comment_count: number | null;
             content: string | null;
             created_at: string;
+            movie_genreIds: string[] | null;
             movie_id: string | null;
+            movie_imgUrl: string | null;
             movie_title: string | null;
             post_id: number;
             title: string | null;
@@ -46,7 +48,9 @@ declare global {
             comment_count?: number | null;
             content?: string | null;
             created_at?: string;
+            movie_genreIds?: string[] | null;
             movie_id?: string | null;
+            movie_imgUrl?: string | null;
             movie_title?: string | null;
             post_id?: number;
             title?: string | null;
@@ -58,7 +62,9 @@ declare global {
             comment_count?: number | null;
             content?: string | null;
             created_at?: string;
+            movie_genreIds?: string[] | null;
             movie_id?: string | null;
+            movie_imgUrl?: string | null;
             movie_title?: string | null;
             post_id?: number;
             title?: string | null;
@@ -225,22 +231,28 @@ declare global {
         users: {
           Row: {
             avatar_url: string | null;
+            email: string | null;
             id: string;
             name: string | null;
+            provider: string | null;
             username: string | null;
             watched_movies: string[];
           };
           Insert: {
             avatar_url?: string | null;
+            email?: string | null;
             id: string;
             name?: string | null;
+            provider?: string | null;
             username?: string | null;
             watched_movies?: string[];
           };
           Update: {
             avatar_url?: string | null;
+            email?: string | null;
             id?: string;
             name?: string | null;
+            provider?: string | null;
             username?: string | null;
             watched_movies?: string[];
           };
