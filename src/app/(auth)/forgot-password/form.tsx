@@ -30,18 +30,25 @@ const ChangePasswordFromMail = () => {
     router.replace(`${process.env.NEXT_PUBLIC_BASE_URL}`);
   };
   return (
-    <div>
-      <form action={updatePasswordHandler}>
-        <h1>새로운 비밀번호를 입력하세요</h1>
+    <div className="h-[calc(100vh-80px)] flex justify-center items-center">
+      <form action={updatePasswordHandler} className="w-10/12 md:w-6/12 lg:w-4/12 flex flex-col px gap-3 items-center">
+        <h1 className="text-center text-2xl">새로운 비밀번호를 입력하세요.</h1>
         <input
-          className="border border-gray-400 py-1 px-2"
+          className="peer custom_input"
           type="password"
           name="password"
-          pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+          pattern="^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[0-9]).{1,}$"
           value={newPassword}
           onChange={(e) => setNewPassword(e.target.value)}
         />
-        <button className="border border-gray-400 py-1 px-2">등록</button>
+
+        <button type="submit" className="custom_button">
+          등록
+        </button>
+
+        <p className="w-3/4 text-center hidden peer-invalid:block duration-150 ease-in">
+          비밀번호는 특수문자와 대문자를 포함한 8자리 이상으로 설정해주세요.
+        </p>
       </form>
     </div>
   );
