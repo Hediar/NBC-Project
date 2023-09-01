@@ -2,7 +2,6 @@ import React from 'react';
 import { cookies } from 'next/headers';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import Image from 'next/image';
-import { Database } from '@/types/supabase';
 import changeFormat from '@/api/formatTime';
 import PostButton from './CommentInput';
 import CommentInput from './CommentInput';
