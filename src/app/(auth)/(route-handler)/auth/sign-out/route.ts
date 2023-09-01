@@ -4,10 +4,9 @@ import { NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
 
-export const POST = async (request: Request) => {
-  const baseUrl = new URL(request.url);
+export const POST = async () => {
   const supabase = createRouteHandlerClient<Database>({ cookies });
   await supabase.auth.signOut();
 
-  return NextResponse.redirect(`${baseUrl.origin}`, { status: 301 });
+  return NextResponse.json({ message: '로그아웃 성공' });
 };

@@ -29,10 +29,11 @@ export const getTrendingMovies = async () => {
   }
 };
 
+// 최신 영화
 export const getNewMovies = async (formattedCurrentDate: string, formattedOneMonthPrev: string) => {
   try {
     const movies = await fetch(
-      `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}discover/movie?include_adult=false&include_video=false&language=ko-KR&page=1&release_date.gte=${formattedOneMonthPrev}&release_date.lte=${formattedCurrentDate}&sort_by=popularity.desc`,
+      `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}discover/movie?include_adult=false&include_video=false&language=ko-KR&page=1&release_date.gte=${formattedOneMonthPrev}&release_date.lte=${formattedCurrentDate}&region=KR&sort_by=primary_release_date.desc&vote_count.gte=100`,
       tmdbOptions
     );
     const movieData = await movies.json();
@@ -143,6 +144,48 @@ export const searchReviewMovies = async (query: string, currentPage: number = 1)
   const searchData = await searchRes.json();
 
   return searchData;
+};
+
+// 참여한 사람이 들어간 영화 목록 가져오기
+export const searchParticipatedMovies = async (query: string) => {
+  const searchRes = await fetch(
+    `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}search/person?query=${query}&include_adult=false&language=ko-KR&page=1`,
+    options
+  );
+  const searchData = await searchRes.json();
+
+  return searchData;
+};
+export const searchTMDB = async (query: string, searchType: string) => {
+  const url = `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}search/${searchType}?query=${query}&include_adult=false&language=ko-KR&page=1`;
+  const searchRes = await fetch(url, options);
+  const searchData = await searchRes.json();
+  return searchData;
+};
+
+// 콘텐츠 페이지
+export const contentPageGetDataSearch = async (query: string, searchType: string, pageParam: number = 1) => {
+  const searchRes = await fetch(
+    `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}search/${searchType}?query=${query}&include_adult=false&language=ko-KR&page=${pageParam}`,
+    tmdbOptions
+  );
+  const searchData = await searchRes.json();
+
+  return searchData;
+};
+
+export const contentPageGetDataDiscover = async (
+  sortType: string,
+  formattedCurrentDate: string,
+  pageParam: number = 1
+) => {
+  const searchRes = await fetch(
+    `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}discover/movie?include_adult=false&include_video=false&language=ko-Kr&page=${pageParam}&primary_release_date.lte=${formattedCurrentDate}&region=KR&sort_by=${sortType}.desc&vote_count.gte=100`,
+    tmdbOptions
+  );
+  const sortData = await searchRes.json();
+
+  return sortData;
 };
 
 export { tmdbOptions };

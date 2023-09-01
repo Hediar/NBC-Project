@@ -85,6 +85,7 @@ declare global {
     budget: number;
     genre_ids: number[];
     homepage?: string;
+    genres: MovieGenre[];
     id: number;
     imdb_id: string;
     original_language: string;
@@ -109,10 +110,6 @@ declare global {
     backdropImages: MovieBackdropImage[];
     appearences: TMDBCreditCast[];
     productions: TMDBCreditCrew[];
-  }
-
-  interface MovieDataGenres extends MovieData {
-    genres: MovieGenre[];
   }
 
   interface MovieLikesTable {
@@ -168,8 +165,12 @@ declare global {
     user_id: string;
     title: string;
     content: string;
-    view_count: number;
+    movie_id: string;
+    movie_title: string;
+    movie_imgUrl: string;
+    movie_genreIds: number[];
     vote_count: number;
+    view_count: number;
     comment_count: number;
   }
 
@@ -198,6 +199,12 @@ declare global {
   interface MovieFetchResult {
     page: number;
     results: MovieData[];
+    total_pages: number;
+    total_results: number;
+  }
+  interface PersonFetchResult {
+    page: number;
+    results: TMDBSearchPerson[];
     total_pages: number;
     total_results: number;
   }
@@ -241,5 +248,42 @@ declare global {
     post_id: number;
     content: string;
     count: number;
+  }
+
+  interface SortingProps {
+    options: { value: string; label: string }[];
+    selectedOption: string;
+    onChange: (value: string) => void;
+  }
+
+  interface TMDBSearchPersonMovie {
+    adult: boolean;
+    backdrop_path: string;
+    first_air_date: string;
+    genre_ids: number[];
+    id: number;
+    media_type: string;
+    name: string;
+    origin_country: string[];
+    original_language: string;
+    original_name: string;
+    overview: string;
+    popularity: number;
+    poster_path: string;
+    vote_average: number;
+    vote_count: number;
+  }
+
+  interface TMDBSearchPerson {
+    adult: boolean;
+    gender: number;
+    id: number;
+    known_for: TMDBSearchPersonMovie[];
+    known_for_department: string;
+    name: string;
+    original_name: string;
+    popularity: number;
+
+    profile_path: string;
   }
 }

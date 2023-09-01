@@ -2,6 +2,7 @@ import supabase from '@/supabase/config';
 // get요청
 export const getDiscussionPost = async () => {
   const { data } = await supabase.from('discussion_post').select('*').order('post_id', { ascending: false });
+  // .range((pageNum - 1) * 5, pageNum * 5 - 1);
 
   return data;
 };
@@ -26,6 +27,16 @@ export const getDiscussionPostOption = async (postId: number) => {
 
     return optionData;
   } catch (error) {}
+};
+
+export const getRelatedDiscussionPost = async ({ genreIds, movieId }: { genreIds: number[]; movieId: number }) => {
+  const { data: relatedPostData } = await supabase
+    .from('discussion_post')
+    .select('*')
+    .neq('movie_id', movieId)
+    .containedBy('movie_genreIds', genreIds);
+
+  return relatedPostData;
 };
 
 interface AddUserData {

@@ -7,6 +7,7 @@ import useToggleSignInModal from '@/store/toggleSignInModal';
 import supabase from '@/supabase/config';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
+import { getMovieDetail } from '@/api/tmdb';
 
 interface Props {}
 
@@ -14,11 +15,22 @@ interface Props {}
 const DiscussionRegistPage = (props: Props) => {
   const { isSearchModalOpen, openSearchModal } = useSearchModalStore();
   const { searchMovieId: movieId, saveSearchMovieId } = useReviewMovieStore();
+  const [movieData, setMovieData] = useState<MovieData>();
 
   useEffect(() => {
     return saveSearchMovieId();
   }, []);
 
+  useEffect(() => {
+    const getMovieData = async () => {
+      if (movieId) {
+        const fetchData = await getMovieDetail(movieId as string);
+        setMovieData(fetchData);
+      }
+    };
+    getMovieData();
+  }, [movieId]);
+  console.log('타입==>>', movieData?.genres);
   const {
     userInfo: { id: userId }
   } = useUserInfoStore();
@@ -53,12 +65,19 @@ const DiscussionRegistPage = (props: Props) => {
       alert('로그인 해주세요');
       return setIsSignInModalOpen(isSignInModalOpen);
     }
+    if (!movieId) {
+      alert('토론하고싶은 영화를 선택해주세요.');
+      return;
+    }
     try {
       const newPost = {
         user_id: userId,
         title,
         content,
         movie_id: movieId,
+        movie_title: movieData?.title,
+        movie_imgUrl: movieData?.poster_path,
+        movie_genreIds: movieData?.genres.map((genre) => genre.id),
         vote_count: 0,
         view_count: 0,
         comment_count: 0
@@ -66,7 +85,6 @@ const DiscussionRegistPage = (props: Props) => {
       const { data } = await supabase.from('discussion_post').insert(newPost).select();
 
       if (isOpen) {
-        console.log('디버깅중!');
         for (let i = 0; i < options.length; i++) {
           const newOption = {
             post_id: data![0].post_id,

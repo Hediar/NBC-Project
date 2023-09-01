@@ -1,11 +1,15 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import SubmitButton from '@/components/Auth/SubmitButton';
 import { useRouter } from 'next/navigation';
 import HCaptcha from '@hcaptcha/react-hcaptcha';
 import SocialButtons from '@/components/Auth/SocialButtons';
 import useToggleSignInModal from '@/store/toggleSignInModal';
+import useToggleForgotPassword from '@/store/toggleForgotPassword';
+import useToggleSignUpModal from '@/store/toggleSignUpModal';
+import SVG_ShowPassword from '@/styles/svg/SVG_ShowPassword';
+import SVG_HidePassword from '@/styles/svg/SVG_HidePassword';
 
 interface Data {
   error: boolean;
@@ -17,11 +21,35 @@ const SignIn = () => {
   const [emailValue, setEmailValue] = useState<string>('');
   const [passwordValue, setPasswordValue] = useState<string>('');
   const [passwordError, setPasswordError] = useState<string | null>(null);
-  const [shouldDisable, setShouldDisable] = useState<boolean>(false);
+  const [shouldDisable, setShouldDisable] = useState<boolean>(true);
   const [captchaToken, setCaptchaToken] = useState<any>();
   const [isError, setIsError] = useState<boolean>(false);
   const { isSignInModalOpen, setIsSignInModalOpen } = useToggleSignInModal();
+  const { isForgotPasswordOpen, setIsForgotPasswordOpen } = useToggleForgotPassword();
+  const { isSignUpModalOpen, setIsSignUpModalOpen } = useToggleSignUpModal();
   const [message, setMessage] = useState<string>('');
+  const [showCaptcha, setShowCaptcha] = useState<boolean>(false);
+  const saveEmailCheckboxRef = useRef<HTMLInputElement>(null);
+  const [showPassword, setShowPassword] = useState(false);
+  const outerDivRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const savedEmail = localStorage.getItem('saved_email');
+    if (savedEmail) {
+      saveEmailCheckboxRef.current!.checked = true;
+      setEmailValue(savedEmail);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (passwordValue.length < 6) {
+      setShouldDisable(true);
+    }
+    if (emailValue.length > 6 && passwordValue.length > 6) {
+      setShowCaptcha(true);
+      setShouldDisable(false);
+    }
+  }, [emailValue, passwordValue]);
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newPassword = e.target.value;
@@ -60,43 +88,76 @@ const SignIn = () => {
         setMessage('에러가 발생했습니다. 다시 시도해주세요.');
       }
     } else {
+      if (saveEmailCheckboxRef.current!.checked) {
+        localStorage.setItem('saved_email', emailValue);
+      }
+      setIsSignInModalOpen(isSignInModalOpen);
       router.refresh();
     }
   };
 
   return (
-    <div className="flex justify-center items-center h-full bg-gray-200">
+    <div className="flex justify-center items-center h-full bg-gray-200 rounded-lg overflow-hidden">
       <form
         onSubmit={signInHandler}
-        className="flex flex-col gap-3 shadow-lg shadow-gray-300 w-96 p-9 items-center bg-slate-50 rounded-md"
+        className="flex flex-col gap-3 shadow-lg shadow-gray-300 w-96 p-9 items-center bg-slate-50 "
       >
-        <h1>Sign In Page</h1>
+        <div className="flex flex-col gap-3 mb-4 text-center">
+          <h1 className="text-xl font-semibold">무비바바</h1>
+          <h2 className="text-lg ">로그인</h2>
+        </div>
         <input
-          className="border border-slate-400 p-2 w-full rounded-md"
+          className="custom_input"
           type="email"
           name="email"
-          placeholder="email"
+          placeholder="이메일 주소"
           value={emailValue}
           onChange={(e) => setEmailValue(e.target.value)}
           required
         />
-        <input
-          className="border border-slate-400 p-2 w-full rounded-md"
-          type="password"
-          name="password"
-          placeholder="password"
-          value={passwordValue}
-          onChange={(e) => handlePasswordChange(e)}
-          pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-          required
-        />
-        <HCaptcha
-          // sitekey="6c9d3095-7348-4fe3-bf72-1f2b2b7ef34d"
-          sitekey="10000000-ffff-ffff-ffff-000000000001"
-          onVerify={(token) => {
-            setCaptchaToken(token);
-          }}
-        />
+        <div ref={outerDivRef} className="outer_div">
+          <input
+            className="inner_input"
+            type={showPassword ? 'text' : 'password'}
+            name="password"
+            placeholder="비밀번호"
+            value={passwordValue}
+            onChange={(e) => handlePasswordChange(e)}
+            onFocus={() => {
+              outerDivRef.current?.classList.add('outer_div_on_focus');
+            }}
+            onBlur={() => {
+              outerDivRef.current?.classList.remove('outer_div_on_focus');
+            }}
+            onInvalid={() => {
+              outerDivRef.current?.classList.add('outer_div_on_invalid');
+            }}
+            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+            required
+          />
+          <button type="button" onClick={() => setShowPassword(!showPassword)}>
+            {showPassword ? (
+              <SVG_HidePassword className="w-6 h-6 opacity-30 hover:opacity-80 transform ease-in-out duration-200" />
+            ) : (
+              <SVG_ShowPassword className="w-6 h-6 opacity-30 hover:opacity-80 transform ease-in-out duration-200" />
+            )}
+          </button>
+        </div>
+
+        <div className="flex justify-end w-full text-sm gap-2">
+          <input ref={saveEmailCheckboxRef} type="checkbox" name="save-id" id="save-id" />
+          <label htmlFor="save-id">이메일 저장 </label>
+        </div>
+        {showCaptcha && (
+          <HCaptcha
+            // sitekey="6c9d3095-7348-4fe3-bf72-1f2b2b7ef34d"
+            sitekey="10000000-ffff-ffff-ffff-000000000001"
+            onVerify={(token) => {
+              setCaptchaToken(token);
+            }}
+          />
+        )}
+
         <SubmitButton
           inputValue="로그인하기"
           loadingMessage="로그인 하는 중..."
@@ -105,13 +166,28 @@ const SignIn = () => {
           setIsError={setIsError}
           passwordError={passwordError}
         />
-        <button
-          className="border border-slate-900 p-2 cursor-pointer w-full rounded-md flex justify-center"
-          type="button"
-          onClick={() => setIsSignInModalOpen(isSignInModalOpen)}
-        >
-          돌아가기
-        </button>
+        <div className="flex justify-center gap-2 items-center">
+          <button
+            className="text-sm"
+            onClick={() => {
+              setIsSignUpModalOpen(isSignUpModalOpen);
+              setIsSignInModalOpen(isSignInModalOpen);
+            }}
+          >
+            회원가입
+          </button>
+          <div className="h-3 border-r-2 border-gray-300"></div>
+          <button
+            type="button"
+            onClick={() => {
+              setIsForgotPasswordOpen(isForgotPasswordOpen);
+            }}
+            className="text-sm"
+          >
+            비밀번호 찾기
+          </button>
+        </div>
+
         <span>{message}</span>
         <SocialButtons />
       </form>

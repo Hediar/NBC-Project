@@ -2,8 +2,6 @@ import changeFormat from '@/api/formatTime';
 import { User } from '@supabase/supabase-js';
 
 const Miscellaneous = ({ user }: { user: User }) => {
-  console.log(user);
-
   const createdAt = changeFormat(user.created_at);
   const lastConnected = changeFormat(user.last_sign_in_at!);
 

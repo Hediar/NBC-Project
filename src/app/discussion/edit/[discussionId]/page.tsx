@@ -23,7 +23,7 @@ const DiscussionEditPage = ({ params }: Props) => {
   const optionInputRef = useRef<HTMLInputElement>(null);
   const [optionValueCheck, setOptionValueCheck] = useState<boolean>(false);
   const initOptionLengthRef = useRef<number>(0);
-  const { updatePostMutation } = useDiscussionPostQuery();
+  const { updatePostMutation } = useDiscussionPostQuery('DiscussionEditPage');
 
   useEffect(() => {
     const getInitData = async () => {
