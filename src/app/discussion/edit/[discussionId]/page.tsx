@@ -2,8 +2,10 @@
 import { getDiscussionPostDetail, getDiscussionPostOption } from '@/api/supabase-discussion';
 import ReviewMovie from '@/components/ReviewForm/ReviewMovie';
 import useDiscussionPostQuery from '@/hooks/useDiscussionPostQuery';
+import DrawSvgX from '@/static/DrawSvgX';
 import { optionMark } from '@/static/optionMark';
 import useUserInfoStore from '@/store/saveCurrentUserData';
+import useToggleSignInModal from '@/store/toggleSignInModal';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
 
@@ -17,6 +19,8 @@ interface Option {
   text: string;
 }
 
+const marginYGap = '25px';
+
 const DiscussionEditPage = ({ params }: Props) => {
   const { discussionId } = params;
   const {
@@ -26,9 +30,14 @@ const DiscussionEditPage = ({ params }: Props) => {
   const [content, setContent] = useState<string>();
   const [movieId, setMovieId] = useState<string>();
   const [options, setOptions] = useState<Option[]>([]);
+  const { isSignInModalOpen, setIsSignInModalOpen } = useToggleSignInModal();
+
   const initOptionLengthRef = useRef<number>(0);
   const { updatePostMutation } = useDiscussionPostQuery('DiscussionEditPage');
+  const titleRef = useRef<HTMLInputElement>(null);
+  const [isManualOpen, setIsManualOpen] = useState<boolean>(false);
 
+  const router = useRouter();
   useEffect(() => {
     const getInitData = async () => {
       const initPostData = await getDiscussionPostDetail(+discussionId);
@@ -36,7 +45,12 @@ const DiscussionEditPage = ({ params }: Props) => {
       setTitle(initPostData!.title);
       setContent(initPostData!.content);
       setMovieId(initPostData.movie_id);
-
+      if (userId) {
+        if (userId !== initPostData.user_id) {
+          alert('작성자와 현재 유저가 다릅니다');
+          router.push('/');
+        }
+      }
       const initOptionData = await getDiscussionPostOption(+discussionId);
       const initOptions = initOptionData?.map((option) => option.content);
 
@@ -45,8 +59,6 @@ const DiscussionEditPage = ({ params }: Props) => {
     };
     getInitData();
   }, []);
-
-  const router = useRouter();
 
   const addOption = () => {
     const newOption = { text: '' };
@@ -58,7 +70,14 @@ const DiscussionEditPage = ({ params }: Props) => {
   };
 
   const handleSubmit = async () => {
-    if (!userId) return;
+    if (!userId) {
+      alert('로그인 해주세요');
+      return setIsSignInModalOpen(isSignInModalOpen);
+    }
+    if (!title) {
+      alert('토론 주제를 입력해주세요');
+      return titleRef.current!.focus();
+    }
     try {
       updatePostMutation.mutate({
         userId,
@@ -84,24 +103,26 @@ const DiscussionEditPage = ({ params }: Props) => {
       </div>
       {/* E:: 영화 선택 */}
 
-      <div className="flex flex-col gap-5 w-full mt-5">
-        <div className="flex gap-2 justify-center items-center">
-          <label htmlFor="topic">주제</label>
+      <div className={`flex flex-col w-full mt-[${marginYGap}] font-bold`}>
+        <div>
+          <label htmlFor="topic">토론 주제*</label>
           <input
+            ref={titleRef}
             type="text"
             name="topic"
-            className="border p-2 rounded w-4/5"
+            className="border w-full px-[20px] py-[12px] rounded-[10px] mt-[6px]"
             placeholder="내용을 입력해주세요"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
         </div>
-        <div className="flex gap-2 justify-center items-center">
-          <label htmlFor="explanation">설명</label>
+
+        <div className={`mt-[${marginYGap}]`}>
+          <label htmlFor="explanation">추가 설명</label>
           <input
             type="text"
             name="explanation"
-            className="border p-2 rounded w-4/5"
+            className="border w-full px-[20px] py-[12px] rounded-[10px] mt-[6px]"
             placeholder="토론 주제를 설명해주세요"
             value={content}
             onChange={(e) => setContent(e.target.value)}
@@ -109,18 +130,51 @@ const DiscussionEditPage = ({ params }: Props) => {
         </div>
       </div>
 
-      <div className="m-5">
-        <>
-          <p className="font-bold p-2">{'투표기능(선택지 최대 10개)'}</p>
+      <div className={`mt-[${marginYGap}]`}>
+        <p className="font-bold relative">
+          <span
+            onMouseOver={() => {
+              setIsManualOpen(!isManualOpen);
+            }}
+            onMouseLeave={() => {
+              setIsManualOpen(!isManualOpen);
+            }}
+          >
+            토론 방식*
+          </span>
+          {isManualOpen && <span className="text-sm text-red-300">토론방식은 수정하실 수 없습니다</span>}
+        </p>
+        <div className="flex gap-3 mt-3 pointer-events-none">
+          {initOptionLengthRef.current ? (
+            <>
+              <div className="border px-20 py-3 rounded-[22px]">자유 토론</div>
+              <div className="border px-20 py-3 rounded-[22px] bg-black text-white">투표 토론</div>
+            </>
+          ) : (
+            <>
+              <div className="border px-20 py-3 rounded-[22px] bg-black text-white">자유 토론</div>
+              <div className="border px-20 py-3 rounded-[22px]">투표 토론</div>
+            </>
+          )}
+        </div>
+      </div>
+
+      {!!initOptionLengthRef.current && (
+        <div className={`mt-[${marginYGap}] font-bold`}>
           {options.map((option, idx) => {
             return (
               <div key={idx} className="flex gap-2 items-center">
                 <div className="w-full">
                   <label htmlFor={`의견${optionMark[idx]}`}>의견{optionMark[idx]}</label>
+                  {idx > 1 && idx >= initOptionLengthRef.current && (
+                    <button className="rounded-full p-1 ml-1 bg-gray-200" onClick={() => deleteOption(idx)}>
+                      <DrawSvgX size={12} />
+                    </button>
+                  )}
                   {idx < initOptionLengthRef.current ? (
                     <input
                       name={`의견${optionMark[idx]}`}
-                      className="border w-full p-1 my-2 rounded pointer-events-none"
+                      className="border w-full px-3 py-1.5 my-2 rounded-xl pointer-events-none"
                       type="text"
                       value={option.text}
                       placeholder="내용을 입력해주세요"
@@ -128,22 +182,13 @@ const DiscussionEditPage = ({ params }: Props) => {
                   ) : (
                     <input
                       name={`의견${optionMark[idx]}`}
-                      className="border w-full p-1 my-2 rounded"
+                      className="border w-full px-3 py-1.5 rounded-xl"
                       type="text"
                       placeholder="내용을 입력해주세요"
                       onChange={(e) => {
                         option.text = e.target.value;
                       }}
                     />
-                  )}
-
-                  {idx > 1 && idx >= initOptionLengthRef.current && (
-                    <button
-                      className="float-right text-sm font-bold text-gray-500 border px-2 py-1 rounded-xl m-1"
-                      onClick={() => deleteOption(idx)}
-                    >
-                      취소
-                    </button>
                   )}
                 </div>
               </div>
@@ -152,23 +197,26 @@ const DiscussionEditPage = ({ params }: Props) => {
 
           {options.length < 10 && (
             <div className="flex justify-center my-5">
-              <button className="border px-2 py-1 hover:bg-gray-200 rounded" onClick={addOption}>
-                <span>선택지 추가하기</span>
+              <button
+                className="w-full border px-2 py-1 bg-gray-200 hover:bg-gray-100 rounded-[10px]"
+                onClick={addOption}
+              >
+                <span>+ 다른 의견 추가</span>
               </button>
             </div>
           )}
-        </>
-      </div>
+        </div>
+      )}
 
-      <div className="flex justify-center gap-3">
-        <button className="border px-2 py-1 bg-gray-300 text-white font-bold hover:bg-gray-200 hover:text-gray-700 rounded">
+      <div className="flex justify-center gap-3 mt-[25px]">
+        <button className="border px-2 py-1 bg-gray-300 text-white font-bold hover:bg-gray-200 hover:text-gray-700 rounded-[10px]">
           임시저장
         </button>
         <button
-          className="border px-2 py-1 bg-black text-white font-bold hover:bg-gray-200 hover:text-gray-700 rounded"
+          className="border px-2 py-1 bg-black text-white font-bold hover:bg-gray-200 hover:text-gray-700 rounded-[10px]"
           onClick={handleSubmit}
         >
-          토론 게시하기
+          토론 수정하기
         </button>
       </div>
     </div>

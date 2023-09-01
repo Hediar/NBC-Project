@@ -66,28 +66,29 @@ export const fetchTrendMoviesByGenre = async (genreId: number | string) => {
   }
 };
 
-//추후 리팩토링!!
 export const getMovieDetail = async (id: string) => {
   try {
-    //Details
-    const detailData = await getDetailData(id);
+    const [detailData, trailerData, watchProviderData, imageData, creditsData] = await Promise.all([
+      getDetailData(id),
+      getTrailerData(id),
+      getProviderData(id),
+      getImageData(id),
+      getCreditsData(id)
+    ]);
 
-    //Videos
-    const trailerData = await getTrailerData(id);
     const trailerKeys = trailerData.results.map((result: TrailerData) => result.key);
-
-    //Watch Providers
-    const watchProviderData = await getProviderData(id);
     const watchProviders = watchProviderData.results['KR'];
-
-    //Images
-    const imageData = await getImageData(id);
     const backdropImages = imageData.backdrops;
+    const { appearences, productions } = creditsData;
 
-    //Credits
-    const { appearences, productions } = await getCreditsData(id);
-
-    const movieDetailData = { ...detailData, trailerKeys, watchProviders, backdropImages, appearences, productions };
+    const movieDetailData = {
+      ...detailData,
+      trailerKeys,
+      watchProviders,
+      backdropImages,
+      appearences,
+      productions
+    };
 
     return movieDetailData;
   } catch (error) {
