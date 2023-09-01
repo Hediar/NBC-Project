@@ -1,4 +1,4 @@
-import { fetchTrendMoviesByGenre, getTrendingMovies, tmdbOptions } from '@/api/tmdb';
+import { fetchTrendMoviesByGenre, getTrendingMovies } from '@/api/tmdb';
 import MovieLikes from '../../MovieLikes/MovieLikes';
 import Image from 'next/image';
 import Link from 'next/link';
