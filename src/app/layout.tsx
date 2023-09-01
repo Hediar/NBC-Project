@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   description: '무비바바에 오신것을 환영합니다!'
 };
 
+// 나중에 없애고 문제 해결해야함
+export const dynamic = 'force-dynamic';
+
 export default function RootLayout(props: { children: React.ReactNode }) {
   return (
     <html>
