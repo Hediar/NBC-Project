@@ -25,7 +25,9 @@ const DiscussionDetail = async ({ discussionId }: Props) => {
 
   return (
     <div className="">
-      <DiscussionContent movieId={postData?.movie_id} />
+      <div className="flex justify-between w-4/5 mx-auto mb-5">
+        <DiscussionContent movieId={postData?.movie_id} />
+      </div>
 
       <div className="flex justify-between w-4/5 mx-auto">
         <div className="w-2/3">
