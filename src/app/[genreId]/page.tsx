@@ -1,3 +1,4 @@
+import HotTopics from '@/components/MainPage/HotTopics';
 import LatestMovies from '@/components/MainPage/LatestMovies';
 import LatestReviews from '@/components/MainPage/LatestReviews';
 import KeywordButtons from '@/components/MainPage/MainPageMovies/KeywordButtons';
@@ -12,6 +13,7 @@ const GenreMovies = ({ params }: { params: { genreId: string } }) => {
       <TrendMoives genreId={genreId} />
       <LatestReviews />
       <LatestMovies />
+      <HotTopics />
     </main>
   );
 };
