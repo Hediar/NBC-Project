@@ -101,7 +101,7 @@ interface UpdateDiscussionPost {
   userId: string;
   title: string | undefined;
   content: string | undefined;
-  options: string[];
+  options: { text: string }[];
   postId: string;
   startNum: number;
 }
@@ -124,7 +124,7 @@ export const updateDiscussionPost = async ({
     for (let i = startNum; i < options.length; i++) {
       const newOption = {
         post_id: data![0].post_id,
-        content: options[i]
+        content: options[i].text
       };
 
       await supabase.from('discussion_option').insert(newOption).select();

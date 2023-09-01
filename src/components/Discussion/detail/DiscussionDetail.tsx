@@ -1,6 +1,5 @@
 import React from 'react';
 import OptionVote from './OptionVote';
-import DiscussionCommentContainer from './comment/DiscussionCommentContainer';
 import EditDeleteBox from './EditDeleteBox';
 import {
   getDiscussionPostDetail,
@@ -19,9 +18,11 @@ interface Props {
 
 const DiscussionDetail = async ({ discussionId }: Props) => {
   const postData = await getDiscussionPostDetail(+discussionId);
-  const relatedData = await getRelatedDiscussionPost({ genreIds: postData.movie_genreIds, movieId: postData.movie_id });
-  const prevPostData = await getPrevDiscussionPost({ postId: postData.post_id, movieId: postData.movie_id });
-  const nextPostData = await getNextDiscussionPost({ postId: postData.post_id, movieId: postData.movie_id });
+  const [relatedData, prevPostData, nextPostData] = await Promise.all([
+    getRelatedDiscussionPost({ genreIds: postData.movie_genreIds, movieId: postData.movie_id }),
+    getPrevDiscussionPost({ postId: postData.post_id, movieId: postData.movie_id }),
+    getNextDiscussionPost({ postId: postData.post_id, movieId: postData.movie_id })
+  ]);
 
   return (
     <div className="">
