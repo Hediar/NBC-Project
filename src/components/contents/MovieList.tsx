@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 'use client';
 
 import { contentPageGetDataDiscover, contentPageGetDataSearch, searchTMDB } from '@/api/tmdb';
@@ -15,7 +14,7 @@ const MovieList = () => {
   const [filteredData, setFilterefData] = useState<any[]>([]);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [dataList, setDataList] = useState<any>([]);
+  const [dataList, setDataList] = useState<any>();
 
   const today = dayjs();
   const formattedCurrentDate = today.format('YYYY-MM-DD');
@@ -25,7 +24,6 @@ const MovieList = () => {
       // 검색 했을 때
       const data = await contentPageGetDataSearch(searchMovieValue, searchType, page);
       setDataList(data);
-
       if (searchType === 'movie') {
         const results = data.results;
         if (page === 1) {
@@ -84,12 +82,17 @@ const MovieList = () => {
       setCurrentPage(1);
       fetchMovieData(1);
     }
-  }, [sortingOption, searchMovieValue]);
+  }, [sortingOption]);
+
+  useEffect(() => {
+    setDataList([]);
+    setCurrentPage(1);
+    fetchMovieData(1);
+  }, [searchMovieValue]);
 
   useEffect(() => {
     fetchMovieData(currentPage);
-    console.log('검색', searchMovieValue);
-  }, [currentPage, searchMovieValue]);
+  }, [currentPage]);
 
   let contents;
 

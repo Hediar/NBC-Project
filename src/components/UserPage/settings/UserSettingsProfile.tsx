@@ -12,7 +12,7 @@ interface Props {
   userData: Database['public']['Tables']['users']['Row'];
 }
 
-const UserSettingsProfile = ({ user, userData }: Props) => {
+const UserSettingsProfile = async ({ user, userData }: Props) => {
   return (
     <div className="w-10/12 bg-white shadow-md shadow-gray-300 p-8">
       <div className="flex gap-4 justify-between w-full">

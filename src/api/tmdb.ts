@@ -17,10 +17,7 @@ export const options = {
 
 export const getTrendingMovies = async () => {
   try {
-    const movies = await fetch(
-      `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}trending/movie/week?language=ko-KR`,
-      tmdbOptions
-    );
+    const movies = await fetch(`${process.env.NEXT_PUBLIC_TMDB_BASE_URL}trending/movie/week?language=ko-KR`, options);
     const movieData = await movies.json();
 
     return movieData;
@@ -34,7 +31,7 @@ export const getNewMovies = async (formattedCurrentDate: string, formattedOneMon
   try {
     const movies = await fetch(
       `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}discover/movie?include_adult=false&include_video=false&language=ko-KR&page=1&release_date.gte=${formattedOneMonthPrev}&release_date.lte=${formattedCurrentDate}&region=KR&sort_by=primary_release_date.desc&vote_count.gte=100`,
-      tmdbOptions
+      options
     );
     const movieData = await movies.json();
 
@@ -46,7 +43,7 @@ export const getNewMovies = async (formattedCurrentDate: string, formattedOneMon
 
 export const getGenres = async () => {
   try {
-    const movies = await fetch(`${process.env.NEXT_PUBLIC_TMDB_BASE_URL}genre/movie/list?language=ko`, tmdbOptions);
+    const movies = await fetch(`${process.env.NEXT_PUBLIC_TMDB_BASE_URL}genre/movie/list?language=ko`, options);
     const genre = await movies.json();
 
     return genre;
@@ -60,7 +57,7 @@ export const fetchTrendMoviesByGenre = async (genreId: number | string) => {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}discover/movie?include_adult=false&include_video=false&language=ko-KR&page=1&sort_by=popularity.desc&with_genres=${genreId}`,
-      tmdbOptions
+      options
     );
     const genreMovieData = await response.json();
     return genreMovieData;
@@ -169,7 +166,7 @@ export const searchTMDB = async (query: string, searchType: string) => {
 export const contentPageGetDataSearch = async (query: string, searchType: string, pageParam: number = 1) => {
   const searchRes = await fetch(
     `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}search/${searchType}?query=${query}&include_adult=false&language=ko-KR&page=${pageParam}`,
-    tmdbOptions
+    options
   );
   const searchData = await searchRes.json();
 
@@ -183,7 +180,7 @@ export const contentPageGetDataDiscover = async (
 ) => {
   const searchRes = await fetch(
     `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}discover/movie?include_adult=false&include_video=false&language=ko-Kr&page=${pageParam}&primary_release_date.lte=${formattedCurrentDate}&region=KR&sort_by=${sortType}.desc&vote_count.gte=100`,
-    tmdbOptions
+    options
   );
   const sortData = await searchRes.json();
 
