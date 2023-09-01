@@ -110,8 +110,8 @@ function SignUp() {
           onChange={(e) => handlePasswordChange(e, setConfirmingPasswordValue)}
         />
         <HCaptcha
-          // sitekey="6c9d3095-7348-4fe3-bf72-1f2b2b7ef34d"
-          sitekey="10000000-ffff-ffff-ffff-000000000001"
+          sitekey="6c9d3095-7348-4fe3-bf72-1f2b2b7ef34d"
+          // sitekey="10000000-ffff-ffff-ffff-000000000001"
           onVerify={(token) => {
             setCaptchaToken(token);
           }}
