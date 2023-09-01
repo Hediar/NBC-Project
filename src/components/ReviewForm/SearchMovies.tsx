@@ -2,7 +2,7 @@
 
 import { searchReviewMovies } from '@/api/tmdb';
 import { useReviewMovieStore, useSearchModalStore } from '@/store/useReviewStore';
-import React from 'react';
+import React, { useState } from 'react';
 import Paging from '../common/Paging';
 import SearchMoviesItem from './SearchMoviesItem';
 

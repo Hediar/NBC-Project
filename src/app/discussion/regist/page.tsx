@@ -30,7 +30,7 @@ const DiscussionRegistPage = (props: Props) => {
     };
     getMovieData();
   }, [movieId]);
-  console.log('타입==>>', movieData?.genres);
+
   const {
     userInfo: { id: userId }
   } = useUserInfoStore();
