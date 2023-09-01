@@ -2,8 +2,9 @@
 
 import { searchReviewMovies } from '@/api/tmdb';
 import { useReviewMovieStore, useSearchModalStore } from '@/store/useReviewStore';
-import React, { useState } from 'react';
+import React from 'react';
 import Paging from '../common/Paging';
+import SearchMoviesItem from './SearchMoviesItem';
 
 const SearchMovies = () => {
   const [currentPage, setCurrentPage] = React.useState(1);
@@ -11,7 +12,6 @@ const SearchMovies = () => {
   const dataPerPage: number = 3;
 
   const [searchMovies, setSearchMovies] = React.useState<TMDBSearchMovie[]>();
-  const [searchValue, setSearchValue] = useState('');
   const { saveSearchMovieId } = useReviewMovieStore();
   const { closeSearchModal } = useSearchModalStore();
 
@@ -21,9 +21,9 @@ const SearchMovies = () => {
     if (!value) return;
     const fetchData = async () => {
       const { results } = await searchReviewMovies(value);
+      setSearchMovies(results);
 
       const total_pages = Math.ceil(results.length / dataPerPage);
-      setSearchMovies(results);
       setTotalPages(total_pages);
     };
     fetchData();
@@ -46,21 +46,16 @@ const SearchMovies = () => {
         name="search"
         type="text"
         placeholder="영화 검색"
-        value={searchValue}
         onChange={handleChange}
       />
-      <ul className="overflow-auto h-44">
+      <ul className={`overflow-auto h-44 grid grid-cols-${dataPerPage} gap-4 mt-2 p-2`}>
         {!isSearchStart && <li>리뷰 남기실 콘텐츠를 검색해 주세요</li>}
         {isSearchNull && <li>검색결과가 없습니다</li>}
         {isSearchStart &&
           searchMovies
             .slice(currentPage * dataPerPage - dataPerPage, currentPage * dataPerPage)
             .map((movie, i: number) => (
-              <li key={'searchMovieKey' + i}>
-                <button type="button" onClick={() => handleClick(movie.id)}>
-                  {movie.title}
-                </button>
-              </li>
+              <SearchMoviesItem key={'searchMovieKey' + i} movie={movie} handleClick={handleClick} />
             ))}
       </ul>
 

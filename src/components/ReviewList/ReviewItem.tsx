@@ -11,8 +11,6 @@ interface Props {
 }
 
 const ReviewItem = ({ review }: Props) => {
-  const baseImgUrl = process.env.NEXT_PUBLIC_TMDB_BASE_IMAGE_URL;
-
   const [movieData, setMovieData] = useState<MovieData>();
 
   useEffect(() => {
@@ -24,6 +22,8 @@ const ReviewItem = ({ review }: Props) => {
   }, []);
 
   const reviewCategories = [].concat(...JSON.parse(review.category));
+  const reviewKeywords = review.keyword!.map((item: string) => JSON.parse(item));
+  const baseImgUrl = process.env.NEXT_PUBLIC_TMDB_BASE_IMAGE_URL;
 
   if (!movieData) return;
   return (
@@ -52,20 +52,19 @@ const ReviewItem = ({ review }: Props) => {
               {reviewCategories.map((category: string, i: number) => (
                 <li
                   key={category + i}
-                  className="m-1 rounded-full  text-teal-700 bg-teal-100 border border-teal-300 py-1 px-2 text-xs font-medium"
+                  className="m-1 rounded-full text-teal-700 bg-teal-100 border border-teal-300 py-1 px-2 text-xs font-medium"
                 >
                   {category}
                 </li>
               ))}
-              {review.keyword &&
-                review.keyword.map((keyword: string, i: number) => (
-                  <li
-                    key={keyword + i}
-                    className="m-1 rounded-full   text-cyan-700 bg-cyan-100 border border-cyan-300 py-1 px-2 text-xs font-medium"
-                  >
-                    {keyword}
-                  </li>
-                ))}
+              {reviewKeywords.map((keyword: { value: string }, i: number) => (
+                <li
+                  key={i}
+                  className="m-1 rounded-full  text-cyan-700 bg-cyan-100 border border-cyan-300 py-1 px-2 text-xs font-medium"
+                >
+                  {keyword.value}
+                </li>
+              ))}
             </ul>
             <span className="text-xs text-gray-500 dark:text-gray-300">
               작성일 {dayjs(review.created_at).format('YYYY.MM.DD')}

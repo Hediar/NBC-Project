@@ -1,6 +1,6 @@
 'use client';
 
-import { getReviews } from '@/api/review';
+import { getReviews, countRowsNumber } from '@/api/review';
 import ReviewItem from '@/components/ReviewList/ReviewItem';
 import ReviewListEmpty from '@/components/ReviewList/ReviewListEmpty';
 import useUserInfoStore from '@/store/saveCurrentUserData';
@@ -13,6 +13,9 @@ const MyReviewPage = () => {
   const [reviews, setReviews] = useState<ReviewsTable[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [isTotalPage, setIsTotalPage] = useState(false);
+  const [totalRowsNumber, setTotalRowsNumber] = useState<number | null>(null);
+
+  const REVIEWS_LIMIT = 3;
 
   const handleClick = () => {
     setCurrentPage(currentPage + 1);
@@ -20,10 +23,23 @@ const MyReviewPage = () => {
 
   useEffect(() => {
     const getMoreData = async (page: number) => {
-      const { data, error } = await getReviews({ userid: userInfo.id!, page });
+      if (totalRowsNumber === null) {
+        const fetchRowNumberData = await countRowsNumber('reviews');
+        setTotalRowsNumber(fetchRowNumberData!);
+      }
+
+      const { data, error } = await getReviews({ userid: userInfo.id!, page, limit: REVIEWS_LIMIT });
       setReviews([...reviews, ...(data as ReviewsTable[])]);
 
-      if (!data?.length) setIsTotalPage(true);
+      // console.log(
+      //   'totalRowsNumber <= reviews.length+3+1 => ',
+      //   totalRowsNumber,
+      //   reviews.length + 3 + 1,
+      //   totalRowsNumber! <= reviews.length + 3 + 1
+      // );
+      totalRowsNumber !== null && totalRowsNumber! <= reviews.length + REVIEWS_LIMIT + 1
+        ? setIsTotalPage(true)
+        : setIsTotalPage(false);
     };
     if (userInfo.id) getMoreData(currentPage);
   }, [userInfo, currentPage]);
@@ -49,9 +65,9 @@ const MyReviewPage = () => {
           <button
             onClick={handleClick}
             type="button"
-            className="border border-gray-700 bg-gray-700 text-white rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-gray-800 focus:outline-none focus:shadow-outline"
+            className="border border-gray-200 bg-gray-200 text-gray-700 rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-gray-300 focus:outline-none focus:shadow-outline"
           >
-            더 보기
+            더 보기{`(${currentPage}/${Math.ceil(totalRowsNumber! / (REVIEWS_LIMIT + 1))})`}
           </button>
         )}
       </div>
