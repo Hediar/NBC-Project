@@ -3,11 +3,12 @@
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore from 'swiper';
-import { Navigation, Scrollbar } from 'swiper/modules';
+import { Navigation, Pagination, A11y } from 'swiper/modules';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/scrollbar';
+import 'swiper/css/pagination';
 
 import Link from 'next/link';
 import { useReviewMovieStore, useSearchModalStore } from '@/store/useReviewStore';
@@ -17,9 +18,10 @@ type Props = {
   dataList: any;
   spaceBetween: any;
   slidesPerView: any;
+  className: string;
 };
 
-const MyMoviesSwiper = ({ dataList, spaceBetween, slidesPerView }: Props) => {
+const MyMoviesSwiper = ({ dataList, spaceBetween, slidesPerView, className }: Props) => {
   const { saveSearchMovieId } = useReviewMovieStore();
   const { closeSearchModal } = useSearchModalStore();
 
@@ -34,18 +36,22 @@ const MyMoviesSwiper = ({ dataList, spaceBetween, slidesPerView }: Props) => {
   const swiperRef = React.useRef<SwiperCore>();
 
   return (
-    <div>
+    <div className={className}>
       <Swiper
         onSwiper={(swiper) => {
           swiperRef.current = swiper;
         }}
-        modules={[Navigation, Scrollbar]} // 사용할 모듈
+        modules={[Navigation, Pagination, A11y]} // 사용할 모듈
         spaceBetween={spaceBetween} // 슬라이드 간격
         slidesPerView={slidesPerView} // 화면에 보여줄 슬라이드 갯수
+        slidesPerGroup={slidesPerView} // 그룹으로 묶을 수. 동시에 슬라이드하게 하는 슬라이드의 숫자를 지정
         loop={true} // 슬라이드 무한 반복 여부
         autoplay={false} // 슬라이드 자동 재생 여부
         navigation // prev, next button 적용
-        scrollbar={{ draggable: true }}
+        // scrollbar={{ draggable: true }}
+        pagination={{ clickable: true }}
+        observer={true}
+        observeParents={true}
       >
         {dataList?.map((movie: any, i: number) => {
           return (
@@ -58,7 +64,7 @@ const MyMoviesSwiper = ({ dataList, spaceBetween, slidesPerView }: Props) => {
                     width={342}
                     height={450}
                     quality={100}
-                    className="rounded-lg"
+                    className="rounded-lg h-[170px]"
                   />
                   <span>{movie.title}</span>
                 </button>

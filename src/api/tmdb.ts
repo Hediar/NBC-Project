@@ -33,7 +33,7 @@ export const getTrendingMovies = async () => {
 export const getNewMovies = async (formattedCurrentDate: string, formattedOneMonthPrev: string) => {
   try {
     const movies = await fetch(
-      `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}discover/movie?include_adult=false&include_video=false&language=ko-KR&page=1&release_date.gte=${formattedOneMonthPrev}&release_date.lte=${formattedCurrentDate}&sort_by=popularity.desc`,
+      `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}discover/movie?include_adult=false&include_video=false&language=ko-KR&page=1&release_date.gte=${formattedOneMonthPrev}&release_date.lte=${formattedCurrentDate}&region=KR&sort_by=primary_release_date.desc&vote_count.gte=100`,
       tmdbOptions
     );
     const movieData = await movies.json();
@@ -98,14 +98,14 @@ export const getMovieDetail = async (id: string) => {
   }
 };
 
-const getDetailData = async (id: string) => {
+export const getDetailData = async (id: string) => {
   const detailRes = await fetch(`${process.env.NEXT_PUBLIC_TMDB_BASE_DETAIL_URL}${id}?language=ko-KR`, options);
   const detailData = await detailRes.json();
 
   return detailData;
 };
 
-const getTrailerData = async (id: string) => {
+const getTrailerData: any = async (id: string) => {
   const trailerRes = await fetch(`${process.env.NEXT_PUBLIC_TMDB_BASE_DETAIL_URL}${id}/videos?language=ko-KR`, options);
   const trailerData = await trailerRes.json();
 

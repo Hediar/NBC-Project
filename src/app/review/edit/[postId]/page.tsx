@@ -15,7 +15,6 @@ const ReviewPage = async ({ params }: Props) => {
 
   const { data: reviews, error } = await supabase.from('reviews').select('*').eq('reviewid', postId);
   const review = reviews![0];
-  console.log(review);
 
   return (
     <>
