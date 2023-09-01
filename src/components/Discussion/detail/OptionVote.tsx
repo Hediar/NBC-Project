@@ -1,5 +1,6 @@
 'use client';
 import useDiscussionOptionQuery from '@/hooks/useDiscussionOptionQuery';
+import { optionMark } from '@/static/optionMark';
 import useUserInfoStore from '@/store/saveCurrentUserData';
 import supabase from '@/supabase/config';
 import React, { useEffect, useState } from 'react';
@@ -10,7 +11,6 @@ interface Props {
 }
 
 const OptionVote = ({ postId, voteCount }: Props) => {
-  const optionMark = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
   const [selectedOption, setSelectedOption] = useState<DiscussionOption | null>();
   const {
     userInfo: { id: userId }
