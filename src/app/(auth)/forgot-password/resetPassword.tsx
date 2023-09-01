@@ -17,7 +17,7 @@ const ResetPassword = () => {
         setShowForm(true);
       }
     });
-  }, [code]);
+  }, [code, supabase.auth]);
 
   return <>{showForm && <ChangePasswordFromMail />}</>;
 };

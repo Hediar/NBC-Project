@@ -10,11 +10,15 @@ import SignUp from '@/components/Auth/SignUp/SignUp';
 import useToggleSignInModal from '@/store/toggleSignInModal';
 import useToggleSignUpModal from '@/store/toggleSignUpModal';
 import OverlaidModal from '@/components/common/OverlaidModal';
+import useToggleDiscussionCommentEditModal from '@/store/toggleDiscussionCommentEditModal';
+import EditDiscussionCommentModal from '@/components/Discussion/detail/comment/EditCommentInput';
 
 const HiddenFunctions = () => {
   const { isForgotPasswordOpen, setIsForgotPasswordOpen } = useToggleForgotPassword();
   const { isSignInModalOpen, setIsSignInModalOpen } = useToggleSignInModal();
   const { isSignUpModalOpen, setIsSignUpModalOpen } = useToggleSignUpModal();
+  const { isDiscussionCommentEditModalOpen, postId, setIsDiscussionCommentEditModalOpen } =
+    useToggleDiscussionCommentEditModal();
 
   return (
     <>
@@ -32,6 +36,11 @@ const HiddenFunctions = () => {
       {isSignUpModalOpen && (
         <OverlaidModal toggle={setIsSignUpModalOpen} value={isSignUpModalOpen}>
           <SignUp />
+        </OverlaidModal>
+      )}
+      {isDiscussionCommentEditModalOpen && (
+        <OverlaidModal toggle={setIsDiscussionCommentEditModalOpen} value={!isDiscussionCommentEditModalOpen}>
+          <EditDiscussionCommentModal postId={postId!} />
         </OverlaidModal>
       )}
     </>
