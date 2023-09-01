@@ -66,6 +66,32 @@ export const getNextDiscussionPost = async ({ postId, movieId }: { postId: numbe
   return nextData;
 };
 
+export const getHotDiscussionPost = async () => {
+  const { data: mostVote } = await supabase
+    .from('discussion_post')
+    .select('*')
+    .order('vote_count', { ascending: false })
+    .limit(6);
+
+  const getContentPromises = mostVote?.map(async (data) => {
+    const { data: discussionOptions } = await supabase
+      .from('discussion_option')
+      .select('content')
+      .eq('post_id', data.post_id);
+
+    const contentsData = discussionOptions?.map((data) => data.content);
+
+    const filterData = { ...data, contents: [...contentsData!] };
+
+    return filterData;
+  });
+
+  // 모든 프로미스를 병렬로 실행하고 결과를 기다리기
+  const allContentData = await Promise.all(getContentPromises!);
+
+  return allContentData;
+};
+
 interface AddUserData {
   user_id: string;
   option_id: number;
