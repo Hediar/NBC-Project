@@ -21,11 +21,12 @@ const MovieList = () => {
   const formattedCurrentDate = today.format('YYYY-MM-DD');
 
   const fetchMovieData = async (page: number) => {
+    console.log('검색 fetchMovieData');
     if (searchMovieValue) {
       // 검색 했을 때
       const data = await contentPageGetDataSearch(searchMovieValue, searchType, page);
       setDataList(data);
-
+      console.log('33');
       if (searchType === 'movie') {
         const results = data.results;
         if (page === 1) {
@@ -44,6 +45,7 @@ const MovieList = () => {
       }
     } else {
       // 검색 x
+      console.log('44');
       const data = await contentPageGetDataDiscover(sortingOption, formattedCurrentDate, page);
       setDataList(data);
       const results = data.results;
