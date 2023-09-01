@@ -66,7 +66,6 @@ export const fetchTrendMoviesByGenre = async (genreId: number | string) => {
   }
 };
 
-//추후 리팩토링!!
 export const getMovieDetail = async (id: string) => {
   try {
     const [detailData, trailerData, watchProviderData, imageData, creditsData] = await Promise.all([
