@@ -9,6 +9,7 @@ const HotTopics = async () => {
     <>
       <div className="p-5">
         <h2 className="text-2xl">핫한 토픽</h2>
+        <Link href={'/discussion/list/1'}>더보기 &gt;</Link>
         <div className="grid grid-cols-3 grid-rows-2 gap-4 p-5">
           {discussionData!.map((post) => (
             <Link
