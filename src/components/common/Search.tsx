@@ -52,6 +52,7 @@ const Search = ({
   };
 
   const handleClick = (item: any) => {
+    // console.log(item);
     if (searchType === 'movie') {
       setSearchInput(item.title);
     } else if (searchType === 'person') {

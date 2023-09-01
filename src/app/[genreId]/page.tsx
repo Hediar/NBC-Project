@@ -4,6 +4,8 @@ import KeywordButtons from '@/components/MainPage/MainPageMovies/KeywordButtons'
 import TrendMoives from '@/components/MainPage/MainPageMovies/TrendMoives';
 import React from 'react';
 
+export const dynamic = 'force-dynamic';
+
 const GenreMovies = ({ params }: { params: { genreId: string } }) => {
   const { genreId } = params;
   return (
