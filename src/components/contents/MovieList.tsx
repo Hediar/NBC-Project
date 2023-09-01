@@ -92,7 +92,7 @@ const MovieList = () => {
 
   useEffect(() => {
     fetchMovieData(currentPage);
-  }, [currentPage, searchMovieValue]);
+  }, [currentPage]);
 
   let contents;
 
