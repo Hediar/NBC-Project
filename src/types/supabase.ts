@@ -1,9 +1,49 @@
 export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[];
 
 declare global {
-  interface Database {
+  export interface Database {
     public: {
       Tables: {
+        discussion_comments: {
+          Row: {
+            content: string;
+            created_at: string;
+            id: string;
+            post_id: number;
+            profiles: { username: string; avatar_url: string } | null;
+            user_id: string;
+          };
+          Insert: {
+            content?: string;
+            created_at?: string;
+            id?: string;
+            post_id: number;
+            profiles?: { username: string; avatar_url: string } | null;
+            user_id: string;
+          };
+          Update: {
+            content?: string;
+            created_at?: string;
+            id?: string;
+            post_id?: number;
+            profiles?: { username: string; avatar_url: string } | null;
+            user_id?: string;
+          };
+          Relationships: [
+            {
+              foreignKeyName: 'discussion_comments_post_id_fkey';
+              columns: ['post_id'];
+              referencedRelation: 'discussion_post';
+              referencedColumns: ['post_id'];
+            },
+            {
+              foreignKeyName: 'discussion_comments_user_id_fkey';
+              columns: ['user_id'];
+              referencedRelation: 'users';
+              referencedColumns: ['id'];
+            }
+          ];
+        };
         discussion_option: {
           Row: {
             content: string | null;
@@ -48,7 +88,7 @@ declare global {
             comment_count?: number | null;
             content?: string | null;
             created_at?: string;
-            movie_genreIds?: string[] | null;
+            movie_genreIds?: number[] | null;
             movie_id?: string | null;
             movie_imgUrl?: string | null;
             movie_title?: string | null;
@@ -62,7 +102,7 @@ declare global {
             comment_count?: number | null;
             content?: string | null;
             created_at?: string;
-            movie_genreIds?: string[] | null;
+            movie_genreIds?: number[] | null;
             movie_id?: string | null;
             movie_imgUrl?: string | null;
             movie_title?: string | null;

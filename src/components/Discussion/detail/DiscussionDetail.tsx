@@ -60,10 +60,6 @@ const DiscussionDetail = async ({ discussionId }: Props) => {
           <div>
             <EditDeleteBox postId={postData.post_id} authorId={postData.user_id} />
           </div>
-
-          <div className="p-5">
-            <DiscussionCommentContainer />
-          </div>
         </div>
 
         <div className="w-[20vw]">

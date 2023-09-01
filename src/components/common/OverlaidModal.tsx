@@ -5,7 +5,7 @@ import Modal from './Modal';
 
 interface Props {
   children: React.ReactNode;
-  toggle: (param: boolean) => void;
+  toggle: (param: boolean, x?: any) => void;
   value: boolean;
   optional_toggle?: (param: boolean) => void;
   optional_value?: boolean;

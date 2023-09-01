@@ -1,4 +1,5 @@
 import DiscussionDetail from '@/components/Discussion/detail/DiscussionDetail';
+import DiscussionCommentContainer from '@/components/Discussion/detail/comment/DiscussionCommentContainer';
 import React from 'react';
 
 interface Props {
@@ -14,6 +15,7 @@ const DiscussionDetailPage = ({ params }: Props) => {
   return (
     <div>
       <DiscussionDetail discussionId={discussionId} />
+      <DiscussionCommentContainer discussionId={discussionId} />
     </div>
   );
 };
