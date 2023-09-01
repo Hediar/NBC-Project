@@ -6,6 +6,8 @@ import changeFormat from '@/api/formatTime';
 import CommentInput from './CommentInput';
 import DeleteCommentButton from './DeleteComment';
 import EditCommentButton from './EditComment';
+import LikeButton from './LikeButton';
+import DisplayComments from './DisplayComments';
 
 interface Props {
   discussionId: string;
@@ -15,50 +17,26 @@ const DiscussionCommentContainer = async ({ discussionId }: Props) => {
   const supabase = createServerComponentClient<Database>({ cookies });
   const { data: commentsData, error } = await supabase
     .from('discussion_comments')
-    .select()
+    .select('*, discussion_comments_likes("user_id")')
     .eq('post_id', discussionId)
     .order('created_at');
 
   // signed user get; username, avatar_url
   const { data: currentUserId, error: currentUserIdError } = await supabase.auth.getUser();
-
   const signedInUserId = currentUserId.user?.id as string;
+
+  const addedCommentsData =
+    commentsData?.map((comment) => ({
+      ...comment,
+      user_has_liked_comment: !!comment.discussion_comments_likes.find((like) => like.user_id === signedInUserId),
+      likes: comment.discussion_comments_likes.length
+    })) ?? [];
 
   const { data: signedInUserData, error: err } = await supabase
     .from('users')
     .select('username, avatar_url')
     .eq('id', signedInUserId)
     .single();
-
-  const displayComments = commentsData?.map((comment) => {
-    return (
-      <div key={comment.id} className="flex w-full text-sm mb-2">
-        <div className="w-1/12">
-          <Image
-            className="h-8 w-8 rounded-full"
-            width={32}
-            height={32}
-            alt="user-profile"
-            src={comment.profiles!.avatar_url}
-          />
-        </div>
-        <div className="w-11/12 flex flex-col gap-1">
-          <div className="flex items-center gap-4">
-            <h6 className="font-semibold ">{comment.profiles!.username}</h6>
-            <p className="text-base">{comment.content}</p>
-          </div>
-          <div className="flex gap-2 items-center">
-            <span>좋아요 1개</span>
-            <button>답글</button>
-            <span>{changeFormat(comment.created_at)}</span>
-            <button className="text-xl">🩷</button>
-            {signedInUserId === comment.user_id && <DeleteCommentButton postId={comment.id} />}
-            {signedInUserId === comment.user_id && <EditCommentButton postId={comment.id} />}
-          </div>
-        </div>
-      </div>
-    );
-  });
 
   if (err) {
     return (
@@ -74,7 +52,7 @@ const DiscussionCommentContainer = async ({ discussionId }: Props) => {
           <CommentInput signedInUserId={signedInUserId} discussionId={discussionId} />
         </div>
 
-        <div className="">{displayComments}</div>
+        <DisplayComments addedCommentsData={addedCommentsData} signedInUserId={signedInUserId} />
       </div>
     );
   }
@@ -99,7 +77,7 @@ const DiscussionCommentContainer = async ({ discussionId }: Props) => {
         <CommentInput signedInUserId={signedInUserId} discussionId={discussionId} />
       </div>
 
-      <div className="">{displayComments}</div>
+      <DisplayComments addedCommentsData={addedCommentsData} signedInUserId={signedInUserId} />
     </div>
   );
 };

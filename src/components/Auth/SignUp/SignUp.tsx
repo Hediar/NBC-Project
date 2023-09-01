@@ -5,8 +5,9 @@ import SubmitButton from '@/components/Auth/SubmitButton';
 import SocialButtons from '@/components/Auth/SocialButtons';
 import HCaptcha from '@hcaptcha/react-hcaptcha';
 import { useRouter } from 'next/navigation';
-import useToggleSignUpModal from '@/store/toggleSignUpModal';
+
 import useToggleSignInModal from '@/store/toggleSignInModal';
+import useToggleSignUpModal from '@/store/toggleSignUpModal';
 
 function SignUp() {
   const router = useRouter();
@@ -57,9 +58,8 @@ function SignUp() {
     formData.append('captchaToken', captchaToken);
 
     const res = await fetch('/auth/sign-up', { method: 'post', body: formData });
-
-    if (res) {
-      const data = await res.json();
+    const data = await res.json();
+    if (data.error) {
       if (data.message === 'User already registered.') {
         setIsError(true);
         setMessage('이미 등록된 이메일입니다.');
@@ -71,6 +71,7 @@ function SignUp() {
       router.refresh();
     } else {
       router.refresh();
+      setIsSignUpModalOpen(isSignUpModalOpen);
     }
   };
 

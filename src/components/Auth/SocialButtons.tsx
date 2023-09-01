@@ -2,10 +2,12 @@
 
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 const SocialButtons = () => {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   const supabase = createClientComponentClient<Database>();
+  const router = useRouter();
 
   const handleOAuthSignIn = async (provider: 'google' | 'kakao', queryParams = {}) => {
     await supabase.auth.signInWithOAuth({
@@ -15,6 +17,7 @@ const SocialButtons = () => {
         queryParams
       }
     });
+    router.refresh();
   };
 
   return (
