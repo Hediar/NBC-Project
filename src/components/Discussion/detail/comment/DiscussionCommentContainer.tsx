@@ -2,11 +2,7 @@ import React from 'react';
 import { cookies } from 'next/headers';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import Image from 'next/image';
-import changeFormat from '@/api/formatTime';
 import CommentInput from './CommentInput';
-import DeleteCommentButton from './DeleteComment';
-import EditCommentButton from './EditComment';
-import LikeButton from './LikeButton';
 import DisplayComments from './DisplayComments';
 
 interface Props {
