@@ -55,3 +55,8 @@ export const getUserName = async (userid: string) => {
 
   return null; // 사용자가 없을 경우 또는 데이터가 올바르지 않을 경우
 };
+
+export const countRowsNumber = async (table: string = 'reviews') => {
+  const { count } = await supabase.from(table).select('*', { count: 'exact', head: true });
+  return count;
+};

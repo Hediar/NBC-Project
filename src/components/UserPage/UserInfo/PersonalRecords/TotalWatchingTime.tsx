@@ -27,7 +27,7 @@ const TotalWatchingTime = async ({ watched_movies }: { watched_movies: Array<str
 
   const totalMovieRuntime = await calculateMovieWatchedTime(watched_movies);
   return (
-    <div className="flex flex-col justify-center items-center gap-3 bg-gray-300 w-1/3 h-40 rounded-2xl">
+    <div className="flex flex-col justify-center items-center gap-3 bg-gray-300 w-1/3 h-40 rounded-2xl p-8">
       <p className="text-xl">현재까지 본 영화 시간</p>
       {totalMovieRuntime ? (
         <p className="text-lg text-gray-700">{totalMovieRuntime}</p>

@@ -37,7 +37,7 @@ export const POST = async (request: Request) => {
       return NextResponse.json({ error: true, message: 'captcha 오류.' });
     }
 
-    return NextResponse.redirect(`${requestUrl.origin}/sign-up?error=에러가 발생했습니다.`, { status: 301 });
+    return NextResponse.json({ isError: true, message: error.message });
   }
 
   return NextResponse.json({ error: false, message: '회원가입 성공' });

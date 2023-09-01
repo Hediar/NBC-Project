@@ -1,9 +1,83 @@
 export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[];
 
 declare global {
-  interface Database {
+  export interface Database {
     public: {
       Tables: {
+        discussion_comments: {
+          Row: {
+            content: string;
+            created_at: string;
+            id: string;
+            post_id: number;
+            profiles: { username: string; avatar_url: string };
+            user_id: string;
+          };
+          Insert: {
+            content: string;
+            created_at?: string;
+            id?: string;
+            post_id: number;
+            profiles?: { username: string; avatar_url: string };
+            user_id: string;
+          };
+          Update: {
+            content?: string;
+            created_at?: string;
+            id?: string;
+            post_id?: number;
+            profiles?: { username: string; avatar_url: string };
+            user_id?: string;
+          };
+          Relationships: [
+            {
+              foreignKeyName: 'discussion_comments_post_id_fkey';
+              columns: ['post_id'];
+              referencedRelation: 'discussion_post';
+              referencedColumns: ['post_id'];
+            },
+            {
+              foreignKeyName: 'discussion_comments_user_id_fkey';
+              columns: ['user_id'];
+              referencedRelation: 'users';
+              referencedColumns: ['id'];
+            }
+          ];
+        };
+        discussion_comments_likes: {
+          Row: {
+            comments_id: string;
+            created_at: string;
+            id: number;
+            user_id: string;
+          };
+          Insert: {
+            comments_id: string;
+            created_at?: string;
+            id?: number;
+            user_id: string;
+          };
+          Update: {
+            comments_id?: string;
+            created_at?: string;
+            id?: number;
+            user_id?: string;
+          };
+          Relationships: [
+            {
+              foreignKeyName: 'discussion_comments_likes_user_id_fkey';
+              columns: ['user_id'];
+              referencedRelation: 'users';
+              referencedColumns: ['id'];
+            },
+            {
+              foreignKeyName: 'fk_comments_id';
+              columns: ['comments_id'];
+              referencedRelation: 'discussion_comments';
+              referencedColumns: ['id'];
+            }
+          ];
+        };
         discussion_option: {
           Row: {
             content: string | null;
@@ -48,7 +122,7 @@ declare global {
             comment_count?: number | null;
             content?: string | null;
             created_at?: string;
-            movie_genreIds?: string[] | null;
+            movie_genreIds?: number[] | null;
             movie_id?: string | null;
             movie_imgUrl?: string | null;
             movie_title?: string | null;
@@ -62,7 +136,7 @@ declare global {
             comment_count?: number | null;
             content?: string | null;
             created_at?: string;
-            movie_genreIds?: string[] | null;
+            movie_genreIds?: number[] | null;
             movie_id?: string | null;
             movie_imgUrl?: string | null;
             movie_title?: string | null;

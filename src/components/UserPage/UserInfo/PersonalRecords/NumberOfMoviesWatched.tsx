@@ -6,7 +6,7 @@ const NumberOfMoviesWatched = ({
   username: string;
 }) => {
   return (
-    <div className="flex flex-col justify-center items-center gap-3 bg-gray-300 w-1/3 h-40 rounded-2xl">
+    <div className="flex flex-col justify-center items-center gap-3 bg-gray-300 w-1/3 h-40 rounded-2xl p-8 text-center">
       <p className="text-xl">내가 지금까지 본 영화</p>
       {!!numberOfMoviesWatched ? (
         <p className="text-lg text-gray-700">{numberOfMoviesWatched}개</p>

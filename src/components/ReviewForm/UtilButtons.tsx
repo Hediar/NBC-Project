@@ -1,4 +1,5 @@
 'use client';
+
 import useUserInfoStore from '@/store/saveCurrentUserData';
 import supabase from '@/supabase/config';
 import { useRouter } from 'next/navigation';

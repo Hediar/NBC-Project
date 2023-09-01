@@ -36,7 +36,34 @@ export const getRelatedDiscussionPost = async ({ genreIds, movieId }: { genreIds
     .neq('movie_id', movieId)
     .containedBy('movie_genreIds', genreIds);
 
-  return relatedPostData;
+  if (relatedPostData?.length) return relatedPostData;
+
+  const { data: relatedPostData2 } = await supabase
+    .from('discussion_post')
+    .select('*')
+    .neq('movie_id', movieId)
+    .overlaps('movie_genreIds', genreIds.slice(0, 1));
+  return relatedPostData2;
+};
+
+export const getPrevDiscussionPost = async ({ postId, movieId }: { postId: number; movieId: string }) => {
+  const { data: prevData } = await supabase
+    .from('discussion_post')
+    .select('*')
+    .eq('movie_id', movieId)
+    .lt('post_id', postId);
+
+  return prevData;
+};
+
+export const getNextDiscussionPost = async ({ postId, movieId }: { postId: number; movieId: string }) => {
+  const { data: nextData } = await supabase
+    .from('discussion_post')
+    .select('*')
+    .eq('movie_id', movieId)
+    .gt('post_id', postId);
+
+  return nextData;
 };
 
 interface AddUserData {
@@ -74,7 +101,7 @@ interface UpdateDiscussionPost {
   userId: string;
   title: string | undefined;
   content: string | undefined;
-  options: string[];
+  options: { text: string }[];
   postId: string;
   startNum: number;
 }
@@ -97,7 +124,7 @@ export const updateDiscussionPost = async ({
     for (let i = startNum; i < options.length; i++) {
       const newOption = {
         post_id: data![0].post_id,
-        content: options[i]
+        content: options[i].text
       };
 
       await supabase.from('discussion_option').insert(newOption).select();

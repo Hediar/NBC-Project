@@ -1,6 +1,8 @@
 'use client';
 import { getDiscussionPostDetail, getDiscussionPostOption } from '@/api/supabase-discussion';
+import ReviewMovie from '@/components/ReviewForm/ReviewMovie';
 import useDiscussionPostQuery from '@/hooks/useDiscussionPostQuery';
+import { optionMark } from '@/static/optionMark';
 import useUserInfoStore from '@/store/saveCurrentUserData';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
@@ -11,6 +13,10 @@ interface Props {
   };
 }
 
+interface Option {
+  text: string;
+}
+
 const DiscussionEditPage = ({ params }: Props) => {
   const { discussionId } = params;
   const {
@@ -18,22 +24,23 @@ const DiscussionEditPage = ({ params }: Props) => {
   } = useUserInfoStore();
   const [title, setTitle] = useState<string>();
   const [content, setContent] = useState<string>();
-  const [optionContent, setOptionContent] = useState<string>('');
-  const [options, setOptions] = useState<string[]>([]);
-  const optionInputRef = useRef<HTMLInputElement>(null);
-  const [optionValueCheck, setOptionValueCheck] = useState<boolean>(false);
+  const [movieId, setMovieId] = useState<string>();
+  const [options, setOptions] = useState<Option[]>([]);
   const initOptionLengthRef = useRef<number>(0);
   const { updatePostMutation } = useDiscussionPostQuery('DiscussionEditPage');
 
   useEffect(() => {
     const getInitData = async () => {
       const initPostData = await getDiscussionPostDetail(+discussionId);
+
       setTitle(initPostData!.title);
       setContent(initPostData!.content);
+      setMovieId(initPostData.movie_id);
 
       const initOptionData = await getDiscussionPostOption(+discussionId);
       const initOptions = initOptionData?.map((option) => option.content);
-      setOptions([...initOptions!]);
+
+      setOptions([...initOptions!.map((option) => ({ text: option }))]);
       initOptionLengthRef.current = initOptions!.length;
     };
     getInitData();
@@ -42,14 +49,8 @@ const DiscussionEditPage = ({ params }: Props) => {
   const router = useRouter();
 
   const addOption = () => {
-    if (optionContent) {
-      const newOption = optionContent;
-      setOptions([...options, newOption]);
-      setOptionContent('');
-    } else {
-      if (optionInputRef.current instanceof HTMLInputElement) optionInputRef.current.focus();
-      setOptionValueCheck(true);
-    }
+    const newOption = { text: '' };
+    setOptions([...options, newOption]);
   };
 
   const deleteOption = (idx: number) => {
@@ -76,60 +77,100 @@ const DiscussionEditPage = ({ params }: Props) => {
   };
 
   return (
-    <div className="p-5">
-      <div className="flex flex-col gap-5">
-        <div className="flex gap-2">
+    <div className="p-5 w-3/5">
+      {/* S:: 영화 선택 */}
+      <div>
+        <ReviewMovie movieId={movieId as string} />
+      </div>
+      {/* E:: 영화 선택 */}
+
+      <div className="flex flex-col gap-5 w-full mt-5">
+        <div className="flex gap-2 justify-center items-center">
           <label htmlFor="topic">주제</label>
-          <input type="text" name="topic" className="border" value={title} onChange={(e) => setTitle(e.target.value)} />
+          <input
+            type="text"
+            name="topic"
+            className="border p-2 rounded w-4/5"
+            placeholder="내용을 입력해주세요"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 justify-center items-center">
           <label htmlFor="explanation">설명</label>
           <input
             type="text"
             name="explanation"
-            className="border"
+            className="border p-2 rounded w-4/5"
+            placeholder="토론 주제를 설명해주세요"
             value={content}
             onChange={(e) => setContent(e.target.value)}
           />
         </div>
       </div>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-        }}
-      >
-        <div className="m-5">
+
+      <div className="m-5">
+        <>
+          <p className="font-bold p-2">{'투표기능(선택지 최대 10개)'}</p>
           {options.map((option, idx) => {
             return (
-              <div key={idx} className="flex gap-2">
-                {idx < initOptionLengthRef.current ? (
-                  <>
-                    <p className="text-gray-500">{option}</p>
-                  </>
-                ) : (
-                  <>
-                    <p>{option}</p>
-                    <div onClick={() => deleteOption(idx)}>삭제</div>
-                  </>
-                )}
+              <div key={idx} className="flex gap-2 items-center">
+                <div className="w-full">
+                  <label htmlFor={`의견${optionMark[idx]}`}>의견{optionMark[idx]}</label>
+                  {idx < initOptionLengthRef.current ? (
+                    <input
+                      name={`의견${optionMark[idx]}`}
+                      className="border w-full p-1 my-2 rounded pointer-events-none"
+                      type="text"
+                      value={option.text}
+                      placeholder="내용을 입력해주세요"
+                    />
+                  ) : (
+                    <input
+                      name={`의견${optionMark[idx]}`}
+                      className="border w-full p-1 my-2 rounded"
+                      type="text"
+                      placeholder="내용을 입력해주세요"
+                      onChange={(e) => {
+                        option.text = e.target.value;
+                      }}
+                    />
+                  )}
+
+                  {idx > 1 && idx >= initOptionLengthRef.current && (
+                    <button
+                      className="float-right text-sm font-bold text-gray-500 border px-2 py-1 rounded-xl m-1"
+                      onClick={() => deleteOption(idx)}
+                    >
+                      취소
+                    </button>
+                  )}
+                </div>
               </div>
             );
           })}
-          <input
-            ref={optionInputRef}
-            type="text"
-            placeholder="선택지를 추가하세요"
-            name="addOption"
-            value={optionContent}
-            onChange={(e) => setOptionContent(e.target.value)}
-            onClick={() => setOptionValueCheck(false)}
-          ></input>
-          {optionValueCheck && <p className="absolute z-10 text-xs text-red-300">내용을 입력해주세요</p>}
 
-          <button onClick={addOption}>+</button>
-        </div>
-      </form>
-      <button onClick={handleSubmit}>작성</button>
+          {options.length < 10 && (
+            <div className="flex justify-center my-5">
+              <button className="border px-2 py-1 hover:bg-gray-200 rounded" onClick={addOption}>
+                <span>선택지 추가하기</span>
+              </button>
+            </div>
+          )}
+        </>
+      </div>
+
+      <div className="flex justify-center gap-3">
+        <button className="border px-2 py-1 bg-gray-300 text-white font-bold hover:bg-gray-200 hover:text-gray-700 rounded">
+          임시저장
+        </button>
+        <button
+          className="border px-2 py-1 bg-black text-white font-bold hover:bg-gray-200 hover:text-gray-700 rounded"
+          onClick={handleSubmit}
+        >
+          토론 게시하기
+        </button>
+      </div>
     </div>
   );
 };
