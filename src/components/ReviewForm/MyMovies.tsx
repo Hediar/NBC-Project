@@ -46,7 +46,14 @@ const MyMovies = () => {
       <strong>나의 영화 리스트</strong>
       <ul className="mx-auto grid max-w-full w-full grid-cols-2 gap-x-5 px-8 h-[300px]">
         <li>
-          <input className="peer sr-only" type="radio" value="myList-likes" name="myList" id="myList-likes" checked />
+          <input
+            className="peer sr-only"
+            type="radio"
+            value="myList-likes"
+            name="myList"
+            id="myList-likes"
+            defaultChecked
+          />
           <label
             className="flex justify-center cursor-pointer rounded-full border border-gray-300 bg-white py-2 px-4 hover:bg-gray-50 focus:outline-none peer-checked:border-transparent peer-checked:ring-2 peer-checked:ring-indigo-500 transition-all duration-500 ease-in-out"
             htmlFor="myList-likes"

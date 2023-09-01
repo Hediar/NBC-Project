@@ -10,8 +10,6 @@ type Props = {
 const HashTagBox = ({ fieldArray, defaultValue }: Props) => {
   const { fields, append, remove, replace } = fieldArray;
 
-  console.log('defaultValue => ', defaultValue);
-
   // onChange로 관리할 문자열
   const [tagItem, setTagItem] = React.useState<string | ''>('');
 

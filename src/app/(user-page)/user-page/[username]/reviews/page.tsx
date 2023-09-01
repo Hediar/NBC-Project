@@ -15,7 +15,7 @@ const MyReviewPage = () => {
   const [isTotalPage, setIsTotalPage] = useState(false);
   const [totalRowsNumber, setTotalRowsNumber] = useState<number | null>(null);
 
-  const reviewsLimit = 3;
+  const REVIEWS_LIMIT = 3;
 
   const handleClick = () => {
     setCurrentPage(currentPage + 1);
@@ -28,7 +28,7 @@ const MyReviewPage = () => {
         setTotalRowsNumber(fetchRowNumberData!);
       }
 
-      const { data, error } = await getReviews({ userid: userInfo.id!, page, limit: reviewsLimit });
+      const { data, error } = await getReviews({ userid: userInfo.id!, page, limit: REVIEWS_LIMIT });
       setReviews([...reviews, ...(data as ReviewsTable[])]);
 
       // console.log(
@@ -37,7 +37,7 @@ const MyReviewPage = () => {
       //   reviews.length + 3 + 1,
       //   totalRowsNumber! <= reviews.length + 3 + 1
       // );
-      totalRowsNumber !== null && totalRowsNumber! <= reviews.length + reviewsLimit + 1
+      totalRowsNumber !== null && totalRowsNumber! <= reviews.length + REVIEWS_LIMIT + 1
         ? setIsTotalPage(true)
         : setIsTotalPage(false);
     };
@@ -67,7 +67,7 @@ const MyReviewPage = () => {
             type="button"
             className="border border-gray-200 bg-gray-200 text-gray-700 rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-gray-300 focus:outline-none focus:shadow-outline"
           >
-            더 보기{`(${currentPage}/${Math.ceil(totalRowsNumber! / (reviewsLimit + 1))})`}
+            더 보기{`(${currentPage}/${Math.ceil(totalRowsNumber! / (REVIEWS_LIMIT + 1))})`}
           </button>
         )}
       </div>

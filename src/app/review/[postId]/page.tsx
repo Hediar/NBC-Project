@@ -21,11 +21,9 @@ const ReviewDetail = async ({ params }: Props) => {
 
   const { data: reviews, error } = await supabase.from('reviews').select('*').eq('reviewid', postId);
   const review = reviews![0];
-  //   console.log(review);
 
   const { data: users } = await supabase.from('users').select('*').eq('id', review.userid);
   const user = users![0];
-  //   console.log(user);
 
   const movieData = await getMovieDetail(review.movieid);
 
@@ -43,14 +41,14 @@ const ReviewDetail = async ({ params }: Props) => {
         <div className="h-full relative">
           <Image
             src={`${baseImgUrl}w300_and_h450_bestv2${movieData.backdrop_path}`}
-            alt="이미지없음"
-            width={300}
-            height={450}
+            alt="포스터 이미지"
+            width={90}
+            height={136}
             quality={100}
-            className="object-cover w-auto h-full rounded-lg"
+            className="rounded-lg"
           />
         </div>
-        <div className="flex flex-col justify-between lg:ml-3 text-left">
+        <div className="flex flex-col justify-between ml-3 text-left">
           <strong>{movieData.title}</strong>
           <div>{movieData.release_date.slice(0, 4)}</div>
           <div>{movieData.genres.map((genre: MovieGenre) => `${genre.name} `)}</div>

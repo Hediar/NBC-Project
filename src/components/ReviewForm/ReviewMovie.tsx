@@ -26,15 +26,15 @@ const ReviewMovie = ({ movieId }: Props) => {
   if (!movieData) return <div>로딩 중..</div>;
 
   return (
-    <div className="lg:flex lg:items-center h-full">
+    <div className="flex items-center h-full">
       <div className="h-full relative">
         <Image
           src={`${baseImgUrl}w300_and_h450_bestv2${movieData.backdrop_path}`}
-          alt=""
-          width={300}
-          height={450}
+          alt="포스터 이미지"
+          width={90}
+          height={136}
           quality={100}
-          className="object-cover w-auto h-full rounded-lg"
+          className="rounded-lg"
         />
         <button
           onClick={() => {
@@ -45,7 +45,7 @@ const ReviewMovie = ({ movieId }: Props) => {
           변경
         </button>
       </div>
-      <div className="flex flex-col justify-between lg:ml-3 text-left">
+      <div className="flex flex-col justify-between ml-3 text-left">
         <strong>{movieData.title}</strong>
         <div>{movieData.release_date.slice(0, 4)}</div>
         <div>{movieData.genres.map((genre: MovieGenre) => `${genre.name} `)}</div>

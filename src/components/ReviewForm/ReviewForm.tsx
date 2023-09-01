@@ -68,7 +68,7 @@ const ReviewForm = ({ movieId, editReview, movieButtonRef }: Props) => {
       keyword: tagList,
       content
     } as ReviewsTable;
-    console.log('newReview => ', newReview);
+    // console.log('newReview => ', newReview);
 
     try {
       const { data, error } = editReview
@@ -90,7 +90,6 @@ const ReviewForm = ({ movieId, editReview, movieButtonRef }: Props) => {
     e.preventDefault();
 
     const { selectedDate, review, content, tagList, rating } = getValues();
-    console.log('임시저장 내용 => ', getValues());
 
     const newReview = {
       movieid: movieId,
@@ -129,7 +128,13 @@ const ReviewForm = ({ movieId, editReview, movieButtonRef }: Props) => {
 
       const { movieid, date, category, review, keyword, rating, content } = reviewForm;
       const categoryArr = JSON.parse(category);
-      const keywordArr = keyword!.map((item: string) => JSON.parse(item));
+      const keywordArr = keyword!.map((item: string) => {
+        if (typeof item === 'object') {
+          return item;
+        } else {
+          return JSON.parse(item);
+        }
+      });
 
       setCheckedListC1(categoryArr[0]);
       setCheckedListC2(categoryArr[1]);

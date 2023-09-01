@@ -2,7 +2,7 @@
 
 import { searchReviewMovies } from '@/api/tmdb';
 import { useReviewMovieStore, useSearchModalStore } from '@/store/useReviewStore';
-import React, { useState } from 'react';
+import React from 'react';
 import Paging from '../common/Paging';
 import SearchMoviesItem from './SearchMoviesItem';
 
@@ -12,7 +12,6 @@ const SearchMovies = () => {
   const dataPerPage: number = 3;
 
   const [searchMovies, setSearchMovies] = React.useState<TMDBSearchMovie[]>();
-  const [searchValue, setSearchValue] = useState('');
   const { saveSearchMovieId } = useReviewMovieStore();
   const { closeSearchModal } = useSearchModalStore();
 
@@ -47,7 +46,6 @@ const SearchMovies = () => {
         name="search"
         type="text"
         placeholder="영화 검색"
-        value={searchValue}
         onChange={handleChange}
       />
       <ul className={`overflow-auto h-44 grid grid-cols-${dataPerPage} gap-4 mt-2 p-2`}>
