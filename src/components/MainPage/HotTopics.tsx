@@ -18,18 +18,20 @@ const HotTopics = async () => {
               className="bg-gray-200 p-4 rounded-md relative"
             >
               <div className="text-2xl font-bold mb-2">{post.title}</div>
-              <div>
-                {post.contents.map((content: string, idx: number) => (
-                  <div key={idx} className={idx === post.contents.length - 1 ? '' : 'mb-2'}>
-                    {content} {idx !== post.contents.length - 1 && 'VS'}
-                  </div>
-                ))}
-              </div>
-              <div className="mt-4 text-sm">
-                👆투표수 {post.vote_count} 💬댓글수 {post.comment_count}
-              </div>
-              <div className="absolute bottom-2 right-2 text-3xl text-gray-400">
-                <AiFillRightCircle />
+              <div className="bg-gray-100 rounded-md relative p-3">
+                <div>
+                  {post.contents.map((content: string, idx: number) => (
+                    <div key={idx} className={idx === post.contents.length - 1 ? '' : 'mb-2'}>
+                      {content} {idx !== post.contents.length - 1 && 'VS'}
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-4 text-sm">
+                  👆투표수 {post.vote_count} 💬댓글수 {post.comment_count}
+                </div>
+                <div className="absolute bottom-2 right-2 text-3xl text-gray-400">
+                  <AiFillRightCircle />
+                </div>
               </div>
             </Link>
           ))}
