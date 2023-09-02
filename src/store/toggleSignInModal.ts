@@ -8,8 +8,8 @@ interface ToggleSignInModal {
 const useToggleSignInModal = create<ToggleSignInModal>((set) => {
   return {
     isSignInModalOpen: false,
-    setIsSignInModalOpen: (isSignInModalOpen: boolean) => {
-      set({ isSignInModalOpen: !isSignInModalOpen });
+    setIsSignInModalOpen: (value: boolean) => {
+      value === true ? set({ isSignInModalOpen: true }) : set({ isSignInModalOpen: false });
     }
   };
 });

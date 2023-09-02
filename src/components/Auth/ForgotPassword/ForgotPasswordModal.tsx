@@ -50,13 +50,13 @@ const ForgotPasswordModal = () => {
     } else {
       alert('해당 계정의 수신함을 확인해주세요.');
       setIsClicked(false);
-      setIsSignInModalOpen(isSignInModalOpen);
-      setIsForgotPasswordOpen(isForgotPasswordOpen);
+      setIsSignInModalOpen(false);
+      setIsForgotPasswordOpen(false);
     }
   };
 
   const cancelHandler = () => {
-    setIsForgotPasswordOpen(isForgotPasswordOpen);
+    setIsForgotPasswordOpen(false);
   };
   return (
     <Modal>

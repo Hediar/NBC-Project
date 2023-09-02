@@ -72,7 +72,7 @@ function SignUp() {
       router.refresh();
     } else {
       router.refresh();
-      setIsSignUpModalOpen(isSignUpModalOpen);
+      setIsSignUpModalOpen(false);
     }
   };
 
@@ -130,8 +130,8 @@ function SignUp() {
           <p className="text-sm">이미 아이디가 있으신가요?</p>
           <button
             onClick={() => {
-              setIsSignUpModalOpen(isSignUpModalOpen);
-              setIsSignInModalOpen(isSignInModalOpen);
+              setIsSignUpModalOpen(false);
+              setIsSignInModalOpen(true);
             }}
             className="hover:underline"
           >

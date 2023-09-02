@@ -15,7 +15,7 @@ const DisplayMoviesWIthMovieIds = ({ movieData }: { movieData: MovieData[] }) =>
 
   const watchLaterClickHandler = async (movieId: number) => {
     if (!userInfo.id) {
-      setIsSignInModalOpen(isSignInModalOpen);
+      setIsSignInModalOpen(true);
       return;
     }
     await POSTWatchLater(movieId);

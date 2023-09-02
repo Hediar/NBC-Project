@@ -6,12 +6,10 @@ import Modal from './Modal';
 interface Props {
   children: React.ReactNode;
   toggle: (param: boolean, x?: any) => void;
-  value: boolean;
   optional_toggle?: (param: boolean) => void;
-  optional_value?: boolean;
 }
 
-const OverlaidModal = ({ children, toggle, value, optional_toggle, optional_value }: Props) => {
+const OverlaidModal = ({ children, toggle, optional_toggle }: Props) => {
   const overlayRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -27,12 +25,12 @@ const OverlaidModal = ({ children, toggle, value, optional_toggle, optional_valu
         if (e.target === overlayRef.current) {
           overlayRef.current.style.opacity = '0';
           setTimeout(() => {
-            toggle(value);
+            toggle(false);
           }, 200);
           // optional_toggle && optional_value 사용은 로그인 모달에서
           // 비밀번호 찾기 모달이 켜져있는 경우 같이 없애려는 목적
-          if (optional_toggle && optional_value) {
-            optional_toggle(optional_value);
+          if (optional_toggle) {
+            optional_toggle(false);
           }
         }
       }}

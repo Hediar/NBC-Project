@@ -3,7 +3,7 @@ import { cookies } from 'next/headers';
 import SignOutButton from './SignOutButton';
 import SignInButton from './SignInButton';
 import SignUpButton from './SignUpButton';
-import UserInfo from './UserInfo';
+import UserInfo from './SaveUserInfoToStore';
 
 export const dynamic = 'force-dynamic';
 
@@ -35,7 +35,6 @@ const AuthButton = async () => {
     return (
       <>
         <SignOutButton />
-        <UserInfo session={session} />
       </>
     );
   } else {

@@ -13,7 +13,7 @@ import OverlaidModal from '@/components/common/OverlaidModal';
 import useToggleDiscussionCommentEditModal from '@/store/toggleDiscussionCommentEditModal';
 import EditDiscussionCommentModal from '@/components/Discussion/detail/comment/EditCommentInput';
 
-const HiddenFunctions = () => {
+const ModalControlCentre = () => {
   const { isForgotPasswordOpen, setIsForgotPasswordOpen } = useToggleForgotPassword();
   const { isSignInModalOpen, setIsSignInModalOpen } = useToggleSignInModal();
   const { isSignUpModalOpen, setIsSignUpModalOpen } = useToggleSignUpModal();
@@ -24,22 +24,17 @@ const HiddenFunctions = () => {
     <>
       {isForgotPasswordOpen && <ForgotPasswordModal />}
       {isSignInModalOpen && (
-        <OverlaidModal
-          toggle={setIsSignInModalOpen}
-          value={isSignInModalOpen}
-          optional_toggle={setIsForgotPasswordOpen}
-          optional_value={isForgotPasswordOpen}
-        >
+        <OverlaidModal toggle={setIsSignInModalOpen} optional_toggle={setIsForgotPasswordOpen}>
           <SignIn />
         </OverlaidModal>
       )}
       {isSignUpModalOpen && (
-        <OverlaidModal toggle={setIsSignUpModalOpen} value={isSignUpModalOpen}>
+        <OverlaidModal toggle={setIsSignUpModalOpen}>
           <SignUp />
         </OverlaidModal>
       )}
       {isDiscussionCommentEditModalOpen && (
-        <OverlaidModal toggle={setIsDiscussionCommentEditModalOpen} value={!isDiscussionCommentEditModalOpen}>
+        <OverlaidModal toggle={setIsDiscussionCommentEditModalOpen}>
           <EditDiscussionCommentModal postId={postId!} />
         </OverlaidModal>
       )}
@@ -47,4 +42,4 @@ const HiddenFunctions = () => {
   );
 };
 
-export default HiddenFunctions;
+export default ModalControlCentre;

@@ -91,7 +91,7 @@ const SignIn = () => {
       if (saveEmailCheckboxRef.current!.checked) {
         localStorage.setItem('saved_email', emailValue);
       }
-      setIsSignInModalOpen(isSignInModalOpen);
+      setIsSignInModalOpen(false);
       router.refresh();
     }
   };
@@ -170,8 +170,8 @@ const SignIn = () => {
           <button
             className="text-sm"
             onClick={() => {
-              setIsSignUpModalOpen(isSignUpModalOpen);
-              setIsSignInModalOpen(isSignInModalOpen);
+              setIsSignUpModalOpen(true);
+              setIsSignInModalOpen(false);
             }}
           >
             회원가입
@@ -180,7 +180,7 @@ const SignIn = () => {
           <button
             type="button"
             onClick={() => {
-              setIsForgotPasswordOpen(isForgotPasswordOpen);
+              setIsForgotPasswordOpen(true);
             }}
             className="text-sm"
           >

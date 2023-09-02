@@ -8,8 +8,8 @@ interface ToggleSignUpModal {
 const useToggleSignUpModal = create<ToggleSignUpModal>((set) => {
   return {
     isSignUpModalOpen: false,
-    setIsSignUpModalOpen: (isSignUpModalOpen: boolean) => {
-      set({ isSignUpModalOpen: !isSignUpModalOpen });
+    setIsSignUpModalOpen: (value: boolean) => {
+      value === true ? set({ isSignUpModalOpen: true }) : set({ isSignUpModalOpen: false });
     }
   };
 });

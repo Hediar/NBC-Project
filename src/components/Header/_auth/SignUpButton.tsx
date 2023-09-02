@@ -9,9 +9,9 @@ const SignUpButton = () => {
 
   const clickHandler = () => {
     if (isSignInModalOpen) {
-      setIsSignInModalOpen(isSignInModalOpen);
+      setIsSignInModalOpen(false);
     }
-    setIsSignUpModalOpen(isSignUpModalOpen);
+    setIsSignUpModalOpen(true);
   };
 
   return (

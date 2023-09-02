@@ -8,8 +8,8 @@ interface ToggleForgotPassword {
 const useToggleForgotPassword = create<ToggleForgotPassword>((set) => {
   return {
     isForgotPasswordOpen: false,
-    setIsForgotPasswordOpen: (isForgotPasswordOpen: boolean) => {
-      set({ isForgotPasswordOpen: !isForgotPasswordOpen });
+    setIsForgotPasswordOpen: (value: boolean) => {
+      value === true ? set({ isForgotPasswordOpen: true }) : set({ isForgotPasswordOpen: false });
     }
   };
 });
