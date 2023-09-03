@@ -5,7 +5,6 @@ import useDiscussionPostQuery from '@/hooks/useDiscussionPostQuery';
 import DrawSvgX from '@/static/DrawSvgX';
 import { optionMark } from '@/static/optionMark';
 import useUserInfoStore from '@/store/saveCurrentUserData';
-import useToggleSignInModal from '@/store/toggleSignInModal';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
 
@@ -30,7 +29,6 @@ const DiscussionEditPage = ({ params }: Props) => {
   const [content, setContent] = useState<string>();
   const [movieId, setMovieId] = useState<string>();
   const [options, setOptions] = useState<Option[]>([]);
-  const { isSignInModalOpen, setIsSignInModalOpen } = useToggleSignInModal();
 
   const initOptionLengthRef = useRef<number>(0);
   const { updatePostMutation } = useDiscussionPostQuery('DiscussionEditPage');
@@ -72,27 +70,28 @@ const DiscussionEditPage = ({ params }: Props) => {
   const handleSubmit = async () => {
     if (!userId) {
       alert('로그인 해주세요');
-      return setIsSignInModalOpen(true);
+      router.replace('?sign-in=true');
     }
     if (!title) {
       alert('토론 주제를 입력해주세요');
       return titleRef.current!.focus();
+    } else if (userId) {
+      try {
+        updatePostMutation.mutate({
+          userId,
+          title,
+          content,
+          options,
+          postId: discussionId,
+          startNum: initOptionLengthRef.current
+        });
+
+        alert('토론글이 수정되었습니다');
+
+        router.refresh();
+        router.push(`/discussion/detail/${discussionId}`);
+      } catch (error) {}
     }
-    try {
-      updatePostMutation.mutate({
-        userId,
-        title,
-        content,
-        options,
-        postId: discussionId,
-        startNum: initOptionLengthRef.current
-      });
-
-      alert('토론글이 수정되었습니다');
-
-      router.refresh();
-      router.push(`/discussion/detail/${discussionId}`);
-    } catch (error) {}
   };
 
   return (
