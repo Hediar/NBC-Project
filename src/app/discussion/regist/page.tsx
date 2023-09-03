@@ -62,7 +62,7 @@ const DiscussionRegistPage = (props: Props) => {
   const handleSubmit = async () => {
     if (!userId) {
       alert('로그인 해주세요');
-      return setIsSignInModalOpen(isSignInModalOpen);
+      return setIsSignInModalOpen(true);
     }
     if (!movieId) {
       alert('토론하고싶은 영화를 선택해주세요');

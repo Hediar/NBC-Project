@@ -63,7 +63,7 @@ const LikeButton = ({ comment, addOptimisticComments }: Props) => {
       }
     } else {
       alert('로그인을 해주세요.');
-      setIsSignInModalOpen(isSignInModalOpen);
+      setIsSignInModalOpen(true);
     }
   };
 

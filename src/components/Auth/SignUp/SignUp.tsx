@@ -4,13 +4,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import SubmitButton from '@/components/Auth/SubmitButton';
 import SocialButtons from '@/components/Auth/SocialButtons';
 import HCaptcha from '@hcaptcha/react-hcaptcha';
-import { useRouter } from 'next/navigation';
-
-import useToggleSignInModal from '@/store/toggleSignInModal';
-import useToggleSignUpModal from '@/store/toggleSignUpModal';
+import { usePathname, useRouter } from 'next/navigation';
 
 function SignUp() {
   const router = useRouter();
+  const path = usePathname() ?? '';
   const emailValue = useRef<string>('');
   const [passwordValue, setPasswordValue] = useState<string>('');
   const [confirmingPasswordValue, setConfirmingPasswordValue] = useState<string>('');
@@ -19,8 +17,6 @@ function SignUp() {
   const [captchaToken, setCaptchaToken] = useState<any>();
   const [message, setMessage] = useState<string>('');
   const [passwordError, setPasswordError] = useState<string | null>(null);
-  const { isSignInModalOpen, setIsSignInModalOpen } = useToggleSignInModal();
-  const { isSignUpModalOpen, setIsSignUpModalOpen } = useToggleSignUpModal();
 
   const handlePasswordChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -72,7 +68,7 @@ function SignUp() {
       router.refresh();
     } else {
       router.refresh();
-      setIsSignUpModalOpen(isSignUpModalOpen);
+      router.replace(path);
     }
   };
 
@@ -128,13 +124,7 @@ function SignUp() {
         />
         <div className="flex gap-2 items-center">
           <p className="text-sm">이미 아이디가 있으신가요?</p>
-          <button
-            onClick={() => {
-              setIsSignUpModalOpen(isSignUpModalOpen);
-              setIsSignInModalOpen(isSignInModalOpen);
-            }}
-            className="hover:underline"
-          >
+          <button type="button" onClick={() => router.replace('?sign-in=true')} className="hover:underline">
             로그인하기
           </button>
         </div>
