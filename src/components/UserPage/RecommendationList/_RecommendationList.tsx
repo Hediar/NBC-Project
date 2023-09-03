@@ -78,7 +78,7 @@ const RecommendationList = async ({ username, watched_movies }: Props) => {
           />
         </div>
 
-        {/* <div className="mb-16">
+        <div className="mb-16">
           <div className="mb-10">
             <h2 className="inline-block text-xl bg-slate-300 p-3 rounded-xl">#{GerneName_B}</h2>
           </div>
@@ -100,7 +100,7 @@ const RecommendationList = async ({ username, watched_movies }: Props) => {
             genreIdArray={[genreId3]}
             ignoredList={ignoredList}
           />
-        </div> */}
+        </div>
       </section>
     </div>
   );
