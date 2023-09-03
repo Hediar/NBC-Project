@@ -5,6 +5,7 @@
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import MovieItem from './MovieItem';
 
 interface Props {
   movieData: MovieFetchResult;
@@ -16,6 +17,7 @@ interface Props {
 const DisplayInfiniteMovies = ({ movieData, discoverMoviesWithGenreId, genreIdArray, ignoredList }: Props) => {
   const [dataToProject, setDataToProject] = useState<MovieData[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [isOnHover, setIsOnHover] = useState<boolean>(false);
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
     const container = e.target as HTMLDivElement;
@@ -37,29 +39,12 @@ const DisplayInfiniteMovies = ({ movieData, discoverMoviesWithGenreId, genreIdAr
 
   if (!dataToProject) return <>nothing</>;
 
-  const content = dataToProject.map((movie) => {
-    return (
-      <Link href={'/detail/' + movie.id} key={movie.id} className="w-56 h-full flex flex-col gap-2 items-center">
-        <img
-          className="rounded-xl h-2/3 w-10/12"
-          alt="poster"
-          //w92, w154, w185, w342, w500, w780 등
-          src={`https://image.tmdb.org/t/p/w342${movie.poster_path}`}
-        />
-        <div className="flex flex-col gap-1 w-full h-1/3">
-          <h4 className="text-sm font-bold">{movie.title}</h4>
-          <div className="flex gap-2">
-            <p className="text-xs">{movie.release_date}</p>
-          </div>
-        </div>
-      </Link>
-    );
-  });
+  const content = dataToProject.map((movie) => <MovieItem key={movie.id} movie={movie} />);
 
   return (
     <div className="overflow-hidden">
-      <div className="overflow-scroll" onScroll={handleScroll}>
-        <div className="INLINE_BOX h-96">{content}</div>
+      <div className="overflow-x-scroll overflow-y-hidden" onScroll={handleScroll}>
+        <div className="w-full INLINE_BOX h-72 mb-12 flex gap-6">{content}</div>
       </div>
     </div>
   );
