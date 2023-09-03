@@ -17,7 +17,6 @@ const GenreMovies = ({ params }: { params: { genreId: string } }) => {
       <LatestReviews />
       <LatestMovies />
       <HotTopics />
-      <ScrollToTopButton />
     </main>
   );
 };
