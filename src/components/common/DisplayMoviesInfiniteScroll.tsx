@@ -3,7 +3,6 @@
 
 'use client';
 
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import MovieItem from './MovieItem';
 
@@ -25,13 +24,16 @@ const DisplayInfiniteMovies = ({ movieData, discoverMoviesWithGenreId, genreIdAr
       setCurrentPage(currentPage + 1);
     }
   };
-
+  useEffect(() => {
+    if (dataToProject.length < 5) {
+      setCurrentPage(currentPage + 1);
+    }
+  }, []);
   useEffect(() => {
     const getMoreData = async (page: number) => {
       const data = await discoverMoviesWithGenreId(genreIdArray, page);
       const results = data[0].results;
       const filteredResults = results.filter((movie) => !ignoredList.includes(movie.id.toString()));
-      console.log(ignoredList);
       setDataToProject([...dataToProject, ...filteredResults]);
     };
     getMoreData(currentPage);

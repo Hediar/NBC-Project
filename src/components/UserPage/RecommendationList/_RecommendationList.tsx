@@ -50,8 +50,6 @@ const RecommendationList = async ({ username, watched_movies }: Props) => {
     .eq('userid', userId)
     .single();
 
-  console.log(fetchIgnoreDataError);
-  console.log(ignoreList);
   const { data: watched } = await supabase.from('users').select('watched_movies').eq('id', userId).single();
 
   // 2. ignoreList와 watched 목록에서 영화 ID 추출

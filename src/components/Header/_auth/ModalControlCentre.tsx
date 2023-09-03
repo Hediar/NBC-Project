@@ -8,7 +8,7 @@ import OverlaidModal from '@/components/common/OverlaidModal';
 import { useSearchParams } from 'next/navigation';
 import RateMovie from '@/components/common/RateMovie';
 
-const ModalControlCentre = () => {
+const ModalControlCentre = ({ signedInUserId }: { signedInUserId: string }) => {
   const searchParams = useSearchParams();
   const isSignInTrue = !!searchParams.get('sign-in');
   const isForgotPasswordTrue = !!searchParams.get('forgot-password');
@@ -18,11 +18,15 @@ const ModalControlCentre = () => {
   const title = decodeURIComponent(searchParams.get('title') as string);
   const movieId = searchParams.get('id') as string;
 
+  const isIgnoreMovieTrue = !!searchParams.get('ignore-movie');
+
+  const scrollTo = searchParams.get('scrollTo');
+
   return (
     <>
       {isForgotPasswordTrue && <ForgotPasswordModal />}
       {isSignInTrue && (
-        <OverlaidModal>
+        <OverlaidModal scrollTo={scrollTo ?? ''}>
           <SignIn />
         </OverlaidModal>
       )}
@@ -31,9 +35,21 @@ const ModalControlCentre = () => {
           <SignUp />
         </OverlaidModal>
       )}
-      {isRateTrue && (
-        <OverlaidModal scrollTo={movieId}>
-          <RateMovie title={title} movieId={movieId} />
+      {/* 유저가 로그인이 되어있으면 보여주고 아니면 로그인 화면 보여주기 */}
+      {signedInUserId ? (
+        isRateTrue && (
+          <OverlaidModal scrollTo={movieId}>
+            <RateMovie title={title} movieId={movieId} />
+          </OverlaidModal>
+        )
+      ) : (
+        <OverlaidModal>
+          <SignIn />
+        </OverlaidModal>
+      )}
+      {!signedInUserId && isIgnoreMovieTrue && (
+        <OverlaidModal>
+          <SignIn />
         </OverlaidModal>
       )}
     </>
