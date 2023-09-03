@@ -3,6 +3,7 @@ import useDiscussionOptionQuery from '@/hooks/useDiscussionOptionQuery';
 import { optionMark } from '@/static/optionMark';
 import useUserInfoStore from '@/store/saveCurrentUserData';
 import supabase from '@/supabase/config';
+import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
 interface Props {
@@ -19,6 +20,7 @@ const OptionVote = ({ postId, voteCount }: Props) => {
   const [isVoted, setIsVoted] = useState<boolean>(false);
   const [votedOption, setVotedOption] = useState<DiscussionUser>();
   const [sumCount, setSumCount] = useState<number>(voteCount);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -33,10 +35,17 @@ const OptionVote = ({ postId, voteCount }: Props) => {
     };
 
     fetchUserData();
-  }, [optionData]);
+  }, [optionData, userId]);
 
   const handleVoteCount = async () => {
-    if (!selectedOption || !userId) return;
+    if (!selectedOption) {
+      alert('투표할 선택지를 선택해주세요');
+      return;
+    }
+    if (!userId) {
+      alert('로그인이 필요합니다');
+      return router.replace('?sign-in=true');
+    }
     const userData = {
       user_id: userId,
       option_id: selectedOption.option_id,
@@ -52,6 +61,7 @@ const OptionVote = ({ postId, voteCount }: Props) => {
 
     setSumCount((sumCount) => (sumCount += 1));
     setSelectedOption(null);
+    router.refresh();
   };
 
   const handleRevoteCount = () => {
@@ -95,7 +105,7 @@ const OptionVote = ({ postId, voteCount }: Props) => {
                 >
                   <span className="font-bold text-white">{optionMark[idx]}</span>
                 </div>
-                <div className="w-3/5">
+                <div className="w-3/5 overflow-auto">
                   <p>{option.content}</p>
                 </div>
 
@@ -132,7 +142,7 @@ const OptionVote = ({ postId, voteCount }: Props) => {
                 >
                   <span className="font-bold text-white">{optionMark[idx]}</span>
                 </div>
-                <div className="w-3/5">
+                <div className="w-3/5 overflow-auto">
                   <p>{option.content}</p>
                 </div>
                 {isVoted && (
