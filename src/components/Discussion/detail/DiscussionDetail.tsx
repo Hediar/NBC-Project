@@ -8,7 +8,6 @@ import {
   getPrevDiscussionPost,
   getRelatedDiscussionPost
 } from '@/api/supabase-discussion';
-import DiscussionContent from './DiscussionContent';
 import RelatedDiscussionPost from './related-discussion/RelatedDiscussionPost';
 import Link from 'next/link';
 
@@ -25,11 +24,7 @@ const DiscussionDetail = async ({ discussionId }: Props) => {
   ]);
 
   return (
-    <div className="">
-      <div className="flex justify-between w-4/5 mx-auto mb-5">
-        <DiscussionContent movieId={postData?.movie_id} />
-      </div>
-
+    <div className="mt-[50px]">
       <div className="flex justify-between w-4/5 mx-auto">
         <div className="w-2/3">
           <section className="min-h-[40vh] flex flex-col items-center relative">
