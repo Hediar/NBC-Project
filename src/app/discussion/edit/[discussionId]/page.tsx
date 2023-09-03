@@ -72,7 +72,7 @@ const DiscussionEditPage = ({ params }: Props) => {
   const handleSubmit = async () => {
     if (!userId) {
       alert('로그인 해주세요');
-      return setIsSignInModalOpen(isSignInModalOpen);
+      return setIsSignInModalOpen(true);
     }
     if (!title) {
       alert('토론 주제를 입력해주세요');
