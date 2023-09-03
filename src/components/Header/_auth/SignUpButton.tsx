@@ -1,27 +1,14 @@
-'use client';
-
-import useToggleSignInModal from '@/store/toggleSignInModal';
-import useToggleSignUpModal from '@/store/toggleSignUpModal';
+import Link from 'next/link';
 
 const SignUpButton = () => {
-  const { isSignInModalOpen, setIsSignInModalOpen } = useToggleSignInModal();
-  const { isSignUpModalOpen, setIsSignUpModalOpen } = useToggleSignUpModal();
-
-  const clickHandler = () => {
-    if (isSignInModalOpen) {
-      setIsSignInModalOpen(false);
-    }
-    setIsSignUpModalOpen(true);
-  };
-
   return (
     <>
-      <button
-        onClick={clickHandler}
+      <Link
+        href="?sign-up=true"
         className="h-full py-2 px-3 rounded-md shadow-sm shadow-gray-700 bg-slate-700 text-white active:bg-slate-600 text-sm flex items-center"
       >
         회원가입
-      </button>
+      </Link>
     </>
   );
 };

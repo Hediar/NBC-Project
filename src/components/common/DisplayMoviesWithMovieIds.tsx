@@ -4,21 +4,24 @@
 
 import POSTWatchLater from '@/api/POSTWatchLater';
 import MovieLikes from '../MovieLikes/MovieLikes';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import useUserInfoStore from '@/store/saveCurrentUserData';
-import useToggleSignInModal from '@/store/toggleSignInModal';
+import getMovieNameWIthMovieId from '@/api/getMovieNameWIthMovieId';
 
 const DisplayMoviesWIthMovieIds = ({ movieData }: { movieData: MovieData[] }) => {
   const router = useRouter();
+  const path = usePathname() ?? '';
   const { userInfo } = useUserInfoStore();
-  const { isSignInModalOpen, setIsSignInModalOpen } = useToggleSignInModal();
 
   const watchLaterClickHandler = async (movieId: number) => {
     if (!userInfo.id) {
-      setIsSignInModalOpen(true);
+      router.replace('?sign-in=true');
       return;
     }
-    await POSTWatchLater(movieId);
+    const message = await POSTWatchLater(movieId);
+    const movieTitle = await getMovieNameWIthMovieId([movieId.toString()]);
+
+    alert(movieTitle[0] + message);
     router.refresh();
     return;
   };

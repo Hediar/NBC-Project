@@ -2,12 +2,9 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import SubmitButton from '@/components/Auth/SubmitButton';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import HCaptcha from '@hcaptcha/react-hcaptcha';
 import SocialButtons from '@/components/Auth/SocialButtons';
-import useToggleSignInModal from '@/store/toggleSignInModal';
-import useToggleForgotPassword from '@/store/toggleForgotPassword';
-import useToggleSignUpModal from '@/store/toggleSignUpModal';
 import SVG_ShowPassword from '@/styles/svg/SVG_ShowPassword';
 import SVG_HidePassword from '@/styles/svg/SVG_HidePassword';
 
@@ -17,6 +14,7 @@ interface Data {
 }
 
 const SignIn = () => {
+  const path = usePathname() ?? '';
   const router = useRouter();
   const [emailValue, setEmailValue] = useState<string>('');
   const [passwordValue, setPasswordValue] = useState<string>('');
@@ -24,9 +22,7 @@ const SignIn = () => {
   const [shouldDisable, setShouldDisable] = useState<boolean>(true);
   const [captchaToken, setCaptchaToken] = useState<any>();
   const [isError, setIsError] = useState<boolean>(false);
-  const { isSignInModalOpen, setIsSignInModalOpen } = useToggleSignInModal();
-  const { isForgotPasswordOpen, setIsForgotPasswordOpen } = useToggleForgotPassword();
-  const { isSignUpModalOpen, setIsSignUpModalOpen } = useToggleSignUpModal();
+
   const [message, setMessage] = useState<string>('');
   const [showCaptcha, setShowCaptcha] = useState<boolean>(false);
   const saveEmailCheckboxRef = useRef<HTMLInputElement>(null);
@@ -91,8 +87,8 @@ const SignIn = () => {
       if (saveEmailCheckboxRef.current!.checked) {
         localStorage.setItem('saved_email', emailValue);
       }
-      setIsSignInModalOpen(false);
       router.refresh();
+      router.replace(path);
     }
   };
 
@@ -167,21 +163,13 @@ const SignIn = () => {
           passwordError={passwordError}
         />
         <div className="flex justify-center gap-2 items-center">
-          <button
-            className="text-sm"
-            onClick={() => {
-              setIsSignUpModalOpen(true);
-              setIsSignInModalOpen(false);
-            }}
-          >
+          <button className="text-sm" onClick={() => router.replace('?sign-up=true')}>
             회원가입
           </button>
           <div className="h-3 border-r-2 border-gray-300"></div>
           <button
             type="button"
-            onClick={() => {
-              setIsForgotPasswordOpen(true);
-            }}
+            onClick={() => router.replace('?sign-in=true&forgot-password=true')}
             className="text-sm"
           >
             비밀번호 찾기

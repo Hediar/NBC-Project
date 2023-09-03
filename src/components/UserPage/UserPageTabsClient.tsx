@@ -19,7 +19,7 @@ const UserPageTabsClient = ({ username, signedInUserData, userNotSignedIn }: Pro
   const { userInfo } = useUserInfoStore();
   const [shouldSettingsMenuRevealed, setShouldSettingsMenuRevealed] = useState<boolean>(false);
 
-  const path = usePathname();
+  const path = usePathname() ?? '';
   const parts = path.split('/');
   const menu = parts[parts.length - 1];
 

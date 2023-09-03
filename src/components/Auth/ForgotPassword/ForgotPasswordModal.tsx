@@ -2,16 +2,15 @@
 
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 import Modal from '@/components/common/Modal';
-import useToggleForgotPassword from '@/store/toggleForgotPassword';
-import useToggleSignInModal from '@/store/toggleSignInModal';
 import supabase from '@/supabase/config';
 import HCaptcha from '@hcaptcha/react-hcaptcha';
 import axios from 'axios';
+import { usePathname, useRouter } from 'next/navigation';
 import React, { useRef, useState } from 'react';
 
 const ForgotPasswordModal = () => {
-  const { isForgotPasswordOpen, setIsForgotPasswordOpen } = useToggleForgotPassword();
-  const { isSignInModalOpen, setIsSignInModalOpen } = useToggleSignInModal();
+  const router = useRouter();
+  const path = usePathname() ?? '';
   const emailRef = useRef<string>('');
   const [captchaToken, setCaptchaToken] = useState<any>();
   const [isClicked, setIsClicked] = useState<boolean>(false);
@@ -21,10 +20,10 @@ const ForgotPasswordModal = () => {
     e.preventDefault();
     const emailValue = emailRef.current;
     const { data: providerData } = await supabase.from('users').select('provider').eq('email', emailValue).single();
-    if (providerData?.provider !== 'email') {
+    if (providerData?.provider === 'google' || providerData?.provider === 'kakao') {
       setIsClicked(false);
       alert('소셜 로그인 사용자는 비밀번호 찾기를 사용할 수 없습니다.\n소셜 로그인은 비밀번호를 사용하지 않습니다.');
-      setIsForgotPasswordOpen(isForgotPasswordOpen);
+      router.replace('?sign-in=true');
       return;
     }
 
@@ -50,13 +49,12 @@ const ForgotPasswordModal = () => {
     } else {
       alert('해당 계정의 수신함을 확인해주세요.');
       setIsClicked(false);
-      setIsSignInModalOpen(false);
-      setIsForgotPasswordOpen(false);
+      router.replace(path);
     }
   };
 
   const cancelHandler = () => {
-    setIsForgotPasswordOpen(false);
+    router.replace('?sign-in=true');
   };
   return (
     <Modal>
@@ -65,8 +63,7 @@ const ForgotPasswordModal = () => {
         <p className="text-center text-sm">등록하신 이메일을 입력해주세요.</p>
         <input className="custom_input" type="email" onChange={(e) => (emailRef.current = e.target.value)} />
         <HCaptcha
-          // sitekey="6c9d3095-7348-4fe3-bf72-1f2b2b7ef34d"
-          sitekey="10000000-ffff-ffff-ffff-000000000001"
+          sitekey="6c9d3095-7348-4fe3-bf72-1f2b2b7ef34d"
           onVerify={(token) => {
             setCaptchaToken(token);
           }}
