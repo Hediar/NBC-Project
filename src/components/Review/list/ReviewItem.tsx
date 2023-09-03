@@ -4,6 +4,7 @@ import React from 'react';
 import dayjs from 'dayjs';
 import Link from 'next/link';
 import Image from 'next/image';
+import ReviewLikes from '../ReviewLikes';
 
 type Props = {
   review: any;
@@ -16,7 +17,6 @@ const ReviewItem = ({ review }: Props) => {
 
   return (
     <li>
-      <button type="button">좋아요</button>
       <Link className="lg:flex" href={`/review/${review.reviewid}`}>
         <Image
           className="object-cover w-full h-56 rounded-lg lg:w-64"
@@ -59,6 +59,8 @@ const ReviewItem = ({ review }: Props) => {
             <span className="text-xs text-gray-500 dark:text-gray-300">
               작성일 {dayjs(review.created_at).format('YYYY.MM.DD')}
             </span>
+
+            <ReviewLikes reviewid={review.reviewid} />
           </div>
         </div>
       </Link>
