@@ -10,6 +10,7 @@ import {
 } from '@/api/supabase-discussion';
 import RelatedDiscussionPost from './related-discussion/RelatedDiscussionPost';
 import Link from 'next/link';
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
 interface Props {
   discussionId: string;
@@ -38,17 +39,17 @@ const DiscussionDetail = async ({ discussionId }: Props) => {
             {prevPostData?.length ? (
               <Link
                 href={`/discussion/detail/${prevPostData[0].post_id}`}
-                className="absolute top-1/2 -translate-y-2/4 left-0"
+                className="absolute top-1/2 -translate-y-2/4 left-0 w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center text-white text-xl"
               >
-                {'<'}
+                <FaChevronLeft />
               </Link>
             ) : null}
             {nextPostData?.length ? (
               <Link
                 href={`/discussion/detail/${nextPostData[0].post_id}`}
-                className="absolute top-1/2 -translate-y-2/4 right-0"
+                className="absolute top-1/2 -translate-y-2/4 right-0 w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center text-white text-xl"
               >
-                {'>'}
+                <FaChevronRight />
               </Link>
             ) : null}
           </section>

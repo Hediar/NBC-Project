@@ -18,7 +18,7 @@ export default async function MovieDetailLayout({
     .eq('movie_id', movieId)
     .order('vote_count', { ascending: false })
     .single();
-  console.log('관련토픽데이타==>>', discussionPostData);
+
   return (
     <section style={{ width: '80%', margin: '0 auto' }}>
       <MovieDetailInfo movieId={movieId} />
