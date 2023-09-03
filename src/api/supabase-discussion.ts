@@ -61,7 +61,8 @@ export const getNextDiscussionPost = async ({ postId, movieId }: { postId: numbe
     .from('discussion_post')
     .select('*')
     .eq('movie_id', movieId)
-    .gt('post_id', postId);
+    .gt('post_id', postId)
+    .order('post_id');
 
   return nextData;
 };

@@ -11,10 +11,13 @@ import {
 import RelatedDiscussionPost from './related-discussion/RelatedDiscussionPost';
 import Link from 'next/link';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import DiscussionCommentContainer from './comment/DiscussionCommentContainer';
 
 interface Props {
   discussionId: string;
 }
+
+export const revalidate = 0;
 
 const DiscussionDetail = async ({ discussionId }: Props) => {
   const postData = await getDiscussionPostDetail(+discussionId);
@@ -29,9 +32,9 @@ const DiscussionDetail = async ({ discussionId }: Props) => {
       <div className="flex justify-between w-4/5 mx-auto">
         <div className="w-2/3">
           <section className="min-h-[40vh] flex flex-col items-center relative">
-            <div className="flex flex-col justify-center mx-auto">
+            <div className="w-full">
               <h3 className="text-3xl font-bold m-5">{postData?.title}</h3>
-              <p className="text-xl">{postData?.content}</p>
+              <p className="text-xl break-words">{postData?.content}</p>
             </div>
 
             <OptionVote postId={postData.post_id} voteCount={postData.vote_count} />
@@ -57,6 +60,7 @@ const DiscussionDetail = async ({ discussionId }: Props) => {
           <div>
             <EditDeleteBox postId={postData.post_id} authorId={postData.user_id} />
           </div>
+          <DiscussionCommentContainer discussionId={discussionId} />
         </div>
 
         <div className="w-[20vw]">

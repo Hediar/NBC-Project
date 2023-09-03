@@ -1,6 +1,4 @@
 import DiscussionDetail from '@/components/Discussion/detail/DiscussionDetail';
-import DiscussionCommentContainer from '@/components/Discussion/detail/comment/DiscussionCommentContainer';
-import supabase from '@/supabase/config';
 import React from 'react';
 
 interface Props {
@@ -17,7 +15,6 @@ const DiscussionDetailPage = async ({ params }: Props) => {
   return (
     <div>
       <DiscussionDetail discussionId={discussionId} />
-      <DiscussionCommentContainer discussionId={discussionId} />
     </div>
   );
 };

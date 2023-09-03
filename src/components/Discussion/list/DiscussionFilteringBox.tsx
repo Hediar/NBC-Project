@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import React, { useState } from 'react';
 
@@ -92,7 +93,13 @@ const DiscussionFilteringBox = ({ sortQuery = '' }: Props) => {
         )}
       </div>
 
-      <div>
+      <div className="flex items-center gap-2">
+        <Link
+          href={`/discussion/regist`}
+          className="border py-1 px-2 rounded-xl bg-gray-400 text-white hover:bg-gray-500"
+        >
+          글 작성
+        </Link>
         <form
           className="flex gap-2 relative"
           onSubmit={(e) => {
