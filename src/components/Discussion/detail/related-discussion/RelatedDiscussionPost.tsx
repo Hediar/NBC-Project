@@ -47,8 +47,8 @@ const RelatedDiscussionPost = ({ relatedDiscussionData, relatedOption }: Props) 
           <div className="w-4/5 h-1/3 flex gap-5 justify-between items-center text-sm font-bold">
             <div className="flex gap-3">
               {' '}
-              <span>투표수&nbsp;{relatedDiscussionData.vote_count}</span>
-              <span>댓글수&nbsp;{relatedDiscussionData.view_count}</span>
+              <span>👆투표수&nbsp;{relatedDiscussionData.vote_count}</span>
+              <span>💬댓글수&nbsp;{relatedDiscussionData.view_count}</span>
             </div>
 
             <Link

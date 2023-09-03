@@ -61,7 +61,7 @@ const DiscussionCommentContainer = async ({ discussionId }: Props) => {
   const { username: currentUserUsername, avatar_url: currentUserAvatar_url } = signedInUserData;
 
   return (
-    <div className="w-1/2 m-8 flex flex-col gap-4">
+    <div className="w-full flex flex-col gap-4">
       <div className="w-full flex gap-2 items-center">
         <Image
           className="h-8 w-8 rounded-full"

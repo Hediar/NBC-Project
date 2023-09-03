@@ -18,6 +18,7 @@ const useDiscussionOptionQuery = (postId: number) => {
       queryClient.invalidateQueries(['discussion_option', postId]);
     }
   });
+
   return { isLoading, isError, data, addVoteMutation, revoteMutation };
 };
 
