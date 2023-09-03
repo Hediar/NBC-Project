@@ -1,13 +1,14 @@
 import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
+import type { NextResponse as NextResponseType } from 'next/server';
 
 export const dynamic = 'force-dynamic';
 
 type WatchLater = Database['public']['Tables']['watch_later']['Row'];
 
 // 찜하기 버튼 클릭 시 처리
-export const POST = async (request: Request) => {
+export const POST = async (request: Request): Promise<NextResponseType<{ message: string }>> => {
   const baseUrl = new URL(request.url);
   const formData = await request.formData();
   const movieId = formData.get('movieId') as string;
@@ -17,7 +18,10 @@ export const POST = async (request: Request) => {
   const { data: userData, error } = await supabase.auth.getUser();
   if (error) {
     console.log(error);
-    return NextResponse.redirect(baseUrl.origin, { status: 301 });
+    return new NextResponse(JSON.stringify({ message: '유저를 찾을 수 없음.' }), {
+      status: 404,
+      statusText: 'Not Found'
+    });
   }
   const userId = userData.user.id;
   //
@@ -40,10 +44,12 @@ export const POST = async (request: Request) => {
       if (newlyInsertedDataError) {
         return NextResponse.json({ message: 'fail to insert new movie list for new user!' });
       }
-      return NextResponse.json({ message: 'success!' });
+      return new NextResponse(JSON.stringify({ message: '추가 성공' }), { status: 200, statusText: 'OK' });
     }
-    console.log(supabaseWatchLaterError);
-    return NextResponse.redirect(baseUrl.origin, { status: 301 });
+    return new NextResponse(JSON.stringify({ message: '리스트 추가 실패' }), {
+      status: 500,
+      statusText: 'Internal Server Error'
+    });
   }
   const watchLaterList = watchLaterData.movies;
   //
@@ -54,18 +60,21 @@ export const POST = async (request: Request) => {
     // 삭제
     const updatedWatchLaterData = watchLaterList.filter((movieIdFromDB: string) => movieIdFromDB !== movieId);
 
-    const { data: results, error: supabaseUpdateRequest } = await supabase
+    const { data: results, error: supabaseUpdateRequestError } = await supabase
       .from('watch_later')
       .update({ movies: updatedWatchLaterData })
       .eq('userid', userId)
       .select();
 
-    if (supabaseUpdateRequest) {
-      console.log(supabaseUpdateRequest);
-      return NextResponse.redirect(baseUrl.origin, { status: 301 });
+    if (supabaseUpdateRequestError) {
+      console.log(supabaseUpdateRequestError);
+      return new NextResponse(JSON.stringify({ message: '삭제 실패' }), {
+        status: 500,
+        statusText: 'Internal Server Error'
+      });
     }
 
-    return NextResponse.redirect(baseUrl.origin, { status: 301 });
+    return new NextResponse(JSON.stringify({ message: '삭제 성공' }), { status: 200, statusText: 'OK' });
   } else {
     // 클릭한 영화의 id가 유저의 찜하기 목록에 없으면 새로 추가하기
     watchLaterList.push(movieId);
@@ -76,9 +85,12 @@ export const POST = async (request: Request) => {
 
     if (watchLaterAddError) {
       console.log(watchLaterAddError);
-      return NextResponse.redirect(baseUrl.origin, { status: 301 });
+      return new NextResponse(JSON.stringify({ message: '추가 실패' }), {
+        status: 500,
+        statusText: 'Internal Server Error'
+      });
     }
 
-    return NextResponse.redirect(baseUrl.origin, { status: 301 });
+    return new NextResponse(JSON.stringify({ message: '추가 성공' }), { status: 200, statusText: 'OK' });
   }
 };

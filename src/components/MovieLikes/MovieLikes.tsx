@@ -20,12 +20,12 @@ const MovieLikes = (props: { movieid: number }) => {
 
   const { userInfo } = useUserInfoStore();
 
-  const mutation = useMovieLikesMutation(props.movieid, userInfo.id!);
+  const mutation = useMovieLikesMutation(props.movieid, userInfo?.id!);
 
   // 좋아요 버튼
   const likeButtonHandler = throttle(
     async () => {
-      if (userInfo.id) {
+      if (userInfo?.id) {
         await mutation.mutateAsync();
       } else {
         alert('로그인 해주세요!');

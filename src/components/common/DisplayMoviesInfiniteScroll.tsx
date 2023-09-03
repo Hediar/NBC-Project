@@ -33,7 +33,7 @@ const DisplayInfiniteMovies = ({ movieData, discoverMoviesWithGenreId, genreIdAr
       setDataToProject([...dataToProject, ...filteredResults]);
     };
     getMoreData(currentPage);
-  }, [currentPage, dataToProject, discoverMoviesWithGenreId, genreIdArray, ignoredList]);
+  }, [currentPage]);
 
   if (!dataToProject) return <>nothing</>;
 
