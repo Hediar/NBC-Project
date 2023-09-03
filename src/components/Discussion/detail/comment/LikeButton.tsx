@@ -1,6 +1,5 @@
 'use client';
 
-import useToggleSignInModal from '@/store/toggleSignInModal';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useRouter } from 'next/navigation';
 import { throttle } from 'lodash';
@@ -31,7 +30,6 @@ type Props = {
 
 const LikeButton = ({ comment, addOptimisticComments }: Props) => {
   const router = useRouter();
-  const { isSignInModalOpen, setIsSignInModalOpen } = useToggleSignInModal();
 
   const handleLikes = throttle(async () => {
     await handleLike();
@@ -63,7 +61,7 @@ const LikeButton = ({ comment, addOptimisticComments }: Props) => {
       }
     } else {
       alert('로그인을 해주세요.');
-      setIsSignInModalOpen(true);
+      router.replace('?sign-in=true');
     }
   };
 

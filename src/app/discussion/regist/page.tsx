@@ -3,7 +3,6 @@ import ReviewMovie from '@/components/ReviewForm/ReviewMovie';
 import SearchPopup from '@/components/ReviewForm/SearchPopup';
 import useUserInfoStore from '@/store/saveCurrentUserData';
 import { useReviewMovieStore, useSearchModalStore } from '@/store/useReviewStore';
-import useToggleSignInModal from '@/store/toggleSignInModal';
 import supabase from '@/supabase/config';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
@@ -30,7 +29,6 @@ const DiscussionRegistPage = (props: Props) => {
   const [content, setContent] = useState<string>('');
   const [options, setOptions] = useState<Option[]>([{ text: '' }, { text: '' }]);
   const [isOptionOpen, setIsOptionOpen] = useState<boolean>(true);
-  const { isSignInModalOpen, setIsSignInModalOpen } = useToggleSignInModal();
 
   const router = useRouter();
   const titleRef = useRef<HTMLInputElement>(null);
@@ -62,7 +60,7 @@ const DiscussionRegistPage = (props: Props) => {
   const handleSubmit = async () => {
     if (!userId) {
       alert('로그인 해주세요');
-      return setIsSignInModalOpen(true);
+      return router.replace('?sign-in=true');
     }
     if (!movieId) {
       alert('토론하고싶은 영화를 선택해주세요');

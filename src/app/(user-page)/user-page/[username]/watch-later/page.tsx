@@ -27,15 +27,18 @@ const ToWatchListPage = async ({ params }: Props) => {
   }
 
   if (watchLaterMovies.length === 0) {
-    return <>{username}님이 아직 아무 영화도 찜하기에 추가하지 않으셨습니다.</>;
+    return <div className="h-full">{username}님이 아직 아무 영화도 찜하기에 추가하지 않으셨습니다.</div>;
   }
 
   const movieList = watchLaterMovies[0].movies;
   const movieDetails = await getMovieDataWithMovieIds(movieList);
+  const movieIds = movieDetails.map((movie) => movie.id);
 
   return (
     <div className="flex flex-col items-center w-full mt-10">
-      <h2 className="text-center font-bold text-2xl">{username}님의 찜 목록</h2>
+      <h2 className="text-center font-bold text-2xl">
+        {username}님이 찜한 {movieIds.length}개의 영화입니다.
+      </h2>
       <div className="w-10/12 flex flex-wrap gap-5 gap-y-10 mt-10 justify-center">
         <DisplayMoviesWIthMovieIds movieData={movieDetails} />
       </div>

@@ -1,6 +1,5 @@
 'use client';
 
-import useToggleSignInModal from '@/store/toggleSignInModal';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -9,7 +8,6 @@ const ChangePasswordFromMail = () => {
   const supabase = createClientComponentClient();
   const [newPassword, setNewPassword] = useState<string>('');
   const router = useRouter();
-  const { isSignInModalOpen, setIsSignInModalOpen } = useToggleSignInModal();
 
   //
   const updatePasswordHandler = async () => {
