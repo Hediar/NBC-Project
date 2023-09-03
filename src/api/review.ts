@@ -1,4 +1,5 @@
 import supabase from '@/supabase/config';
+import { getDetailData } from './tmdb';
 
 export const addReview = async (post: ReviewsTable) => {
   const fetchData = await supabase.from('reviews').insert([post]).select();
@@ -60,3 +61,29 @@ export const countRowsNumber = async (table: string = 'reviews') => {
   const { count } = await supabase.from(table).select('*', { count: 'exact', head: true });
   return count;
 };
+
+// 리뷰 리스트페이지 더보기
+export async function fetchReviewData({ queryKey, pageParam = 1, limit = 7 }: any) {
+  const [_, page] = queryKey;
+  // useQuery 에서 사용될 때는 queryKey 에서 page 추출
+  // useInfiniteQuery에서 사용될 때는 pageParam 에서 page 추출
+  const pageToFetch = page ?? pageParam;
+
+  const { count } = await supabase.from('reviews').select('*', { count: 'exact', head: true });
+  const total_pages = Math.ceil(count! / limit);
+
+  const rangeFrom = (pageParam - 1) * limit;
+  const rangeTo = pageParam * limit - 1;
+  // console.log('range => ', rangeFrom, ' ~ ', rangeTo, ' / count => ', count);
+  // console.log('page => ', pageToFetch, ' /  total_pages => ', Math.ceil(count! / limit));
+
+  const reviews = await supabase.from('reviews').select('*').range(rangeFrom, rangeTo);
+  const promises = reviews.data?.map(async (review) => {
+    const movieDetail = await getDetailData(review.movieid);
+    const username = await getUserName(review.userid);
+    return { ...review, movieDetail, userDetail: { username } };
+  });
+  const results = await Promise.all(promises!);
+
+  return { results, page: pageToFetch, total_pages };
+}
