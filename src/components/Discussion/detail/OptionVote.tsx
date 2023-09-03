@@ -23,12 +23,12 @@ const OptionVote = ({ postId, voteCount }: Props) => {
   useEffect(() => {
     const fetchUserData = async () => {
       const { data: userData } = await supabase.from('discussion_user').select('*').eq('post_id', postId);
-      const votedOption = userData?.filter((data) => data.user_id === userId);
-      const check = votedOption?.length ? true : false;
+      const userOption = userData?.filter((data) => data.user_id === userId);
+      const check = userOption?.length ? true : false;
 
-      if (votedOption) {
+      if (userOption) {
         setIsVoted(check);
-        setVotedOption(votedOption[0]);
+        setVotedOption(userOption[0]);
       }
     };
 
@@ -71,28 +71,87 @@ const OptionVote = ({ postId, voteCount }: Props) => {
   }
 
   return (
-    <div className="m-5 w-3/5 max-h-[500px] overflow-y-auto">
+    <div className="m-5 w-3/5 max-h-[15rem] overflow-y-auto flex flex-col gap-3">
       {optionData?.map((option, idx) => {
         return (
-          <div key={idx} className="w-full h-[4rem] flex items-center" onClick={() => setSelectedOption(option)}>
-            <span className="p-2 w-1/5">
-              {votedOption?.option_id === option.option_id ? optionMark[idx] + '투표됨' : optionMark[idx]}
-            </span>
-            <span className="p-2 w-3/5">
-              {selectedOption?.option_id === option.option_id ? option.content + '체크' : option.content}
-            </span>
-            {isVoted && (
-              <div className="p-2 w-1/5">
-                <div className="w-full h-2">
-                  <div className={`h-full bg-black`} style={{ width: `${(option.count / sumCount) * 100}%` }}></div>
+          <React.Fragment key={idx}>
+            {selectedOption?.option_id === option.option_id ? (
+              <div
+                className="w-full h-[4rem] flex gap-5 items-center rounded-xl py-10 px-5 relative overflow-hidden"
+                style={{
+                  border: `${
+                    votedOption?.option_id === option.option_id || selectedOption?.option_id === option.option_id
+                      ? '1px solid black'
+                      : 'none'
+                  }`
+                }}
+                onClick={() => setSelectedOption(option)}
+              >
+                <div
+                  className="w-8 h-8 p-2 bg-gray-400 rounded-full flex items-center justify-center"
+                  style={{
+                    backgroundColor: `${votedOption?.option_id === option.option_id ? 'black' : 'rgba(88,88,88,0.5)'}`
+                  }}
+                >
+                  <span className="font-bold text-white">{optionMark[idx]}</span>
                 </div>
-                <div className="flex gap-3">
-                  <p>투표수: {option.count}</p>
-                  <p>{((option.count / sumCount) * 100).toFixed(2) + '%'}</p>
+                <div className="w-3/5">
+                  <p>{option.content}</p>
                 </div>
+
+                {isVoted && (
+                  <>
+                    <div className="w-full h-full absolute top-0 left-0 -z-10">
+                      <div
+                        className={`h-full bg-gray-200`}
+                        style={{ width: `${(option.count / sumCount) * 100}%` }}
+                      ></div>
+                    </div>
+                    <div className="flex gap-3 text-sm">
+                      <span className="font-bold">{voteCount}명</span>
+                      <span className="font-bold text-gray-400">{`${(option.count / sumCount) * 100}%`}</span>
+                    </div>
+                  </>
+                )}
+              </div>
+            ) : (
+              <div
+                className="w-full h-[4rem] flex gap-5 items-center rounded-xl py-10 px-5 relative overflow-hidden"
+                style={{
+                  border: `${
+                    votedOption?.option_id === option.option_id ? '1px solid black' : '1px solid rgba(88,88,88,0.5)'
+                  }`
+                }}
+                onClick={() => setSelectedOption(option)}
+              >
+                <div
+                  className="w-8 h-8 p-2 bg-gray-400 rounded-full flex items-center justify-center"
+                  style={{
+                    backgroundColor: `${votedOption?.option_id === option.option_id ? 'black' : 'rgba(88,88,88,0.5)'}`
+                  }}
+                >
+                  <span className="font-bold text-white">{optionMark[idx]}</span>
+                </div>
+                <div className="w-3/5">
+                  <p>{option.content}</p>
+                </div>
+                {isVoted && (
+                  <>
+                    <div className="w-full h-full absolute top-0 left-0 -z-10">
+                      <div
+                        className={`h-full bg-gray-200`}
+                        style={{ width: `${(option.count / sumCount) * 100}%` }}
+                      ></div>
+                    </div>
+                    <div className="flex gap-3 text-sm">
+                      <span className="font-bold">{voteCount}명</span>
+                      <span className="font-bold text-gray-400">{`${(option.count / sumCount) * 100}%`}</span>
+                    </div>
+                  </>
+                )}
               </div>
             )}
-          </div>
+          </React.Fragment>
         );
       })}
       {optionData?.length ? (

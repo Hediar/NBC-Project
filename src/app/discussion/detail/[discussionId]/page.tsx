@@ -1,5 +1,6 @@
 import DiscussionDetail from '@/components/Discussion/detail/DiscussionDetail';
 import DiscussionCommentContainer from '@/components/Discussion/detail/comment/DiscussionCommentContainer';
+import supabase from '@/supabase/config';
 import React from 'react';
 
 interface Props {
@@ -10,8 +11,9 @@ interface Props {
 
 export const dynamic = 'force-dynamic';
 
-const DiscussionDetailPage = ({ params }: Props) => {
+const DiscussionDetailPage = async ({ params }: Props) => {
   const { discussionId } = params;
+
   return (
     <div>
       <DiscussionDetail discussionId={discussionId} />
