@@ -17,8 +17,6 @@ interface Props {
   discussionId: string;
 }
 
-export const revalidate = 0;
-
 const DiscussionDetail = async ({ discussionId }: Props) => {
   const postData = await getDiscussionPostDetail(+discussionId);
   const [relatedData, prevPostData, nextPostData] = await Promise.all([
@@ -64,7 +62,7 @@ const DiscussionDetail = async ({ discussionId }: Props) => {
         </div>
 
         <div className="w-[20vw]">
-          <p>관련된 다른 토픽</p>
+          <p className="font-bold text-xl">관련된 다른 토픽</p>
           {relatedData?.length ? (
             relatedData?.map(async (relatedDiscussionData, idx) => {
               if (idx > 3) return null;
