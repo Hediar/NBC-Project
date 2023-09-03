@@ -87,3 +87,24 @@ export async function fetchReviewData({ queryKey, pageParam = 1, limit = 7 }: an
 
   return { results, page: pageToFetch, total_pages };
 }
+
+// 리뷰 작성 시 최근 본 영화 추가
+export const saveWatchList = async (userId: string, movieId: string) => {
+  const { data: watchTable } = await supabase.from('watch_later').select('*').eq('userid', userId);
+
+  if (watchTable) {
+    const newWatch = watchTable[0].movies.filter((watchId: string) => watchId !== movieId);
+    newWatch.push(String(movieId));
+
+    const { error } = await supabase.from('watch_later').update({ movies: newWatch }).eq('userid', userId);
+    if (error) console.error(error);
+  } else {
+    const { error } = await supabase
+      .from('watch_later')
+      .insert([{ userid: userId, movies: [movieId] }])
+      .select();
+    if (error) console.error(error);
+  }
+
+  // console.log('2. watchTable => ', watchTable);
+};
