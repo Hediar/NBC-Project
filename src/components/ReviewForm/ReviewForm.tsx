@@ -16,6 +16,7 @@ import { addReview, updateReview } from '@/api/review';
 import StarBox from './StarBox';
 import Modal from '../common/Modal';
 import { useForm, useFieldArray, Controller } from 'react-hook-form';
+import supabase from '@/supabase/config';
 
 interface Props {
   movieId?: string;
@@ -51,6 +52,30 @@ const ReviewForm = ({ movieId, editReview, movieButtonRef }: Props) => {
     name: 'tagList' // 폼 필드 배열의 이름
   });
 
+  // 최근본영화 - 작업 중
+  const saveWatchList = async (userId: string) => {
+    const { data: watchTable } = await supabase.from('watch_later').select('*').eq('userid', userId);
+
+    if (watchTable) {
+      const newWatch = watchTable[0].movies.filter((watchId: string) => watchId !== movieId);
+      // newWatch.push(String(movieId));
+      newWatch.push('😺😺😺😺');
+      const response = await supabase.from('watch_later').update({ movies: newWatch }).eq('userid', userId).select();
+      console.log('0. 최근본영화 응답 => ', response);
+      console.log('01. 최근본영화 응답 newWatch => ', newWatch);
+    } else {
+      const response = await supabase
+        .from('watch_later')
+        .insert([{ userid: userId, movies: [movieId] }])
+        .select();
+      console.log('00. 최근본영화 응답 => ', response);
+    }
+
+    console.log('1. userId => ', userId);
+    console.log('2. watchTable => ', watchTable);
+    console.log('3. movieId => ', movieId);
+  };
+
   const addPost = async ({ selectedDate, review, content, tagList, rating }: any) => {
     if (!userInfo) return alert('로그인 정보가 없습니다.');
     if (!movieId && movieButtonRef.current !== null) {
@@ -77,6 +102,10 @@ const ReviewForm = ({ movieId, editReview, movieButtonRef }: Props) => {
       if (error) return alert('오류가 발생하였습니다. 죄송합니다.' + error.message);
 
       saveTempReview();
+
+      // 최근 본 리스트 db 추가
+      saveWatchList(userInfo.id!);
+
       alert('저장 완');
       router.push(`/review/${data![0].reviewid}`);
     } catch (error) {

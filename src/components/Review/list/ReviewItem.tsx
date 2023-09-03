@@ -16,6 +16,7 @@ const ReviewItem = ({ review }: Props) => {
 
   return (
     <li>
+      <button type="button">좋아요</button>
       <Link className="lg:flex" href={`/review/${review.reviewid}`}>
         <Image
           className="object-cover w-full h-56 rounded-lg lg:w-64"
