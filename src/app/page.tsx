@@ -3,6 +3,7 @@ import LatestMovies from '@/components/MainPage/LatestMovies';
 import LatestReviews from '@/components/MainPage/LatestReviews';
 import KeywordButtons from '@/components/MainPage/MainPageMovies/KeywordButtons';
 import TrendMoives from '@/components/MainPage/MainPageMovies/TrendMoives';
+import ScrollToTopButton from '@/components/common/ScrollToTopButton';
 
 export const revalidate = 0;
 
@@ -14,6 +15,7 @@ export default async function Home() {
       <LatestReviews />
       <LatestMovies />
       <HotTopics />
+      <ScrollToTopButton />
     </main>
   );
 }
