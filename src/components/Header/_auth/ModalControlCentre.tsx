@@ -36,16 +36,12 @@ const ModalControlCentre = ({ signedInUserId }: { signedInUserId: string }) => {
         </OverlaidModal>
       )}
       {/* 유저가 로그인이 되어있으면 보여주고 아니면 로그인 화면 보여주기 */}
-      {signedInUserId ? (
-        isRateTrue && (
-          <OverlaidModal scrollTo={movieId}>
-            <RateMovie title={title} movieId={movieId} />
-          </OverlaidModal>
-        )
-      ) : (
-        <OverlaidModal>
-          <SignIn />
+      {signedInUserId && isRateTrue ? (
+        <OverlaidModal scrollTo={movieId}>
+          <RateMovie title={title} movieId={movieId} />
         </OverlaidModal>
+      ) : (
+        <></>
       )}
       {!signedInUserId && isIgnoreMovieTrue && (
         <OverlaidModal>
