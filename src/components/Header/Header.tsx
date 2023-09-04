@@ -30,7 +30,7 @@ const Header = async () => {
         </div>
       </div>
       <HiddenServerFunctions />
-      <ModalControlCentre />
+      <ModalControlCentre signedInUserId={userId ?? ''} />
     </>
   );
 };

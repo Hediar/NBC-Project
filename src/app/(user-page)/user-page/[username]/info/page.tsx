@@ -18,13 +18,12 @@ const UserInfoPage = async ({ params }: { params: { username: string } }) => {
   const { avatar_url } = userInfo![0];
 
   return (
-    <>
+    <section className="w-full flex flex-col items-center h-[calc(100vh-134px)]">
       <UserPageSemiHeader params={username} avatar_url={avatar_url!} />
       <Suspense fallback={<Fallback />}>
         <UserPagePersonalRecords params={username} />
       </Suspense>
-      <UserPageMostWatchedGenres username={username} />
-    </>
+    </section>
   );
 };
 
