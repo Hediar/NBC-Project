@@ -17,9 +17,12 @@ export function useReviewLikesMutation(reviewId: string, userInfoId: string) {
           ? users.filter((id: string) => id !== userInfoId)
           : [...users, userInfoId];
 
-        await supabase.from('reviewlikes').update({ user_id: newUsers }).eq('reviewid', reviewId);
+        await supabase
+          .from('reviewlikes')
+          .update({ user_id: newUsers, count: newUsers.length })
+          .eq('reviewid', reviewId);
       } else {
-        const newUsers = { reviewid: reviewId, user_id: [userInfoId] };
+        const newUsers = { reviewid: reviewId, user_id: [userInfoId], count: 1 };
         await supabase.from('reviewlikes').insert(newUsers);
       }
     },

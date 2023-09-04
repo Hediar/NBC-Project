@@ -63,7 +63,33 @@ export const countRowsNumber = async (table: string = 'reviews') => {
 };
 
 // 리뷰 리스트페이지 더보기
-export async function fetchReviewData({ queryKey, pageParam = 1, limit = 7 }: any) {
+export async function fetchReviewData({ queryKey, pageParam = 1, limit = 15, sort }: any) {
+  // 정렬 만드는 중
+  // const test3 = await supabase
+  //   .from('reviews')
+  //   .select(
+  //     `*,
+  // reviewlikes (
+  //   count
+  // )`
+  //   )
+  //   .order('count', { foreignTable: 'reviewlikes', ascending: false });
+  // // .range(0, 10);
+  // console.log('test3 => ', test3);
+
+  // const getReviewsBySortQuery = () => {
+  //   switch (sort) {
+  //     case 'new':
+  //       return supabase.from('reviews').select('*').order('created_at', { ascending: false }).range(rangeFrom, rangeTo);
+  //     case 'likes':
+  //       return supabase.from('reviews').select('*').order('rating', { ascending: false }).range(rangeFrom, rangeTo);
+  //     case 'rating':
+  //       return supabase.from('reviews').select('*').order('rating', { ascending: false }).range(rangeFrom, rangeTo);
+  //     default:
+  //       return supabase.from('reviews').select('*').range(rangeFrom, rangeTo);
+  //   }
+  // };
+
   const [_, page] = queryKey;
   // useQuery 에서 사용될 때는 queryKey 에서 page 추출
   // useInfiniteQuery에서 사용될 때는 pageParam 에서 page 추출
