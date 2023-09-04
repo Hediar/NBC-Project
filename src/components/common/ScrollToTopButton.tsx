@@ -1,6 +1,6 @@
 'use client';
+import { SVGArrowUpButton } from '@/styles/icons/IconsETC';
 import React, { useState, useEffect } from 'react';
-import { AiFillUpCircle } from 'react-icons/ai';
 
 const ScrollToTopButton = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -36,7 +36,9 @@ const ScrollToTopButton = () => {
       className={`fixed bottom-10 right-10 p-2 rounded-full cursor-pointer ${isVisible ? 'block' : 'hidden'}`}
       onClick={scrollToTop}
     >
-      <AiFillUpCircle className="text-2xl" size="35" />
+      {/* <AiFillUpCircle className="text-2xl" size="35" /> */}
+
+      <SVGArrowUpButton />
     </button>
   );
 };

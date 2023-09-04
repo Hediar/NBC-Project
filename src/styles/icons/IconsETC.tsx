@@ -1,33 +1,35 @@
-const LightPrevButton = () => {
-  <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+import { SVGProps } from 'react';
+
+const SVGLightPrevButton = (props: SVGProps<SVGSVGElement>) => (
+  <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
     <circle opacity="0.4" cx="30" cy="30" r="30" fill="black" />
     <path d="M34 18L22 30L34 42" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-  </svg>;
-};
+  </svg>
+);
 
-const LightNexButton = () => {
-  <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+const SVGLightNexButton = (props: SVGProps<SVGSVGElement>) => (
+  <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
     <circle opacity="0.4" cx="30" cy="30" r="30" fill="black" />
     <path d="M26 42L38 30L26 18" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-  </svg>;
-};
+  </svg>
+);
 
-const PrevButton = () => {
-  <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+const SVGPrevButton = (props: SVGProps<SVGSVGElement>) => (
+  <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
     <circle opacity="0.8" cx="30" cy="30" r="30" fill="black" />
     <path d="M34 18L22 30L34 42" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-  </svg>;
-};
+  </svg>
+);
 
-const NextButton = () => {
-  <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+const SVGNextButton = (props: SVGProps<SVGSVGElement>) => (
+  <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
     <circle opacity="0.8" cx="30" cy="30" r="30" fill="black" />
     <path d="M26 42L38 30L26 18" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-  </svg>;
-};
+  </svg>
+);
 
-const ArrowUpButton = () => {
-  <svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+const SVGArrowUpButton = (props: SVGProps<SVGSVGElement>) => (
+  <svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
     <g filter="url(#filter0_d_1121_48434)">
       <circle cx="36" cy="34" r="24" fill="white" />
     </g>
@@ -58,7 +60,7 @@ const ArrowUpButton = () => {
         <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_1121_48434" result="shape" />
       </filter>
     </defs>
-  </svg>;
-};
+  </svg>
+);
 
-export { LightPrevButton, LightNexButton, PrevButton, NextButton, ArrowUpButton };
+export { SVGLightPrevButton, SVGLightNexButton, SVGPrevButton, SVGNextButton, SVGArrowUpButton };
