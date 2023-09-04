@@ -28,6 +28,7 @@ const SignIn = () => {
   const saveEmailCheckboxRef = useRef<HTMLInputElement>(null);
   const [showPassword, setShowPassword] = useState(false);
   const outerDivRef = useRef<HTMLDivElement>(null);
+  const captcha = useRef();
 
   useEffect(() => {
     const savedEmail = localStorage.getItem('saved_email');
