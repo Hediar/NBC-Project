@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef } from 'react';
 import Modal from './Modal';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 interface Props {
   children: React.ReactNode;
@@ -15,6 +15,7 @@ const OverlaidModal = ({ children, scrollTo = '' }: Props) => {
   const router = useRouter();
   const path = usePathname() ?? '';
   const redirectUrl = path;
+  const isOnSettingsMyAccount = useSearchParams().get('my-account') ?? '';
 
   useEffect(() => {
     setTimeout(() => {
@@ -29,7 +30,11 @@ const OverlaidModal = ({ children, scrollTo = '' }: Props) => {
         if (e.target === overlayRef.current) {
           overlayRef.current.style.opacity = '0';
           setTimeout(() => {
-            router.replace(redirectUrl + `#${scrollTo}`);
+            if (isOnSettingsMyAccount) {
+              router.replace(redirectUrl + '?my-account=true');
+            } else {
+              router.replace(redirectUrl + `#${scrollTo}`);
+            }
           }, 200);
         }
       }}

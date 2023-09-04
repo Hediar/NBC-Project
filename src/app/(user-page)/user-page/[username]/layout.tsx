@@ -41,9 +41,11 @@ export default async function Layout({
   if (usernameData && usernameData.length === 0) notFound();
 
   return (
-    <main className="flex flex-col items-center bg-slate-50 w-full overflow-x-hidden">
-      <UserPageTabs username={decodedUsername} />
-      {children}
+    <main className="flex justify-center bg-slate-50 w-full overflow-x-hidden ">
+      <div className="w-full max-w-7xl flex flex-col items-center">
+        <UserPageTabs username={decodedUsername} />
+        {children}
+      </div>
     </main>
   );
 }

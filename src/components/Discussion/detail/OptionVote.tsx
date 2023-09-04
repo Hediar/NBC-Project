@@ -1,4 +1,5 @@
 'use client';
+
 import useDiscussionOptionQuery from '@/hooks/useDiscussionOptionQuery';
 import { optionMark } from '@/static/optionMark';
 import useUserInfoStore from '@/store/saveCurrentUserData';
@@ -13,10 +14,13 @@ interface Props {
 
 const OptionVote = ({ postId, voteCount }: Props) => {
   const [selectedOption, setSelectedOption] = useState<DiscussionOption | null>();
+
   const {
     userInfo: { id: userId }
   } = useUserInfoStore();
+
   const { isLoading, data: optionData, addVoteMutation, revoteMutation } = useDiscussionOptionQuery(postId);
+
   const [isVoted, setIsVoted] = useState<boolean>(false);
   const [votedOption, setVotedOption] = useState<DiscussionUser>();
   const [sumCount, setSumCount] = useState<number>(voteCount);
