@@ -1,8 +1,10 @@
+/* eslint-disable @next/next/no-img-element */
 'use client';
 
+import OverlaidModal from '@/components/common/OverlaidModal';
 import useUserInfoStore from '@/store/saveCurrentUserData';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 
 interface Props {
@@ -20,6 +22,8 @@ const AvatarPhoto = ({ userData }: Props) => {
   const fileInputRef = useRef<any>(null);
   const { userInfo, saveUserInfo } = useUserInfoStore();
   const router = useRouter();
+  const [isUploadModal, setIsUploadModal] = useState<boolean>(false);
+  const queryString = !!useSearchParams().get('upload-photo');
 
   useEffect(() => {
     if (avatarUrl) {
@@ -77,39 +81,46 @@ const AvatarPhoto = ({ userData }: Props) => {
   };
 
   return (
-    <div className="flex gap-8 w-full">
-      <div>
-        <Image className="w-24 h-24 rounded-full" width={200} height={200} src={photoURLValue} alt="avatar" />
-      </div>
-      <div>
-        <div>
+    <>
+      <div className="flex gap-8 w-full">
+        <div className="flex gap-4 items-center">
+          <img
+            className="w-16 h-16 rounded-full"
+            src={photoURLValue}
+            alt="avatar"
+            onClick={() => router.push('?my-account=true&upload-photo=true')}
+          />
           <h1 className="text-lg">{username}</h1>
-          <p className="text-sm text-gray-600">128x128 사이즈를 추천합니다.</p>
         </div>
-        <div className="mt-4 flex flex-col gap-3 justify-start items-start">
-          <input
-            ref={fileInputRef}
-            className="text-sm text-slate-500
+      </div>
+
+      {queryString && (
+        <OverlaidModal>
+          <div>
+            <input
+              ref={fileInputRef}
+              className="text-sm text-slate-500
             file:mr-4 file:py-2 file:px-4
             file:rounded-full file:border-0
             file:text-sm file:font-semibold
             file:bg-violet-50 file:text-violet-700
             hover:file:bg-violet-100
       "
-            type="file"
-            name="avatar"
-            onChange={(e) => handleFileChange(e)}
-          />
-          <button
-            className="py-1 px-4 shadow-sm shadow-slate-500 rounded-md text-sm bg-slate-800 text-white disabled:bg-slate-300 disabled:cursor-not-allowed disabled:shadow-none"
-            disabled={isDisabled}
-            onClick={handleClick}
-          >
-            Upload new
-          </button>
-        </div>
-      </div>
-    </div>
+              type="file"
+              name="avatar"
+              onChange={(e) => handleFileChange(e)}
+            />
+            <button
+              className="py-1 px-4 shadow-sm shadow-slate-500 rounded-md text-sm bg-slate-800 text-white disabled:bg-slate-300 disabled:cursor-not-allowed disabled:shadow-none"
+              disabled={isDisabled}
+              onClick={handleClick}
+            >
+              업로드
+            </button>
+          </div>
+        </OverlaidModal>
+      )}
+    </>
   );
 };
 

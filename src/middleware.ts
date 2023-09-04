@@ -18,7 +18,7 @@ import type { NextRequest } from 'next/server';
 // 첫 번째 미들웨어 함수 정의
 function customMiddleware(request: Request) {
   const requestHeaders = new Headers(request.headers);
-  requestHeaders.set('x-url', request.url);
+  requestHeaders.set('url', request.url);
 
   return NextResponse.next({
     request: {
