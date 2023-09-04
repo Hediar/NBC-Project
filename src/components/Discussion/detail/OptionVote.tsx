@@ -7,6 +7,7 @@ import supabase from '@/supabase/config';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { message } from 'antd';
+import { getDiscussionPostOption } from '@/api/supabase-discussion';
 
 interface Props {
   postId: number;
@@ -22,7 +23,11 @@ const OptionVote = ({ postId, voteCount, checkUpdate }: Props) => {
     userInfo: { id: userId }
   } = useUserInfoStore();
 
-  const { isLoading, data: optionData, addVoteMutation, revoteMutation } = useDiscussionOptionQuery(postId);
+  const { isLoading, data: optionData, addVoteMutation, revoteMutation, refetch } = useDiscussionOptionQuery(postId);
+
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
 
   const [isVoted, setIsVoted] = useState<boolean>(false);
   const [votedOption, setVotedOption] = useState<DiscussionUser>();
@@ -88,7 +93,7 @@ const OptionVote = ({ postId, voteCount, checkUpdate }: Props) => {
   if (isLoading) {
     return <div>Loading...</div>;
   }
-
+  console.log('optionData', optionData);
   return (
     <>
       {contextHolder}

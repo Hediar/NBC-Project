@@ -1,7 +1,7 @@
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { cookies } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 import UserPageTabs from '@/components/UserPage/UserPageTabs';
 
 export const dynamic = 'force-dynamic';
@@ -34,6 +34,7 @@ export default async function Layout({
   children: React.ReactNode;
   params: { username: string };
 }) {
+  const url = headers().get('url');
   const decodedUsername = decodeURIComponent(params.username);
   const supabase = createServerComponentClient<Database>({ cookies });
   const { data: usernameData } = await supabase.from('users').select('username').eq('username', decodedUsername);

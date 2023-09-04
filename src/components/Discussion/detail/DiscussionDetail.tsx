@@ -12,6 +12,7 @@ import RelatedDiscussionPost from './related-discussion/RelatedDiscussionPost';
 import Link from 'next/link';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import DiscussionCommentContainer from './comment/DiscussionCommentContainer';
+import { cookies } from 'next/headers';
 
 interface Props {
   discussionId: string;

@@ -50,12 +50,12 @@ const UserPageTabsClient = ({ username, signedInUserData, userNotSignedIn }: Pro
 
   return (
     <div className="mt-5 w-full flex gap-3 justify-center relative">
-      <div className="w-10/12 flex gap-7">
+      <div className="w-8/12 flex gap-7">
         <Link
           href={`/user-page/${username}/info`}
           className={`${basicStyle} ${menu.includes('info') && onSelectedStyle}`}
         >
-          유저 정보
+          내 정보
         </Link>
         <Link
           href={`/user-page/${username}/recommendations`}
