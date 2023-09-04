@@ -3,7 +3,8 @@ import LatestMovies from '@/components/MainPage/LatestMovies';
 import LatestReviews from '@/components/MainPage/LatestReviews';
 import KeywordButtons from '@/components/MainPage/MainPageMovies/KeywordButtons';
 import TrendMoives from '@/components/MainPage/MainPageMovies/TrendMoives';
-import ScrollToTopButton from '@/components/common/ScrollToTopButton';
+import LoadingSpinner from '@/components/common/LoadingSpinner';
+import { Suspense } from 'react';
 
 export const revalidate = 0;
 
@@ -13,6 +14,8 @@ export default async function Home() {
       <KeywordButtons params={'all'} />
       <TrendMoives genreId={'all'} />
       <LatestReviews />
+      {/* <Suspense fallback={<LoadingSpinner />}>
+      </Suspense> */}
       <LatestMovies />
       <HotTopics />
     </main>
