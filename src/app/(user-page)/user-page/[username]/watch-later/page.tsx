@@ -27,7 +27,14 @@ const ToWatchListPage = async ({ params }: Props) => {
   }
 
   if (watchLaterMovies.length === 0) {
-    return <div className="h-full">{username}님이 아직 아무 영화도 찜하기에 추가하지 않으셨습니다.</div>;
+    return (
+      <div className="flex flex-col items-center w-full mt-10 h-[calc(100%-54px)]">
+        <h2 className="text-center font-bold text-2xl">{username}님이 좋아하신 영화</h2>
+        <div className="flex gap-y-10 justify-center sm:gap-10 md:gap-5 gap-5 items-center h-full">
+          <p className="w-full text-2xl text-center">{username}님이 아직 아무 영화도 찜하기에 추가하지 않으셨습니다.</p>
+        </div>
+      </div>
+    );
   }
 
   const movieList = watchLaterMovies[0].movies;

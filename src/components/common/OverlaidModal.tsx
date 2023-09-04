@@ -6,9 +6,10 @@ import { usePathname, useRouter } from 'next/navigation';
 
 interface Props {
   children: React.ReactNode;
+  scrollTo?: string;
 }
 
-const OverlaidModal = ({ children }: Props) => {
+const OverlaidModal = ({ children, scrollTo = '' }: Props) => {
   const overlayRef = useRef<HTMLDivElement>(null);
 
   const router = useRouter();
@@ -28,7 +29,7 @@ const OverlaidModal = ({ children }: Props) => {
         if (e.target === overlayRef.current) {
           overlayRef.current.style.opacity = '0';
           setTimeout(() => {
-            router.replace(redirectUrl);
+            router.replace(redirectUrl + `#${scrollTo}`);
           }, 200);
         }
       }}
