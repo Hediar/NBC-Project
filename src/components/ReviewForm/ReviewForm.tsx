@@ -12,10 +12,11 @@ import CategoryBox from '@/components/ReviewForm/CategoryBox';
 import HashTagBox from '@/components/ReviewForm/HashTagBox';
 import useUserInfoStore from '@/store/saveCurrentUserData';
 import { useReviewMovieStore, useReviewStore } from '../../store/useReviewStore';
-import { addReview, updateReview } from '@/api/review';
+import { addReview, saveWatchList, updateReview } from '@/api/review';
 import StarBox from './StarBox';
 import Modal from '../common/Modal';
 import { useForm, useFieldArray, Controller } from 'react-hook-form';
+import supabase from '@/supabase/config';
 
 interface Props {
   movieId?: string;
@@ -76,7 +77,9 @@ const ReviewForm = ({ movieId, editReview, movieButtonRef }: Props) => {
         : await addReview(newReview);
       if (error) return alert('오류가 발생하였습니다. 죄송합니다.' + error.message);
 
+      saveWatchList(userInfo.id!, movieId!);
       saveTempReview();
+
       alert('저장 완');
       router.push(`/review/${data![0].reviewid}`);
     } catch (error) {

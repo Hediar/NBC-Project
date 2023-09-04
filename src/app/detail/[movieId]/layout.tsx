@@ -1,8 +1,27 @@
 import DiscussionDetail from '@/components/Discussion/detail/DiscussionDetail';
 import MovieDetailInfo from '@/components/MovieDetail/MovieDetailInfo';
-import Discussion from '@/components/MovieDetail/discussion/Discussion';
 import supabase from '@/supabase/config';
 import Link from 'next/link';
+import { Metadata, ResolvingMetadata } from 'next';
+import { getMovieDetail } from '@/api/tmdb';
+
+export async function generateMetadata(
+  {
+    params
+  }: {
+    params: {
+      movieId: string;
+    };
+  },
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const { movieId } = params;
+  const movieData = await getMovieDetail(movieId);
+
+  return {
+    title: `${movieData?.title ?? 'null'} - 영화상세 - 무비바바`
+  };
+}
 
 export default async function MovieDetailLayout({
   children,

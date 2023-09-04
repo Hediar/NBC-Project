@@ -19,10 +19,11 @@ interface Props {
 
 const DiscussionDetail = async ({ discussionId }: Props) => {
   const postData = await getDiscussionPostDetail(+discussionId);
-  const [relatedData, prevPostData, nextPostData] = await Promise.all([
+  const [relatedData, prevPostData, nextPostData, optionData] = await Promise.all([
     getRelatedDiscussionPost({ genreIds: postData.movie_genreIds, movieId: postData.movie_id }),
     getPrevDiscussionPost({ postId: postData.post_id, movieId: postData.movie_id }),
-    getNextDiscussionPost({ postId: postData.post_id, movieId: postData.movie_id })
+    getNextDiscussionPost({ postId: postData.post_id, movieId: postData.movie_id }),
+    getDiscussionPostOption(postData.post_id)
   ]);
 
   return (
@@ -35,7 +36,7 @@ const DiscussionDetail = async ({ discussionId }: Props) => {
               <p className="text-xl break-words">{postData?.content}</p>
             </div>
 
-            <OptionVote postId={postData.post_id} voteCount={postData.vote_count} />
+            <OptionVote postId={postData.post_id} voteCount={postData.vote_count} checkUpdate={optionData!.length} />
 
             {prevPostData?.length ? (
               <Link
