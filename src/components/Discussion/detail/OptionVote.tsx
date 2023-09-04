@@ -22,21 +22,13 @@ const OptionVote = ({ postId, voteCount, checkUpdate }: Props) => {
   const {
     userInfo: { id: userId }
   } = useUserInfoStore();
-
   const { isLoading, data: optionData, addVoteMutation, revoteMutation, refetch } = useDiscussionOptionQuery(postId);
-
-  useEffect(() => {
-    refetch();
-  }, [refetch]);
-
   const [isVoted, setIsVoted] = useState<boolean>(false);
   const [votedOption, setVotedOption] = useState<DiscussionUser>();
   const [sumCount, setSumCount] = useState<number>(voteCount);
   const router = useRouter();
 
-  console.log('렌더안됨=>', checkUpdate);
   useEffect(() => {
-    console.log('렌더됨=>', checkUpdate);
     const fetchUserData = async () => {
       const { data: userData } = await supabase.from('discussion_user').select('*').eq('post_id', postId);
       const userOption = userData?.filter((data) => data.user_id === userId);
@@ -49,6 +41,7 @@ const OptionVote = ({ postId, voteCount, checkUpdate }: Props) => {
     };
 
     fetchUserData();
+    refetch();
   }, [optionData, userId, checkUpdate]);
 
   const handleVoteCount = async () => {
@@ -134,7 +127,7 @@ const OptionVote = ({ postId, voteCount, checkUpdate }: Props) => {
                         ></div>
                       </div>
                       <div className="flex gap-3 text-sm">
-                        <span className="font-bold">{voteCount}명</span>
+                        <span className="font-bold">{option.count}명</span>
                         <span className="font-bold text-gray-400">{`${(option.count / sumCount) * 100}%`}</span>
                       </div>
                     </>
@@ -170,7 +163,7 @@ const OptionVote = ({ postId, voteCount, checkUpdate }: Props) => {
                         ></div>
                       </div>
                       <div className="flex gap-3 text-sm">
-                        <span className="font-bold">{voteCount}명</span>
+                        <span className="font-bold">{option.count}명</span>
                         <span className="font-bold text-gray-400">{`${(option.count / sumCount) * 100}%`}</span>
                       </div>
                     </>

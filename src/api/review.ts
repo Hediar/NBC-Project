@@ -25,8 +25,6 @@ export const getReviews = async ({
   const rangeFrom = page == 1 ? initFrom : (limit + 1) * (page - 1) - 1;
   const rangeTo = (limit + 1) * page - initTo;
 
-  // console.log(rangeFrom, '~', rangeTo);
-
   const fetchData = await supabase
     .from('reviews')
     .select('*')
@@ -37,13 +35,23 @@ export const getReviews = async ({
 };
 
 export const getLatestReviews = async () => {
-  const fetchData = await supabase
+  const { data: getReviews } = await supabase
     .from('reviews')
     .select('*')
     .order('date', { ascending: false }) // 날짜 기준으로 내림차순 정렬
-    .limit(4); // 가져올 개수 제한
+    .limit(8); // 가져올 개수 제한
+  const addUserName = getReviews?.map(async (data) => {
+    const { data: userName } = await supabase.from('users').select('username').eq('id', data.userid);
 
-  return fetchData;
+    const usernameData = userName?.map((data) => data.username);
+    console.log(usernameData);
+    const filterData = { ...data, username: usernameData! };
+
+    return filterData;
+  });
+  const allLatestData = await Promise.all(addUserName!);
+
+  return allLatestData;
 };
 
 // userid기반으로 닉네임 찾아야함
