@@ -10,15 +10,15 @@ declare global {
             created_at: string;
             id: string;
             post_id: number;
-            profiles: { username: string; avatar_url: string } | null;
+            profiles: { username: string; avatar_url: string };
             user_id: string;
           };
           Insert: {
-            content?: string;
+            content: string;
             created_at?: string;
             id?: string;
             post_id: number;
-            profiles?: { username: string; avatar_url: string } | null;
+            profiles?: { username: string; avatar_url: string };
             user_id: string;
           };
           Update: {
@@ -26,7 +26,7 @@ declare global {
             created_at?: string;
             id?: string;
             post_id?: number;
-            profiles?: { username: string; avatar_url: string } | null;
+            profiles?: { username: string; avatar_url: string };
             user_id?: string;
           };
           Relationships: [
@@ -40,6 +40,40 @@ declare global {
               foreignKeyName: 'discussion_comments_user_id_fkey';
               columns: ['user_id'];
               referencedRelation: 'users';
+              referencedColumns: ['id'];
+            }
+          ];
+        };
+        discussion_comments_likes: {
+          Row: {
+            comments_id: string;
+            created_at: string;
+            id: number;
+            user_id: string;
+          };
+          Insert: {
+            comments_id: string;
+            created_at?: string;
+            id?: number;
+            user_id: string;
+          };
+          Update: {
+            comments_id?: string;
+            created_at?: string;
+            id?: number;
+            user_id?: string;
+          };
+          Relationships: [
+            {
+              foreignKeyName: 'discussion_comments_likes_user_id_fkey';
+              columns: ['user_id'];
+              referencedRelation: 'users';
+              referencedColumns: ['id'];
+            },
+            {
+              foreignKeyName: 'fk_comments_id';
+              columns: ['comments_id'];
+              referencedRelation: 'discussion_comments';
               referencedColumns: ['id'];
             }
           ];

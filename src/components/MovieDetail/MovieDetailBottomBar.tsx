@@ -14,8 +14,8 @@ const MovieDetailBottomBar = ({ movieId }: Props) => {
     { name: '주요정보', url: 'main' },
     { name: '출연/제작', url: 'crew' },
     { name: '영상/포토', url: 'trailer' },
-    { name: '평점', url: 'rating' },
     { name: '토론', url: 'discussion' }
+    // { name: '리뷰', url: 'review' },
   ];
 
   return (

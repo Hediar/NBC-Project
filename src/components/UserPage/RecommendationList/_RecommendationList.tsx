@@ -2,7 +2,8 @@ import getMovieDataWithMovieIds from '@/api/getMovieDataWithMovieIds';
 import { getMovieGenresById, getMovieGenresByName, sortByMostFrequent } from '@/api/getMovieGenres';
 import DisplayInfiniteMovies from '@/components/common/DisplayMoviesInfiniteScroll';
 import discoverMoviesWithGenreId from '@/api/discoverMoviesWithGenreId';
-import supabase from '@/supabase/config';
+import { cookies } from 'next/headers';
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 
 interface Props {
   username: string;
@@ -10,6 +11,7 @@ interface Props {
 }
 
 const RecommendationList = async ({ username, watched_movies }: Props) => {
+  const supabase = createServerComponentClient({ cookies });
   // 유저가 본 영화 데이터를 다 가져오기
   const movieData = await getMovieDataWithMovieIds(watched_movies);
   // 영화 데이터들에서 [장르 id]를 추출
@@ -34,16 +36,25 @@ const RecommendationList = async ({ username, watched_movies }: Props) => {
   // 무시하기 필터링
 
   // 1. 사용자 정보 조회
-  const { data: userId } = await supabase.from('users').select('id').eq('username', username);
-  const { data: ignoreList } = await supabase
+  const { data: userData, error: isUserNotSignedIn } = await supabase.auth.getUser();
+  if (isUserNotSignedIn) {
+    console.log(isUserNotSignedIn);
+    return <>로그인을 해주세요.</>;
+  }
+
+  const userId = userData.user.id;
+
+  const { data: ignoreList, error: fetchIgnoreDataError } = await supabase
     .from('ignored_movies')
     .select('ignored_movies')
-    .eq('userid', userId![0]?.id);
-  const { data: watched } = await supabase.from('users').select('watched_movies').eq('id', userId![0]?.id);
+    .eq('userid', userId)
+    .single();
+
+  const { data: watched } = await supabase.from('users').select('watched_movies').eq('id', userId).single();
 
   // 2. ignoreList와 watched 목록에서 영화 ID 추출
-  const ignoredMovieIds = ignoreList![0]?.ignored_movies || [];
-  const watchedMovieIds = watched![0]?.watched_movies || [];
+  const ignoredMovieIds = ignoreList?.ignored_movies || [];
+  const watchedMovieIds = watched!.watched_movies || [];
 
   // 3. 필터링하여 제외된 영화들 반환
   const ignoredList = Array.from(new Set([...ignoredMovieIds, ...watchedMovieIds])).map((id) => id.toString());
@@ -51,48 +62,47 @@ const RecommendationList = async ({ username, watched_movies }: Props) => {
   let [movieData1, movieData2, movieData3] = threeRecommendationPages.map((page) => page);
 
   return (
-    <>
-      <div className="w-full h-20 flex flex-col gap-4 justify-center items-center relative my-10">
-        <h1 className="text-2xl w-10/12"> {username}님이 좋아하실 만한</h1>
-      </div>
+    <div className="w-10/12 mx-auto">
+      <h1 className="text-2xl text-center py-12"> {username}님이 좋아하신 영화중에 비슷한 장르를 찾아봤어요.</h1>
 
-      <div className="w-10/12 mb-6">
-        <div className="mb-10">
-          <h2 className="inline-block text-xl bg-slate-300 p-3 rounded-xl">#{GerneName_A}</h2>
+      <section>
+        <div className="mb-16">
+          <div className="mb-10">
+            <h2 className="inline-block text-xl bg-slate-300 p-3 rounded-xl">#{GerneName_A}</h2>
+          </div>
+          <DisplayInfiniteMovies
+            movieData={movieData1}
+            discoverMoviesWithGenreId={discoverMoviesWithGenreId}
+            genreIdArray={[genreId1]}
+            ignoredList={ignoredList}
+          />
         </div>
 
-        <DisplayInfiniteMovies
-          movieData={movieData1}
-          discoverMoviesWithGenreId={discoverMoviesWithGenreId}
-          genreIdArray={[genreId1]}
-          ignoredList={ignoredList}
-        />
-      </div>
-
-      <div className="w-10/12 mb-6">
-        <div className="mb-10">
-          <h2 className="inline-block text-xl bg-slate-300 p-3 rounded-xl">#{GerneName_B}</h2>
+        <div className="mb-16">
+          <div className="mb-10">
+            <h2 className="inline-block text-xl bg-slate-300 p-3 rounded-xl">#{GerneName_B}</h2>
+          </div>
+          <DisplayInfiniteMovies
+            movieData={movieData2}
+            discoverMoviesWithGenreId={discoverMoviesWithGenreId}
+            genreIdArray={[genreId2]}
+            ignoredList={ignoredList}
+          />
         </div>
-        <DisplayInfiniteMovies
-          movieData={movieData2}
-          discoverMoviesWithGenreId={discoverMoviesWithGenreId}
-          genreIdArray={[genreId2]}
-          ignoredList={ignoredList}
-        />
-      </div>
 
-      <div className="w-10/12 mb-6">
-        <div className="mb-10">
-          <h2 className="inline-block text-xl bg-slate-300 p-3 rounded-xl">#{GerneName_C}</h2>
+        <div className=" mb-16">
+          <div className="mb-10">
+            <h2 className="inline-block text-xl bg-slate-300 p-3 rounded-xl">#{GerneName_C}</h2>
+          </div>
+          <DisplayInfiniteMovies
+            movieData={movieData3}
+            discoverMoviesWithGenreId={discoverMoviesWithGenreId}
+            genreIdArray={[genreId3]}
+            ignoredList={ignoredList}
+          />
         </div>
-        <DisplayInfiniteMovies
-          movieData={movieData3}
-          discoverMoviesWithGenreId={discoverMoviesWithGenreId}
-          genreIdArray={[genreId3]}
-          ignoredList={ignoredList}
-        />
-      </div>
-    </>
+      </section>
+    </div>
   );
 };
 

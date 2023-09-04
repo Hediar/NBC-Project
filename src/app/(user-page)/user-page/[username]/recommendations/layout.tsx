@@ -14,5 +14,5 @@ export const generateMetadata = ({ params: { username } }: Params) => {
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>;
+  return <div className="h-[calc(100vh-134px)] w-full bg-gray-100 overflow-scroll">{children}</div>;
 }

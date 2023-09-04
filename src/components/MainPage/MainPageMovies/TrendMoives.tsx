@@ -1,8 +1,7 @@
-import { fetchTrendMoviesByGenre, getTrendingMovies, tmdbOptions } from '@/api/tmdb';
+import { fetchTrendMoviesByGenre, getTrendingMovies } from '@/api/tmdb';
 import MovieLikes from '../../MovieLikes/MovieLikes';
 import Image from 'next/image';
 import Link from 'next/link';
-import DisplayMovies from '../../common/DisplayMovies';
 import AddIgnoreMovieButton from '../../common/AddIgnoreMovieButton';
 
 export const revalidate = 0;
@@ -22,8 +21,6 @@ const TrendMoives = async ({ genreId }: { genreId: string }) => {
         <h2 className="text-2xl">인기 영화</h2>
         <Link href={'/movielist'}>더보기 &gt;</Link>
       </div>
-
-      {/* <DisplayMovies movieData={trendMovies} /> */}
 
       <div className="overflow-x-scroll flex">
         {filteredMovies?.map((movie: MovieData, idx: number) => {

@@ -1,18 +1,22 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import AuthButton from './_auth/AuthButtons';
 import HeaderUser from './HeaderUser';
-import { cookies } from 'next/headers';
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import Link from 'next/link';
-import HiddenFunctions from './_auth/HiddenFunctions';
+import HiddenServerFunctions from './_auth/HiddenServerFunctions';
+import ModalControlCentre from './_auth/ModalControlCentre';
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
+import { cookies } from 'next/headers';
 
 export const dynamic = 'force-dynamic';
 
 const Header = async () => {
   const supabase = createServerComponentClient({ cookies });
   const {
-    data: { session }
-  } = await supabase.auth.getSession();
+    data: { user }
+  } = await supabase.auth.getUser();
+  const userId = user?.id;
+
+  const { data: userData, error: userDataError } = await supabase.from('users').select().eq('id', userId).single();
 
   return (
     <>
@@ -21,11 +25,12 @@ const Header = async () => {
           무비바바
         </Link>
         <div className="flex gap-3 items-center">
-          {session && <HeaderUser session={session} />}
+          {userData && <HeaderUser userData={userData} />}
           <AuthButton />
         </div>
       </div>
-      <HiddenFunctions />
+      <HiddenServerFunctions />
+      <ModalControlCentre signedInUserId={userId ?? ''} />
     </>
   );
 };

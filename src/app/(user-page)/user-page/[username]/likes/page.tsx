@@ -30,10 +30,10 @@ const LikesListPage = async ({ params }: Props) => {
 
   if (usersLikedMovies.length === 0)
     return (
-      <div className="flex flex-col items-center w-full mt-10">
+      <div className="flex flex-col items-center w-full mt-10 h-[calc(100%-54px)]">
         <h2 className="text-center font-bold text-2xl">{username}님이 좋아하신 영화</h2>
-        <div className="w-10/12 flex flex-wrap  gap-y-10 mt-10 justify-center sm:gap-10 md:gap-5 gap-5">
-          아직 {username}님이 좋아요 누른 영화가 없습니다!
+        <div className="w-10/12 flex gap-y-10 justify-center sm:gap-10 md:gap-5 gap-5 items-center h-full">
+          <p className="text-2xl ">아직 {username}님이 좋아요 누른 영화가 없습니다!</p>
         </div>
       </div>
     );

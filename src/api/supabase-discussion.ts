@@ -61,9 +61,36 @@ export const getNextDiscussionPost = async ({ postId, movieId }: { postId: numbe
     .from('discussion_post')
     .select('*')
     .eq('movie_id', movieId)
-    .gt('post_id', postId);
+    .gt('post_id', postId)
+    .order('post_id');
 
   return nextData;
+};
+
+export const getHotDiscussionPost = async () => {
+  const { data: mostVote } = await supabase
+    .from('discussion_post')
+    .select('*')
+    .order('vote_count', { ascending: false })
+    .limit(6);
+
+  const getContentPromises = mostVote?.map(async (data) => {
+    const { data: discussionOptions } = await supabase
+      .from('discussion_option')
+      .select('content')
+      .eq('post_id', data.post_id);
+
+    const contentsData = discussionOptions?.map((data) => data.content);
+
+    const filterData = { ...data, contents: [...contentsData!] };
+
+    return filterData;
+  });
+
+  // 모든 프로미스를 병렬로 실행하고 결과를 기다리기
+  const allContentData = await Promise.all(getContentPromises!);
+
+  return allContentData;
 };
 
 interface AddUserData {
@@ -101,7 +128,7 @@ interface UpdateDiscussionPost {
   userId: string;
   title: string | undefined;
   content: string | undefined;
-  options: string[];
+  options: { text: string }[];
   postId: string;
   startNum: number;
 }
@@ -124,7 +151,7 @@ export const updateDiscussionPost = async ({
     for (let i = startNum; i < options.length; i++) {
       const newOption = {
         post_id: data![0].post_id,
-        content: options[i]
+        content: options[i].text
       };
 
       await supabase.from('discussion_option').insert(newOption).select();

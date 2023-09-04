@@ -1,6 +1,9 @@
 'use client';
 import { getDiscussionPostDetail, getDiscussionPostOption } from '@/api/supabase-discussion';
+import ReviewMovie from '@/components/ReviewForm/ReviewMovie';
 import useDiscussionPostQuery from '@/hooks/useDiscussionPostQuery';
+import DrawSvgX from '@/static/DrawSvgX';
+import { optionMark } from '@/static/optionMark';
 import useUserInfoStore from '@/store/saveCurrentUserData';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
@@ -11,6 +14,12 @@ interface Props {
   };
 }
 
+interface Option {
+  text: string;
+}
+
+const marginYGap = '25px';
+
 const DiscussionEditPage = ({ params }: Props) => {
   const { discussionId } = params;
   const {
@@ -18,38 +27,40 @@ const DiscussionEditPage = ({ params }: Props) => {
   } = useUserInfoStore();
   const [title, setTitle] = useState<string>();
   const [content, setContent] = useState<string>();
-  const [optionContent, setOptionContent] = useState<string>('');
-  const [options, setOptions] = useState<string[]>([]);
-  const optionInputRef = useRef<HTMLInputElement>(null);
-  const [optionValueCheck, setOptionValueCheck] = useState<boolean>(false);
+  const [movieId, setMovieId] = useState<string>();
+  const [options, setOptions] = useState<Option[]>([]);
+
   const initOptionLengthRef = useRef<number>(0);
   const { updatePostMutation } = useDiscussionPostQuery('DiscussionEditPage');
+  const titleRef = useRef<HTMLInputElement>(null);
+  const [isManualOpen, setIsManualOpen] = useState<boolean>(false);
 
+  const router = useRouter();
   useEffect(() => {
     const getInitData = async () => {
       const initPostData = await getDiscussionPostDetail(+discussionId);
+
       setTitle(initPostData!.title);
       setContent(initPostData!.content);
-
+      setMovieId(initPostData.movie_id);
+      if (userId) {
+        if (userId !== initPostData.user_id) {
+          alert('작성자와 현재 유저가 다릅니다');
+          router.push('/');
+        }
+      }
       const initOptionData = await getDiscussionPostOption(+discussionId);
       const initOptions = initOptionData?.map((option) => option.content);
-      setOptions([...initOptions!]);
+
+      setOptions([...initOptions!.map((option) => ({ text: option }))]);
       initOptionLengthRef.current = initOptions!.length;
     };
     getInitData();
   }, []);
 
-  const router = useRouter();
-
   const addOption = () => {
-    if (optionContent) {
-      const newOption = optionContent;
-      setOptions([...options, newOption]);
-      setOptionContent('');
-    } else {
-      if (optionInputRef.current instanceof HTMLInputElement) optionInputRef.current.focus();
-      setOptionValueCheck(true);
-    }
+    const newOption = { text: '' };
+    setOptions([...options, newOption]);
   };
 
   const deleteOption = (idx: number) => {
@@ -57,79 +68,156 @@ const DiscussionEditPage = ({ params }: Props) => {
   };
 
   const handleSubmit = async () => {
-    if (!userId) return;
-    try {
-      updatePostMutation.mutate({
-        userId,
-        title,
-        content,
-        options,
-        postId: discussionId,
-        startNum: initOptionLengthRef.current
-      });
+    if (!userId) {
+      alert('로그인 해주세요');
+      router.replace('?sign-in=true');
+    }
+    if (!title) {
+      alert('토론 주제를 입력해주세요');
+      return titleRef.current!.focus();
+    } else if (userId) {
+      try {
+        updatePostMutation.mutate({
+          userId,
+          title,
+          content,
+          options,
+          postId: discussionId,
+          startNum: initOptionLengthRef.current
+        });
 
-      alert('토론글이 수정되었습니다');
+        alert('토론글이 수정되었습니다');
 
-      router.refresh();
-      router.push(`/discussion/detail/${discussionId}`);
-    } catch (error) {}
+        router.refresh();
+        router.push(`/discussion/detail/${discussionId}`);
+      } catch (error) {}
+    }
   };
 
   return (
-    <div className="p-5">
-      <div className="flex flex-col gap-5">
-        <div className="flex gap-2">
-          <label htmlFor="topic">주제</label>
-          <input type="text" name="topic" className="border" value={title} onChange={(e) => setTitle(e.target.value)} />
+    <div className="p-5 w-3/5">
+      {/* S:: 영화 선택 */}
+      <div>
+        <ReviewMovie movieId={movieId as string} />
+      </div>
+      {/* E:: 영화 선택 */}
+
+      <div className={`flex flex-col w-full mt-[${marginYGap}] font-bold`}>
+        <div>
+          <label htmlFor="topic">토론 주제*</label>
+          <input
+            ref={titleRef}
+            type="text"
+            name="topic"
+            className="border w-full px-[20px] py-[12px] rounded-[10px] mt-[6px]"
+            placeholder="내용을 입력해주세요"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
         </div>
-        <div className="flex gap-2">
-          <label htmlFor="explanation">설명</label>
+
+        <div className={`mt-[${marginYGap}]`}>
+          <label htmlFor="explanation">추가 설명</label>
           <input
             type="text"
             name="explanation"
-            className="border"
+            className="border w-full px-[20px] py-[12px] rounded-[10px] mt-[6px]"
+            placeholder="토론 주제를 설명해주세요"
             value={content}
             onChange={(e) => setContent(e.target.value)}
           />
         </div>
       </div>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-        }}
-      >
-        <div className="m-5">
+
+      <div className={`mt-[${marginYGap}]`}>
+        <p className="font-bold relative">
+          <span
+            onMouseOver={() => {
+              setIsManualOpen(!isManualOpen);
+            }}
+            onMouseLeave={() => {
+              setIsManualOpen(!isManualOpen);
+            }}
+          >
+            토론 방식*
+          </span>
+          {isManualOpen && <span className="text-sm text-red-300">토론방식은 수정하실 수 없습니다</span>}
+        </p>
+        <div className="flex gap-3 mt-3 pointer-events-none">
+          {initOptionLengthRef.current ? (
+            <>
+              <div className="border px-20 py-3 rounded-[22px]">자유 토론</div>
+              <div className="border px-20 py-3 rounded-[22px] bg-black text-white">투표 토론</div>
+            </>
+          ) : (
+            <>
+              <div className="border px-20 py-3 rounded-[22px] bg-black text-white">자유 토론</div>
+              <div className="border px-20 py-3 rounded-[22px]">투표 토론</div>
+            </>
+          )}
+        </div>
+      </div>
+
+      {!!initOptionLengthRef.current && (
+        <div className={`mt-[${marginYGap}] font-bold`}>
           {options.map((option, idx) => {
             return (
-              <div key={idx} className="flex gap-2">
-                {idx < initOptionLengthRef.current ? (
-                  <>
-                    <p className="text-gray-500">{option}</p>
-                  </>
-                ) : (
-                  <>
-                    <p>{option}</p>
-                    <div onClick={() => deleteOption(idx)}>삭제</div>
-                  </>
-                )}
+              <div key={idx} className="flex gap-2 items-center">
+                <div className="w-full">
+                  <label htmlFor={`의견${optionMark[idx]}`}>의견{optionMark[idx]}</label>
+                  {idx > 1 && idx >= initOptionLengthRef.current && (
+                    <button className="rounded-full p-1 ml-1 bg-gray-200" onClick={() => deleteOption(idx)}>
+                      <DrawSvgX size={12} />
+                    </button>
+                  )}
+                  {idx < initOptionLengthRef.current ? (
+                    <input
+                      name={`의견${optionMark[idx]}`}
+                      className="border w-full px-3 py-1.5 my-2 rounded-xl pointer-events-none"
+                      type="text"
+                      value={option.text}
+                      placeholder="내용을 입력해주세요"
+                    />
+                  ) : (
+                    <input
+                      name={`의견${optionMark[idx]}`}
+                      className="border w-full px-3 py-1.5 rounded-xl"
+                      type="text"
+                      placeholder="내용을 입력해주세요"
+                      onChange={(e) => {
+                        option.text = e.target.value;
+                      }}
+                    />
+                  )}
+                </div>
               </div>
             );
           })}
-          <input
-            ref={optionInputRef}
-            type="text"
-            placeholder="선택지를 추가하세요"
-            name="addOption"
-            value={optionContent}
-            onChange={(e) => setOptionContent(e.target.value)}
-            onClick={() => setOptionValueCheck(false)}
-          ></input>
-          {optionValueCheck && <p className="absolute z-10 text-xs text-red-300">내용을 입력해주세요</p>}
 
-          <button onClick={addOption}>+</button>
+          {options.length < 10 && (
+            <div className="flex justify-center my-5">
+              <button
+                className="w-full border px-2 py-1 bg-gray-200 hover:bg-gray-100 rounded-[10px]"
+                onClick={addOption}
+              >
+                <span>+ 다른 의견 추가</span>
+              </button>
+            </div>
+          )}
         </div>
-      </form>
-      <button onClick={handleSubmit}>작성</button>
+      )}
+
+      <div className="flex justify-center gap-3 mt-[25px]">
+        <button className="border px-2 py-1 bg-gray-300 text-white font-bold hover:bg-gray-200 hover:text-gray-700 rounded-[10px]">
+          임시저장
+        </button>
+        <button
+          className="border px-2 py-1 bg-black text-white font-bold hover:bg-gray-200 hover:text-gray-700 rounded-[10px]"
+          onClick={handleSubmit}
+        >
+          토론 수정하기
+        </button>
+      </div>
     </div>
   );
 };

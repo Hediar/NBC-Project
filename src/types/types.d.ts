@@ -102,6 +102,7 @@ declare global {
     status: string;
     tagline: string;
     title: string;
+    name: string;
     video: boolean;
     vote_average: number;
     vote_count: number;
