@@ -3,28 +3,28 @@ import { SVGProps } from 'react';
 const SVGLightPrevButton = (props: SVGProps<SVGSVGElement>) => (
   <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
     <circle opacity="0.4" cx="30" cy="30" r="30" fill="black" />
-    <path d="M34 18L22 30L34 42" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M34 18L22 30L34 42" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
 const SVGLightNexButton = (props: SVGProps<SVGSVGElement>) => (
   <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
     <circle opacity="0.4" cx="30" cy="30" r="30" fill="black" />
-    <path d="M26 42L38 30L26 18" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M26 42L38 30L26 18" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
 const SVGPrevButton = (props: SVGProps<SVGSVGElement>) => (
   <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
     <circle opacity="0.8" cx="30" cy="30" r="30" fill="black" />
-    <path d="M34 18L22 30L34 42" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M34 18L22 30L34 42" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
 const SVGNextButton = (props: SVGProps<SVGSVGElement>) => (
   <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
     <circle opacity="0.8" cx="30" cy="30" r="30" fill="black" />
-    <path d="M26 42L38 30L26 18" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M26 42L38 30L26 18" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
@@ -33,7 +33,7 @@ const SVGArrowUpButton = (props: SVGProps<SVGSVGElement>) => (
     <g filter="url(#filter0_d_1121_48434)">
       <circle cx="36" cy="34" r="24" fill="white" />
     </g>
-    <path d="M46 37L36 27L26 37" stroke="#222222" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M46 37L36 27L26 37" stroke="#222222" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
     <defs>
       <filter
         id="filter0_d_1121_48434"
@@ -42,9 +42,9 @@ const SVGArrowUpButton = (props: SVGProps<SVGSVGElement>) => (
         width="72"
         height="72"
         filterUnits="userSpaceOnUse"
-        color-interpolation-filters="sRGB"
+        colorInterpolationFilters="sRGB"
       >
-        <feFlood flood-opacity="0" result="BackgroundImageFix" />
+        <feFlood floodOpacity="0" result="BackgroundImageFix" />
         <feColorMatrix
           in="SourceAlpha"
           type="matrix"

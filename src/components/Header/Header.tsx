@@ -22,19 +22,20 @@ const Header = async () => {
 
   return (
     <>
-      <div className="h-20 shadow-md shadow-gray-300 flex items-center px-4 justify-between bg-white">
-        <div className="flex items-center">
-          <Link href={'/'} className="text-white text-xl font-bold tracking-wider">
-            <Logo />
-          </Link>
-          <Nav />
+      <header className="flex justify-center h-[70px] shadow-md shadow-gray-300  bg-white">
+        <div className="w-10/12 h-full flex items-center justify-between">
+          <div className="flex items-center gap-[60px]">
+            <Link href={'/'} className="text-white text-xl font-bold tracking-wider">
+              <Logo />
+            </Link>
+            <Nav />
+          </div>
+          <div className="flex gap-3 items-center">
+            {userData && <HeaderUser userData={userData} />}
+            <AuthButton />
+          </div>
         </div>
-
-        <div className="flex gap-3 items-center">
-          {userData && <HeaderUser userData={userData} />}
-          <AuthButton />
-        </div>
-      </div>
+      </header>
       <HiddenServerFunctions />
       <ModalControlCentre signedInUserId={userId ?? ''} />
     </>
