@@ -1,3 +1,4 @@
+'use server';
 import DiscussionContent from '@/components/Discussion/detail/DiscussionContent';
 import supabase from '@/supabase/config';
 import { Metadata, ResolvingMetadata } from 'next';

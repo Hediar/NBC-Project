@@ -5,7 +5,9 @@ import React, { useEffect } from 'react';
 const useDiscussionOptionQuery = (postId: number) => {
   const queryClient = useQueryClient();
 
-  const { isLoading, isError, data } = useQuery(['discussion_option', postId], () => getDiscussionPostOption(postId));
+  const { isLoading, isError, data, refetch } = useQuery(['discussion_option', postId], () =>
+    getDiscussionPostOption(postId)
+  );
 
   const addVoteMutation = useMutation(addDiscussionOptionVote, {
     onSuccess: () => {
@@ -19,7 +21,7 @@ const useDiscussionOptionQuery = (postId: number) => {
     }
   });
 
-  return { isLoading, isError, data, addVoteMutation, revoteMutation };
+  return { isLoading, isError, data, addVoteMutation, revoteMutation, refetch };
 };
 
 export default useDiscussionOptionQuery;
