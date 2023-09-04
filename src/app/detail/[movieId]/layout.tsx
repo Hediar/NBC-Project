@@ -19,7 +19,7 @@ export async function generateMetadata(
   const movieData = await getMovieDetail(movieId);
 
   return {
-    title: `${movieData.title} - 영화상세 - 무비바바`
+    title: `${movieData?.title ?? 'null'} - 영화상세 - 무비바바`
   };
 }
 

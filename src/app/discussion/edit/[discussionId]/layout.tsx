@@ -19,7 +19,7 @@ export async function generateMetadata(
     .single();
 
   return {
-    title: `${discussionPostData.title} - 토론수정 - 무비바바`
+    title: `${discussionPostData?.title ?? 'default'} - 토론수정 - 무비바바`
   };
 }
 
