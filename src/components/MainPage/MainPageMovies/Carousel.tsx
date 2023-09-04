@@ -8,7 +8,7 @@ type PropType = {
   options?: EmblaOptionsType;
 };
 
-const EmblaCarousel: React.FC<PropType> = (props) => {
+const Carousel: React.FC<PropType> = (props) => {
   const { slides, options } = props;
   const [emblaRef, emblaApi] = useEmblaCarousel(options);
   const [prevBtnDisabled, setPrevBtnDisabled] = useState(true);
@@ -54,4 +54,4 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
   );
 };
 
-export default CarouselWrapper;
+export default Carousel;

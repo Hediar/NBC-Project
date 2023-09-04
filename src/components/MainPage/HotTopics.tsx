@@ -17,15 +17,9 @@ const HotTopics = async () => {
               key={post.id}
               className="bg-gray-200 p-4 rounded-md relative"
             >
+              <div>{post.movie_title}</div>
               <div className="text-2xl font-bold mb-2">{post.title}</div>
               <div className="bg-gray-100 rounded-md relative p-3">
-                <div>
-                  {post.contents.map((content: string, idx: number) => (
-                    <div key={idx} className={idx === post.contents.length - 1 ? '' : 'mb-2'}>
-                      {content} {idx !== post.contents.length - 1 && 'VS'}
-                    </div>
-                  ))}
-                </div>
                 <div className="mt-4 text-sm">
                   👆투표수 {post.vote_count} 💬댓글수 {post.comment_count}
                 </div>
