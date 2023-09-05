@@ -10,7 +10,7 @@ const MovieDetailTrailer = ({ movieData }: Props) => {
   const { trailerKeys, backdropImages } = movieData;
 
   return (
-    <div className="my-10">
+    <div className="mt-10 mb-20">
       <div>
         <p className="font-bold text-gray-500 text-2xl mb-5">트레일러 {trailerKeys?.length}</p>
         {trailerKeys.length ? (
