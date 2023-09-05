@@ -3,7 +3,7 @@ import React from 'react';
 
 import { baseImgUrl } from '@/static/baseImgUrl';
 import EmblaCarousel from '@/components/common/Slider/EmblaCarousel';
-import Carousel from './Carousel';
+import TrendMoviesCarousel from './TrendMoviesCarousel';
 
 type Props = {
   photoData: MovieData[];
@@ -12,14 +12,14 @@ type Props = {
 const TrendMovieSlider = ({ photoData }: Props) => {
   return (
     <div className="flex justify-center items-center w-full h-60 rounded-md font-thin text-xl my-3">
-      <Carousel
+      <TrendMoviesCarousel
         slides={photoData.map((imageData, idx) => {
           return (
             <Image
               key={idx}
               layout="fill"
               src={`${baseImgUrl}w533_and_h300_bestv2${imageData.backdrop_path}`}
-              className="w-51.125 h-28.75rem"
+              className="w-51.125 h-28.75rem rounded-lg"
               alt="Image"
             ></Image>
           );

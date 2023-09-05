@@ -8,7 +8,7 @@ type PropType = {
   options?: EmblaOptionsType;
 };
 
-const Carousel: React.FC<PropType> = (props) => {
+const TrendMoviesCarousel: React.FC<PropType> = (props) => {
   const { slides, options } = props;
   const [emblaRef, emblaApi] = useEmblaCarousel(options);
   const [prevBtnDisabled, setPrevBtnDisabled] = useState(true);
@@ -40,8 +40,8 @@ const Carousel: React.FC<PropType> = (props) => {
   }, [emblaApi, onSelect]);
 
   return (
-    <div className="w-full relative rounded-md">
-      <div className="overflow-hidden relative rounded-md h-55" ref={emblaRef}>
+    <div className="w-full relative">
+      <div className="overflow-hidden relative h-55" ref={emblaRef}>
         <div className="flex flex-col flex-wrap h-44 flex-none">
           {slides.map((slide, index) => (
             <div className={'w-[70%] h-44 relative mx-1'} key={index}>
@@ -61,4 +61,4 @@ const Carousel: React.FC<PropType> = (props) => {
   );
 };
 
-export default Carousel;
+export default TrendMoviesCarousel;

@@ -3,7 +3,7 @@ import MovieLikes from '../../MovieLikes/MovieLikes';
 import Image from 'next/image';
 import Link from 'next/link';
 import AddIgnoreMovieButton from '../../common/AddIgnoreMovieButton';
-import Carousel from './Carousel';
+import Carousel from './TrendMoviesCarousel';
 import TrendMovieSlider from './TrendMovieSlider';
 
 export const revalidate = 0;
