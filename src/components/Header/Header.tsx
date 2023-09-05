@@ -22,7 +22,7 @@ const Header = async () => {
 
   return (
     <>
-      <header className="flex justify-center h-[70px] shadow-md shadow-gray-300  bg-white">
+      <header className="flex justify-center h-[70px] border-b border-[#ebebeb]  bg-white">
         <div className="w-10/12 h-full flex items-center justify-between">
           <div className="flex items-center gap-[60px]">
             <Link href={'/'} className="text-white text-xl font-bold tracking-wider">

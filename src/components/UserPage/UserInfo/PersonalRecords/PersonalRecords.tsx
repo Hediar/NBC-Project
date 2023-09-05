@@ -1,8 +1,8 @@
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
-import NumberOfReviews from './NumberOfReviews';
-import TotalWatchingTime from './TotalWatchingTime';
-import NumberOfMoviesWatched from './NumberOfMoviesWatched';
+import NumberOfReviews from './SmallElements/NumberOfReviews';
+import NumberOfMoviesWatched from './SmallElements/NumberOfMoviesWatched';
+import TotalWatchingTime from './SmallElements/TotalWatchingTime';
 
 export const dynamic = 'force-dynamic';
 interface Props {
@@ -17,13 +17,12 @@ const UserPagePersonalRecords = async ({ params: username }: Props) => {
   const numberOfMoviesWatched = watched_movies.length;
 
   return (
-    <div className="w-full h-64  flex justify-center items-center relative">
-      <div className="flex gap-4 w-8/12">
+    <div className="w-full mt-5 flex justify-center items-center">
+      <section className="w-full flex gap-4">
         <NumberOfReviews userId={userId} />
+        <NumberOfMoviesWatched numberOfMoviesWatched={numberOfMoviesWatched} />
         <TotalWatchingTime watched_movies={watched_movies} />
-        <NumberOfMoviesWatched numberOfMoviesWatched={numberOfMoviesWatched} username={username} />
-      </div>
-      <div className="absolute bottom-0 border-b-2 border-slate-200 w-full"></div>
+      </section>
     </div>
   );
 };
