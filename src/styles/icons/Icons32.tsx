@@ -179,13 +179,13 @@ export const ArrowRight = (props: SVGProps<SVGSVGElement>) => (
 
 export const Subtract = (props: SVGProps<SVGSVGElement>) => (
   <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none" {...props}>
-    <path d="M4 16L28 16" stroke="#4F4F4F" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round" />
+    <path d="M4 16L28 16" stroke="#4F4F4F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 export const Addition = (props: SVGProps<SVGSVGElement>) => (
   <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none" {...props}>
-    <path d="M4 16L28 16" stroke="#4F4F4F" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round" />
-    <path d="M16 28L16 4" stroke="#4F4F4F" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round" />
+    <path d="M4 16L28 16" stroke="#4F4F4F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M16 28L16 4" stroke="#4F4F4F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 export const Multiply = (props: SVGProps<SVGSVGElement>) => (
@@ -198,13 +198,13 @@ export const Multiply = (props: SVGProps<SVGSVGElement>) => (
 export const PreviousArrow = (props: SVGProps<SVGSVGElement>) => (
   <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none" {...props}>
     <circle opacity="0.4" cx="16" cy="16" r="16" fill="#4F4F4F" />
-    <path d="M18 10L12 16L18 22" stroke="white" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round" />
+    <path d="M18 10L12 16L18 22" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
 export const NextArrow = (props: SVGProps<SVGSVGElement>) => (
   <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none" {...props}>
     <circle opacity="0.4" cx="16" cy="16" r="16" fill="#4F4F4F" />
-    <path d="M14 22L20 16L14 10" stroke="white" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round" />
+    <path d="M14 22L20 16L14 10" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
