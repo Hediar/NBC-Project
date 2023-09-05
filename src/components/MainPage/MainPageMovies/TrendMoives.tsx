@@ -16,22 +16,21 @@ const TrendMoives = async ({ genreId }: { genreId: string }) => {
     trendMovies = await fetchTrendMoviesByGenre(genreId);
   }
   const filteredMovies = trendMovies.results;
+  const sliderMovies = filteredMovies.slice(0, 8);
+  const listMovies = filteredMovies.slice(8, 14);
   return (
     <>
       <div className="p-5 felx ">
         <h2 className="text-2xl">인기 영화</h2>
         <Link href={'/movielist'}>더보기 &gt;</Link>
       </div>
-      <TrendMovieSlider photoData={filteredMovies} />
-      {/* <div className="overflow-x-scroll flex">
-        {filteredMovies?.map((movie: MovieData, idx: number) => {
+      <TrendMovieSlider photoData={sliderMovies} />
+      <div className="flex flex-wrap">
+        {listMovies.map((movie: MovieData, idx: number) => {
           return (
             <>
-              <div className="flex-none py-6 px-3 first:pl-6 last:pr-6">
+              <div className="flex-none py-6 first:pl-6 last:pr-6">
                 <div key={movie.id}>
-                  <div>
-                    {movie.title} {movie.id}
-                  </div>
                   <Link
                     href={`${process.env.NEXT_PUBLIC_BASE_URL}/detail/${movie.id}/main`}
                     className="w-56 h-full flex flex-col gap-2 items-center"
@@ -43,6 +42,7 @@ const TrendMoives = async ({ genreId }: { genreId: string }) => {
                       height={420}
                       priority={false}
                     ></Image>
+                    <div>{movie.title}</div>
                   </Link>
                   <MovieLikes movieid={movie.id} />
                   <AddIgnoreMovieButton movieid={movie.id} />
@@ -51,7 +51,7 @@ const TrendMoives = async ({ genreId }: { genreId: string }) => {
             </>
           );
         })}
-      </div> */}
+      </div>
     </>
   );
 };
