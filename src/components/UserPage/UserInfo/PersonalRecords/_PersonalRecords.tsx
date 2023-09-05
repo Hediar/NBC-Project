@@ -3,6 +3,8 @@ import { cookies } from 'next/headers';
 import NumberOfReviews from './NumberOfReviews';
 import TotalWatchingTime from './TotalWatchingTime';
 import NumberOfMoviesWatched from './NumberOfMoviesWatched';
+import { getMovieTimeByGenres } from '@/api/movieStatistics/getTimeAndNumbersByGenres';
+import MovieRuntimeGraph from './MovieRuntimeGraph';
 
 export const dynamic = 'force-dynamic';
 interface Props {
