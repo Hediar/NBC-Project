@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import ReactQueryProvider from './ReactQueryProvider';
 import Header from '@/components/Header/Header';
 import ScrollToTopButton from '@/components/common/ScrollToTopButton';
+import Footer from '@/components/common/Footer';
 
 // 현재 DYNAMIC_SERVER_USAGE에러로 인하여 빌드할 때 실패하는 상황이라서 일단
 // export const dynamic = 'force-dynamic';를 RootLayout에 선언하여
@@ -23,6 +24,7 @@ export default function RootLayout(props: { children: React.ReactNode }) {
           {props.children}
         </ReactQueryProvider>
         <ScrollToTopButton />
+        <Footer />
       </body>
     </html>
   );

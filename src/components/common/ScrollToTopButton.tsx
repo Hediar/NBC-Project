@@ -36,9 +36,7 @@ const ScrollToTopButton = () => {
       className={`fixed bottom-10 right-10 p-2 rounded-full cursor-pointer ${isVisible ? 'block' : 'hidden'}`}
       onClick={scrollToTop}
     >
-      {/* <AiFillUpCircle className="text-2xl" size="35" /> */}
-
-      <SVGArrowUpButton />
+      <SVGArrowUpButton className="w-12 h-12" />
     </button>
   );
 };

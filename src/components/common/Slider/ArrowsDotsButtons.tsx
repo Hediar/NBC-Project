@@ -21,7 +21,7 @@ export const PrevButton: React.FC<PropType> = (props) => {
 
   return (
     <button className="embla__button embla__button--prev" type="button" {...restProps}>
-      <SVGLightPrevButton />
+      <SVGLightPrevButton className="w-8 h-8" />
       {children}
     </button>
   );
@@ -32,7 +32,7 @@ export const NextButton: React.FC<PropType> = (props) => {
 
   return (
     <button className="embla__button embla__button--next" type="button" {...restProps}>
-      <SVGLightNextButton />
+      <SVGLightNextButton className="w-8 h-8" />
       {children}
     </button>
   );
