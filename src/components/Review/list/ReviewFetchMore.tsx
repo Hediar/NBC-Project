@@ -2,24 +2,30 @@
 
 import { fetchReviewData } from '@/api/review';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ReviewItem from './ReviewItem';
 
 type Props = {
-  sort: string;
+  searchParams: {
+    [key: string]: string | string[] | undefined;
+  };
 };
 
-const ReviewFetchMore = ({ sort }: Props) => {
+const ReviewFetchMore = ({ searchParams }: Props) => {
+  console.log('왜안바껴searchParams => ', searchParams);
+  const [firstMount, setFirstMount] = useState(true);
+
   const {
     data: reviews,
     hasNextPage,
     fetchNextPage,
-    isFetching
+    isFetching,
+    refetch,
+    remove
   } = useInfiniteQuery({
     queryKey: ['reviews'],
-    queryFn: fetchReviewData,
+    queryFn: (queryKey) => fetchReviewData(queryKey, searchParams),
     getNextPageParam: (lastPage) => {
-      //   console.log('page: ', lastPage.page, ' / total_pages: ', lastPage.total_pages);
       if (lastPage.page < lastPage.total_pages!) {
         return lastPage.page + 1;
       }
@@ -28,7 +34,15 @@ const ReviewFetchMore = ({ sort }: Props) => {
       return data.pages.map((pageData: any) => pageData.results).flat();
     }
   }) as any;
-  // console.log('✅reviews => ', reviews);
+
+  useEffect(() => {
+    if (!firstMount) {
+      remove();
+      refetch().then();
+    } else {
+      setFirstMount(false);
+    }
+  }, [searchParams]);
 
   const fetchMore = () => {
     if (!hasNextPage) return;

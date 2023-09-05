@@ -1,6 +1,5 @@
 'use client';
 
-import { redirect } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react';
 import ReactDatePicker from 'react-datepicker';
@@ -16,7 +15,7 @@ import { addReview, saveWatchList, updateReview } from '@/api/review';
 import StarBox from './StarBox';
 import Modal from '../common/Modal';
 import { useForm, useFieldArray, Controller } from 'react-hook-form';
-import supabase from '@/supabase/config';
+import { getDetailData } from '@/api/tmdb';
 
 interface Props {
   movieId?: string;
@@ -53,15 +52,20 @@ const ReviewForm = ({ movieId, editReview, movieButtonRef }: Props) => {
   });
 
   const addPost = async ({ selectedDate, review, content, tagList, rating }: any) => {
-    if (!userInfo) return alert('로그인 정보가 없습니다.');
+    if (!userInfo.id) return alert('로그인 정보가 없습니다.');
     if (!movieId && movieButtonRef.current !== null) {
       alert('선택된 영화가 없습니다.');
       return movieButtonRef.current.focus();
     }
 
+    const { title } = await getDetailData(movieId!);
+    console.log('movieId => ', movieId);
+    console.log('영화제목 => ', title);
+
     const newReview = {
       movieid: movieId,
-      userid: userInfo.id, // Q:: 유저 인증 막혀서 insert 정책을 true로 풀고 테스트 중
+      movie_title: title,
+      userid: userInfo.id,
       date: selectedDate,
       category: JSON.stringify(checkedListIndex),
       review,
@@ -69,18 +73,18 @@ const ReviewForm = ({ movieId, editReview, movieButtonRef }: Props) => {
       keyword: tagList,
       content
     } as ReviewsTable;
-    // console.log('newReview => ', newReview);
+    console.log('newReview => ', newReview);
 
     try {
       const { data, error } = editReview
         ? await updateReview(editReview.reviewid!, newReview)
         : await addReview(newReview);
+      if (error) console.log('오류 => ', error);
       if (error) return alert('오류가 발생하였습니다. 죄송합니다.' + error.message);
-
       saveWatchList(userInfo.id!, movieId!);
       saveTempReview();
-
       alert('저장 완');
+
       router.push(`/review/${data![0].reviewid}`);
     } catch (error) {
       console.log('에러 => ', error);
@@ -159,7 +163,7 @@ const ReviewForm = ({ movieId, editReview, movieButtonRef }: Props) => {
 
   return (
     <>
-      <form onSubmit={handleSubmit(addPost)}>
+      <form>
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="date">
             콘텐츠 본 날짜
@@ -257,6 +261,8 @@ const ReviewForm = ({ movieId, editReview, movieButtonRef }: Props) => {
               임시저장
             </button>
             <button
+              type="button"
+              onClick={handleSubmit(addPost)}
               disabled={isSubmitting}
               className="mt-4 border border-indigo-500 bg-indigo-500 text-white rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-indigo-600 focus:outline-none focus:shadow-outline"
             >

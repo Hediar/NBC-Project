@@ -1,6 +1,8 @@
 import ReviewFetchMore from '@/components/Review/list/ReviewFetchMore';
+import ReviewFilteringBox from '@/components/Review/list/ReviewFilteringBox';
 import Link from 'next/link';
-// import ReviewList from '@/components/Review/list/ReviewList';
+
+export const dynamic = 'force-dynamic';
 
 interface Props {
   searchParams: {
@@ -9,8 +11,6 @@ interface Props {
 }
 
 const ReviewListPage = ({ searchParams }: Props) => {
-  const sort = searchParams.sort;
-
   return (
     <div>
       <Link
@@ -20,10 +20,8 @@ const ReviewListPage = ({ searchParams }: Props) => {
         + 리뷰작성
       </Link>
 
-      {/* 정렬, 검색필터 - 작업 중 <br />
-      필터: 최신, 인기(좋아요), 별점 - ?sort=new | likes | rating <br />
-      검색: 전체, 영화제목, 리뷰내용 - ?filter=movie_title | review_cont <br /> */}
-      <ReviewFetchMore sort={sort as string} />
+      <ReviewFilteringBox />
+      <ReviewFetchMore searchParams={searchParams} />
     </div>
   );
 };
