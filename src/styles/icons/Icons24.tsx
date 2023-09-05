@@ -19,7 +19,6 @@ export const HeartLine = (props: SVGProps<SVGSVGElement>) => (
     />
   </svg>
 );
-
 export const HeartFilledColor = (props: SVGProps<SVGSVGElement>) => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
     <path
@@ -27,6 +26,9 @@ export const HeartFilledColor = (props: SVGProps<SVGSVGElement>) => (
       fill="#FF1D53"
       stroke="#FF1D53"
       stroke-width="2"
+    />
+  </svg>
+);
 
 export const StarFill = (props: SVGProps<SVGSVGElement>) => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
