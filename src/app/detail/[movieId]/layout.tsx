@@ -4,6 +4,9 @@ import supabase from '@/supabase/config';
 import Link from 'next/link';
 import { Metadata, ResolvingMetadata } from 'next';
 import { getMovieDetail } from '@/api/tmdb';
+import DiscussionTopic from '@/components/Discussion/detail/DiscussionTopic';
+import DiscussionCommentContainer from '@/components/Discussion/detail/comment/DiscussionCommentContainer';
+import RelatedDiscussionList from '@/components/Discussion/detail/related-discussion/RelatedDiscussionList';
 
 export async function generateMetadata(
   {
@@ -44,8 +47,15 @@ export default async function MovieDetailLayout({
       {children}
       <section>
         {discussionPostData ? (
-          <div className="mt-[25px]">
-            <DiscussionDetail discussionId={discussionPostData.post_id} />
+          <div className="flex">
+            <main className="w-2/3 pr-10">
+              <DiscussionTopic postData={discussionPostData} />
+              <DiscussionCommentContainer discussionId={discussionPostData.post_id} />
+            </main>
+
+            <section className="w-1/3">
+              <RelatedDiscussionList discussionId={discussionPostData.post_id} />
+            </section>
           </div>
         ) : (
           <div className="w-full text-center flex flex-col gap-3">

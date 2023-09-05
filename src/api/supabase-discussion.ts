@@ -9,9 +9,8 @@ export const getDiscussionPost = async () => {
 
 export const getDiscussionPostDetail = async (postId: number) => {
   try {
-    const { data } = await supabase.from('discussion_post').select('*').eq('post_id', postId);
+    const { data: postData } = await supabase.from('discussion_post').select('*').eq('post_id', postId).single();
 
-    const postData = data![0];
     return postData;
   } catch (error) {}
 };

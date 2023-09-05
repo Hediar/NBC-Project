@@ -2,7 +2,7 @@ import Image from 'next/image';
 import React from 'react';
 import altImage from '../../../../public/anonymous-avatar-icon.png';
 import Link from 'next/link';
-import { StarFill } from '@/styles/icons/Icons24';
+import { ArrowRight, StarFill } from '@/styles/icons/Icons24';
 
 interface Props {
   movieData: MovieData;
@@ -100,11 +100,16 @@ const KeyInfomation = async ({ movieData }: Props) => {
             }
           })}
         </div>
-        <div className="flex justify-center items-center">
-          <Link href={`/detail/${movieId}/crew`} className="border rounded-xl text-sm px-2 py-1">
-            더보기
-          </Link>
-        </div>
+
+        <Link
+          href={`/detail/${movieId}/crew`}
+          className="flex items-center justify-center border w-full rounded-[20px] text-center subtitle1_suit py-5 mb-20"
+        >
+          더보기
+          <ArrowRight />
+        </Link>
+
+        <div className="border-b"></div>
       </div>
     </div>
   );
