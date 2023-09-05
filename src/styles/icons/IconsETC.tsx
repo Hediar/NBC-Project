@@ -7,7 +7,7 @@ const SVGLightPrevButton = (props: SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
-const SVGLightNexButton = (props: SVGProps<SVGSVGElement>) => (
+const SVGLightNextButton = (props: SVGProps<SVGSVGElement>) => (
   <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
     <circle opacity="0.4" cx="30" cy="30" r="30" fill="black" />
     <path d="M26 42L38 30L26 18" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
@@ -63,4 +63,4 @@ const SVGArrowUpButton = (props: SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
-export { SVGLightPrevButton, SVGLightNexButton, SVGPrevButton, SVGNextButton, SVGArrowUpButton };
+export { SVGLightPrevButton, SVGLightNextButton, SVGPrevButton, SVGNextButton, SVGArrowUpButton };

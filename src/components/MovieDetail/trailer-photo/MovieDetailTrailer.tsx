@@ -1,6 +1,6 @@
 import React from 'react';
 import TrailerSlider from './TrailerSlider';
-import PhotoSlider from './PhotoSlider';
+import Slider from '../../common/Slider/Slider';
 
 interface Props {
   movieData: MovieData;
@@ -8,7 +8,7 @@ interface Props {
 
 const MovieDetailTrailer = ({ movieData }: Props) => {
   const { trailerKeys, backdropImages } = movieData;
-  const photoData = backdropImages.map((image) => image.file_path);
+
   return (
     <div className="mt-8">
       <div>
@@ -20,14 +20,7 @@ const MovieDetailTrailer = ({ movieData }: Props) => {
         )}
       </div>
 
-      <div>
-        <p className="font-bold text-gray-500 text-2xl">갤러리 {photoData?.length}</p>
-        {photoData.length ? (
-          <PhotoSlider slideData={photoData} itemNum={4} gap={30} count={1} />
-        ) : (
-          <p className="flex justify-center font-bold text-base my-10">갤러리가 없습니다.</p>
-        )}
-      </div>
+      <Slider photoData={backdropImages} />
     </div>
   );
 };
