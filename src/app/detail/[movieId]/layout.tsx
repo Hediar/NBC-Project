@@ -43,9 +43,6 @@ export default async function MovieDetailLayout({
       <MovieDetailInfo movieId={movieId} />
       {children}
       <section>
-        <div className="my-20">
-          <p className="text-2xl font-bold">이 영화 토픽</p>
-        </div>
         {discussionPostData ? (
           <div className="mt-[25px]">
             <DiscussionDetail discussionId={discussionPostData.post_id} />

@@ -8,7 +8,7 @@ interface Props {
   movieData: MovieData;
 }
 const baseImgUrl = process.env.NEXT_PUBLIC_TMDB_BASE_IMAGE_URL;
-const KeyInfomation = ({ movieData }: Props) => {
+const KeyInfomation = async ({ movieData }: Props) => {
   const { id: movieId, poster_path, overview, tagline, vote_average, appearences, productions } = movieData;
 
   return (

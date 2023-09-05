@@ -41,6 +41,7 @@ export default async function DiscussionDetailLayout({
 
   return (
     <section style={{ width: '80%', margin: '0 auto' }}>
+      <p className="mt-10 h3_suit">토론 상세</p>
       <DiscussionContent movieId={discussionPostData?.movie_id} />
       {children}
     </section>
