@@ -4,7 +4,7 @@ import getMovieDataWithMovieIds from '../getMovieDataWithMovieIds';
 import { getMoreOrganizedMovieDetails } from './getOrganizedMovieDetails';
 
 // 장르별 영화 시간
-export const getMovieTimeByGenres = async (userId: string, supabase: SupabaseClient): Promise<[string[], number[]]> => {
+export const getLikesByGenres = async (userId: string, supabase: SupabaseClient): Promise<[string[], number[]]> => {
   const watchedList = await getWatchedMoviesList(userId, supabase);
 
   const movieDetails = await getMovieDataWithMovieIds(watchedList);
