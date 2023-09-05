@@ -5,7 +5,7 @@ type UserData = Database['public']['Tables']['users']['Row'];
 
 const HeaderUser = ({ userData }: { userData: UserData }) => {
   return (
-    <div className="flex gap-5 items-center mr-4">
+    <div className="flex-row-reverse xl:flex-row animate-300 flex gap-5 items-center mr-4">
       <HeaderMenuButton userData={userData} />
       <div className="rounded-full overflow-hidden shadow-sm shadow-gray-400">
         <Image
@@ -20,7 +20,7 @@ const HeaderUser = ({ userData }: { userData: UserData }) => {
           blurDataURL={'/anonymous-avatar-icon.png'}
         />
       </div>
-      <h3 className="body1_regular_suit">{userData.username}</h3>
+      <h3 className="hidden lg:block body1_regular_suit">{userData.username}</h3>
     </div>
   );
 };

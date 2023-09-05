@@ -18,7 +18,7 @@ const UserPagePersonalRecords = async ({ params: username }: Props) => {
 
   return (
     <div className="w-full mt-5 flex justify-center items-center">
-      <section className="w-full flex gap-4">
+      <section className="w-full flex flex-col gap-4 xl:flex-row">
         <NumberOfReviews userId={userId} />
         <NumberOfMoviesWatched numberOfMoviesWatched={numberOfMoviesWatched} />
         <TotalWatchingTime watched_movies={watched_movies} />

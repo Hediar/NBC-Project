@@ -3,7 +3,7 @@ import React from 'react';
 
 const Nav = () => {
   return (
-    <nav>
+    <nav className="hidden md:block">
       <li className="flex gap-8 body1_regular_suit">
         <ul>
           <Link className="transform ease-in-out duration-300 hover:translate-x-7 hover:text-yellow-400" href={'/'}>
