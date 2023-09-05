@@ -31,8 +31,6 @@ const UserPageMostWatchedGenres = async ({ username }: Props) => {
           </>
         ))}
       </div>
-
-      <div className="absolute bottom-0 border-b-2 border-slate-200 w-full"></div>
     </div>
   );
 };

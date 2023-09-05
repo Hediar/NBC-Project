@@ -277,4 +277,15 @@ declare global {
 
     profile_path: string;
   }
+
+  type OrganizedMovieDetails = {
+    id: number;
+    title: string;
+    popularity: number;
+    runtime: number;
+    genres: string[] | string;
+    vote_average: number;
+    release_date: string;
+    production_countries: string[] | string;
+  };
 }

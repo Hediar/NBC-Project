@@ -38,7 +38,7 @@ const MovieList = () => {
         } else {
           setFilterefData([...filteredData, ...results]);
         }
-        console.log('영화데이터', results);
+        // console.log('영화데이터', results);
       }
     } else {
       // 검색 x
