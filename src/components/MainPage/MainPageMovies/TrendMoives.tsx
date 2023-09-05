@@ -3,6 +3,8 @@ import MovieLikes from '../../MovieLikes/MovieLikes';
 import Image from 'next/image';
 import Link from 'next/link';
 import AddIgnoreMovieButton from '../../common/AddIgnoreMovieButton';
+import Carousel from './TrendMoviesCarousel';
+import TrendMovieSlider from './TrendMovieSlider';
 
 export const revalidate = 0;
 
@@ -14,15 +16,14 @@ const TrendMoives = async ({ genreId }: { genreId: string }) => {
     trendMovies = await fetchTrendMoviesByGenre(genreId);
   }
   const filteredMovies = trendMovies.results;
-
   return (
     <>
       <div className="p-5 felx ">
         <h2 className="text-2xl">인기 영화</h2>
         <Link href={'/movielist'}>더보기 &gt;</Link>
       </div>
-
-      <div className="overflow-x-scroll flex">
+      <TrendMovieSlider photoData={filteredMovies} />
+      {/* <div className="overflow-x-scroll flex">
         {filteredMovies?.map((movie: MovieData, idx: number) => {
           return (
             <>
@@ -50,7 +51,7 @@ const TrendMoives = async ({ genreId }: { genreId: string }) => {
             </>
           );
         })}
-      </div>
+      </div> */}
     </>
   );
 };

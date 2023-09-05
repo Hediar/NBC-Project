@@ -1,4 +1,5 @@
 import getMovieDataWithMovieIds from '@/api/getMovieDataWithMovieIds';
+import RecordsContainerSmall from '../_Containers/RecordsContainerSmall';
 
 const TotalWatchingTime = async ({ watched_movies }: { watched_movies: Array<string> }) => {
   const calculateMovieWatchedTime = async (watched_movies: Array<string>) => {
@@ -12,7 +13,7 @@ const TotalWatchingTime = async ({ watched_movies }: { watched_movies: Array<str
       const hours = Math.floor(minutes / 60);
       const remainingMinutes = minutes % 60;
 
-      return `${hours}시간 ${remainingMinutes}분`;
+      return `${hours}h ${remainingMinutes}m`;
     };
 
     const movieData = await getMovieDataWithMovieIds(watched_movies);
@@ -26,15 +27,16 @@ const TotalWatchingTime = async ({ watched_movies }: { watched_movies: Array<str
   };
 
   const totalMovieRuntime = await calculateMovieWatchedTime(watched_movies);
+
   return (
-    <div className="flex flex-col justify-center items-center gap-3 bg-gray-300 w-1/3 h-40 rounded-2xl p-8">
-      <p className="text-xl">현재까지 본 영화 시간</p>
-      {totalMovieRuntime ? (
-        <p className="text-lg text-gray-700">{totalMovieRuntime}</p>
-      ) : (
-        <p className="text-md text-gray-600">아직 본 영화가 없습니다.</p>
-      )}
-    </div>
+    <RecordsContainerSmall
+      key="ffede5"
+      bgColor="#ffede5"
+      borderColor="#fcd5c4"
+      textColor="#f0743f"
+      title="영화 본 시간"
+      value={totalMovieRuntime.toString()}
+    />
   );
 };
 
