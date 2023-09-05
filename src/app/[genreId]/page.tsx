@@ -10,10 +10,14 @@ const GenreMovies = ({ params }: { params: { genreId: string } }) => {
   const { genreId } = params;
   return (
     <main>
-      <KeywordButtons params={params.genreId} />
+      <div className="p-2">
+        <KeywordButtons params={params.genreId} />
+      </div>
       <TrendMoives genreId={genreId} />
-      <LatestReviews />
-      <LatestMovies />
+      <div className="flex">
+        <LatestReviews />
+        <LatestMovies />
+      </div>
       <HotTopics />
     </main>
   );
