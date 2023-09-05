@@ -10,6 +10,15 @@ export const DropdownMenu = (props: SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
+export const DropUpMenu = (props: SVGProps<SVGSVGElement>) => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <path
+      d="M12.1921 9.23047L15.9065 13.6879C16.3408 14.2089 15.9702 15 15.292 15L8.70803 15C8.02976 15 7.65924 14.2089 8.09346 13.6879L11.8079 9.23047C11.9079 9.11053 12.0921 9.11053 12.1921 9.23047Z"
+      fill="#4F4F4F"
+    />
+  </svg>
+);
+
 export const HeartLine = (props: SVGProps<SVGSVGElement>) => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
     <path
@@ -19,7 +28,6 @@ export const HeartLine = (props: SVGProps<SVGSVGElement>) => (
     />
   </svg>
 );
-
 export const HeartFilledColor = (props: SVGProps<SVGSVGElement>) => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
     <path
@@ -27,7 +35,9 @@ export const HeartFilledColor = (props: SVGProps<SVGSVGElement>) => (
       fill="#FF1D53"
       stroke="#FF1D53"
       stroke-width="2"
-
+    />
+  </svg>
+);
 export const StarFill = (props: SVGProps<SVGSVGElement>) => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
     <path
@@ -36,5 +46,16 @@ export const StarFill = (props: SVGProps<SVGSVGElement>) => (
       stroke="#4F4F4F"
       strokeWidth="2"
     />
+  </svg>
+);
+
+export const ArrowRight = (props: SVGProps<SVGSVGElement>) => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <path d="M9 18L15 12L9 6" stroke="#4F4F4F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </svg>
+);
+export const ArrowDown = (props: SVGProps<SVGSVGElement>) => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <path d="M6 9L12 15L18 9" stroke="#4F4F4F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
   </svg>
 );
