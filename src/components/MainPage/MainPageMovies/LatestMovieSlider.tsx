@@ -4,6 +4,7 @@ import React from 'react';
 import { baseImgUrl } from '@/static/baseImgUrl';
 import EmblaCarousel from '@/components/common/Slider/EmblaCarousel';
 import LatestMoviesCarousel from '../Carousel/LatestMoviesCarousel';
+import Link from 'next/link';
 
 type Props = {
   photoData: MovieData[];
@@ -15,13 +16,20 @@ const LatestMovieSlider = ({ photoData }: Props) => {
       <LatestMoviesCarousel
         slides={photoData.map((imageData, idx) => {
           return (
-            <Image
+            <div
               key={idx}
-              layout="fill"
-              src={`${baseImgUrl}w533_and_h300_bestv2${imageData.poster_path}`}
-              className="object-cover rounded-md"
-              alt="Image"
-            ></Image>
+              className="relative w-[740px] h-[608px] border border-solid rounded-[20px] overflow-hidden bg-gradient-to-r from-[#F3C2B0] to-[#FFF2DD]"
+            >
+              <Link href={`/detail/${imageData.id}`} className="absolute top-0 left-0 z-10">
+                <Image
+                  layout="fill"
+                  src={`${baseImgUrl}w533_and_h300_bestv2${imageData.poster_path}`}
+                  className="object-cover rounded-md"
+                  alt="Image"
+                />
+              </Link>
+              <div className="absolute bottom-0 left-0 right-0 h-[98px] bg-gradient-to-r from-[#BF3100] to-[#FFF2DD]"></div>
+            </div>
           );
         })}
         options={{
@@ -30,7 +38,7 @@ const LatestMovieSlider = ({ photoData }: Props) => {
           skipSnaps: false,
           inViewThreshold: 0.7
         }}
-        slideHeight="h-44"
+        slideHeight="h-[608px]"
         slideWidth="w-full"
       />
     </div>

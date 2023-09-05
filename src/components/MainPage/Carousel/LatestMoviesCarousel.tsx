@@ -48,11 +48,11 @@ export const LatestMoviesCarousel = (props: PropType) => {
             </div>
           ))}
         </div>
-        <div className="flex justify-between items-center absolute left-0 top-1/2 -translate-y-1/2 bg-transparent cursor-pointer z-10">
-          <PrevButton onClick={scrollPrev} disabled={prevBtnDisabled} />
-        </div>
-        <div className="flex justify-between items-center absolute right-0 top-1/2 -translate-y-1/2 bg-transparent cursor-pointer z-10">
-          <NextButton onClick={scrollNext} disabled={nextBtnDisabled} />
+        <div className="absolute top-1 right-1 z-10">
+          <div className="flex items-center space-x-2">
+            <PrevButton onClick={scrollPrev} disabled={prevBtnDisabled} className="p-1 rounded-full cursor-pointer" />
+            <NextButton onClick={scrollNext} disabled={nextBtnDisabled} className="p-1 rounded-full cursor-pointer" />
+          </div>
         </div>
       </div>
     </div>
