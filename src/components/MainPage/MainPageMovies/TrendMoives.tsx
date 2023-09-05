@@ -45,7 +45,6 @@ const TrendMoives = async ({ genreId }: { genreId: string }) => {
                     <div>{movie.title}</div>
                   </Link>
                   <MovieLikes movieid={movie.id} />
-                  <AddIgnoreMovieButton movieid={movie.id} />
                 </div>
               </div>
             </>

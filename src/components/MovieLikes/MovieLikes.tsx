@@ -5,7 +5,7 @@ import useUserInfoStore from '@/store/saveCurrentUserData';
 import { useQuery } from '@tanstack/react-query';
 import { throttle } from 'lodash';
 import { useMovieLikesMutation } from '@/hooks/useMovieLikesMutation';
-import { HeartLine } from '@/styles/icons/Icons24';
+import { HeartFilledColor, HeartLine } from '@/styles/icons/Icons24';
 
 const MovieLikes = (props: { movieid: number }) => {
   const [likecurrentuser, setLikecurrentuser] = useState(false); // 현재 유저가 좋아하는지 여부
@@ -21,7 +21,7 @@ const MovieLikes = (props: { movieid: number }) => {
 
   const { userInfo } = useUserInfoStore();
 
-  const mutation = useMovieLikesMutation(props.movieid, userInfo?.id!);
+  const mutation = useMovieLikesMutation(props.movieid, userInfo?.id!, likecurrentuser, setLikecurrentuser);
 
   // 좋아요 버튼
   const likeButtonHandler = throttle(
@@ -44,7 +44,7 @@ const MovieLikes = (props: { movieid: number }) => {
       좋아요 개수: {currentMovieLikeData?.length ? currentMovieLikeData[0].user_id.length : 0}
       <br />
       <button className="py-2 px-4 rounded" onClick={likeButtonHandler}>
-        <HeartLine />
+        {likecurrentuser ? <HeartFilledColor /> : <HeartLine />}
       </button>
     </div>
   );

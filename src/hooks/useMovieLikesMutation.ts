@@ -2,7 +2,12 @@ import supabase from '@/supabase/config';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 
-export function useMovieLikesMutation(movieId: number, userInfoId: string) {
+export function useMovieLikesMutation(
+  movieId: number,
+  userInfoId: string,
+  likecurrentuser: boolean,
+  setLikecurrentuser: React.Dispatch<React.SetStateAction<boolean>>
+) {
   const queryClient = useQueryClient();
   const router = useRouter();
 
@@ -18,9 +23,11 @@ export function useMovieLikesMutation(movieId: number, userInfoId: string) {
           : [...users, userInfoId];
 
         await supabase.from('movielikes').update({ user_id: newUsers }).eq('movieid', movieId);
+        setLikecurrentuser(!likecurrentuser);
       } else {
         const newUsers = { movieid: movieId, user_id: [userInfoId] };
         await supabase.from('movielikes').insert(newUsers);
+        setLikecurrentuser(!likecurrentuser);
       }
     },
     {
