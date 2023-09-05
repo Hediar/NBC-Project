@@ -7,7 +7,7 @@ const LatestReviews = async () => {
   const latestReviewData = await getLatestReviews();
   return (
     <div className="p-5 flex-1">
-      <h2 className="text-2xl">최신 리뷰</h2>
+      <h1 className="main_title_text">최신 리뷰</h1>
       <div className="">
         {latestReviewData?.map((review) => {
           return (

@@ -1,8 +1,5 @@
 import Image from 'next/image';
-import React from 'react';
-
 import { baseImgUrl } from '@/static/baseImgUrl';
-import EmblaCarousel from '@/components/common/Slider/EmblaCarousel';
 import LatestMoviesCarousel from '../Carousel/LatestMoviesCarousel';
 import Link from 'next/link';
 

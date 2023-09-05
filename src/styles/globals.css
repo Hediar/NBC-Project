@@ -26,7 +26,7 @@ body {
 
 /* 메인 페이지 title */
 .main_title_text {
-  @apply text-6xl font-extrabold leading-10;
+  @apply text-6xl font-extrabold leading-[72px];
 }
 
 /* 영화 보여주기에서 */
