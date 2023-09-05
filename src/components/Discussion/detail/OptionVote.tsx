@@ -86,7 +86,7 @@ const OptionVote = ({ postId, voteCount, checkUpdate }: Props) => {
   if (isLoading) {
     return <div>Loading...</div>;
   }
-  console.log('optionData', optionData);
+
   return (
     <>
       {contextHolder}
