@@ -96,6 +96,23 @@ const SVGTalkEndPoint = (props: SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
+const SVGPlayButton = (props: SVGProps<SVGSVGElement>) => (
+  <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <circle opacity="0.8" cx="40" cy="40" r="40" fill="#4F4F4F" />
+    <path
+      d="M62 38.268C63.3333 39.0378 63.3333 40.9623 62 41.7321L30.5 59.9186C29.1667 60.6884 27.5 59.7261 27.5 58.1865L27.5 21.8135C27.5 20.2739 29.1667 19.3116 30.5 20.0814L62 38.268Z"
+      fill="white"
+    />
+  </svg>
+);
+
+const SVGPauseButton = (props: SVGProps<SVGSVGElement>) => (
+  <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <circle opacity="0.8" cx="40" cy="40" r="40" fill="#4F4F4F" />
+    <path d="M30 23V57M50 23V57" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+  </svg>
+);
+
 export {
   SVGLightPrevButton,
   SVGLightNextButton,
@@ -103,5 +120,7 @@ export {
   SVGNextButton,
   SVGArrowUpButton,
   SVGTalkStartPoint,
-  SVGTalkEndPoint
+  SVGTalkEndPoint,
+  SVGPlayButton,
+  SVGPauseButton
 };
