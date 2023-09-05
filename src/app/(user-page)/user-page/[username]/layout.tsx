@@ -41,11 +41,11 @@ export default async function Layout({
   if (usernameData && usernameData.length === 0) notFound();
 
   return (
-    <main className="h-[calc(100vh-70px)] bg-white flex justify-center">
-      <aside className="w-1/6 md:w-1/4 border-r border-[#ebebeb] bg-[#fffdf9]">
+    <main className="h-[calc(100vh-70px)] bg-white flex justify-center ">
+      <aside className="w-1/6 md:w-3/12 lg:w-2/12 border-r border-[#ebebeb] bg-[#fffdf9] ">
         <UserPageTabs username={decodedUsername} />
       </aside>
-      <section className="w-5/6 md:w-3/4 flex flex-col items-center">{children}</section>
+      <section className="w-5/6 md:w-9/12 lg:w-10/12  flex flex-col items-center">{children}</section>
     </main>
   );
 }

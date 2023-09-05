@@ -24,7 +24,6 @@ const UserPageTabs = async ({ username }: { username: string }) => {
   const supabase = createServerComponentClient<Database>({ cookies });
 
   const userMatch = await doesUsersMatch(supabase, username);
-  console.log(userMatch);
 
   return (
     <div className="flex flex-col items-center gap-5 mt-[80px]">

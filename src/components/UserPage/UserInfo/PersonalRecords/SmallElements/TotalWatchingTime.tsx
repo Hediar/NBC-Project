@@ -35,7 +35,7 @@ const TotalWatchingTime = async ({ watched_movies }: { watched_movies: Array<str
       borderColor="#fcd5c4"
       textColor="#f0743f"
       title="영화 본 시간"
-      value={totalMovieRuntime.toString()}
+      value={totalMovieRuntime ? totalMovieRuntime.toString() : '0'}
     />
   );
 };

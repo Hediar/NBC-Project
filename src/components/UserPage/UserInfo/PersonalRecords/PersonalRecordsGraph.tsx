@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 
 import { cookies } from 'next/headers';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import LikesOnGenres from './BigElements(Graphs)/LikesOnGenres';
 import NumberOfGenresWatched from './BigElements(Graphs)/NumberOfGenresWatched';
 import RuntimeByGenres from './BigElements(Graphs)/RuntimeByGenres';
+import LoadingSpinner from '@/components/common/LoadingSpinner';
 
 export const dynamic = 'force-dynamic';
 

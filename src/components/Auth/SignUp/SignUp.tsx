@@ -71,7 +71,7 @@ function SignUp() {
           content: 'captcha오류입니다. 다시 시도해주세요.'
         });
       }
-      console.log(data.message);
+
       router.refresh();
     } else {
       router.refresh();
