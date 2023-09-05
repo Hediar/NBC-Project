@@ -47,6 +47,7 @@ export const EmblaCarousel = (props: PropType) => {
   return (
     <div className="w-full relative rounded-md ">
       <div className="overflow-hidden relative rounded-md" ref={emblaRef}>
+        {/* height */}
         <div className="flex flex-col flex-wrap h-44 flex-none">
           {slides.map((slide, index) => (
             <div className={`${slideWidth} ${slideHeight} relative mx-1`} key={index}>
@@ -61,8 +62,10 @@ export const EmblaCarousel = (props: PropType) => {
             <span className="text-[#ffffffb2]">{slides.length}</span>
           </div>
         </div>
-        <div className="w-full flex justify-between items-center absolute top-1/2 -translate-y-1/2 bg-transparent cursor-pointer z-10">
+        <div className="flex justify-between items-center absolute left-0 top-1/2 -translate-y-1/2 bg-transparent cursor-pointer z-10">
           <PrevButton onClick={scrollPrev} disabled={prevBtnDisabled} />
+        </div>
+        <div className="flex justify-between items-center absolute right-0 top-1/2 -translate-y-1/2 bg-transparent cursor-pointer z-10">
           <NextButton onClick={scrollNext} disabled={nextBtnDisabled} />
         </div>
       </div>
