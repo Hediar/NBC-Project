@@ -41,20 +41,20 @@ const TrendMoviesCarousel: React.FC<PropType> = (props) => {
 
   return (
     <div className="w-full relative">
-      <div className="overflow-hidden relative h-55" ref={emblaRef}>
+      <div className="overflow-hidden relative h-[460px]" ref={emblaRef}>
         <div className="flex flex-col flex-wrap h-44 flex-none">
           {slides.map((slide, index) => (
-            <div className={'w-[70%] h-44 relative mx-1'} key={index}>
+            <div className={'w-[50%] h-44 relative mx-1'} key={index}>
               {slide}
             </div>
           ))}
         </div>
       </div>
 
-      <div className="flex justify-between items-center absolute left-0 top-1/2 -translate-y-1/2 bg-transparent cursor-pointer z-10">
+      <div className="flex justify-between absolute left-0 top-1/2 -translate-y-1/2 bg-transparent cursor-pointer z-10">
         <PrevButton onClick={scrollPrev} disabled={prevBtnDisabled} />
       </div>
-      <div className="flex justify-between items-center absolute right-0 top-1/2 -translate-y-1/2 bg-transparent cursor-pointer z-10">
+      <div className="flex justify-between absolute right-0 top-1/2 -translate-y-1/2 bg-transparent cursor-pointer z-10">
         <NextButton onClick={scrollNext} disabled={nextBtnDisabled} />
       </div>
     </div>
