@@ -45,8 +45,8 @@ export const EmblaCarousel = (props: PropType) => {
   }, [embla, setScrollSnaps, onInit, onSelect]);
 
   return (
-    <div className="w-full relative rounded-md ">
-      <div className="overflow-hidden relative rounded-md" ref={emblaRef}>
+    <div className="w-full relative rounded-md">
+      <div className="overflow-hidden relative rounded-md h-55" ref={emblaRef}>
         {/* height */}
         <div className="flex flex-col flex-wrap h-44 flex-none">
           {slides.map((slide, index) => (
