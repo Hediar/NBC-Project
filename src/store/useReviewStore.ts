@@ -26,13 +26,9 @@ interface ReturnMovieTypes {
 export const useReviewMovieStore = create<ReturnMovieTypes>((set) => {
   return {
     searchMovieId: null,
-    // searchMovieInfo: null,
     saveSearchMovieId: (newMovieId?) => {
       set({ searchMovieId: newMovieId });
     }
-    // saveSearchMovieInfo: (newMovieInfo?) => {
-    //   set({ searchMovieInfo: newMovieInfo });
-    // },
   };
 });
 

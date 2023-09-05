@@ -37,7 +37,7 @@ const SearchMoviesItem = ({ movie, handleClick }: Props) => {
           <strong>{movie.title}</strong>
           <div>{movie.release_date.slice(0, 4)}</div>
           <div>{detailData && detailData.genres.map((genre: MovieGenre) => `${genre.name} `)}</div>
-          <div>{detailData && detailData.production_countries[0]['iso_3166_1']}</div>
+          <div>{detailData?.production_countries.length && detailData.production_countries[0]['iso_3166_1']}</div>
           <div>{detailData && detailData.runtime}분</div>
           <div>{movie.adult ? '청소년관람불가' : '전체관람가'}</div>
         </div>

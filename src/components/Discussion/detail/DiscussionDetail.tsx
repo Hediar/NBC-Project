@@ -5,10 +5,8 @@ import {
   getDiscussionPostDetail,
   getDiscussionPostOption,
   getNextDiscussionPost,
-  getPrevDiscussionPost,
-  getRelatedDiscussionPost
+  getPrevDiscussionPost
 } from '@/api/supabase-discussion';
-import RelatedDiscussionPost from './related-discussion/RelatedDiscussionPost';
 import Link from 'next/link';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import DiscussionCommentContainer from './comment/DiscussionCommentContainer';
@@ -20,8 +18,7 @@ interface Props {
 
 const DiscussionDetail = async ({ discussionId }: Props) => {
   const postData = await getDiscussionPostDetail(+discussionId);
-  const [relatedData, prevPostData, nextPostData, optionData] = await Promise.all([
-    getRelatedDiscussionPost({ genreIds: postData.movie_genreIds, movieId: postData.movie_id }),
+  const [prevPostData, nextPostData, optionData] = await Promise.all([
     getPrevDiscussionPost({ postId: postData.post_id, movieId: postData.movie_id }),
     getNextDiscussionPost({ postId: postData.post_id, movieId: postData.movie_id }),
     getDiscussionPostOption(postData.post_id)
@@ -31,8 +28,10 @@ const DiscussionDetail = async ({ discussionId }: Props) => {
     <>
       <ViewCount postId={postData.post_id} viewCount={postData.view_count} />
       <div className="mt-[50px]">
+        <h3 className="h3_suit flex">이 영화 토픽</h3>
         <div className="flex justify-between w-4/5 mx-auto">
           <div className="w-2/3">
+            <div className="w-full h-[60px] border rounded-lg"></div>
             <section className="min-h-[40vh] flex flex-col items-center relative">
               <div className="w-full">
                 <h3 className="text-3xl font-bold m-5">{postData?.title}</h3>
@@ -63,32 +62,6 @@ const DiscussionDetail = async ({ discussionId }: Props) => {
               <EditDeleteBox postId={postData.post_id} authorId={postData.user_id} />
             </div>
             <DiscussionCommentContainer discussionId={discussionId} />
-          </div>
-
-          <div className="w-[20vw]">
-            <p className="font-bold text-xl">관련된 다른 토픽</p>
-            {relatedData?.length ? (
-              relatedData?.map(async (relatedDiscussionData, idx) => {
-                if (idx > 3) return null;
-
-                const relatedOption = await getDiscussionPostOption(relatedDiscussionData.post_id);
-
-                return (
-                  <RelatedDiscussionPost
-                    key={relatedDiscussionData.post_id}
-                    relatedDiscussionData={relatedDiscussionData}
-                    relatedOption={relatedOption!}
-                  />
-                );
-              })
-            ) : (
-              <div className="mt-5 p-10 text-center border rounded-lg">
-                <p className="mb-5">관련된 토론글이 없습니다.</p>
-                <Link href={`/discussion/regist`} className="border rounded-lg p-1">
-                  토론글 작성하러 가기
-                </Link>
-              </div>
-            )}
           </div>
         </div>
       </div>
