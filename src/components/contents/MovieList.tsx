@@ -25,7 +25,7 @@ const MovieList = () => {
       const data = await contentPageGetDataSearch(searchMovieValue, searchType, page);
       setDataList(data);
       if (searchType === 'movie') {
-        const results = data.results;
+        const results = data;
         if (page === 1) {
           setFilterefData([...results]);
         } else {
