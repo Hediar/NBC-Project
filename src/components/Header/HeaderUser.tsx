@@ -7,13 +7,13 @@ const HeaderUser = ({ userData }: { userData: UserData }) => {
   return (
     <div className="flex gap-5 items-center mr-4">
       <HeaderMenuButton userData={userData} />
-      <div className="rounded-full overflow-hidden">
+      <div className="rounded-full overflow-hidden shadow-sm shadow-gray-400">
         <Image
-          className="w-10 h-10"
+          className="w-9 h-9"
           src={userData.avatar_url!}
           alt="user profile"
-          width={40}
-          height={40}
+          width={32}
+          height={32}
           objectFit="cover"
           objectPosition="center"
           placeholder="blur"

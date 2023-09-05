@@ -42,11 +42,11 @@ export default async function Layout({
   if (usernameData && usernameData.length === 0) notFound();
 
   return (
-    <main className="flex justify-center bg-slate-50 w-full overflow-x-hidden ">
-      <div className="w-full max-w-7xl flex flex-col items-center">
+    <main className=" h-[calc(100vh-70px)] bg-white flex justify-center">
+      <aside className="w-1/4 border-r border-[#ebebeb] bg-[#fffdf9]">
         <UserPageTabs username={decodedUsername} />
-        {children}
-      </div>
+      </aside>
+      <section className="w-3/4 flex flex-col items-center">{children}</section>
     </main>
   );
 }

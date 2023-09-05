@@ -1,17 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css');
+@import url('https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/variable/woff2/SUIT-Variable.css');
 
 :root {
   --foreground-rgb: #222222;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+  --base-font: 'SUIT', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+    'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  font-family: 'SUIT', sans-serif;
+  color: var(--foreground-rgb);
+  font-family: var(--base-font);
 }
 /* 영화 보여주기에서 */
 .INLINE_BOX {
@@ -22,6 +24,10 @@ body {
   } */
 }
 /*  */
+.hover_scale5 {
+  @apply transform ease-in-out duration-200 hover:scale-105 active:scale-95;
+}
+
 .custom_input {
   @apply px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400  disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1 focus:invalid:border-gray-400 focus:invalid:ring-gray-400 invalid:border-pink-500 invalid:text-pink-600 disabled:shadow-none transform ease-in-out duration-150;
 }
@@ -62,7 +68,7 @@ select:-webkit-autofill:focus {
 }
 
 .h1_suit {
-  font-family: SUIT;
+  font-family: var(--base-font);
   font-size: 60px;
   font-style: normal;
   font-weight: 800;
@@ -70,7 +76,7 @@ select:-webkit-autofill:focus {
 }
 
 .h3_suit {
-  font-family: SUIT;
+  font-family: var(--base-font);
   font-size: 32px;
   font-style: normal;
   font-weight: 700;
@@ -78,7 +84,7 @@ select:-webkit-autofill:focus {
 }
 
 .h4_suit {
-  font-family: SUIT;
+  font-family: var(--base-font);
   font-size: 24px;
   font-style: normal;
   font-weight: 700;
@@ -87,7 +93,7 @@ select:-webkit-autofill:focus {
 
 .subtitle1_suit {
   /* font/subtitle1(regular) */
-  font-family: SUIT;
+  font-family: var(--base-font);
   font-size: 24px;
   font-style: normal;
   font-weight: 400;
@@ -95,14 +101,14 @@ select:-webkit-autofill:focus {
 }
 .subtitle2_suit {
   /* font/subtitle2(bold) */
-  font-family: SUIT;
+  font-family: var(--base-font);
   font-size: 20px;
   font-style: normal;
   font-weight: 700;
   line-height: 24px; /* 120% */
 }
 .subtitle3_suit {
-  font-family: SUIT;
+  font-family: var(--base-font);
   font-size: 20px;
   font-style: normal;
   font-weight: 400;
@@ -110,28 +116,28 @@ select:-webkit-autofill:focus {
 }
 
 .body1_bold_suit {
-  font-family: SUIT;
+  font-family: var(--base-font);
   font-size: 16px;
   font-style: normal;
   font-weight: 700;
   line-height: 22px; /* 137.5% */
 }
 .body1_regular_suit {
-  font-family: SUIT;
+  font-family: var(--base-font);
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
   line-height: 22px; /* 137.5% */
 }
 .body2_suit {
-  font-family: SUIT;
+  font-family: var(--base-font);
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
   line-height: 17px; /* 121.429% */
 }
 .body3_suit {
-  font-family: SUIT;
+  font-family: var(--base-font);
   font-size: 13px;
   font-style: normal;
   font-weight: 400;
@@ -139,9 +145,21 @@ select:-webkit-autofill:focus {
 }
 
 .caption_suit {
-  font-family: SUIT;
+  font-family: var(--base-font);
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
   line-height: 14px; /* 116.667% */
+}
+
+.bold_40_suit {
+  font-family: SUIT;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.shadow1 {
+  box-shadow: 0px 8px 24px 0px rgba(114, 121, 128, 0.15);
 }
