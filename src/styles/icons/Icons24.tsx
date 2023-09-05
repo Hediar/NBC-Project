@@ -19,6 +19,17 @@ export const HeartLine = (props: SVGProps<SVGSVGElement>) => (
     />
   </svg>
 );
+
+export const HeartLineWhite = (props: SVGProps<SVGSVGElement>) => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <path
+      d="M4.85616 13.409L11.4494 19.492C11.6484 19.6756 11.748 19.7675 11.8617 19.8002C11.9521 19.8262 12.0479 19.8262 12.1383 19.8002C12.252 19.7675 12.3516 19.6756 12.5506 19.492L19.1438 13.409C21.0375 11.6618 21.2665 8.7511 19.6694 6.72929L19.4206 6.41431C17.5326 4.0244 13.7956 4.43005 12.4644 7.16939C12.2761 7.55691 11.7239 7.55691 11.5356 7.16939C10.2044 4.43005 6.46741 4.02439 4.57945 6.41431L4.33063 6.72929C2.73346 8.7511 2.96246 11.6618 4.85616 13.409Z"
+      stroke="white"
+      stroke-width="2"
+    />
+  </svg>
+);
+
 export const HeartFilledColor = (props: SVGProps<SVGSVGElement>) => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
     <path

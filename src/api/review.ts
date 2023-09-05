@@ -44,7 +44,6 @@ export const getLatestReviews = async () => {
     const { data: userName } = await supabase.from('users').select('username').eq('id', data.userid);
 
     const usernameData = userName?.map((data) => data.username);
-    console.log(usernameData);
     const filterData = { ...data, username: usernameData! };
 
     return filterData;

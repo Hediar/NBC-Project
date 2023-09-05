@@ -3,7 +3,7 @@ import MovieLikes from '../../MovieLikes/MovieLikes';
 import Image from 'next/image';
 import Link from 'next/link';
 import AddIgnoreMovieButton from '../../common/AddIgnoreMovieButton';
-import Carousel from './TrendMoviesCarousel';
+import Carousel from '../Carousel/TrendMoviesCarousel';
 import TrendMovieSlider from './TrendMovieSlider';
 
 export const revalidate = 0;
@@ -33,7 +33,7 @@ const TrendMoives = async ({ genreId }: { genreId: string }) => {
                 <div key={movie.id}>
                   <Link
                     href={`${process.env.NEXT_PUBLIC_BASE_URL}/detail/${movie.id}/main`}
-                    className="w-56 h-full flex flex-col gap-2 items-center"
+                    className="w-56 h-full flex flex-col gap-2 items-center "
                   >
                     <Image
                       src={`${process.env.NEXT_PUBLIC_TMDB_BASE_IMAGE_URL}t/p/w200${movie.poster_path}`}
@@ -41,6 +41,7 @@ const TrendMoives = async ({ genreId }: { genreId: string }) => {
                       width={200}
                       height={420}
                       priority={false}
+                      className="rounded-2xl"
                     ></Image>
                     <div>{movie.title}</div>
                   </Link>
