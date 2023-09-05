@@ -15,6 +15,15 @@ body {
   color: var(--foreground-rgb);
   font-family: var(--base-font);
 }
+/* DESIGN SYSTEM */
+.full_button {
+  @apply rounded-3xl border border-gray-300 bg-white w-[1540px] h-[70px];
+}
+
+.large_default_button {
+  @apply rounded-3xl border border-gray-300 bg-white px-5 py-2.5 flex items-center;
+}
+
 /* 영화 보여주기에서 */
 .INLINE_BOX {
   display: -webkit-inline-box;

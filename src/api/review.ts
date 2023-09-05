@@ -38,13 +38,12 @@ export const getLatestReviews = async () => {
   const { data: getReviews } = await supabase
     .from('reviews')
     .select('*')
-    .order('date', { ascending: false }) // 날짜 기준으로 내림차순 정렬
-    .limit(8); // 가져올 개수 제한
+    .order('created_at', { ascending: false }) // 날짜 기준으로 내림차순 정렬
+    .limit(4); // 가져올 개수 제한
   const addUserName = getReviews?.map(async (data) => {
     const { data: userName } = await supabase.from('users').select('username').eq('id', data.userid);
 
     const usernameData = userName?.map((data) => data.username);
-    console.log(usernameData);
     const filterData = { ...data, username: usernameData! };
 
     return filterData;
