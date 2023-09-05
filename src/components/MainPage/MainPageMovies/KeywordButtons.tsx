@@ -5,27 +5,29 @@ const KeywordButtons = ({ params }: { params: string }) => {
   const genres = MOVIE_GENRES;
 
   return (
-    <div className="p-5 overflow-scroll flex ">
-      {genres?.map((genre: MovieGenre, idx: number) => {
-        {
-          return (
-            <Link
-              key={genre.name}
-              href={`/${genre.id}`}
-              className={`block mt-7 bg-blue-500 hover:bg-blue-700 text-white font-bold m-1 py-2 px-4 rounded ${
-                (!params && genre.name === '전체') ||
-                (params === 'all' && genre.name === '전체') ||
-                (params && Number(params) === genre.id)
-                  ? 'bg-blue-700'
-                  : ''
-              }`}
-            >
-              {' '}
-              # {genre.name}
-            </Link>
-          );
-        }
-      })}
+    <div>
+      <div className="flex flex-wrap gap-2">
+        {genres?.map((genre: MovieGenre, idx: number) => {
+          {
+            return (
+              <Link
+                key={genre.name}
+                href={`/${genre.id}`}
+                className={`rounded-3xl border border-gray-300 bg-white px-5 py-2.5 flex items-center ${
+                  (!params && genre.name === '전체') ||
+                  (params === 'all' && genre.name === '전체') ||
+                  (params && Number(params) === genre.id)
+                    ? '!bg-black text-white'
+                    : ''
+                }`}
+              >
+                {' '}
+                # {genre.name}
+              </Link>
+            );
+          }
+        })}
+      </div>
     </div>
   );
 };

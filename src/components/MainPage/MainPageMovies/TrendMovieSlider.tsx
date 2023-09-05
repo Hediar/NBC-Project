@@ -1,9 +1,8 @@
 import Image from 'next/image';
 import React from 'react';
-
 import { baseImgUrl } from '@/static/baseImgUrl';
-import EmblaCarousel from '@/components/common/Slider/EmblaCarousel';
 import TrendMoviesCarousel from './TrendMoviesCarousel';
+import Link from 'next/link';
 
 type Props = {
   photoData: MovieData[];
@@ -15,13 +14,14 @@ const TrendMovieSlider = ({ photoData }: Props) => {
       <TrendMoviesCarousel
         slides={photoData.map((imageData, idx) => {
           return (
-            <Image
-              key={idx}
-              layout="fill"
-              src={`${baseImgUrl}w533_and_h300_bestv2${imageData.backdrop_path}`}
-              className="w-51.125 h-28.75rem rounded-lg"
-              alt="Image"
-            ></Image>
+            <Link href={`/detail/${imageData.id}`} key={idx}>
+              <Image
+                layout="fill"
+                src={`${baseImgUrl}w1280_and_h720_bestv2${imageData.backdrop_path}`}
+                className="w-51.125 h-28.75rem rounded-lg"
+                alt="Image"
+              ></Image>
+            </Link>
           );
         })}
         options={{
