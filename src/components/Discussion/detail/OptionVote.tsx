@@ -1,4 +1,5 @@
 'use client';
+
 import useDiscussionOptionQuery from '@/hooks/useDiscussionOptionQuery';
 import { optionMark } from '@/static/optionMark';
 import useUserInfoStore from '@/store/saveCurrentUserData';
@@ -6,6 +7,7 @@ import supabase from '@/supabase/config';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { message } from 'antd';
+import { getDiscussionPostOption } from '@/api/supabase-discussion';
 
 interface Props {
   postId: number;
@@ -16,6 +18,7 @@ interface Props {
 const OptionVote = ({ postId, voteCount, checkUpdate }: Props) => {
   const [messageApi, contextHolder] = message.useMessage();
   const [selectedOption, setSelectedOption] = useState<DiscussionOption | null>();
+
   const {
     userInfo: { id: userId }
   } = useUserInfoStore();
@@ -83,7 +86,7 @@ const OptionVote = ({ postId, voteCount, checkUpdate }: Props) => {
   if (isLoading) {
     return <div>Loading...</div>;
   }
-
+  console.log('optionData', optionData);
   return (
     <>
       {contextHolder}
