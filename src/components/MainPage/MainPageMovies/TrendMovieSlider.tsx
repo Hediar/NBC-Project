@@ -10,7 +10,7 @@ type Props = {
 
 const TrendMovieSlider = ({ photoData }: Props) => {
   return (
-    <div className="flex justify-center w-full h-60 rounded-md font-thin text-xl my-3">
+    <div className="flex justify-center w-full rounded-md font-thin text-xl my-3">
       <TrendMoviesCarousel
         slides={photoData.map((imageData, idx) => {
           return (
@@ -26,6 +26,7 @@ const TrendMovieSlider = ({ photoData }: Props) => {
           );
         })}
         options={{
+          align: 'start',
           loop: true
         }}
       />
