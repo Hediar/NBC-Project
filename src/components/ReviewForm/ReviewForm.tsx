@@ -16,6 +16,7 @@ import StarBox from './StarBox';
 import Modal from '../common/Modal';
 import { useForm, useFieldArray, Controller } from 'react-hook-form';
 import { getDetailData } from '@/api/tmdb';
+import { message } from 'antd';
 
 interface Props {
   movieId?: string;
@@ -24,6 +25,7 @@ interface Props {
 }
 
 const ReviewForm = ({ movieId, editReview, movieButtonRef }: Props) => {
+  const [messageApi, contextHolder] = message.useMessage();
   const router = useRouter();
   const { userInfo } = useUserInfoStore();
   const { saveSearchMovieId } = useReviewMovieStore();
@@ -52,15 +54,20 @@ const ReviewForm = ({ movieId, editReview, movieButtonRef }: Props) => {
   });
 
   const addPost = async ({ selectedDate, review, content, tagList, rating }: any) => {
-    if (!userInfo.id) return alert('로그인 정보가 없습니다.');
+    if (!userInfo.id)
+      return messageApi.open({
+        type: 'warning',
+        content: '로그인 정보가 없습니다.'
+      });
     if (!movieId && movieButtonRef.current !== null) {
-      alert('선택된 영화가 없습니다.');
+      messageApi.open({
+        type: 'warning',
+        content: '선택된 영화가 없습니다.'
+      });
       return movieButtonRef.current.focus();
     }
 
     const { title } = await getDetailData(movieId!);
-    console.log('movieId => ', movieId);
-    console.log('영화제목 => ', title);
 
     const newReview = {
       movieid: movieId,
@@ -73,21 +80,30 @@ const ReviewForm = ({ movieId, editReview, movieButtonRef }: Props) => {
       keyword: tagList,
       content
     } as ReviewsTable;
-    console.log('newReview => ', newReview);
 
     try {
       const { data, error } = editReview
         ? await updateReview(editReview.reviewid!, newReview)
         : await addReview(newReview);
-      if (error) console.log('오류 => ', error);
-      if (error) return alert('오류가 발생하였습니다. 죄송합니다.' + error.message);
+      if (error)
+        return messageApi.open({
+          type: 'error',
+          content: '리뷰를 등록할 수 없습니다. ' + error.message
+        });
       saveWatchList(userInfo.id!, movieId!);
       saveTempReview();
-      alert('저장 완');
+      messageApi.open({
+        type: 'success',
+        content: '리뷰가 등록되었습니다.'
+      });
 
       router.push(`/review/${data![0].reviewid}`);
     } catch (error) {
-      console.log('에러 => ', error);
+      if (error)
+        return messageApi.open({
+          type: 'error',
+          content: '오류가 발생하였습니다. ' + error
+        });
     }
   };
 
@@ -111,7 +127,10 @@ const ReviewForm = ({ movieId, editReview, movieButtonRef }: Props) => {
 
     saveTempReview(newReview);
 
-    alert('임시저장 완료');
+    messageApi.open({
+      type: 'success',
+      content: '임시저장이 완료되었습니다.'
+    });
   };
 
   // form에 내용 채우기
@@ -163,6 +182,7 @@ const ReviewForm = ({ movieId, editReview, movieButtonRef }: Props) => {
 
   return (
     <>
+      {contextHolder}
       <form>
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="date">
