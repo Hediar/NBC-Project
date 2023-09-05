@@ -3,7 +3,7 @@ import getWatchedMoviesList from './getWatchedMoviesList';
 import getMovieDataWithMovieIds from '../getMovieDataWithMovieIds';
 import { getMoreOrganizedMovieDetails } from './getOrganizedMovieDetails';
 
-// 장르별 영화 시간, 장르별 영화 개수,
+// 장르별 영화 시간
 export const getMovieTimeByGenres = async (userId: string, supabase: SupabaseClient): Promise<[string[], number[]]> => {
   const watchedList = await getWatchedMoviesList(userId, supabase);
 
