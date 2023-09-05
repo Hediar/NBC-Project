@@ -51,3 +51,32 @@ const MovieLikes = (props: { movieid: number }) => {
 };
 
 export default MovieLikes;
+
+/**
+ * const mutation = useMutation(
+    async () => {
+      const { data: likesTable } = await supabase.from('movielikes').select('*').eq('movieid', props.movieid);
+
+      if (likesTable?.length) {
+        if (likesTable[0]?.user_id.includes(userInfo.id)) {
+          const { data: users } = await supabase.from('movielikes').select('user_id').eq('movieid', props.movieid);
+          const newUsers = users![0].user_id.filter((id: string) => id !== userInfo.id);
+          await supabase.from('movielikes').update({ user_id: newUsers }).eq('movieid', props.movieid);
+        } else {
+          const { data: users } = await supabase.from('movielikes').select('user_id').eq('movieid', props.movieid);
+          const newUsers = [...users![0].user_id, userInfo.id];
+          await supabase.from('movielikes').update({ user_id: newUsers }).eq('movieid', props.movieid);
+        }
+      } else {
+        const newUsers = { movieid: props.movieid, user_id: [userInfo.id] };
+        await supabase.from('movielikes').insert(newUsers);
+      }
+    },
+    {
+      // 성공 시에 캐시 업데이트
+      onSuccess: () => {
+        queryClient.invalidateQueries(['movieLikes', props.movieid]);
+      }
+    }
+  );
+ */
