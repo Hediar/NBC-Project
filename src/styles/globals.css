@@ -24,6 +24,11 @@ body {
   @apply rounded-3xl border border-gray-300 bg-white px-5 py-2.5 flex items-center;
 }
 
+/* 메인 페이지 title */
+.main_title_text {
+  @apply text-6xl font-extrabold leading-10;
+}
+
 /* 영화 보여주기에서 */
 .INLINE_BOX {
   display: -webkit-inline-box;

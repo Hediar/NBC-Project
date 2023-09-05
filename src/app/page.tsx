@@ -9,7 +9,9 @@ export const revalidate = 0;
 export default async function Home() {
   return (
     <main>
-      <KeywordButtons params={'all'} />
+      <div className="p-2">
+        <KeywordButtons params={'all'} />
+      </div>
       <TrendMoives genreId={'all'} />
       <div className="flex">
         <LatestReviews />

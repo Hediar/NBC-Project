@@ -6,7 +6,7 @@ const KeywordButtons = ({ params }: { params: string }) => {
 
   return (
     <div>
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-2 items-start content-start px-5.625">
         {genres?.map((genre: MovieGenre, idx: number) => {
           {
             return (
