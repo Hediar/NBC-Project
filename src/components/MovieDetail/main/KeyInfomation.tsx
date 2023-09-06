@@ -2,39 +2,67 @@ import Image from 'next/image';
 import React from 'react';
 import altImage from '../../../../public/anonymous-avatar-icon.png';
 import Link from 'next/link';
+import { ArrowRight, StarFill } from '@/styles/icons/Icons24';
+import { SVGTalkEndPoint, SVGTalkStartPoint } from '@/styles/icons/IconsETC';
 
 interface Props {
   movieData: MovieData;
 }
 const baseImgUrl = process.env.NEXT_PUBLIC_TMDB_BASE_IMAGE_URL;
-const KeyInfomation = ({ movieData }: Props) => {
+const KeyInfomation = async ({ movieData }: Props) => {
   const { id: movieId, poster_path, overview, tagline, vote_average, appearences, productions } = movieData;
+  const formData = new FormData();
+  const imageUrl = `${baseImgUrl}w300_and_h450_bestv2${poster_path}`;
+  formData.append('imageUrl', imageUrl.toString());
+  const res = await fetch('http://localhost:3000/api/imagecolorpicker', { method: 'post', body: formData });
+  const rgb = await res.json();
 
   return (
     <div>
-      <div className="flex mb-10">
-        <div>
-          <Image
-            src={`${baseImgUrl}w300_and_h450_bestv2${poster_path}`}
-            alt=""
-            width={220}
-            height={330}
-            quality={100}
-            className="rounded-lg"
-          />
+      <main className="h-[500px] py-[40px] bg-gray-100">
+        <div className="flex">
+          <section>
+            <Image
+              src={`${baseImgUrl}w300_and_h450_bestv2${poster_path}`}
+              alt="Image"
+              width={278}
+              height={398}
+              quality={100}
+              className="rounded-lg"
+            />
+          </section>
+
+          <section id="detail-cont" className="w-[1250px] mx-auto flex flex-col gap-10 px-4 py-10">
+            <div className="text-sm h-[300px] flex relative">
+              <div
+                className="w-[47px] h-[57px] self-end bg-white"
+                style={{ clipPath: 'polygon(100% 50%, 0% 100%, 100% 100%)' }}
+              ></div>
+              <div className="w-full flex flex-col flex-wrap gap-2 justify-center items-center bg-white rounded-2xl rounded-bl-none font-bold text-2xl px-4">
+                {tagline && <p>"{tagline}"</p>}
+                <span>{overview}</span>
+              </div>
+              <div className="absolute left-16 top-5">
+                <SVGTalkStartPoint />
+              </div>
+              <div className="absolute right-5 top-5">
+                <SVGTalkEndPoint />
+              </div>
+            </div>
+
+            <div>
+              <span className="font-bold text-base flex">
+                평균 별점
+                <StarFill />
+                {(vote_average / 2).toFixed(2)}
+              </span>
+            </div>
+          </section>
         </div>
-        <div id="detail-cont" className="w-[80%] flex flex-col justify-between p-5">
-          <div className="text-sm">
-            <p className="font-bold text-base mb-1">{tagline}</p>
-            <span>{overview}</span>
-          </div>
-          <div>
-            <p className="font-bold text-base">평점: {vote_average.toFixed(2)}</p>
-          </div>
-        </div>
-      </div>
+      </main>
+
       <div>
-        <p className="font-bold text-2xl flex items-center">
+        <p className="font-bold text-2xl flex items-center mt-20">
           출연<span style={{ fontSize: '0.5px' }}>●</span>제작
         </p>
         <div className="flex justify-between m-5">
@@ -84,11 +112,16 @@ const KeyInfomation = ({ movieData }: Props) => {
             }
           })}
         </div>
-        <div className="flex justify-center items-center">
-          <Link href={`/detail/${movieId}/crew`} className="border rounded-xl text-sm px-2 py-1">
-            더보기
-          </Link>
-        </div>
+
+        <Link
+          href={`/detail/${movieId}/crew`}
+          className="flex items-center justify-center border w-full rounded-[20px] text-center subtitle1_suit py-5 mb-20"
+        >
+          더보기
+          <ArrowRight />
+        </Link>
+
+        <div className="border-b"></div>
       </div>
     </div>
   );

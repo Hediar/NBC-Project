@@ -1,9 +1,8 @@
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import SignOutButton from './SignOutButton';
-import SignInButton from './SignInButton';
-import SignUpButton from './SignUpButton';
 import saveUserProvider from '@/api/supabase/saveUserProviderIfNotSaved';
+import Link from 'next/link';
 
 export const dynamic = 'force-dynamic';
 
@@ -23,10 +22,15 @@ const AuthButton = async () => {
     );
   } else {
     return (
-      <>
-        <SignInButton />
-        <SignUpButton />
-      </>
+      <div className="body1_regular_suit flex gap-[10px] items-center">
+        <Link href={'?sign-in=true'} className="pt-[2px] hover:font-semibold animate-200">
+          로그인
+        </Link>
+        <div className="w-[1px] h-3 flex-shrink-0 bg-gray-600"></div>
+        <Link href="?sign-up=true" className="pt-[2px] hover:font-semibold animate-200">
+          회원가입
+        </Link>
+      </div>
     );
   }
 };

@@ -9,9 +9,8 @@ export const getDiscussionPost = async () => {
 
 export const getDiscussionPostDetail = async (postId: number) => {
   try {
-    const { data } = await supabase.from('discussion_post').select('*').eq('post_id', postId);
+    const { data: postData } = await supabase.from('discussion_post').select('*').eq('post_id', postId).single();
 
-    const postData = data![0];
     return postData;
   } catch (error) {}
 };
@@ -149,12 +148,14 @@ export const updateDiscussionPost = async ({
     const { data } = await supabase.from('discussion_post').update(newPost).eq('post_id', +postId).select();
 
     for (let i = startNum; i < options.length; i++) {
-      const newOption = {
-        post_id: data![0].post_id,
-        content: options[i].text
-      };
+      if (options[i].text.trim().length) {
+        const newOption = {
+          post_id: data![0].post_id,
+          content: options[i].text
+        };
 
-      await supabase.from('discussion_option').insert(newOption).select();
+        await supabase.from('discussion_option').insert(newOption);
+      }
     }
   } catch (error) {}
 };

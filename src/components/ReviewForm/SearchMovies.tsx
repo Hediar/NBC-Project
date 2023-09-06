@@ -5,6 +5,7 @@ import { useReviewMovieStore, useSearchModalStore } from '@/store/useReviewStore
 import React, { useState } from 'react';
 import Paging from '../common/Paging';
 import SearchMoviesItem from './SearchMoviesItem';
+import { debounce } from 'lodash';
 
 const SearchMovies = () => {
   const [currentPage, setCurrentPage] = React.useState(1);
@@ -15,7 +16,7 @@ const SearchMovies = () => {
   const { saveSearchMovieId } = useReviewMovieStore();
   const { closeSearchModal } = useSearchModalStore();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = debounce((e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
 
     if (!value) return;
@@ -27,7 +28,7 @@ const SearchMovies = () => {
       setTotalPages(total_pages);
     };
     fetchData();
-  };
+  }, 300);
 
   const handleClick = (movieId: number) => {
     saveSearchMovieId(movieId);

@@ -4,6 +4,7 @@
 
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { User } from '@supabase/supabase-js';
+import { message } from 'antd';
 import { useRef, useState } from 'react';
 
 interface Props {
@@ -19,6 +20,8 @@ const UpdateEmail = ({ user }: Props) => {
   const [showEmailHover, setShowEmailHover] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
+
+  const [messageApi, contextHolder] = message.useMessage();
 
   if (appMetadata.provider !== 'email') {
     return (
@@ -44,7 +47,10 @@ const UpdateEmail = ({ user }: Props) => {
     } else if (buttonRef.current && buttonRef.current.innerText === '확인') {
       if (confirm('정말 이메일을 변경하시겠습니까?')) {
         if (userPrevEmail === emailValue) {
-          alert('예전과 동일한 이메일 주소입니다.');
+          messageApi.open({
+            type: 'warning',
+            content: '예전과 동일한 이메일 주소입니다.'
+          });
           return;
         }
         const supabase = createClientComponentClient();
@@ -52,17 +58,25 @@ const UpdateEmail = ({ user }: Props) => {
 
         if (error) {
           if (error.message.includes('address has already')) {
-            alert('이미 등록된 계정입니다. 다른 이메일을 사용해주세요.');
+            messageApi.open({
+              type: 'warning',
+              content: '이미 등록된 계정입니다. 다른 이메일을 사용해주세요.'
+            });
             return;
           }
-          alert('에러가 발생했습니다. 다시 시도해주세요.');
+          messageApi.open({
+            type: 'error',
+            content: '에러가 발생했습니다. 다시 시도해주세요.'
+          });
           return;
         }
 
         if (data) {
-          alert('새로 등록한 메일주소의 수신함을 확인해주세요.');
+          messageApi.open({
+            type: 'success',
+            content: '새로 등록한 메일주소의 수신함을 확인해주세요.'
+          });
         }
-        console.log(data);
 
         setIsDisabled(true);
         if (inputRef.current) {
@@ -73,22 +87,25 @@ const UpdateEmail = ({ user }: Props) => {
   };
 
   return (
-    <div className="w-10/12">
-      <h2>이메일</h2>
-      <form action={editHandler} className="flex gap-4">
-        <input
-          className="py-1 px-3 shadow-sm shadow-gray-400"
-          ref={inputRef}
-          type="email"
-          value={emailValue}
-          onChange={(e) => setEmailValue(e.target.value)}
-          disabled={isDisabled}
-        />
-        <button className="py-1 px-3 shadow-sm shadow-gray-400" ref={buttonRef}>
-          수정
-        </button>
-      </form>
-    </div>
+    <>
+      {contextHolder}
+      <div className="w-10/12">
+        <h2>이메일</h2>
+        <form action={editHandler} className="flex gap-4">
+          <input
+            className="py-1 px-3 shadow-sm shadow-gray-400"
+            ref={inputRef}
+            type="email"
+            value={emailValue}
+            onChange={(e) => setEmailValue(e.target.value)}
+            disabled={isDisabled}
+          />
+          <button className="py-1 px-3 shadow-sm shadow-gray-400" ref={buttonRef}>
+            수정
+          </button>
+        </form>
+      </div>
+    </>
   );
 };
 

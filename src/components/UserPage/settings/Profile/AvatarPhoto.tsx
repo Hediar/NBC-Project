@@ -1,8 +1,10 @@
+/* eslint-disable @next/next/no-img-element */
 'use client';
 
+import OverlaidModal from '@/components/common/OverlaidModal';
 import useUserInfoStore from '@/store/saveCurrentUserData';
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { message } from 'antd';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 
 interface Props {
@@ -20,6 +22,10 @@ const AvatarPhoto = ({ userData }: Props) => {
   const fileInputRef = useRef<any>(null);
   const { userInfo, saveUserInfo } = useUserInfoStore();
   const router = useRouter();
+  const [isUploadModal, setIsUploadModal] = useState<boolean>(false);
+  const queryString = !!useSearchParams().get('upload-photo');
+
+  const [messageApi, contextHolder] = message.useMessage();
 
   useEffect(() => {
     if (avatarUrl) {
@@ -45,7 +51,10 @@ const AvatarPhoto = ({ userData }: Props) => {
 
     const isImage = file.type.startsWith('image/');
     if (!isImage) {
-      alert('이미지 파일만 업로드할 수 있습니다.');
+      messageApi.open({
+        type: 'info',
+        content: '이미지 파일만 업로드할 수 있습니다.'
+      });
       fileInputRef.current.value = null;
       return;
     }
@@ -72,44 +81,55 @@ const AvatarPhoto = ({ userData }: Props) => {
       setIsDisabled(true);
       fileInputRef.current.value = null;
       router.refresh();
-      alert('업데이트 완료되었습니다.');
+      messageApi.open({
+        type: 'success',
+        content: '업데이트 완료되었습니다.'
+      });
     }
   };
 
   return (
-    <div className="flex gap-8 w-full">
-      <div>
-        <Image className="w-24 h-24 rounded-full" width={200} height={200} src={photoURLValue} alt="avatar" />
-      </div>
-      <div>
-        <div>
+    <>
+      {contextHolder}
+      <div className="flex gap-8 w-full">
+        <div className="flex gap-4 items-center">
+          <img
+            className="w-16 h-16 rounded-full"
+            src={photoURLValue}
+            alt="avatar"
+            onClick={() => router.push('?my-account=true&upload-photo=true')}
+          />
           <h1 className="text-lg">{username}</h1>
-          <p className="text-sm text-gray-600">128x128 사이즈를 추천합니다.</p>
         </div>
-        <div className="mt-4 flex flex-col gap-3 justify-start items-start">
-          <input
-            ref={fileInputRef}
-            className="text-sm text-slate-500
+      </div>
+
+      {queryString && (
+        <OverlaidModal>
+          <div>
+            <input
+              ref={fileInputRef}
+              className="text-sm text-slate-500
             file:mr-4 file:py-2 file:px-4
             file:rounded-full file:border-0
             file:text-sm file:font-semibold
             file:bg-violet-50 file:text-violet-700
             hover:file:bg-violet-100
       "
-            type="file"
-            name="avatar"
-            onChange={(e) => handleFileChange(e)}
-          />
-          <button
-            className="py-1 px-4 shadow-sm shadow-slate-500 rounded-md text-sm bg-slate-800 text-white disabled:bg-slate-300 disabled:cursor-not-allowed disabled:shadow-none"
-            disabled={isDisabled}
-            onClick={handleClick}
-          >
-            Upload new
-          </button>
-        </div>
-      </div>
-    </div>
+              type="file"
+              name="avatar"
+              onChange={(e) => handleFileChange(e)}
+            />
+            <button
+              className="py-1 px-4 shadow-sm shadow-slate-500 rounded-md text-sm bg-slate-800 text-white disabled:bg-slate-300 disabled:cursor-not-allowed disabled:shadow-none"
+              disabled={isDisabled}
+              onClick={handleClick}
+            >
+              업로드
+            </button>
+          </div>
+        </OverlaidModal>
+      )}
+    </>
   );
 };
 

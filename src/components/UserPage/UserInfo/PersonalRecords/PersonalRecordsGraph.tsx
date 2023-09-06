@@ -1,0 +1,34 @@
+import React, { Suspense } from 'react';
+
+import { cookies } from 'next/headers';
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
+import LikesOnGenres from './BigElements(Graphs)/LikesOnGenres';
+import NumberOfGenresWatched from './BigElements(Graphs)/NumberOfGenresWatched';
+import RuntimeByGenres from './BigElements(Graphs)/RuntimeByGenres';
+import LoadingSpinner from '@/components/common/LoadingSpinner';
+
+export const dynamic = 'force-dynamic';
+
+interface Props {
+  params: string;
+}
+
+const UserPagePersonalRecordsGraph = async ({ params: username }: Props) => {
+  const supabase = createServerComponentClient<Database>({ cookies });
+  const { data: userInfo } = await supabase.from('users').select().eq('username', username);
+  const { id: userId, watched_movies } = userInfo![0];
+
+  const numberOfMoviesWatched = watched_movies.length;
+
+  return (
+    <div className="w-full mt-5 flex justify-center items-center">
+      <section className="pb-12 xl:pb-0 w-full flex flex-col gap-4  xl:flex-row ">
+        <LikesOnGenres username={username} />
+        <NumberOfGenresWatched userId={userId} />
+        <RuntimeByGenres userId={userId} />
+      </section>
+    </div>
+  );
+};
+
+export default UserPagePersonalRecordsGraph;

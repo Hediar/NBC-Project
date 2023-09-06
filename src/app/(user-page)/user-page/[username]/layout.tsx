@@ -3,6 +3,8 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { cookies } from 'next/headers';
 import UserPageTabs from '@/components/UserPage/UserPageTabs';
+import HiddenUserPageTabs from '@/components/UserPage/HiddenUserPageTabs';
+import doesUsersMatch from '@/api/doesUserMatch';
 
 export const dynamic = 'force-dynamic';
 
@@ -40,15 +42,17 @@ export default async function Layout({
 
   if (usernameData && usernameData.length === 0) notFound();
 
+  const userMatch = await doesUsersMatch(supabase, decodedUsername);
+
   return (
-    <main className="flex flex-col items-center bg-slate-50 w-full overflow-x-hidden">
-      <UserPageTabs username={decodedUsername} />
-      {children}
+    <main className="bg-white flex-col sm:flex-row flex justify-center ">
+      <aside className=" sm:w-1/6 md:w-3/12 lg:w-2/12 border-r border-[#ebebeb] bg-[#fffdf9] ">
+        <UserPageTabs username={decodedUsername} userMatch={userMatch} />
+        <HiddenUserPageTabs username={decodedUsername} userMatch={userMatch} />
+      </aside>
+      <section className="overflow-hidden w-full change sm:w-5/6 md:w-9/12 lg:w-10/12  flex flex-col items-center">
+        {children}
+      </section>
     </main>
   );
 }
-
-// const userData = getUser(userId);
-// const userPostData = getUserPosts(userId);
-// 여기에서 이 것들을 쓴다음 promise 상태인 부분을 써야하는 컴포넌트에 내려주고 await해주면 promise all과 같은 효과가 나온다. 그리고 로딩도 더 빠를 듯
-// 추가로 suspense도 해주면 좋다.

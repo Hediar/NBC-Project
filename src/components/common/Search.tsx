@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import debounce from 'lodash/debounce';
 import { searchTMDB } from '@/api/tmdb';
+import { SearchLined } from '@/styles/icons/Icons32';
 
 const Search = ({
   searchMovieValue,
@@ -52,7 +53,6 @@ const Search = ({
   };
 
   const handleClick = (item: any) => {
-    // console.log(item);
     if (searchType === 'movie') {
       setSearchInput(item.title);
     } else if (searchType === 'person') {
@@ -70,14 +70,14 @@ const Search = ({
   const isSearchStart = !!searchResults;
 
   return (
-    <div className="w-1/3">
-      <form onSubmit={handleSubmit} className="flex">
-        <select value={searchType} onChange={handleSelectChange} className="border rounded px-2 py-1">
+    <div className="w-[570px] h-[52px]">
+      <form onSubmit={handleSubmit} className="flex border border-GreyScaleGrey rounded-xl px-2 py-1">
+        <select value={searchType} onChange={handleSelectChange} className="">
           <option value="movie">영화</option>
           <option value="person">인물</option>
         </select>
         <input
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-"
+          className="appearance-none border-transparent rounded w-full py-2 px-3 "
           id="search"
           name="search"
           type="text"
@@ -85,8 +85,8 @@ const Search = ({
           value={searchInput}
           onChange={handleChange}
         />
-        <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2">
-          검색
+        <button type="submit" className=" font-bold py-2 px-4 rounded ml-2">
+          <SearchLined />
         </button>
       </form>
       <ul

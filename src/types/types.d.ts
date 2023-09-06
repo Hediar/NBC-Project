@@ -118,29 +118,18 @@ declare global {
     user_id: string[];
   }
 
-  // interface ReviewsTable {
-  //   category: Json | null;
-  //   content: string;
-  //   date: Date | string | null;
-  //   keyword: string[] | [] | undefined;
-  //   movieid: string;
-  //   review: string;
-  //   reviewid?: string;
-  //   userid: string;
-  //   rating: number;
-  //   created_at: string;
-  // }
   interface ReviewsTable {
     category: Json | null;
     content: string;
-    created_at: string;
-    date: string | null;
-    keyword: string[] | null;
+    date: Date | string | null;
+    keyword: string[] | [] | undefined;
     movieid: string;
-    rating: number | null;
     review: string;
-    reviewid: string;
+    reviewid?: string;
+    review_title?: string;
     userid: string;
+    created_at?: string;
+    rating?: number;
   }
 
   interface TMDBSearchMovie {
@@ -209,47 +198,48 @@ declare global {
     total_pages: number;
     total_results: number;
   }
-  interface ReviewsTable {
-    category: Json | null;
-    content: string;
-    date: Date | string | null;
-    keyword: string[] | [] | undefined;
-    movieid: string;
-    review: string;
-    reviewid?: string;
-    userid: string;
-  }
+  // interface ReviewsTable {
+  //   category: Json | null;
+  //   content: string;
+  //   date: Date | string | null;
+  //   keyword: string[] | [] | undefined;
+  //   movieid: string;
+  //   review: string;
+  //   reviewid?: string;
+  //   review_title?: string;
+  //   userid: string;
+  // }
 
-  interface TMDBSearchMovie {
-    adult: boolean;
-    backdrop_path: string;
-    genre_ids: number[];
-    id: number;
-    original_language: string;
-    original_title: string;
-    overview: string;
-    popularity: number;
-    poster_path: string;
-    release_date: string;
-    title: string;
-    video: boolean;
-    vote_average: number;
-    vote_count: number;
-  }
+  // interface TMDBSearchMovie {
+  //   adult: boolean;
+  //   backdrop_path: string;
+  //   genre_ids: number[];
+  //   id: number;
+  //   original_language: string;
+  //   original_title: string;
+  //   overview: string;
+  //   popularity: number;
+  //   poster_path: string;
+  //   release_date: string;
+  //   title: string;
+  //   video: boolean;
+  //   vote_average: number;
+  //   vote_count: number;
+  // }
 
-  interface DiscussionPost {
-    post_id: number;
-    created_at: string;
-    user_id: string;
-    title: string;
-    content: string;
-  }
-  interface DiscussionOption {
-    option_id: number;
-    post_id: number;
-    content: string;
-    count: number;
-  }
+  // interface DiscussionPost {
+  //   post_id: number;
+  //   created_at: string;
+  //   user_id: string;
+  //   title: string;
+  //   content: string;
+  // }
+  // interface DiscussionOption {
+  //   option_id: number;
+  //   post_id: number;
+  //   content: string;
+  //   count: number;
+  // }
 
   interface SortingProps {
     options: { value: string; label: string }[];
@@ -287,4 +277,15 @@ declare global {
 
     profile_path: string;
   }
+
+  type OrganizedMovieDetails = {
+    id: number;
+    title: string;
+    popularity: number;
+    runtime: number;
+    genres: string[] | string;
+    vote_average: number;
+    release_date: string;
+    production_countries: string[] | string;
+  };
 }

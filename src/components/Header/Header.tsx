@@ -6,6 +6,8 @@ import HiddenServerFunctions from './_auth/HiddenServerFunctions';
 import ModalControlCentre from './_auth/ModalControlCentre';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
+import Logo from '@/styles/svg/Logo';
+import Nav from './Nav';
 
 export const dynamic = 'force-dynamic';
 
@@ -20,15 +22,20 @@ const Header = async () => {
 
   return (
     <>
-      <div className="h-20 shadow-md shadow-gray-300 flex items-center px-4 justify-between bg-gray-500">
-        <Link href={'/'} className="text-white text-xl font-bold tracking-wider">
-          무비바바
-        </Link>
-        <div className="flex gap-3 items-center">
-          {userData && <HeaderUser userData={userData} />}
-          <AuthButton />
+      <header className="flex justify-center h-[70px] border-b border-[#ebebeb] bg-white">
+        <div className="w-11/12 xl:w-10/12 h-full flex items-center justify-between animate-300">
+          <div className="flex items-center gap-[60px]">
+            <Link href={'/'} className="text-white text-xl font-bold tracking-wider">
+              <Logo />
+            </Link>
+            <Nav />
+          </div>
+          <div className="flex gap-3 items-center">
+            {userData && <HeaderUser userData={userData} />}
+            <AuthButton />
+          </div>
         </div>
-      </div>
+      </header>
       <HiddenServerFunctions />
       <ModalControlCentre signedInUserId={userId ?? ''} />
     </>

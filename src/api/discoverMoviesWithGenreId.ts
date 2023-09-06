@@ -1,7 +1,5 @@
 // movieGenres = ['1', '2', '3'] 1, 2, 3은 movie 장르 ID
 
-import { tmdbOptions } from './tmdb';
-
 const discoverMoviesWithGenreId = async (movieGenres: string[], page: number = 1): Promise<MovieFetchResult[]> => {
   'use server';
 
