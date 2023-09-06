@@ -9,6 +9,7 @@ const LatestReviews = async () => {
   return (
     <div className="p-5 flex-1">
       <h1 className="h1_suit">최신 리뷰</h1>
+      <Link href={'/review'}>더보기 &gt;</Link>
       <div>
         {latestReviewData?.map((review, index) => {
           return (

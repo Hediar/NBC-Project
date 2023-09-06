@@ -36,7 +36,7 @@ const TrendMoives = async ({ genreId }: { genreId: string }) => {
                     className="w-56 h-full flex flex-col gap-2 items-center "
                   >
                     <Image
-                      src={`${process.env.NEXT_PUBLIC_TMDB_BASE_IMAGE_URL}t/p/w200${movie.poster_path}`}
+                      src={`${process.env.NEXT_PUBLIC_TMDB_BASE_IMAGE_URL}w220_and_h330_bestv2${movie.poster_path}`}
                       alt=""
                       width={200}
                       height={420}
