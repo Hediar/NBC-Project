@@ -11,7 +11,13 @@ interface Props {
 const baseImgUrl = process.env.NEXT_PUBLIC_TMDB_BASE_IMAGE_URL;
 const KeyInfomation = async ({ movieData }: Props) => {
   const { id: movieId, poster_path, overview, tagline, vote_average, appearences, productions } = movieData;
+  // const formData = new FormData();
+  // formData.append('posterPath', poster_path.toString());
+  // const res = await fetch('http://localhost:3000/api/imagecolorpicker', { method: 'post', body: formData });
+  // const data = await res.json();
+  // const rgb = JSON.parse(data.message);
 
+  // // console.log('받아옴??=>', rgb);
   return (
     <div>
       <main className="h-[500px] py-[40px] bg-gray-100">
