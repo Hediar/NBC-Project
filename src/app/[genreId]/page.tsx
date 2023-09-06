@@ -13,22 +13,28 @@ const GenreMovies = ({ params }: { params: { genreId: string } }) => {
   return (
     <main>
       <section>
-        <div className="flex justify-between items-end">
+        <div className="flex flex-col items-end my-[120px] md:flex-row md:justify-between">
           <h2 className="h1_suit">😎장르별 인기 영화</h2>
-          <Link href={'/movielist'} className="flex">
+          <Link href={'/movielist'} className="flex mt-4 mr-[190px] md:mt-0">
             더보기 <ArrowRight2 />
           </Link>
         </div>
-        <div className="p-2">
+        <div className="p-2 mx-32">
           <KeywordButtons params={params.genreId} />
         </div>
+        <TrendMoives genreId={genreId} />
       </section>
-      <TrendMoives genreId={genreId} />
-      <section className="flex">
-        <LatestReviews />
-        <LatestMovies />
+      <section className="mt-[180px] mb-[160px] flex flex-col md:flex-row">
+        <div className="md:w-1/2 mb-8 md:mb-0">
+          <LatestReviews />
+        </div>
+        <div className="md:w-1/2">
+          <LatestMovies />
+        </div>
       </section>
-      <HotTopics />
+      <section className=" bg-GreyScaleWhite2">
+        <HotTopics />
+      </section>
     </main>
   );
 };

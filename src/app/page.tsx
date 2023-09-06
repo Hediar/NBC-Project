@@ -11,23 +11,29 @@ export const revalidate = 0;
 export default async function Home() {
   return (
     <main>
-      <section>
-        <div className="flex justify-between items-end">
-          <h2 className="h1_suit">😎장르별 인기 영화</h2>
-          <Link href={'/movielist'} className="flex">
+      <section className="my-8">
+        <div className="flex flex-col items-end my-[120px] md:flex-row md:justify-between">
+          <h2 className="h1_suit mx-auto">😎장르별 인기 영화</h2>
+          <Link href={'/movielist'} className="flex mt-4 mr-[190px] md:mt-0">
             더보기 <ArrowRight2 />
           </Link>
         </div>
-        <div className="p-2">
+        <div className="p-2 mx-32">
           <KeywordButtons params={'all'} />
         </div>
+        <TrendMoives genreId={'all'} />
       </section>
-      <TrendMoives genreId={'all'} />
-      <div className="flex">
-        <LatestReviews />
-        <LatestMovies />
-      </div>
-      <HotTopics />
+      <section className="mt-[180px] mb-[160px] mx-[190px] flex flex-col md:flex-row">
+        <div className="md:w-1/2 mb-8 md:mb-0 mr-[58px]">
+          <LatestReviews />
+        </div>
+        <div className="md:w-1/2">
+          <LatestMovies />
+        </div>
+      </section>
+      <section className=" bg-GreyScaleWhite2">
+        <HotTopics />
+      </section>
     </main>
   );
 }
