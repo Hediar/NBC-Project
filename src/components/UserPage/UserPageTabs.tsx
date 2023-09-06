@@ -20,13 +20,9 @@ import {
 import Link from 'next/link';
 import React from 'react';
 
-const UserPageTabs = async ({ username }: { username: string }) => {
-  const supabase = createServerComponentClient<Database>({ cookies });
-
-  const userMatch = await doesUsersMatch(supabase, username);
-
+const UserPageTabs = async ({ username, userMatch }: { username: string; userMatch: boolean }) => {
   return (
-    <div className="border-t border-[#f0f0f0] py-3 px-8  change sm:border-t-0 sm:py-0 sm:px-0 flex flex-row sm:flex-col items-center gap-5 sm:mt-[80px]">
+    <div className="hidden sm:flex border-t border-[#f0f0f0] py-3 px-4  change sm:border-t-0 sm:py-0 sm:px-0 flex-row sm:flex-col items-center gap-3 sm:gap-5 sm:mt-[80px]">
       <Link
         href={`/user-page/${username}/info`}
         className="justify-center md:justify-normal  group flex gap-2 items-center w-[140px] hover_scale5"

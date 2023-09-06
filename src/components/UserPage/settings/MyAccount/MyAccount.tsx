@@ -1,17 +1,14 @@
-/* eslint-disable @next/next/no-img-element */
 'use client';
-
-import OverlaidModal from '@/components/common/OverlaidModal';
 import useUserInfoStore from '@/store/saveCurrentUserData';
-import { message } from 'antd';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useRef, useState } from 'react';
+import { Upload, UploadFile, UploadProps, message } from 'antd';
+import { useRouter } from 'next/navigation';
+import React, { useEffect, useRef, useState } from 'react';
 
 interface Props {
   userData: Database['public']['Tables']['users']['Row'];
 }
 
-const AvatarPhoto = ({ userData }: Props) => {
+const MyAccount = ({ userData }: Props) => {
   const avatarUrl = userData.avatar_url!;
   const userId = userData.id!;
   const username = userData.username!;
@@ -22,10 +19,10 @@ const AvatarPhoto = ({ userData }: Props) => {
   const fileInputRef = useRef<any>(null);
   const { userInfo, saveUserInfo } = useUserInfoStore();
   const router = useRouter();
-  const [isUploadModal, setIsUploadModal] = useState<boolean>(false);
-  const queryString = !!useSearchParams().get('upload-photo');
 
   const [messageApi, contextHolder] = message.useMessage();
+
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
 
   useEffect(() => {
     if (avatarUrl) {
@@ -66,7 +63,7 @@ const AvatarPhoto = ({ userData }: Props) => {
     }
   };
 
-  const handleClick = async () => {
+  const onChangeHandler = async () => {
     const formData = new FormData();
     formData.append('userId', userId);
     formData.append('file', photo!);
@@ -88,49 +85,64 @@ const AvatarPhoto = ({ userData }: Props) => {
     }
   };
 
+  const onChange: UploadProps['onChange'] = ({ fileList: newFileList }) => {
+    setFileList(newFileList);
+  };
+
   return (
     <>
       {contextHolder}
-      <div className="flex gap-8 w-full">
-        <div className="flex gap-4 items-center">
-          <img
-            className="w-16 h-16 rounded-full"
-            src={photoURLValue}
-            alt="avatar"
-            onClick={() => router.push('?my-account=true&upload-photo=true')}
-          />
-          <h1 className="text-lg">{username}</h1>
+      <div className="w-full flex flex-col gap-4 p-10">
+        <div className="w-10/12 h-20 rounded-xl bg-gray-400">
+          <div className="h-full px-8 flex gap-4 items-center">
+            <div className="relative w-16 h-16 rounded-full overflow-hidden">
+              <img
+                className="w-full h-full"
+                src={photoURLValue}
+                alt="avatar"
+                onClick={() => router.push('?my-account=true&upload-photo=true')}
+              />
+              <div>
+                <input
+                  ref={fileInputRef}
+                  className="w-16 absolute bottom-1 bg-gray-800 bg-opacity-30 text-center text-white file:opacity-0"
+                  type="file"
+                  name="avatar"
+                  onChange={(e) => handleFileChange(e)}
+                />
+                <span className="absolute bottom-1 left-1/2 right-1/2 text-white text-xs w-5">편집</span>
+              </div>
+            </div>
+
+            <div className="flex gap-4">
+              <div>{username}</div>
+              <div>button</div>
+            </div>
+          </div>
+        </div>
+        <div className="flex flex-col gap-4 w-10/12 bg-gray-300 p-8 h-96 rounded-2xl">
+          <div className="">
+            <h2>이메일</h2>
+            <p>sample@example.com</p>
+            <div>
+              <button type="button">
+                <i></i> Upload File
+                <input type="file" />
+              </button>
+            </div>
+          </div>
+          <div>
+            <h2>가입일</h2>
+            <p>2023.08.01</p>
+          </div>
+          <div>
+            <h2>마지막 접속 시간</h2>
+            <p>2023.08.01 19:20</p>
+          </div>
         </div>
       </div>
-
-      {queryString && (
-        <OverlaidModal>
-          <div>
-            <input
-              ref={fileInputRef}
-              className="text-sm text-slate-500
-            file:mr-4 file:py-2 file:px-4
-            file:rounded-full file:border-0
-            file:text-sm file:font-semibold
-            file:bg-violet-50 file:text-violet-700
-            hover:file:bg-violet-100
-      "
-              type="file"
-              name="avatar"
-              onChange={(e) => handleFileChange(e)}
-            />
-            <button
-              className="py-1 px-4 shadow-sm shadow-slate-500 rounded-md text-sm bg-slate-800 text-white disabled:bg-slate-300 disabled:cursor-not-allowed disabled:shadow-none"
-              disabled={isDisabled}
-              onClick={handleClick}
-            >
-              업로드
-            </button>
-          </div>
-        </OverlaidModal>
-      )}
     </>
   );
 };
 
-export default AvatarPhoto;
+export default MyAccount;
