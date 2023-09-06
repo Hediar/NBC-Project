@@ -32,19 +32,38 @@ const DiscussionPost = async ({ post }: Props) => {
           <p className="text-xs">{post.movie_title}</p>
           <p className="text-base font-bold">{post.title}</p>
           <div>
-            <p className="w-4/5 text-sm overflow-hidden whitespace-nowrap text-ellipsis">
+            <p className="w-4/5 flex text-sm overflow-hidden whitespace-nowrap text-ellipsis">
               {optionData?.length ? (
                 <>
                   {optionData?.map((option, idx) =>
                     idx === optionData.length - 1 ? (
-                      <React.Fragment key={idx}>{option.content}</React.Fragment>
+                      <div
+                        key={idx}
+                        className="h-[29px] px-3 py-1.5 bg-white rounded-[22px] border border-zinc-300 justify-start items-center gap-2.5 inline-flex"
+                      >
+                        <div className="text-neutral-800 text-sm font-normal leading-[17px]">
+                          {option.content.length > 15 ? option.content.slice(0, 15) + '...' : option.content}
+                        </div>
+                      </div>
                     ) : (
-                      <React.Fragment key={idx}>{option.content + ' VS '}</React.Fragment>
+                      <div key={idx} className="flex items-center">
+                        <div
+                          key={idx}
+                          className="h-[29px] px-3 py-1.5 bg-white rounded-[22px] border border-zinc-300 justify-start items-center gap-2.5 inline-flex"
+                        >
+                          <div className="text-neutral-800 text-sm font-normal leading-[17px]">
+                            {option.content.length > 15 ? option.content.slice(0, 15) + '...' : option.content}
+                          </div>
+                        </div>
+                        <div className="text-zinc-500 text-[13px] font-normal leading-[14px]">VS</div>
+                      </div>
                     )
                   )}
                 </>
               ) : (
-                <>자유토론</>
+                <div className="h-[29px] px-3 py-1.5 bg-white rounded-[22px] border border-zinc-300 justify-start items-center gap-2.5 inline-flex">
+                  <div className="text-neutral-800 text-sm font-normal leading-[17px]">자유토론</div>
+                </div>
               )}
             </p>
           </div>

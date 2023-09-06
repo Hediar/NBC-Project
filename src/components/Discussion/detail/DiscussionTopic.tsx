@@ -39,7 +39,7 @@ const DiscussionTopic = async ({ postData }: Props) => {
           {optionData?.length ? (
             <OptionVote postId={postData.post_id} voteCount={postData.vote_count} checkUpdate={optionData!.length} />
           ) : (
-            <div className="h-[15rem] flex items-center">
+            <div className="h-[272px] flex items-center">
               <div className="bg-[#3977F0] text-white p-2 flex flex-col gap-2  justify-center items-center rounded-[20px] font-bold">
                 <p>투표컨텐츠가 없는 토론글입니다.</p>
                 <p>보다 자유롭게 주제에 대해서 토론해주세요</p>
