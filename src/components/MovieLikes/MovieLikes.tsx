@@ -5,10 +5,11 @@ import useUserInfoStore from '@/store/saveCurrentUserData';
 import { useQuery } from '@tanstack/react-query';
 import { throttle } from 'lodash';
 import { useMovieLikesMutation } from '@/hooks/useMovieLikesMutation';
-import { HeartFilledColor, HeartLine } from '@/styles/icons/Icons24';
+import { HeartFilledColor, HeartLine, HeartLineWhite } from '@/styles/icons/Icons24';
 
 const MovieLikes = (props: { movieid: number }) => {
   const [likecurrentuser, setLikecurrentuser] = useState(false); // 현재 유저가 좋아하는지 여부
+  const [isOnHover, setIsOnHover] = useState<boolean>(false);
 
   const { data: currentMovieLikeData } = useQuery({
     queryKey: ['movieLikes', props.movieid],
@@ -57,8 +58,17 @@ const MovieLikes = (props: { movieid: number }) => {
       {props.movieid}
       좋아요 개수: {currentMovieLikeData?.length ? currentMovieLikeData[0].user_id.length : 0}
       <br /> */}
-      <button className="py-2 px-4 rounded" onClick={likeButtonHandler}>
-        {likecurrentuser ? <HeartFilledColor /> : <HeartLine />}
+      <button onClick={likeButtonHandler}>
+        {likecurrentuser ? (
+          <HeartFilledColor className="animate-200 hover:scale-110" />
+        ) : (
+          <HeartLineWhite
+            fill={isOnHover ? 'white' : 'transparent'}
+            onMouseEnter={() => setIsOnHover(true)}
+            onMouseLeave={() => setIsOnHover(false)}
+            className="cursor-pointer animate-200 hover:scale-110"
+          />
+        )}
       </button>
     </div>
   );
