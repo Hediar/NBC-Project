@@ -63,13 +63,13 @@ const DiscussionCommentContainer = async ({ discussionId }: Props) => {
   return (
     <div className="w-full flex flex-col gap-4">
       <div className="w-full flex gap-2 items-center">
-        <Image
+        {/* <Image
           className="h-8 w-8 rounded-full"
           width={32}
           height={32}
           alt="user-profile"
           src={currentUserAvatar_url!}
-        />
+        /> */}
         <CommentInput signedInUserId={signedInUserId} discussionId={discussionId} />
       </div>
 
