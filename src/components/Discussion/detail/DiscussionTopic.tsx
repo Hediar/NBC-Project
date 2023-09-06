@@ -30,13 +30,22 @@ const DiscussionTopic = async ({ postData }: Props) => {
           <span className="subtitle2_suit">{userData.username}</span>
         </header>
 
-        <section className="h-[438px] px-[62px] py-[54px] flex flex-col items-center relative mt-5 border border-[#888888] rounded-[40px]">
-          <div className="flex flex-col justify-center gap-[10px]">
+        <section className="min-h-[438px] px-[62px] py-[54px] flex flex-col items-center relative mt-5 border border-[#888888] rounded-[40px]">
+          <div className="flex flex-col justify-center items-center gap-[10px]">
             <h3 className="h4_suit">{postData?.title}</h3>
             <p className="body1_regular_suit text-[#888888]">{postData?.content}</p>
           </div>
 
-          <OptionVote postId={postData.post_id} voteCount={postData.vote_count} checkUpdate={optionData!.length} />
+          {optionData?.length ? (
+            <OptionVote postId={postData.post_id} voteCount={postData.vote_count} checkUpdate={optionData!.length} />
+          ) : (
+            <div className="h-[15rem] flex items-center">
+              <div className="bg-[#3977F0] text-white p-2 flex flex-col gap-2  justify-center items-center rounded-[20px] font-bold">
+                <p>투표컨텐츠가 없는 토론글입니다.</p>
+                <p>보다 자유롭게 주제에 대해서 토론해주세요</p>
+              </div>
+            </div>
+          )}
 
           {prevPostData?.length ? (
             <Link
