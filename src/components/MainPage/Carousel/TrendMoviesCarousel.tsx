@@ -2,8 +2,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import useEmblaCarousel, { EmblaCarouselType, EmblaOptionsType } from 'embla-carousel-react';
 import { NextButton, PrevButton } from '@/components/common/Slider/ArrowsDotsButtons';
-import { Suspense } from 'react';
-import MainSkeleton from '@/components/MainPage/MainSkeleton';
 
 type PropType = {
   slides: any[];
