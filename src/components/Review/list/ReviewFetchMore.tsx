@@ -34,6 +34,7 @@ const ReviewFetchMore = ({ searchParams }: Props) => {
       return data.pages.map((pageData: any) => pageData.results).flat();
     }
   }) as any;
+  console.log('✅reviews => ', reviews);
 
   useEffect(() => {
     if (!firstMount) {
@@ -51,18 +52,13 @@ const ReviewFetchMore = ({ searchParams }: Props) => {
 
   return (
     <div>
-      <ul className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-2 p-2">
+      <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-5">
         {reviews?.map((review: any, i: number) => (
           <ReviewItem key={i} review={review} />
         ))}
       </ul>
       {hasNextPage && (
-        <button
-          type="button"
-          disabled={isFetching}
-          onClick={fetchMore}
-          className="w-full bg-blue-700 cursor-pointer text-center py-2 text-white"
-        >
+        <button type="button" disabled={isFetching} onClick={fetchMore} className="full_button mt-20">
           {isFetching ? '로딩 중...' : '더 보기'}
         </button>
       )}

@@ -26,7 +26,7 @@ const ReviewFilteringBox = () => {
   };
 
   return (
-    <div>
+    <div className="flex justify-between mb-12">
       <Select
         defaultValue="new"
         style={{ width: 120 }}

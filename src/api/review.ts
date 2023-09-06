@@ -55,14 +55,9 @@ export const getLatestReviews = async () => {
 };
 
 // userid기반으로 닉네임 찾아야함
-export const getUserName = async (userid: string) => {
-  const { data: userName } = await supabase.from('users').select('username').eq('id', userid);
-
-  if (userName && userName.length > 0) {
-    return userName[0].username;
-  }
-
-  return null; // 사용자가 없을 경우 또는 데이터가 올바르지 않을 경우
+export const getUserProfile = async (userid: string) => {
+  const { data } = await supabase.from('users').select('username, avatar_url').eq('id', userid).single();
+  return data; // 사용자가 없을 경우 또는 데이터가 올바르지 않을 경우
 };
 
 export const countRowsNumber = async (table: string = 'reviews') => {
@@ -121,12 +116,12 @@ export async function fetchReviewData(
   query.range((pageParam - 1) * limit, pageParam * limit - 1);
 
   const { data: reviews, error } = await query;
-  console.log('reviews => ', reviews);
+  // console.log('reviews => ', reviews);
 
   const promises = reviews?.map(async (review) => {
     const movieDetail = await getDetailData(review.movieid);
-    const username = await getUserName(review.userid);
-    return { ...review, movieDetail, userDetail: { username } };
+    const userProfile = await getUserProfile(review.userid);
+    return { ...review, movieDetail, userDetail: { ...userProfile } };
   });
   const results = await Promise.all(promises!);
 
