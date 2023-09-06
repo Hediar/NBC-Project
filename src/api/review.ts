@@ -108,29 +108,29 @@ export async function fetchReviewData(
   if (q) {
     switch (filter) {
       case 'movie_title':
-        console.log(filter, ' => movie_title');
+        // console.log(filter, ' => movie_title');
         query = query.eq('movie_title', q);
         break;
       case 'review_cont':
-        console.log(filter, ' => review_cont');
+        // console.log(filter, ' => review_cont');
         query = query.eq('content, review', q);
         break;
       default:
-        console.log(filter, ' => default');
+        // console.log(filter, ' => default');
         query = query.eq('movie_title, content, review', q);
     }
   }
   switch (sort) {
     case 'likes':
-      console.log(sort, ' => likes');
+      // console.log(sort, ' => likes');
       query = query.order(`reviewlikes(count)`, { ascending: false, nullsFirst: false });
       break;
     case 'rating':
-      console.log(sort, ' => rating');
+      // console.log(sort, ' => rating');
       query = query.order('rating', { ascending: false });
       break;
     default:
-      console.log(sort, ' => new');
+      // console.log(sort, ' => new');
       query = query.order('created_at', { ascending: false });
   }
   query.range((pageParam - 1) * limit, pageParam * limit - 1);

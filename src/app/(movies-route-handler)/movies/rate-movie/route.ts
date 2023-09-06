@@ -30,7 +30,7 @@ export const POST = async (req: Request) => {
       .insert({ user_id: userId, movie_id: movieId, ratings });
 
     if (rateMovieFailed) {
-      console.log(rateMovieFailed);
+      // console.log(rateMovieFailed);
       return new NextResponse(JSON.stringify({ message: rateMovieFailed.message }), {
         status: 400,
         statusText: 'Bad Request'
@@ -46,7 +46,7 @@ export const POST = async (req: Request) => {
       .eq('movie_id', movieId);
 
     if (rateMovieFailed) {
-      console.log(rateMovieFailed);
+      // console.log(rateMovieFailed);
       return new NextResponse(JSON.stringify({ message: rateMovieFailed.message }), {
         status: 400,
         statusText: 'Bad Request'

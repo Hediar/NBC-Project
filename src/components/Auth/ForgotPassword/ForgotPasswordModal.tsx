@@ -37,7 +37,7 @@ const ForgotPasswordModal = () => {
     } = await axios.post('/auth/profile/forgot-password', { email: emailValue, captchaToken });
 
     if (error) {
-      console.log(error);
+      // console.log(error);
       if (error.message.includes('captcha')) {
         setIsClicked(false);
         messageApi.open({

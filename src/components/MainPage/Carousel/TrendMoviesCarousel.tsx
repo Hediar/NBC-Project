@@ -1,10 +1,10 @@
 'use client';
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { ReactNode, useState, useEffect, useCallback } from 'react';
 import useEmblaCarousel, { EmblaCarouselType, EmblaOptionsType } from 'embla-carousel-react';
 import { NextButton, PrevButton } from '@/components/common/Slider/ArrowsDotsButtons';
 
 type PropType = {
-  slides: any[];
+  slides: ReactNode[];
   options?: EmblaOptionsType;
 };
 

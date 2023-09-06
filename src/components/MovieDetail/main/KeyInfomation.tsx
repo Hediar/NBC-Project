@@ -16,7 +16,7 @@ const KeyInfomation = async ({ movieData }: Props) => {
   formData.append('imageUrl', imageUrl.toString());
   const res = await fetch('http://localhost:3000/api/imagecolorpicker', { method: 'post', body: formData });
   const rgb = await res.json();
-  console.log(rgb);
+  // console.log(rgb);
   return (
     <div>
       <main className="h-[500px] py-[40px] bg-gray-100">
