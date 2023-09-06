@@ -115,7 +115,7 @@ const SignIn = () => {
       <div className="flex justify-center items-center h-full bg-gray-200 rounded-lg overflow-hidden">
         <form
           onSubmit={signInHandler}
-          className="flex flex-col gap-3 shadow-lg shadow-gray-300 w-96 p-9 items-center bg-slate-50 "
+          className="animate-300 w-[calc(100vw-100px)] sm:w-96 flex flex-col gap-3 shadow-lg shadow-gray-300  p-9 items-center bg-slate-50 "
         >
           <div className="flex flex-col gap-3 mb-4 text-center">
             <h1 className="text-xl font-semibold">무비바바</h1>

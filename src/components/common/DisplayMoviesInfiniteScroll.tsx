@@ -20,7 +20,7 @@ const DisplayInfiniteMovies = ({ movieData, discoverMoviesWithGenreId, genreIdAr
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
     const container = e.target as HTMLDivElement;
-    if (container.scrollLeft + container.clientWidth >= container.scrollWidth * 0.8) {
+    if (container.scrollLeft + container.clientWidth >= container.scrollWidth * 0.9) {
       setCurrentPage(currentPage + 1);
     }
   };
@@ -46,7 +46,7 @@ const DisplayInfiniteMovies = ({ movieData, discoverMoviesWithGenreId, genreIdAr
   return (
     <div className="overflow-hidden">
       <div className="overflow-x-scroll overflow-y-hidden" onScroll={handleScroll}>
-        <div className="w-full INLINE_BOX h-72 mb-12 flex gap-6">{content}</div>
+        <div className="w-full INLINE_BOX mb-12 flex gap-6">{content}</div>
       </div>
     </div>
   );

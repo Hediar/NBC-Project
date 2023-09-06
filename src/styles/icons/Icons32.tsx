@@ -64,7 +64,7 @@ export const BookMarkLined = (props: SVGProps<SVGSVGElement>) => (
   <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none" {...props}>
     <path
       d="M8 13.2188C8 10.2872 8 8.82144 8.87868 7.91072C9.75736 7 11.1716 7 14 7H18C20.8284 7 22.2426 7 23.1213 7.91072C24 8.82144 24 10.2872 24 13.2188V20.2953C24 23.0765 24 24.467 23.1557 24.8924C22.3114 25.3177 21.2565 24.4586 19.1465 22.7403L18.4713 22.1904C17.2849 21.2243 16.6917 20.7412 16 20.7412C15.3083 20.7412 14.7151 21.2243 13.5287 22.1904L12.8535 22.7403C10.7435 24.4586 9.68859 25.3177 8.84429 24.8924C8 24.467 8 23.0765 8 20.2953V13.2188Z"
-      stroke="#4F4F4F"
+      stroke="#ffffff"
       strokeWidth="2"
     />
   </svg>
@@ -188,7 +188,7 @@ export const Addition = (props: SVGProps<SVGSVGElement>) => (
     <path d="M16 28L16 4" stroke="#4F4F4F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
-export const Multiply = (props: SVGProps<SVGSVGElement>) => (
+export const Close = (props: SVGProps<SVGSVGElement>) => (
   <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none" {...props}>
     <path d="M6 6L26 26" stroke="#4F4F4F" strokeWidth="2" strokeLinecap="round" />
     <path d="M6 26L26 6" stroke="#4F4F4F" strokeWidth="2" strokeLinecap="round" />

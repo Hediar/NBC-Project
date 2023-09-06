@@ -40,7 +40,9 @@ const OverlaidModal = ({ children, scrollTo = '' }: Props) => {
       }}
       className="opacity-0 -mt-20 fixed w-screen h-screen bg-gray-700 bg-opacity-50 z-40 transform ease-in-out duration-200 "
     >
-      <Modal>{children}</Modal>
+      <Modal overlayRef={overlayRef} scrollTo={scrollTo}>
+        {children}
+      </Modal>
     </div>
   );
 };

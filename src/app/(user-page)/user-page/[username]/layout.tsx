@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { cookies, headers } from 'next/headers';
 import UserPageTabs from '@/components/UserPage/UserPageTabs';
+import Footer from '@/components/common/Footer';
 
 export const dynamic = 'force-dynamic';
 
@@ -41,7 +42,7 @@ export default async function Layout({
   if (usernameData && usernameData.length === 0) notFound();
 
   return (
-    <main className="h-[calc(100vh-70px)] bg-white flex-col sm:flex-row flex justify-center ">
+    <main className="bg-white flex-col sm:flex-row flex justify-center ">
       <aside className=" sm:w-1/6 md:w-3/12 lg:w-2/12 border-r border-[#ebebeb] bg-[#fffdf9] ">
         <UserPageTabs username={decodedUsername} />
       </aside>

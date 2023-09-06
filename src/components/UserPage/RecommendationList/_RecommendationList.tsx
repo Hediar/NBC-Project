@@ -62,13 +62,16 @@ const RecommendationList = async ({ username, watched_movies }: Props) => {
   let [movieData1, movieData2, movieData3] = threeRecommendationPages.map((page) => page);
 
   return (
-    <div className="w-10/12 mx-auto">
+    <div className=" w-10/12 mx-auto">
       <h1 className="text-2xl text-center py-12"> {username}님이 좋아하신 영화중에 비슷한 장르를 찾아봤어요.</h1>
 
       <section>
         <div className="mb-16">
           <div className="mb-10">
-            <h2 className="inline-block text-xl bg-slate-300 p-3 rounded-xl">#{GerneName_A}</h2>
+            <h2 className="inline-block text-[28px] sm:text-[32px] font-bold bg-[#ffede5] px-4 py-2 sm:py-3 rounded-xl">
+              #{GerneName_A}
+            </h2>
+            <span className="ml-3 text-[20px] sm:text-[24px] font-bold">어떠세요?</span>
           </div>
           <DisplayInfiniteMovies
             movieData={movieData1}
@@ -80,7 +83,7 @@ const RecommendationList = async ({ username, watched_movies }: Props) => {
 
         <div className="mb-16">
           <div className="mb-10">
-            <h2 className="inline-block text-xl bg-slate-300 p-3 rounded-xl">#{GerneName_B}</h2>
+            <h2 className="inline-block text-xl bg-[#ffede5] p-3 rounded-xl">#{GerneName_B}</h2>
           </div>
           <DisplayInfiniteMovies
             movieData={movieData2}
@@ -92,7 +95,7 @@ const RecommendationList = async ({ username, watched_movies }: Props) => {
 
         <div className=" mb-16">
           <div className="mb-10">
-            <h2 className="inline-block text-xl bg-slate-300 p-3 rounded-xl">#{GerneName_C}</h2>
+            <h2 className="inline-block text-xl bg-[#ffede5] p-3 rounded-xl">#{GerneName_C}</h2>
           </div>
           <DisplayInfiniteMovies
             movieData={movieData3}
