@@ -51,10 +51,10 @@ const TrendMoviesCarousel: React.FC<PropType> = (props) => {
         </div>
       </div>
 
-      <div className="flex justify-between absolute left-0 top-1/2 -translate-y-1/2 bg-transparent cursor-pointer z-10">
+      <div className="flex justify-between absolute left-[190px] top-1/2 -translate-y-1/2 bg-transparent cursor-pointer z-10">
         <PrevButton onClick={scrollPrev} disabled={prevBtnDisabled} />
       </div>
-      <div className="flex justify-between absolute right-0 top-1/2 -translate-y-1/2 bg-transparent cursor-pointer z-10">
+      <div className="flex justify-between absolute right-[190px] top-1/2 -translate-y-1/2 bg-transparent cursor-pointer z-10">
         <NextButton onClick={scrollNext} disabled={nextBtnDisabled} />
       </div>
     </div>

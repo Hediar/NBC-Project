@@ -81,3 +81,12 @@ export const ArrowDown = (props: SVGProps<SVGSVGElement>) => (
     <path d="M6 9L12 15L18 9" stroke="#4F4F4F" strokeWidth="2" stroke-linecap="round" strokeLinejoin="round" />
   </svg>
 );
+
+export const ArrowRight2 = (props: SVGProps<SVGSVGElement>) => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <path
+      d="M21 11.9998L21.7682 11.3596L22.3017 11.9998L21.7682 12.64L21 11.9998ZM4 12.9998C3.44772 12.9998 3 12.5521 3 11.9998C3 11.4476 3.44772 10.9998 4 10.9998V12.9998ZM16.7682 5.35981L21.7682 11.3596L20.2318 12.64L15.2318 6.64019L16.7682 5.35981ZM21.7682 12.64L16.7682 18.6402L15.2318 17.3598L20.2318 11.3597L21.7682 12.64ZM21 12.9998H4V10.9998H21V12.9998Z"
+      fill="#4F4F4F"
+    />
+  </svg>
+);
