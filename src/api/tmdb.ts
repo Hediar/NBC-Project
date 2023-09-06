@@ -110,7 +110,7 @@ const getTrailerData: any = async (id: string) => {
   return trailerData;
 };
 
-const getProviderData = async (id: string) => {
+export const getProviderData = async (id: string) => {
   const watchProviderRes = await fetch(`${process.env.NEXT_PUBLIC_TMDB_BASE_DETAIL_URL}${id}/watch/providers`, options);
   const watchProviderData = await watchProviderRes.json();
 

@@ -89,7 +89,7 @@ function SignUp() {
       <div className="flex justify-center items-center h-full bg-gray-200">
         <form
           onSubmit={signupHandler}
-          className="flex flex-col gap-3 shadow-lg shadow-gray-300 w-96 p-9 items-center bg-slate-50 rounded-md "
+          className="animate-300 w-[calc(100vw-100px)] sm:w-96 flex flex-col gap-3 shadow-lg shadow-gray-300 p-9 items-center bg-slate-50 rounded-md "
         >
           <h1>Sign Up Page</h1>
           <input
