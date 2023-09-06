@@ -21,7 +21,7 @@ export const LatestMoviesCarousel = (props: PropType) => {
 
   const onInit = useCallback(() => {
     if (!embla) return;
-  }, []);
+  }, [embla]);
 
   const onSelect = useCallback(() => {
     if (!embla) return;
