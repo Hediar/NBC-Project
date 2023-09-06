@@ -58,7 +58,8 @@ export default async function MovieDetailLayout({
             </section>
           </div>
         ) : (
-          <div className="w-full text-center flex flex-col gap-3">
+          <div className="w-full text-center flex flex-col gap-3 mt-[50px]">
+            <h3 className="h3_suit flex">이 영화 토픽</h3>
             <p>관련 토픽이 없습니다</p>
             <p>
               이 영화의 <span className="font-bold">첫번째 토픽 주인공</span>이 되어보세요
