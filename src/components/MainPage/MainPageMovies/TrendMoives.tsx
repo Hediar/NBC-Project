@@ -29,7 +29,7 @@ const TrendMoives = async ({ genreId }: { genreId: string }) => {
         {listMovies.map((movie: MovieData, idx: number) => {
           return (
             <>
-              <div className="flex-none py-6 first:pl-6 last:pr-6">
+              <div className="flex-none py-6 first:pl-6 last:pr-6 relative">
                 <div key={movie.id}>
                   <Link
                     href={`${process.env.NEXT_PUBLIC_BASE_URL}/detail/${movie.id}/main`}
@@ -45,7 +45,9 @@ const TrendMoives = async ({ genreId }: { genreId: string }) => {
                     ></Image>
                     <div>{movie.title}</div>
                   </Link>
-                  <MovieLikes movieid={movie.id} />
+                  <div className="absolute top-7 right-5">
+                    <MovieLikes movieid={movie.id} />
+                  </div>
                 </div>
               </div>
             </>

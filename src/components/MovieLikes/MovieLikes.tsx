@@ -52,11 +52,11 @@ const MovieLikes = (props: { movieid: number }) => {
 
   return (
     <div>
-      MovieLikes
+      {/* MovieLikes
       <br />
       {props.movieid}
       좋아요 개수: {currentMovieLikeData?.length ? currentMovieLikeData[0].user_id.length : 0}
-      <br />
+      <br /> */}
       <button className="py-2 px-4 rounded" onClick={likeButtonHandler}>
         {likecurrentuser ? <HeartFilledColor /> : <HeartLine />}
       </button>
