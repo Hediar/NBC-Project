@@ -41,10 +41,10 @@ const TrendMoviesCarousel: React.FC<PropType> = (props) => {
 
   return (
     <div className="w-full relative">
-      <div className="overflow-hidden relative h-[460px]" ref={emblaRef}>
-        <div className="flex flex-col flex-wrap h-44 flex-none">
+      <div className="overflow-hidden relative h-[460px] " ref={emblaRef}>
+        <div className="flex flex-col flex-wrap h-44 flex-none ml-28">
           {slides.map((slide, index) => (
-            <div className={'w-[50%] h-44 relative mx-1'} key={index}>
+            <div className={'w-[60%] relative mx-1'} key={index}>
               {slide}
             </div>
           ))}

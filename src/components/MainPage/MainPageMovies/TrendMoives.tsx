@@ -3,7 +3,7 @@ import MovieLikes from '../../MovieLikes/MovieLikes';
 import Image from 'next/image';
 import Link from 'next/link';
 import AddIgnoreMovieButton from '../../common/AddIgnoreMovieButton';
-import Carousel from './TrendMoviesCarousel';
+import Carousel from '../Carousel/TrendMoviesCarousel';
 import TrendMovieSlider from './TrendMovieSlider';
 
 export const revalidate = 0;
@@ -16,25 +16,24 @@ const TrendMoives = async ({ genreId }: { genreId: string }) => {
     trendMovies = await fetchTrendMoviesByGenre(genreId);
   }
   const filteredMovies = trendMovies.results;
+  const sliderMovies = filteredMovies.slice(0, 8);
+  const listMovies = filteredMovies.slice(8, 14);
   return (
     <>
       <div className="p-5 felx ">
-        <h2 className="text-2xl">인기 영화</h2>
+        <h2 className="h1_suit">인기 영화</h2>
         <Link href={'/movielist'}>더보기 &gt;</Link>
       </div>
-      <TrendMovieSlider photoData={filteredMovies} />
-      {/* <div className="overflow-x-scroll flex">
-        {filteredMovies?.map((movie: MovieData, idx: number) => {
+      <TrendMovieSlider photoData={sliderMovies} />
+      <div className="flex flex-wrap">
+        {listMovies.map((movie: MovieData, idx: number) => {
           return (
             <>
-              <div className="flex-none py-6 px-3 first:pl-6 last:pr-6">
+              <div className="flex-none py-6 first:pl-6 last:pr-6">
                 <div key={movie.id}>
-                  <div>
-                    {movie.title} {movie.id}
-                  </div>
                   <Link
                     href={`${process.env.NEXT_PUBLIC_BASE_URL}/detail/${movie.id}/main`}
-                    className="w-56 h-full flex flex-col gap-2 items-center"
+                    className="w-56 h-full flex flex-col gap-2 items-center "
                   >
                     <Image
                       src={`${process.env.NEXT_PUBLIC_TMDB_BASE_IMAGE_URL}t/p/w200${movie.poster_path}`}
@@ -42,16 +41,17 @@ const TrendMoives = async ({ genreId }: { genreId: string }) => {
                       width={200}
                       height={420}
                       priority={false}
+                      className="rounded-2xl"
                     ></Image>
+                    <div>{movie.title}</div>
                   </Link>
                   <MovieLikes movieid={movie.id} />
-                  <AddIgnoreMovieButton movieid={movie.id} />
                 </div>
               </div>
             </>
           );
         })}
-      </div> */}
+      </div>
     </>
   );
 };

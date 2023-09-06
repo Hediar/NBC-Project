@@ -168,9 +168,38 @@ export const contentPageGetDataSearch = async (query: string, searchType: string
     options
   );
   const searchData = await searchRes.json();
-
+  console.log(searchData);
   return searchData;
 };
+
+// export const contentPageGetDataSearch = async (query: string, searchType: string, pageParam: number = 1) => {
+//   const itemsPerPage = 18; // 페이지당 아이템 개수
+//   const previousItemsToKeep = (pageParam - 1) * 2; // 이전 페이지에서 유지할 아이템 개수
+
+//   // 현재 페이지에서 필요한 아이템 개수 계산
+//   const itemsToFetch = itemsPerPage - previousItemsToKeep;
+
+//   // 페이지당 데이터를 가져오는 요청
+//   const searchRes = await fetch(
+//     `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}search/${searchType}?query=${query}&include_adult=false&language=ko-KR&page=${pageParam}`,
+//     options
+//   );
+//   const searchData = await searchRes.json();
+
+//   // 이전 페이지에서 유지할 아이템 가져오기
+//   const previousItems = searchData.results.slice(0, previousItemsToKeep);
+
+//   // 현재 페이지에서 필요한 아이템 가져오기
+//   const currentItems = searchData.results.slice(previousItemsToKeep, previousItemsToKeep + itemsToFetch);
+
+//   // 페이지당 아이템 개수만큼만 잘라서 반환
+//   const slicedData = previousItems.concat(currentItems);
+
+//   // total_pages 계산
+//   const total_pages = Math.ceil(searchData.total_results / itemsPerPage);
+//   console.log(slicedData);
+//   return { results: slicedData, total_pages };
+// };
 
 export const contentPageGetDataDiscover = async (
   sortType: string,

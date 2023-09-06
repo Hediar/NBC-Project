@@ -141,7 +141,6 @@ function SignUp() {
               로그인하기
             </button>
           </div>
-          <>{message}</>
           <SocialButtons />
         </form>
       </div>

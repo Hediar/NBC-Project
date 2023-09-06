@@ -73,10 +73,10 @@ const DiscussionList = ({ pageNum }: Props) => {
   }
 
   return (
-    <div>
+    <div className="w-4/5 mx-auto">
       <DiscussionFilteringBox sortQuery={sortQuery} />
 
-      <div>
+      <div className="flex flex-col gap-5">
         {searchQuery && (
           <p className="border-b text-center">
             &quot;<span className="font-bold">{searchQuery}</span>&quot;와 관련된 {filteredPostData.length} 개의

@@ -11,6 +11,7 @@ const RelatedDiscussionPost = ({ relatedDiscussionData, relatedOption }: Props) 
 
     return <RelatedDiscussionPost relatedDiscussionData={relatedDiscussionData} relatedOption={slicedRelatedOption} />;
   }
+
   return (
     <div className="w-full aspect-[5/4.1] mt-5 border rounded-lg bg-gray-200 shadow-[8px_8px_5px_0_rgba(88,88,88,0.3)] pointer-events-none flex flex-col items-center">
       <div className="h-1/3 w-4/5 flex flex-col items-center justify-center">

@@ -16,8 +16,8 @@ const LatestMovies = async () => {
   const newMovies = data.results;
 
   return (
-    <div className="p-5">
-      <h2 className="text-2xl">최근 개봉 영화</h2>
+    <div className="p-5 flex-1">
+      <h1 className="h1_suit">최근 개봉 영화</h1>
       <div className="p-5">
         <LatestMovieSlider photoData={newMovies} />
       </div>
