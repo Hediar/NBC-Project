@@ -9,7 +9,7 @@ const HotTopics = async () => {
     <>
       <div className="md:mx-[190px] py-[100px]">
         <div className="flex justify-between items-end mt-[100px] mb-[120px]">
-          <h1 className="h1_suit mx-auto">🔥지금 핫한 토픽</h1>
+          <h1 className="h3_suit mx-auto md:text-6xl leading-[72px]">🔥지금 핫한 토픽</h1>
           <Link href={'/discussion/list/1'} className="flex">
             더보기 <ArrowRight2 />
           </Link>

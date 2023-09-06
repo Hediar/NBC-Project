@@ -17,7 +17,7 @@ body {
 }
 /* DESIGN SYSTEM */
 .full_button {
-  @apply flex rounded-3xl border border-gray-300 bg-white w-[1540px] h-[70px] cursor-pointer;
+  @apply flex rounded-3xl border border-gray-300 bg-white h-[70px] cursor-pointer justify-center;
 }
 
 .large_default_button {
