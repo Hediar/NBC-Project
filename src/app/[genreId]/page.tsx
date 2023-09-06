@@ -14,7 +14,7 @@ const GenreMovies = ({ params }: { params: { genreId: string } }) => {
     <main>
       <section className="my-8">
         <div className="flex flex-col items-end my-[120px] md:flex-row md:justify-between">
-          <h2 className="h1_suit">😎장르별 인기 영화</h2>
+          <h2 className="h1_suit mx-auto sm:h4_suit">😎장르별 인기 영화</h2>
           <Link href={'/movielist'} className="flex mt-4 mr-[190px] md:mt-0">
             더보기 <ArrowRight2 />
           </Link>
@@ -24,7 +24,7 @@ const GenreMovies = ({ params }: { params: { genreId: string } }) => {
         </div>
         <TrendMoives genreId={genreId} />
       </section>
-      <section className="mt-[180px] mb-[160px] flex flex-col md:flex-row">
+      <section className="flex flex-col md:flex-row">
         <div className="md:w-1/2 mb-8 md:mb-0 mr-[58px]">
           <LatestReviews />
         </div>
