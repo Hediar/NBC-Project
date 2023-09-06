@@ -29,6 +29,7 @@ const UpdatePassword = ({ user }: Props) => {
       </>
     );
   }
+
   const clickHandler = async () => {
     if (buttonRef.current?.innerText === '수정') {
       setIsDisabled(false);
