@@ -5,6 +5,7 @@
 
 import { useEffect, useState } from 'react';
 import MovieItem from './MovieItem';
+import { debounce } from 'lodash';
 
 interface Props {
   movieData: MovieFetchResult;
@@ -24,6 +25,7 @@ const DisplayInfiniteMovies = ({ movieData, discoverMoviesWithGenreId, genreIdAr
       setCurrentPage(currentPage + 1);
     }
   };
+
   useEffect(() => {
     if (dataToProject.length < 5) {
       setCurrentPage(currentPage + 1);
@@ -44,10 +46,8 @@ const DisplayInfiniteMovies = ({ movieData, discoverMoviesWithGenreId, genreIdAr
   const content = dataToProject.map((movie) => <MovieItem key={movie.id} movie={movie} />);
 
   return (
-    <div className="overflow-hidden">
-      <div className="overflow-x-scroll overflow-y-hidden" onScroll={handleScroll}>
-        <div className="w-full INLINE_BOX h-72 mb-12 flex gap-6">{content}</div>
-      </div>
+    <div className="overflow-x-scroll overflow-y-hidden " onScroll={debounce(handleScroll, 300)}>
+      <div className=" w-full INLINE_BOX mb-12 flex gap-6">{content}</div>
     </div>
   );
 };

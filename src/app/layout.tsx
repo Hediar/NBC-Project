@@ -22,9 +22,9 @@ export default function RootLayout(props: { children: React.ReactNode }) {
         <ReactQueryProvider>
           <Header />
           {props.children}
+          <Footer />
         </ReactQueryProvider>
         <ScrollToTopButton />
-        <Footer />
       </body>
     </html>
   );
