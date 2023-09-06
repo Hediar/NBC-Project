@@ -35,7 +35,7 @@ const LatestReviews = async () => {
                 <div className="flex justify-between">
                   <span className="flex">
                     <HeartLine />
-                    {review.reviewLikesCount.length ? review.reviewLikesCount : 0}
+                    {/* {review.reviewLikesCount.length ? review.reviewLikesCount : 0} */}
                   </span>
                   <ArrowRight />
                 </div>

@@ -40,17 +40,16 @@ const TrendMoviesCarousel: React.FC<PropType> = (props) => {
   }, [emblaApi, onSelect]);
 
   return (
-    <div className="w-full relative h-96 md:h-[460px]">
-      <div className="overflow-hidden relative h-[460px] " ref={emblaRef}>
+    <div className="w-full relative sm:h-[400px] md:h-[460px] lg:h-[665px] mb-5">
+      <div className="overflow-hidden relative sm:h-[400px] md:h-[460px] lg:h-[665px]" ref={emblaRef}>
         <div className="flex flex-col flex-wrap h-44 flex-none ml-8 md:ml-28">
           {slides.map((slide, index) => (
-            <div className={'relative mx-1 sm:w-[100%] md:w-[60%] lg:w-[60%] xl:w-[30%]'} key={index}>
+            <div className={'relative mx-1 sm:w-[100%] md:w-[60%] lg:w-[60%] xl:w-[60%]'} key={index}>
               {slide}
             </div>
           ))}
         </div>
       </div>
-
       <div className="flex justify-between absolute left-[30px] top-[50%] -translate-y-1/2 bg-transparent cursor-pointer z-10">
         <PrevButton onClick={scrollPrev} disabled={prevBtnDisabled} />
       </div>
