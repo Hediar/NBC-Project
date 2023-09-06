@@ -21,15 +21,13 @@ const TrendMoviesCarousel: React.FC<PropType> = (props) => {
   const onInit = useCallback(() => {
     if (!emblaApi) return;
     setScrollSnaps(emblaApi.scrollSnapList());
-  }, []);
+  }, [emblaApi]);
 
-  const onSelect = useCallback(
-    (emblaApi: EmblaCarouselType) => {
-      setPrevBtnDisabled(!emblaApi.canScrollPrev());
-      setNextBtnDisabled(!emblaApi.canScrollNext());
-    },
-    [emblaApi]
-  );
+  const onSelect = useCallback((emblaApi: EmblaCarouselType) => {
+    if (!emblaApi) return;
+    setPrevBtnDisabled(!emblaApi.canScrollPrev());
+    setNextBtnDisabled(!emblaApi.canScrollNext());
+  }, []);
 
   useEffect(() => {
     if (!emblaApi) return;
@@ -37,7 +35,7 @@ const TrendMoviesCarousel: React.FC<PropType> = (props) => {
     onSelect(emblaApi);
     emblaApi.on('reInit', onSelect);
     emblaApi.on('select', onSelect);
-  }, [emblaApi, onSelect]);
+  }, [emblaApi, onSelect, onInit]);
 
   return (
     <div className="w-full relative md:mb-5">
