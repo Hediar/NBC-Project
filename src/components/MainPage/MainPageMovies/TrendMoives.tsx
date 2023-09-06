@@ -2,14 +2,13 @@ import { fetchTrendMoviesByGenre, getTrendingMovies } from '@/api/tmdb';
 import MovieLikes from '../../MovieLikes/MovieLikes';
 import Image from 'next/image';
 import Link from 'next/link';
-import AddIgnoreMovieButton from '../../common/AddIgnoreMovieButton';
-import Carousel from '../Carousel/TrendMoviesCarousel';
 import TrendMovieSlider from './TrendMovieSlider';
 
 export const revalidate = 0;
 
 const TrendMoives = async ({ genreId }: { genreId: string }) => {
   let trendMovies;
+
   if (genreId === 'all') {
     trendMovies = await getTrendingMovies();
   } else {
