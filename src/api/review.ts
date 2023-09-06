@@ -42,10 +42,13 @@ export const getLatestReviews = async () => {
     .order('created_at', { ascending: false }) // 날짜 기준으로 내림차순 정렬
     .limit(4); // 가져올 개수 제한
   const addUserName = getReviews?.map(async (data) => {
-    const { data: userName } = await supabase.from('users').select('username').eq('id', data.userid);
+    const { data: userData } = await supabase.from('users').select('*').eq('id', data.userid);
+    const { data: reviewLikes } = await supabase.from('reviewlikes').select('count').eq('reviewid', data.reviewid);
 
-    const usernameData = userName?.map((data) => data.username);
-    const filterData = { ...data, username: usernameData! };
+    const usernameData = userData?.map((data) => data.username);
+    const userAvatarURL = userData?.map((data) => data.avatar_url);
+
+    const filterData = { ...data, username: usernameData!, userAvatarURL, reviewLikesCount: reviewLikes };
 
     return filterData;
   });
