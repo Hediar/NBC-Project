@@ -5,7 +5,7 @@ export const revalidate = 0;
 
 const LatestReviews = async () => {
   const latestReviewData = await getLatestReviews();
-  const backgroundColors = ['MainYellow2', 'MainBlue2', 'MainPurple2', 'MainOrange2'];
+  const backgroundColors = ['#FFF8DE', '#ECEFFF', '#FAF0FF', '#FFEDE5'];
   return (
     <div className="p-5 flex-1">
       <h1 className="h1_suit">최신 리뷰</h1>
