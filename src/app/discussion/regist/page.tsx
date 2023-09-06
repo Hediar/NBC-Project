@@ -4,7 +4,7 @@ import SearchPopup from '@/components/ReviewForm/SearchPopup';
 import useUserInfoStore from '@/store/saveCurrentUserData';
 import { useReviewMovieStore, useSearchModalStore } from '@/store/useReviewStore';
 import supabase from '@/supabase/config';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
 import { getMovieDetail } from '@/api/tmdb';
 import { optionMark } from '@/static/optionMark';
@@ -23,7 +23,7 @@ const DiscussionRegistPage = (props: Props) => {
   const [messageApi, contextHolder] = message.useMessage();
   const { isSearchModalOpen, openSearchModal } = useSearchModalStore();
   const { searchMovieId: movieId, saveSearchMovieId } = useReviewMovieStore();
-  const [movieData, setMovieData] = useState<MovieData>();
+  const [movieData, setMovieData] = useState<MovieData | null>();
   const {
     userInfo: { id: userId }
   } = useUserInfoStore();
@@ -36,6 +36,9 @@ const DiscussionRegistPage = (props: Props) => {
   const titleRef = useRef<HTMLInputElement>(null);
   const [isManualOpen, setIsManualOpen] = useState<boolean>(false);
 
+  const searchParams = useSearchParams();
+  const movie_id = searchParams.get('movieId') ?? '';
+
   useEffect(() => {
     return saveSearchMovieId();
   }, []);
@@ -45,9 +48,19 @@ const DiscussionRegistPage = (props: Props) => {
       if (movieId) {
         const fetchData = await getMovieDetail(movieId as string);
         setMovieData(fetchData);
+        return;
+      }
+      if (movie_id) {
+        const fetchData = await getMovieDetail(movie_id as string);
+        setMovieData(fetchData);
+        return;
       }
     };
     getMovieData();
+
+    return () => {
+      setMovieData(null);
+    };
   }, [movieId]);
 
   const addOption = () => {
@@ -67,7 +80,7 @@ const DiscussionRegistPage = (props: Props) => {
       });
       return router.replace('?sign-in=true');
     }
-    if (!movieId) {
+    if (!movieData) {
       messageApi.open({
         type: 'warning',
         content: '토론하고싶은 영화를 선택해주세요'
@@ -99,7 +112,7 @@ const DiscussionRegistPage = (props: Props) => {
         user_id: userId,
         title,
         content,
-        movie_id: movieId,
+        movie_id: movieData?.id,
         movie_title: movieData?.title,
         movie_imgUrl: movieData?.poster_path,
         movie_genreIds: movieData?.genres.map((genre) => genre.id),
@@ -138,8 +151,8 @@ const DiscussionRegistPage = (props: Props) => {
         <h1 className={`text-2xl font-bold mb-[25px]`}>토론 작성</h1>
         {/* S:: 영화 선택 */}
         <div>
-          {movieId ? (
-            <ReviewMovie movieId={movieId as string} />
+          {movieId || movie_id ? (
+            <ReviewMovie movieId={movieId ?? movie_id} />
           ) : (
             <div className="w-full h-[15vh] flex justify-center items-center">
               <button
