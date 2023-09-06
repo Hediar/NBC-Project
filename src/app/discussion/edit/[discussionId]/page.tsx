@@ -107,15 +107,24 @@ const DiscussionEditPage = ({ params }: Props) => {
       } catch (error) {}
     }
   };
-
   return (
     <>
       {contextHolder}
       <div className="p-5 w-3/5">
         {/* S:: 영화 선택 */}
-        <div>
-          <ReviewMovie movieId={movieId as string} />
-        </div>
+        {movieId && (
+          <div
+            onClick={() => {
+              messageApi.open({
+                type: 'error',
+                content: '변경하실 수 없습니다'
+              });
+            }}
+          >
+            <ReviewMovie movieId={movieId} />
+          </div>
+        )}
+
         {/* E:: 영화 선택 */}
 
         <div className={`flex flex-col w-full mt-[${marginYGap}] font-bold`}>
