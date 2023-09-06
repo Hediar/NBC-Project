@@ -1,15 +1,11 @@
-import Image from 'next/image';
-import Link from 'next/link';
 import React from 'react';
+import MovieItem from '../common/MovieItem';
 
 const MovieDataList = ({ movieData }: { movieData: MovieData[] }) => {
   return (
-    <div className="grid grid-cols-5 gap-4">
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
       {movieData.map((movie: MovieData) => (
-        <Link href={`/detail/${movie.id}`} key={movie.id}>
-          <Image src={`https://image.tmdb.org/t/p/w342${movie.poster_path}`} width={500} height={500} alt={'포스터'} />
-          <h3>{movie.title ? movie.title : movie.name}</h3>
-        </Link>
+        <MovieItem movie={movie} key={movie.id} />
       ))}
     </div>
   );

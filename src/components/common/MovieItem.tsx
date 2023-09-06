@@ -6,12 +6,14 @@ import Link from 'next/link';
 import MovieLikes from '../MovieLikes/MovieLikes';
 
 const MovieItem = ({ movie }: { movie: MovieData }) => {
+  if (!movie.id) return <></>;
+
   return (
     <>
-      <div className="w-[240px] flex flex-col gap-3">
+      <div className="w-[140px] sm:w-[240px] flex flex-col gap-3">
         <div className="relative">
           <img
-            className="w-[240px] h-[360px] rounded-xl"
+            className="w-[140px] h-[210px] sm:w-[240px] sm:h-[360px] rounded-xl"
             src={`https://image.tmdb.org/t/p/w185${movie.poster_path}`}
             alt="poster"
           />

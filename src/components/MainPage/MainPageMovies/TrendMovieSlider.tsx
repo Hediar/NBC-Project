@@ -14,13 +14,13 @@ const TrendMovieSlider = ({ photoData }: Props) => {
       <TrendMoviesCarousel
         slides={photoData.map((imageData, idx) => {
           return (
-            <Link href={`/detail/${imageData.id}`} key={idx}>
+            <Link href={`/detail/${imageData.id}`} key={idx} className="h-">
               <Image
                 src={`${baseImgUrl}w1280_and_h720_bestv2${imageData.backdrop_path}`}
                 className="rounded-lg"
                 alt="Image"
-                width={760}
-                height={460}
+                width={1280}
+                height={720}
               ></Image>
             </Link>
           );

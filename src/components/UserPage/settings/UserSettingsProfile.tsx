@@ -1,7 +1,5 @@
 import { User } from '@supabase/supabase-js';
-import AvatarPhoto from './Profile/AvatarPhoto';
 import UpdateUsername from './Profile/UpdateUsername';
-import Miscellaneous from './Profile/Miscellaneous';
 import UpdateEmail from './Profile/UpdateEmail';
 import UpdateName from './Profile/UpdateName';
 import UpdatePassword from './Profile/UpdatePassword';

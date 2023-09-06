@@ -1,9 +1,10 @@
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { cookies, headers } from 'next/headers';
+import { cookies } from 'next/headers';
 import UserPageTabs from '@/components/UserPage/UserPageTabs';
-import Footer from '@/components/common/Footer';
+import HiddenUserPageTabs from '@/components/UserPage/HiddenUserPageTabs';
+import doesUsersMatch from '@/api/doesUserMatch';
 
 export const dynamic = 'force-dynamic';
 
@@ -41,10 +42,13 @@ export default async function Layout({
 
   if (usernameData && usernameData.length === 0) notFound();
 
+  const userMatch = await doesUsersMatch(supabase, decodedUsername);
+
   return (
     <main className="bg-white flex-col sm:flex-row flex justify-center ">
       <aside className=" sm:w-1/6 md:w-3/12 lg:w-2/12 border-r border-[#ebebeb] bg-[#fffdf9] ">
-        <UserPageTabs username={decodedUsername} />
+        <UserPageTabs username={decodedUsername} userMatch={userMatch} />
+        <HiddenUserPageTabs username={decodedUsername} userMatch={userMatch} />
       </aside>
       <section className="overflow-hidden w-full change sm:w-5/6 md:w-9/12 lg:w-10/12  flex flex-col items-center">
         {children}

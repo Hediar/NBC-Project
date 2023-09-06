@@ -1,6 +1,5 @@
-import MyAccount from '@/components/UserPage/settings/Profile/MyAccount';
+import MyAccount from '@/components/UserPage/settings/MyAccount/MyAccount';
 import UserSettingsTabs from '@/components/UserPage/settings/UserSettingsTabs';
-import SVG_Settings from '@/styles/svg/settings';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
@@ -35,10 +34,11 @@ const UserSettingsPage = async ({ params: { username }, searchParams }: Props) =
   const { data: userData } = await supabase.from('users').select('*').eq('id', user!.id).single();
 
   return (
-    <div className="flex w-10/12 pt-10 h-[calc(100vh-134px)] gap-8 pb-8 max-w-6xl">
+    <div className="w-full h-[calc(100vh)] sm:h-[calc(100vh-390px)]">
       <UserSettingsTabs />
+
       {/* <UserSettingsProfile user={user!} userData={userData!} /> */}
-      {myAccount && <MyAccount user={user!} userData={userData!} />}
+      {myAccount && <MyAccount userData={userData!} />}
       {changeInfo && <></>}
       {myMenu && <></>}
       {deleteAccount && <></>}
