@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import React from 'react';
 import { baseImgUrl } from '@/static/baseImgUrl';
-import TrendMoviesCarousel from './TrendMoviesCarousel';
+import TrendMoviesCarousel from '../Carousel/TrendMoviesCarousel';
 import Link from 'next/link';
 
 type Props = {
@@ -10,14 +10,14 @@ type Props = {
 
 const TrendMovieSlider = ({ photoData }: Props) => {
   return (
-    <div className="flex justify-center w-full rounded-md font-thin text-xl my-3">
+    <div className="flex justify-center w-full rounded-md my-3 ">
       <TrendMoviesCarousel
         slides={photoData.map((imageData, idx) => {
           return (
             <Link href={`/detail/${imageData.id}`} key={idx}>
               <Image
                 src={`${baseImgUrl}w1280_and_h720_bestv2${imageData.backdrop_path}`}
-                className="w-51.125 h-28.75rem rounded-lg"
+                className="rounded-lg"
                 alt="Image"
                 width={760}
                 height={460}
@@ -26,7 +26,6 @@ const TrendMovieSlider = ({ photoData }: Props) => {
           );
         })}
         options={{
-          align: 'start',
           loop: true
         }}
       />

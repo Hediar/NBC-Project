@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 
 import { cookies } from 'next/headers';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import LikesOnGenres from './BigElements(Graphs)/LikesOnGenres';
 import NumberOfGenresWatched from './BigElements(Graphs)/NumberOfGenresWatched';
 import RuntimeByGenres from './BigElements(Graphs)/RuntimeByGenres';
+import LoadingSpinner from '@/components/common/LoadingSpinner';
 
 export const dynamic = 'force-dynamic';
 
@@ -21,7 +22,7 @@ const UserPagePersonalRecordsGraph = async ({ params: username }: Props) => {
 
   return (
     <div className="w-full mt-5 flex justify-center items-center">
-      <section className="w-full flex gap-4">
+      <section className="pb-12 xl:pb-0 w-full flex flex-col gap-4  xl:flex-row ">
         <LikesOnGenres username={username} />
         <NumberOfGenresWatched userId={userId} />
         <RuntimeByGenres userId={userId} />

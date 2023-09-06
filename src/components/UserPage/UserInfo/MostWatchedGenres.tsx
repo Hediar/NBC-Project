@@ -23,11 +23,15 @@ const UserPageMostWatchedGenres = async ({ username }: Props) => {
 
   return (
     <div className="w-full h-60  flex  flex-col gap-4 justify-center items-center relative">
-      <h2 className="text-2xl">{username}님이 가장 좋아하는 장르는</h2>
+      <h2 className="text-[25px] sm:leading-[40px] sm:text-[32px] font-bold px-8 text-center">
+        {username}님이 가장 좋아하는 장르는
+      </h2>
       <div className="flex gap-2">
         {threeMostGenres.map((genre) => (
           <>
-            <div className="bg-gray-300 text-xl rounded-xl p-2">#{genre}</div>
+            <div className="bg-[#ffede5] text-xl rounded-xl p-2">
+              <span className="font-bold text-[25px] xl:text-[30px]">#{genre}</span>
+            </div>
           </>
         ))}
       </div>

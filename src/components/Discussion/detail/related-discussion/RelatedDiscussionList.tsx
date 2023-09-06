@@ -11,8 +11,8 @@ const RelatedDiscussionList = async ({ discussionId }: Props) => {
   const postData = await getDiscussionPostDetail(+discussionId);
   const relatedData = await getRelatedDiscussionPost({ genreIds: postData.movie_genreIds, movieId: postData.movie_id });
   return (
-    <div className="w-[20vw]">
-      <p className="font-bold text-xl">관련된 다른 토픽</p>
+    <div className="w-[20vw] bg-[#EBEBEB] h-screen p-10">
+      <p className="font-bold text-xl h3_suit">관련 토픽</p>
       {relatedData?.length ? (
         relatedData?.map(async (relatedDiscussionData, idx) => {
           if (idx > 3) return null;
