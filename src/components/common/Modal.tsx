@@ -5,8 +5,8 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 interface Props {
   children: React.ReactNode;
-  overlayRef: React.RefObject<HTMLDivElement>;
-  scrollTo: string;
+  overlayRef?: React.RefObject<HTMLDivElement>;
+  scrollTo?: string;
 }
 const Modal = ({ children, overlayRef, scrollTo }: Props) => {
   const router = useRouter();
@@ -22,7 +22,9 @@ const Modal = ({ children, overlayRef, scrollTo }: Props) => {
         height={24}
         fill="#888"
         onMouseDown={() => {
-          overlayRef.current!.style.opacity = '0';
+          if (overlayRef) {
+            overlayRef.current!.style.opacity = '0';
+          }
           setTimeout(() => {
             if (isOnSettingsMyAccount) {
               router.replace(redirectUrl + '?my-account=true');
