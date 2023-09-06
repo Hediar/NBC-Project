@@ -1,4 +1,3 @@
-import { baseImgUrl } from '@/static/baseImgUrl';
 import axios from 'axios';
 import sharp from 'sharp';
 import { NextResponse } from 'next/server';
@@ -6,39 +5,57 @@ import { NextResponse } from 'next/server';
 export const dynamic = 'force-dynamic';
 
 export const POST = async (request: Request) => {
-  const formData = await request.formData();
-  const poster_path = String(formData.get('posterPath'));
+  async function getImageData(imageUrl: string) {
+    const response = await axios.get(imageUrl, { responseType: 'arraybuffer' });
+    const image = sharp(response.data)
+      .withMetadata()
+      .toColorspace('srgb')
+      .resize({ width: 300, height: 450, fit: 'inside', kernel: 'lanczos3' })
+      .toFormat('png');
 
-  const imageUrl = `${baseImgUrl}w300_and_h450_bestv2${poster_path}`;
-  const response = await axios.get(imageUrl, { responseType: 'arraybuffer' });
-
-  const image = sharp(response.data)
-    .withMetadata() // 메타데이터 유지
-    .toColorspace('srgb') // 색상 프로파일 설정
-    .resize({ width: 200, height: 300, fit: 'inside', kernel: 'lanczos3' }) // 원하는 크기로 조정
-    .toFormat('png');
-
-  const imageData = await image.raw().toBuffer({ resolveWithObject: true });
-
-  const pixels = imageData.data;
-
-  let totalRed = 0;
-  let totalGreen = 0;
-  let totalBlue = 0;
-
-  for (let i = 0; i < pixels.length; i += 4) {
-    totalRed += pixels[i];
-    totalGreen += pixels[i + 1];
-    totalBlue += pixels[i + 2];
+    const { data, info } = await image.raw().toBuffer({ resolveWithObject: true });
+    return { data, info };
   }
 
-  const pixelCount = pixels.length / 4;
-  const avgRed = Math.round(totalRed / pixelCount);
-  const avgGreen = Math.round(totalGreen / pixelCount);
-  const avgBlue = Math.round(totalBlue / pixelCount);
+  // 이미지 데이터 가져오기
+  const formData = await request.formData();
+  const imageUrl = String(formData.get('imageUrl'));
+  const { data, info } = await getImageData(imageUrl);
 
-  const avgRGB = [avgRed, avgGreen, avgBlue];
-  console.log('평균rgb==>', avgRGB);
-  console.log('==>', pixels.length);
-  return NextResponse.json({ error: false, message: JSON.stringify(avgRGB) });
+  // 이미지를 16개의 정사각형으로 나누고 각 정사각형에 대한 평균 RGB 계산
+  const { channels } = info;
+  const pixelCount = data.length / channels;
+  const channelSums = [0, 0, 0];
+  const squareAverages = [];
+
+  // 이미지를 16개의 정사각형으로 나누기
+  const gridSize = 4; // 4x4 격자로 나눔
+  const squareWidth = Math.floor(info.width / gridSize);
+  const squareHeight = Math.floor(info.height / gridSize);
+
+  for (let row = 0; row < gridSize; row++) {
+    for (let col = 0; col < gridSize; col++) {
+      const startX = col * squareWidth;
+      const startY = row * squareHeight;
+
+      for (let i = startY; i < startY + squareHeight; i++) {
+        for (let j = startX; j < startX + squareWidth; j++) {
+          const pixelIndex = (i * info.width + j) * channels;
+          for (let k = 0; k < channels; k++) {
+            channelSums[k] += data[pixelIndex + k];
+          }
+        }
+      }
+
+      // 각 정사각형의 평균 RGB 값을 계산하고 배열에 추가
+      const squarePixelCount = squareWidth * squareHeight;
+      const squareChannelAverages = channelSums.map((sum) => Math.round(sum / squarePixelCount));
+      squareAverages.push(squareChannelAverages);
+
+      // channelSums 배열 초기화
+      channelSums.fill(0);
+    }
+  }
+
+  return NextResponse.json({ error: false, message: squareAverages });
 };

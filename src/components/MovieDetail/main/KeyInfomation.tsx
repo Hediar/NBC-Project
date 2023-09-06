@@ -11,13 +11,12 @@ interface Props {
 const baseImgUrl = process.env.NEXT_PUBLIC_TMDB_BASE_IMAGE_URL;
 const KeyInfomation = async ({ movieData }: Props) => {
   const { id: movieId, poster_path, overview, tagline, vote_average, appearences, productions } = movieData;
-  // const formData = new FormData();
-  // formData.append('posterPath', poster_path.toString());
-  // const res = await fetch('http://localhost:3000/api/imagecolorpicker', { method: 'post', body: formData });
-  // const data = await res.json();
-  // const rgb = JSON.parse(data.message);
+  const formData = new FormData();
+  const imageUrl = `${baseImgUrl}w300_and_h450_bestv2${poster_path}`;
+  formData.append('imageUrl', imageUrl.toString());
+  const res = await fetch('http://localhost:3000/api/imagecolorpicker', { method: 'post', body: formData });
+  const rgb = await res.json();
 
-  // // console.log('받아옴??=>', rgb);
   return (
     <div>
       <main className="h-[500px] py-[40px] bg-gray-100">
