@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import supabase from '@/supabase/config';
 import useUserInfoStore from '@/store/saveCurrentUserData';
 import { useQuery } from '@tanstack/react-query';
@@ -35,6 +35,20 @@ const MovieLikes = (props: { movieid: number }) => {
     1000, // 스로틀링 간격 (여기서는 1000ms)
     { trailing: false } // 마지막 호출 후 추가 호출 방지
   );
+
+  const checkLikes = async (movieId: number) => {
+    const { data: likesTable } = await supabase.from('movielikes').select('*').eq('movieid', movieId);
+    if (likesTable?.length) {
+      const users = likesTable[0].user_id;
+      users.includes(userInfo?.id!) ? setLikecurrentuser(true) : setLikecurrentuser(false);
+    } else {
+      setLikecurrentuser(false);
+    }
+  };
+
+  useEffect(() => {
+    checkLikes(props.movieid);
+  }, []);
 
   return (
     <div>
