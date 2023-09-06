@@ -1,6 +1,4 @@
 import { getNewMovies } from '@/api/tmdb';
-import Image from 'next/image';
-import Link from 'next/link';
 import dayjs from 'dayjs';
 import LatestMovieSlider from './MainPageMovies/LatestMovieSlider';
 
