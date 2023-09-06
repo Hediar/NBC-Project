@@ -17,7 +17,10 @@ export const options = {
 
 export const getTrendingMovies = async () => {
   try {
-    const movies = await fetch(`${process.env.NEXT_PUBLIC_TMDB_BASE_URL}trending/movie/week?language=ko-KR`, options);
+    const movies = await fetch(
+      `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}trending/movie/week?include_adult=false&language=ko-KR`,
+      options
+    );
     const movieData = await movies.json();
 
     return movieData;
