@@ -1,13 +1,13 @@
 'use client';
 
 import LoadingSpinner from '@/components/common/LoadingSpinner';
-import Modal from '@/components/common/Modal';
 import supabase from '@/supabase/config';
 import HCaptcha from '@hcaptcha/react-hcaptcha';
 import axios from 'axios';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useRef, useState } from 'react';
 import { message } from 'antd';
+import Modal from '@/components/common/Modal';
 
 const ForgotPasswordModal = () => {
   const router = useRouter();
