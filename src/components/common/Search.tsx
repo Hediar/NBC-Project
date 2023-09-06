@@ -53,7 +53,6 @@ const Search = ({
   };
 
   const handleClick = (item: any) => {
-    // console.log(item);
     if (searchType === 'movie') {
       setSearchInput(item.title);
     } else if (searchType === 'person') {
@@ -78,7 +77,7 @@ const Search = ({
           <option value="person">인물</option>
         </select>
         <input
-          className="appearance-none border-transparent rounded w-full py-2 px-3 text-GreyScaleGrey "
+          className="appearance-none border-transparent rounded w-full py-2 px-3 "
           id="search"
           name="search"
           type="text"

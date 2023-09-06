@@ -168,7 +168,7 @@ export const contentPageGetDataSearch = async (query: string, searchType: string
     options
   );
   const searchData = await searchRes.json();
-  console.log(searchData);
+
   return searchData;
 };
 
