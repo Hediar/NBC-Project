@@ -103,7 +103,7 @@ const MovieList = () => {
   }
 
   return (
-    <div>
+    <div className="p-16">
       <div className="flex justify-between h-20">
         <Sort sortingOption={sortingOption} setSortingOption={setSortingOption} />
         <Search
