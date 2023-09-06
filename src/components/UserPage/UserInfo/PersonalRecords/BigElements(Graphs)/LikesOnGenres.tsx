@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import RecordsContainerBig from '../_Containers/RecordsContainerBig';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import idToUsername from '@/api/supabase/idToUsername';
 import getGenresUserLikes from '@/api/movieStatistics/getGenresUserLikes';
 import NumberOfGenresGraph from './Graphs/NumberOfGenresGraph';
+import LoadingSpinner from '@/components/common/LoadingSpinner';
 
 const LikesOnGenres = async ({ username }: { username: string }) => {
   const supabase = createServerComponentClient<Database>({ cookies });
@@ -43,9 +44,19 @@ const LikesOnGenres = async ({ username }: { username: string }) => {
   const [genresResult, genresQuantitiesResult] = await getGenresUserLikes(movieIds, supabase);
 
   return (
-    <RecordsContainerBig key="ecefff" bgColor="#ecefff" borderColor="#cad3fe" title="좋아요 누른 영화 장르">
-      <NumberOfGenresGraph genreNames={genresResult} quantities={genresQuantitiesResult} />
-    </RecordsContainerBig>
+    <>
+      {genresResult.length !== 0 ? (
+        <RecordsContainerBig key="ecefff" bgColor="#ecefff" borderColor="#cad3fe" title="좋아요 누른 영화 장르">
+          <NumberOfGenresGraph genreNames={genresResult} quantities={genresQuantitiesResult} />
+        </RecordsContainerBig>
+      ) : (
+        <RecordsContainerBig key="ecefff" bgColor="#ecefff" borderColor="#cad3fe" title="좋아요 누른 영화 장르">
+          <div className="p-5 text-lg text-center h-full flex justify-center items-center">
+            평점을 남기거나 리뷰글을 작성하시면 영화 추천이 가능합니다.
+          </div>
+        </RecordsContainerBig>
+      )}
+    </>
   );
 };
 

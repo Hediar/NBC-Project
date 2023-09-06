@@ -33,6 +33,15 @@ body {
   } */
 }
 /*  */
+
+.animate-200 {
+  @apply transform ease-in-out duration-200;
+}
+
+.animate-300 {
+  @apply transform ease-in-out duration-300;
+}
+
 .hover_scale5 {
   @apply transform ease-in-out duration-200 hover:scale-105 active:scale-95;
 }

@@ -34,7 +34,6 @@ export default async function Layout({
   children: React.ReactNode;
   params: { username: string };
 }) {
-  const url = headers().get('url');
   const decodedUsername = decodeURIComponent(params.username);
   const supabase = createServerComponentClient<Database>({ cookies });
   const { data: usernameData } = await supabase.from('users').select('username').eq('username', decodedUsername);
@@ -42,16 +41,13 @@ export default async function Layout({
   if (usernameData && usernameData.length === 0) notFound();
 
   return (
-    <main className=" h-[calc(100vh-70px)] bg-white flex justify-center">
-      <aside className="w-1/4 border-r border-[#ebebeb] bg-[#fffdf9]">
+    <main className="h-[calc(100vh-70px)] bg-white flex-col sm:flex-row flex justify-center ">
+      <aside className=" sm:w-1/6 md:w-3/12 lg:w-2/12 border-r border-[#ebebeb] bg-[#fffdf9] ">
         <UserPageTabs username={decodedUsername} />
       </aside>
-      <section className="w-3/4 flex flex-col items-center">{children}</section>
+      <section className="overflow-hidden w-full change sm:w-5/6 md:w-9/12 lg:w-10/12  flex flex-col items-center">
+        {children}
+      </section>
     </main>
   );
 }
-
-// const userData = getUser(userId);
-// const userPostData = getUserPosts(userId);
-// 여기에서 이 것들을 쓴다음 promise 상태인 부분을 써야하는 컴포넌트에 내려주고 await해주면 promise all과 같은 효과가 나온다. 그리고 로딩도 더 빠를 듯
-// 추가로 suspense도 해주면 좋다.

@@ -3,6 +3,7 @@
 
 import OverlaidModal from '@/components/common/OverlaidModal';
 import useUserInfoStore from '@/store/saveCurrentUserData';
+import { message } from 'antd';
 import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
@@ -24,6 +25,8 @@ const AvatarPhoto = ({ userData }: Props) => {
   const router = useRouter();
   const [isUploadModal, setIsUploadModal] = useState<boolean>(false);
   const queryString = !!useSearchParams().get('upload-photo');
+
+  const [messageApi, contextHolder] = message.useMessage();
 
   useEffect(() => {
     if (avatarUrl) {
@@ -49,7 +52,10 @@ const AvatarPhoto = ({ userData }: Props) => {
 
     const isImage = file.type.startsWith('image/');
     if (!isImage) {
-      alert('이미지 파일만 업로드할 수 있습니다.');
+      messageApi.open({
+        type: 'info',
+        content: '이미지 파일만 업로드할 수 있습니다.'
+      });
       fileInputRef.current.value = null;
       return;
     }
@@ -76,12 +82,16 @@ const AvatarPhoto = ({ userData }: Props) => {
       setIsDisabled(true);
       fileInputRef.current.value = null;
       router.refresh();
-      alert('업데이트 완료되었습니다.');
+      messageApi.open({
+        type: 'success',
+        content: '업데이트 완료되었습니다.'
+      });
     }
   };
 
   return (
     <>
+      {contextHolder}
       <div className="flex gap-8 w-full">
         <div className="flex gap-4 items-center">
           <img
