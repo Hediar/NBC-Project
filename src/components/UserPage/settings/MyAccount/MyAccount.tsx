@@ -11,7 +11,6 @@ interface Props {
 const MyAccount = async ({ userData, user }: Props) => {
   const createdAt = changeFormat(user.created_at);
   const lastConnected = changeFormat(user.last_sign_in_at!);
-  console.log();
 
   return (
     <div className="w-full items-center lg:items-start flex flex-col gap-4 p-10">

@@ -12,7 +12,7 @@ type Props = {
 };
 
 const ReviewFetchMore = ({ searchParams }: Props) => {
-  console.log('왜안바껴searchParams => ', searchParams);
+  // console.log('왜안바껴searchParams => ', searchParams);
   const [firstMount, setFirstMount] = useState(true);
 
   const {
@@ -34,7 +34,7 @@ const ReviewFetchMore = ({ searchParams }: Props) => {
       return data.pages.map((pageData: any) => pageData.results).flat();
     }
   }) as any;
-  console.log('✅reviews => ', reviews);
+  // console.log('✅reviews => ', reviews);
 
   useEffect(() => {
     if (!firstMount) {
