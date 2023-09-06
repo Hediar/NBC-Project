@@ -3,7 +3,8 @@ import Image from 'next/image';
 import React, { useState } from 'react';
 import EmblaCarousel from '@/components/common/Slider/EmblaCarousel';
 import TrailerPlay from './TrailerPlay';
-import { SVGNextButton } from '@/styles/icons/IconsETC';
+import { SVGPlayButton } from '@/styles/icons/IconsETC';
+
 type Props = {
   trailerKeys: string[];
 };
@@ -31,7 +32,7 @@ const TrailerSlider = ({ trailerKeys }: Props) => {
                 onClick={() => showTrailer(KEY)}
               ></Image>
               <div className="flex justify-between items-center absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-transparent cursor-pointer z-10 pointer-events-none">
-                <SVGNextButton />
+                <SVGPlayButton />
               </div>
             </React.Fragment>
           );

@@ -42,22 +42,28 @@ const DisplayComments = ({ addedCommentsData, signedInUserId }: any) => {
     }
   );
 
-  const displayComments = optimisticComments.map((comment: any) => {
+  const displayComments = optimisticComments?.map((comment: any) => {
     return (
-      <div key={comment.id} className="flex w-full text-sm mb-2">
-        <div className="w-1/12">
-          <Image
-            className="h-8 w-8 rounded-full"
-            width={32}
-            height={32}
-            alt="user-profile"
-            src={comment.profiles!.avatar_url}
-          />
+      <div
+        key={comment.id}
+        className="flex flex-col gap-3 w-full h-[142px] text-sm mb-2 p-5 border rounded-[20px] bg-[#EBEBEB]"
+      >
+        <div className="w-full flex items-center gap-3">
+          <div>
+            <Image
+              className="h-8 w-8 rounded-full"
+              width={40}
+              height={40}
+              alt="user-profile"
+              src={comment.profiles!.avatar_url}
+            />
+          </div>
+          <h6 className="subtitle2_suit">{comment.profiles!.username}</h6>
         </div>
+
         <div className="w-11/12 flex flex-col gap-1">
           <div className="flex items-center gap-4">
-            <h6 className="font-semibold ">{comment.profiles!.username}</h6>
-            <p className="text-base">{comment.content}</p>
+            <p className="body1_regular_suit">{comment.content}</p>
           </div>
           <div className="flex gap-2 items-center">
             <span>좋아요 {comment.likes}개</span>

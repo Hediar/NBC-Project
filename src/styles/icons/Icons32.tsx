@@ -188,7 +188,7 @@ export const Addition = (props: SVGProps<SVGSVGElement>) => (
     <path d="M16 28L16 4" stroke="#4F4F4F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
-export const Multiply = (props: SVGProps<SVGSVGElement>) => (
+export const Close = (props: SVGProps<SVGSVGElement>) => (
   <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none" {...props}>
     <path d="M6 6L26 26" stroke="#4F4F4F" strokeWidth="2" strokeLinecap="round" />
     <path d="M6 26L26 6" stroke="#4F4F4F" strokeWidth="2" strokeLinecap="round" />

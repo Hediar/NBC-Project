@@ -1,13 +1,12 @@
 'use client';
 
 import useDiscussionOptionQuery from '@/hooks/useDiscussionOptionQuery';
-import { optionMark } from '@/static/optionMark';
 import useUserInfoStore from '@/store/saveCurrentUserData';
 import supabase from '@/supabase/config';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { message } from 'antd';
-import { getDiscussionPostOption } from '@/api/supabase-discussion';
+import Option from './Option';
 
 interface Props {
   postId: number;
@@ -90,89 +89,30 @@ const OptionVote = ({ postId, voteCount, checkUpdate }: Props) => {
   return (
     <>
       {contextHolder}
-      <div className="m-5 w-3/5 max-h-[15rem] overflow-y-auto flex flex-col gap-3">
-        {optionData?.map((option, idx) => {
-          return (
-            <React.Fragment key={idx}>
-              {selectedOption?.option_id === option.option_id ? (
-                <div
-                  className="w-full h-[4rem] flex gap-5 items-center rounded-xl py-10 px-5 relative overflow-hidden"
-                  style={{
-                    border: `${
-                      votedOption?.option_id === option.option_id || selectedOption?.option_id === option.option_id
-                        ? '1px solid black'
-                        : 'none'
-                    }`
-                  }}
-                  onClick={() => setSelectedOption(option)}
-                >
-                  <div
-                    className="w-8 h-8 p-2 bg-gray-400 rounded-full flex items-center justify-center"
-                    style={{
-                      backgroundColor: `${votedOption?.option_id === option.option_id ? 'black' : 'rgba(88,88,88,0.5)'}`
-                    }}
-                  >
-                    <span className="font-bold text-white">{optionMark[idx]}</span>
-                  </div>
-                  <div className="w-3/5 overflow-auto">
-                    <p>{option.content}</p>
-                  </div>
-
-                  {isVoted && (
-                    <>
-                      <div className="w-full h-full absolute top-0 left-0 -z-10">
-                        <div
-                          className={`h-full bg-gray-200`}
-                          style={{ width: `${(option.count / sumCount) * 100}%` }}
-                        ></div>
-                      </div>
-                      <div className="flex gap-3 text-sm">
-                        <span className="font-bold">{option.count}명</span>
-                        <span className="font-bold text-gray-400">{`${(option.count / sumCount) * 100}%`}</span>
-                      </div>
-                    </>
-                  )}
-                </div>
-              ) : (
-                <div
-                  className="w-full h-[4rem] flex gap-5 items-center rounded-xl py-10 px-5 relative overflow-hidden"
-                  style={{
-                    border: `${
-                      votedOption?.option_id === option.option_id ? '1px solid black' : '1px solid rgba(88,88,88,0.5)'
-                    }`
-                  }}
-                  onClick={() => setSelectedOption(option)}
-                >
-                  <div
-                    className="w-8 h-8 p-2 bg-gray-400 rounded-full flex items-center justify-center"
-                    style={{
-                      backgroundColor: `${votedOption?.option_id === option.option_id ? 'black' : 'rgba(88,88,88,0.5)'}`
-                    }}
-                  >
-                    <span className="font-bold text-white">{optionMark[idx]}</span>
-                  </div>
-                  <div className="w-3/5 overflow-auto">
-                    <p>{option.content}</p>
-                  </div>
-                  {isVoted && (
-                    <>
-                      <div className="w-full h-full absolute top-0 left-0 -z-10">
-                        <div
-                          className={`h-full bg-gray-200`}
-                          style={{ width: `${(option.count / sumCount) * 100}%` }}
-                        ></div>
-                      </div>
-                      <div className="flex gap-3 text-sm">
-                        <span className="font-bold">{option.count}명</span>
-                        <span className="font-bold text-gray-400">{`${(option.count / sumCount) * 100}%`}</span>
-                      </div>
-                    </>
-                  )}
-                </div>
-              )}
-            </React.Fragment>
-          );
-        })}
+      <div className="m-5 w-full px-20 py-3 max-h-[15rem] overflow-y-auto flex flex-col gap-3">
+        {optionData?.map((option, idx) => (
+          <React.Fragment key={idx}>
+            {selectedOption?.option_id === option.option_id ? (
+              <Option
+                option={option}
+                selected={true}
+                votedOption={votedOption}
+                sumCount={sumCount}
+                settingNum={idx}
+                onClick={() => setSelectedOption(option)}
+              />
+            ) : (
+              <Option
+                option={option}
+                selected={false}
+                votedOption={votedOption}
+                sumCount={sumCount}
+                settingNum={idx}
+                onClick={() => setSelectedOption(option)}
+              />
+            )}
+          </React.Fragment>
+        ))}
         {optionData?.length ? (
           <div className="flex justify-between p-2">
             <span>총투표수: {sumCount}</span>

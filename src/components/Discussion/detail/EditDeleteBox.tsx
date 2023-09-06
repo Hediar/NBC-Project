@@ -3,7 +3,7 @@ import useDiscussionPostQuery from '@/hooks/useDiscussionPostQuery';
 import useUserInfoStore from '@/store/saveCurrentUserData';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { message } from 'antd';
 
 type Props = {
@@ -12,6 +12,7 @@ type Props = {
 };
 
 const EditDeleteBox = ({ postId, authorId }: Props) => {
+  const [mounted, setMounted] = useState<boolean>(false);
   const [messageApi, contextHolder] = message.useMessage();
   const router = useRouter();
   const { deletePostMutation } = useDiscussionPostQuery('EditDeleteBox');
@@ -30,25 +31,32 @@ const EditDeleteBox = ({ postId, authorId }: Props) => {
       //   console.log('에러==>>', error);
     }
   };
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
-    <>
-      {contextHolder}
-      <div>
-        {authorId === userId && (
-          <div className="flex justify-end mr-5 gap-3">
-            <Link href={`/discussion/edit/${postId}`}>게시글 수정</Link>
-            <button
-              onClick={() => {
-                const check = confirm('삭제된 글은 복구할 수 없습니다.\n \n삭제하시겠습니까?');
-                deletePost(check);
-              }}
-            >
-              게시글 삭제
-            </button>
-          </div>
-        )}
-      </div>
-    </>
+    mounted && (
+      <>
+        {contextHolder}
+        <div>
+          {authorId === userId && (
+            <div className="flex justify-end mr-5 gap-3">
+              <Link href={`/discussion/edit/${postId}`}>게시글 수정</Link>
+              <button
+                onClick={() => {
+                  const check = confirm('삭제된 글은 복구할 수 없습니다.\n \n삭제하시겠습니까?');
+                  deletePost(check);
+                }}
+              >
+                게시글 삭제
+              </button>
+            </div>
+          )}
+        </div>
+      </>
+    )
   );
 };
 

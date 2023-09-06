@@ -16,7 +16,7 @@ const UserInfoPage = async ({ params }: { params: { username: string } }) => {
   const { id, avatar_url } = userInfo!;
 
   return (
-    <div className="w-10/12">
+    <div className="w-10/12  xl:pb-[200px] ">
       <UserPageSemiHeader params={username} avatar_url={avatar_url!} />
       <UserPagePersonalRecords params={username} />
       <UserPagePersonalRecordsGraph params={username} />

@@ -3,7 +3,7 @@
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { message } from 'antd';
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 
 interface Props {
   signedInUserId: string;
@@ -14,8 +14,17 @@ const CommentInput = ({ signedInUserId, discussionId }: Props) => {
   const [commentValue, setCommentValue] = useState<string>('');
   const router = useRouter();
   const [messageApi, contextHolder] = message.useMessage();
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const writeCommentHandler = async () => {
+    if (!commentValue) {
+      messageApi.open({
+        type: 'warning',
+        content: '댓글을 입력해주세요.'
+      });
+      if (textareaRef.current) return textareaRef.current.focus();
+      return;
+    }
     const supabase = createClientComponentClient();
     const { data, error } = await supabase
       .from('discussion_comments')
@@ -36,25 +45,33 @@ const CommentInput = ({ signedInUserId, discussionId }: Props) => {
     setCommentValue('');
     router.refresh();
   };
-
+  const handleFocusing = () => {
+    if (textareaRef.current) textareaRef.current.focus();
+  };
   return (
     <>
       {contextHolder}
 
       <div className="flex w-full gap-2">
-        <div className="w-5/6">
-          <input
-            name="comment"
-            type="text"
-            className="custom_input "
+        <div className="w-full border rounded-xl flex px-[20px] py-[12px] justify-between" onClick={handleFocusing}>
+          <textarea
+            ref={textareaRef}
+            className="w-5/6 h-[92px] border-none resize-none focus:outline-none text-base"
+            placeholder="내용을 입력해 주세요."
             value={commentValue}
             onChange={(e) => setCommentValue(e.target.value)}
           />
-        </div>
-        <div className="w-1/6">
-          <button onClick={writeCommentHandler} className="custom_button">
-            글쓰기
-          </button>
+          <div className="self-end">
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                writeCommentHandler();
+              }}
+              className="primary_small_default_noIcon "
+            >
+              작성
+            </button>
+          </div>
         </div>
       </div>
     </>

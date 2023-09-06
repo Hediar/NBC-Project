@@ -9,7 +9,8 @@ interface Props {
 }
 
 const MovieDetailBottomBar = ({ movieId }: Props) => {
-  const pathName = usePathname().split('/')[3];
+  const pathName = usePathname().split('/')[3] ?? 'main';
+
   const tags = [
     { name: '주요정보', url: 'main' },
     { name: '출연/제작', url: 'crew' },
