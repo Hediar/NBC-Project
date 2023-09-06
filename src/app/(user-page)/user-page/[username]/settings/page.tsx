@@ -1,4 +1,4 @@
-import MyAccount from '@/components/UserPage/settings/Profile/MyAccount';
+import MyAccount from '@/components/UserPage/settings/MyAccount/MyAccount';
 import UserSettingsTabs from '@/components/UserPage/settings/UserSettingsTabs';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
@@ -36,8 +36,9 @@ const UserSettingsPage = async ({ params: { username }, searchParams }: Props) =
   return (
     <div className="w-full h-[calc(100vh)] sm:h-[calc(100vh-390px)]">
       <UserSettingsTabs />
+
       {/* <UserSettingsProfile user={user!} userData={userData!} /> */}
-      {myAccount && <MyAccount user={user!} userData={userData!} />}
+      {myAccount && <MyAccount userData={userData!} />}
       {changeInfo && <></>}
       {myMenu && <></>}
       {deleteAccount && <></>}
