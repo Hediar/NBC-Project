@@ -1,6 +1,7 @@
 'use client';
 
 import useUserInfoStore from '@/store/saveCurrentUserData';
+import { SVG_SignOut } from '@/styles/svg/SignOut';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 
@@ -8,8 +9,7 @@ const SignOutButton = () => {
   const router = useRouter();
   const { deleteUserInfo } = useUserInfoStore();
 
-  const clickHandler = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
+  const clickHandler = async () => {
     await axios.post('/auth/sign-out');
     router.refresh();
     deleteUserInfo();
@@ -17,7 +17,15 @@ const SignOutButton = () => {
 
   return (
     <div className="body1_regular_suit flex items-center">
-      <button onClick={(e) => clickHandler(e)}>로그아웃</button>
+      <button onClick={clickHandler} className="hidden lg:block hover:font-semibold animate-200">
+        로그아웃
+      </button>
+      <SVG_SignOut
+        width={22}
+        height={22}
+        onClick={clickHandler}
+        className="lg:hidden cursor-pointer animate-200 hover:scale-105"
+      />
     </div>
   );
 };

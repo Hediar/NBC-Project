@@ -26,11 +26,7 @@ export const POST = async (request: Request) => {
     if (error.message.includes('Invalid login credentials')) {
       return NextResponse.json({ error: true, message: '이메일이나 비밀번호가 틀립니다.' });
     }
-    // console.log(error.cause);
-    // console.log(error.message);
-    // console.log(error.name);
-    // console.log(error.stack);
-    // console.log(error.status);
+
     return NextResponse.json({ error: true, message: '에러가 발생했습니다' });
   }
 

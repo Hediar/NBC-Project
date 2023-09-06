@@ -24,7 +24,6 @@ export const POST = async (req: Request) => {
     .eq('user_id', userId);
 
   if (!checkIfAlreadyExist!.length) {
-    console.log(1);
     // 새로 추가하기
     const { error: rateMovieFailed } = await supabse
       .from('movie_ratings')

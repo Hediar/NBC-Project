@@ -3,7 +3,7 @@
 import POSTWatchLater from '@/api/POSTWatchLater';
 import getMovieNameWIthMovieId from '@/api/getMovieNameWIthMovieId';
 import { HeartFilled, HeartOutlined, HeartTwoTone, LikeFilled, LikeOutlined } from '@ant-design/icons';
-import { Tooltip } from 'antd';
+import { Tooltip, message } from 'antd';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
@@ -12,6 +12,7 @@ const MovieButtons = ({ movieId, title }: { movieId: number; title: string }) =>
   const path = usePathname();
   const [isHeartHover, setIsHeartHover] = useState<boolean>(false);
   const [isThumbsUpHover, setIsThumbsUpHover] = useState<boolean>(false);
+  const [messageApi, contextHolder] = message.useMessage();
 
   const ignoreHandler = async () => {
     const ignoreMovie = async () => {
@@ -21,11 +22,22 @@ const MovieButtons = ({ movieId, title }: { movieId: number; title: string }) =>
       if (isError && message.includes('no user')) {
         return router.replace(`?sign-in=true&scrollTo=${movieId}`);
       } else if (isError && message.includes('이미')) {
-        return alert(message);
+        messageApi.open({
+          type: 'error',
+          content: message
+        });
+        return;
       } else if (isError) {
-        return alert('오류가 발생했습니다. 다시 시도해주세요.');
+        messageApi.open({
+          type: 'error',
+          content: '오류가 발생했습니다. 다시 시도해주세요.'
+        });
+        return;
       }
-      alert('무시 목록에 추가됐습니다. 추천 목록에서 제외됩니다.');
+      messageApi.open({
+        type: 'success',
+        content: '무시 목록에 추가됐습니다. 추천 목록에서 제외됩니다.'
+      });
       // router.refresh();
     };
     ignoreMovie();
@@ -36,13 +48,18 @@ const MovieButtons = ({ movieId, title }: { movieId: number; title: string }) =>
     const message = await POSTWatchLater(movieId);
     const movieTitle = await getMovieNameWIthMovieId([movieId.toString()]);
 
-    alert(movieTitle[0] + message);
+    messageApi.open({
+      type: 'success',
+      content: movieTitle[0] + message
+    });
+
     router.refresh();
     return;
   };
 
   return (
     <>
+      {contextHolder}
       <div className="absolute -top-9 left-0">
         {!isThumbsUpHover && (
           <LikeOutlined
