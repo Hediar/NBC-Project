@@ -5,6 +5,9 @@ import supabase from '@/supabase/config';
 import Image from 'next/image';
 import React from 'react';
 import dayjs from 'dayjs';
+import { getUserProfile } from '@/api/review';
+import Link from 'next/link';
+import { Edit } from '@/styles/icons/Icons24';
 
 interface Params {
   postId: string;
@@ -19,11 +22,11 @@ export const dynamic = 'force-dynamic';
 const ReviewDetail = async ({ params }: Props) => {
   const { postId } = params;
 
-  const { data: reviews, error } = await supabase.from('reviews').select('*').eq('reviewid', postId);
-  const review = reviews![0];
+  const { data: review, error } = await supabase.from('reviews').select('*').eq('reviewid', postId).single();
 
-  const { data: users } = await supabase.from('users').select('*').eq('id', review.userid);
-  const user = users![0];
+  // const { data: users } = await supabase.from('users').select('*').eq('id', review.userid);
+  // const user = users![0];
+  const user = await getUserProfile(review.userid);
 
   const movieData = await getMovieDetail(review.movieid);
 
@@ -34,9 +37,9 @@ const ReviewDetail = async ({ params }: Props) => {
   return (
     <div>
       <div className="flex justify-between">
-        <h2>리뷰 상세</h2>
-        <UtilButtons postId={postId} userId={user.id} />
+        <h2 className="h3_suit">리뷰 상세</h2>
       </div>
+
       <div className="flex items-center w-full h-44 p-5 bg-slate-100 rounded-md">
         <div className="h-full relative">
           <Image
@@ -58,37 +61,63 @@ const ReviewDetail = async ({ params }: Props) => {
         </div>
       </div>
 
-      <div className="mb-4">
-        {/* <div>작성자: {user.username}</div> */}
-        <div>{dayjs(review.date).format('YYYY/MM/DD')}</div>
+      {/* 컨텐츠 S */}
+      <div className="overflow-hidden mb-4 rounded-[20px] border border-zinc-500">
+        <div className="flex items-center h-[60px] px-5 py-2 ">
+          <div className="w-10 h-10 bg-white rounded-full border border-gray-200 overflow-hidden">
+            <Image
+              className="w-full"
+              src={`${user!.avatar_url}`}
+              alt="프로필 이미지"
+              width={40}
+              height={40}
+              quality={100}
+            />
+          </div>
+          <div className="pl-2 text-neutral-800 text-base font-bold leading-snug">{user!.username}</div>
+          <span className="pl-5 text-neutral-800 text-sm font-normal">
+            {dayjs(review.created_at).format('YYYY.MM.DD')}
+          </span>
 
-        <ul className="flex flex-wrap">
-          {reviewCategories.map((category: string, i: number) => (
-            <li
-              key={category + i}
-              className="m-1 rounded-full text-teal-700 bg-teal-100 border border-teal-300 py-1 px-2 text-xs font-medium"
-            >
-              {category}
-            </li>
-          ))}
-          {reviewKeywords.map((keyword: { value: string }, i: number) => (
-            <li
-              key={i}
-              className="m-1 rounded-full  text-cyan-700 bg-cyan-100 border border-cyan-300 py-1 px-2 text-xs font-medium"
-            >
-              {keyword.value}
-            </li>
-          ))}
-        </ul>
-
-        <div>{review.review}</div>
-
-        <div>
-          <StarBox defaultValue={review.rating} readOnly={true} />
+          <div className="ml-auto">
+            <UtilButtons postId={postId} userId={review.userid} />
+          </div>
         </div>
 
-        <div>{review.content}</div>
+        <div className="flex flex-col items-center gap-6 py-14 px-5  bg-neutral-50 border-y border-zinc-500 text-neutral-800 text-base font-normal">
+          <div>{dayjs(review.date).format('YYYY/MM/DD')}</div>
+
+          <ul className="flex flex-wrap gap-3 justify-center">
+            {reviewCategories.map((category: string, i: number) => (
+              <li
+                key={category + i}
+                className="min-w-[70px] h-[38px] px-4 py-2 bg-white rounded-[22px] border border-zinc-300 justify-center items-center gap-2.5 inline-flex text-neutral-800 text-base font-normal leading-snug"
+              >
+                {category}
+              </li>
+            ))}
+            {reviewKeywords.map((keyword: { value: string }, i: number) => (
+              <li
+                key={i}
+                className="min-w-[70px] h-[38px] px-4 py-2 bg-white rounded-[22px] border border-zinc-300 justify-center items-center gap-2.5 inline-flex text-neutral-800 text-base font-normal leading-snug"
+              >
+                {keyword.value}
+              </li>
+            ))}
+          </ul>
+
+          <div>{review.review}</div>
+
+          <div>
+            <StarBox defaultValue={review.rating} readOnly={true} />
+          </div>
+
+          <div>{review.content}</div>
+        </div>
+
+        <div className="flex items-center h-16 px-5 ">좋아요 자리</div>
       </div>
+      {/* 컨텐츠 E */}
     </div>
   );
 };

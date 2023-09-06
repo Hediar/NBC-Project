@@ -73,12 +73,30 @@ export const StarFill = (props: SVGProps<SVGSVGElement>) => (
 
 export const ArrowRight = (props: SVGProps<SVGSVGElement>) => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
-    <path d="M9 18L15 12L9 6" stroke="#4F4F4F" strokeWidth="2" stroke-linecap="round" strokeLinejoin="round" />
+    <path d="M9 18L15 12L9 6" stroke="#4F4F4F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 export const ArrowDown = (props: SVGProps<SVGSVGElement>) => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
-    <path d="M6 9L12 15L18 9" stroke="#4F4F4F" strokeWidth="2" stroke-linecap="round" strokeLinejoin="round" />
+    <path d="M6 9L12 15L18 9" stroke="#4F4F4F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+export const Edit = (props: SVGProps<SVGSVGElement>) => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path
+      d="M10.1716 4.5H7C5.11438 4.5 4.17157 4.5 3.58579 5.08579C3 5.67157 3 6.61438 3 8.5L3 16.9998C3 18.8855 3 19.8283 3.58579 20.4141C4.17157 20.9998 5.11438 20.9998 7 20.9998H15C16.8856 20.9998 17.8284 20.9998 18.4142 20.4141C19 19.8283 19 18.8855 19 16.9998V14.9998"
+      stroke="#4F4F4F"
+      strokeWidth="2"
+      strokeLinecap="round"
+    />
+    <path
+      d="M9.29289 14.7073C9 14.4144 9 13.943 9 13.0002V11.0002L18 2L22 6L13 15.0002H11C10.0572 15.0002 9.58579 15.0002 9.29289 14.7073Z"
+      stroke="#4F4F4F"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path d="M16 4L20 8" stroke="#4F4F4F" strokeWidth="2" />
   </svg>
 );
 
