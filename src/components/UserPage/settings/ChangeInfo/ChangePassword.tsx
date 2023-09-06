@@ -63,10 +63,15 @@ const ChangePassword = ({ user }: Props) => {
     const {
       data: { data, error }
     } = await axios.post('/auth/profile/change-password', { nonce: nonceValue, password: passwordValue });
-    console.log('성공했다면,', data);
 
     if (error) {
       console.log(error);
+      if (error.includes('New password should be different from the old password')) {
+        return messageApi.open({
+          type: 'error',
+          content: `예전 비밀번호와 같습니다. 다른 비밀번호를 사용해주세요.`
+        });
+      }
       return messageApi.open({
         type: 'error',
         content: `에러가 발생했습니다. \n에러: ${error}`
@@ -154,7 +159,9 @@ const ChangePassword = ({ user }: Props) => {
             cancelText="취소"
           >
             <div className="w-[350px] sm:w-auto">
-              <button className="w-full button-dark ">변경하기</button>
+              <button disabled={disableInput} className="w-full button-dark ">
+                변경하기
+              </button>
             </div>
           </Popconfirm>
         )}

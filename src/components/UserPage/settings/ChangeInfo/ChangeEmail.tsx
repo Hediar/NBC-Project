@@ -71,7 +71,7 @@ const ChangeEmail = ({ user }: Props) => {
   return (
     <>
       {contextHolder}
-      <div className="w-full items-center sm:items-start flex flex-col gap-6">
+      <div className="w-full items-center sm:items-start flex flex-col gap-6 ">
         <h1 className="w-full px-4">이메일 변경</h1>
         <input
           placeholder="이메일 주소"
