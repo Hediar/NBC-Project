@@ -14,10 +14,15 @@ export const POST = async (request: Request) => {
     const fileName = Date.now().toString();
 
     const uploadPath = `users/avatar/${userId}`;
-    const { data: uploadedPhotoData } = await supabase.storage.from(uploadPath).upload(fileName, file as File);
+    const { data: uploadedPhotoData, error: uploadError } = await supabase.storage
+      .from(uploadPath)
+      .upload(fileName, file as File);
 
     const { data: publicUrlData } = supabase.storage.from(uploadPath).getPublicUrl(fileName);
+
     const publicUrl = publicUrlData.publicUrl;
+
+    console.log('publicUrl', publicUrl);
 
     await supabase.from('users').update({ avatar_url: publicUrl }).eq('id', userId);
 

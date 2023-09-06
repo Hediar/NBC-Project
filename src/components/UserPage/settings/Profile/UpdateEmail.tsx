@@ -17,7 +17,7 @@ const UpdateEmail = ({ user }: Props) => {
 
   const [emailValue, setEmailValue] = useState<string>(userPrevEmail);
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
-  const [showEmailHover, setShowEmailHover] = useState(false);
+
   const inputRef = useRef<HTMLInputElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
 

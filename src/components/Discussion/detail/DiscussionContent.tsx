@@ -1,5 +1,6 @@
 import { getMovieDetail } from '@/api/tmdb';
 import Image from 'next/image';
+import Link from 'next/link';
 import React from 'react';
 
 interface Props {
@@ -14,17 +15,22 @@ const DiscussionContent = async ({ movieId }: Props) => {
       <p className="mt-10 h3_suit">토론 상세</p>
       <div className="flex items-center w-full mt-5 px-10 py-5 rounded-[20px] shadow1 border">
         <div className="h-full relative">
-          <Image
-            src={`${baseImgUrl}w300_and_h450_bestv2${movieData.backdrop_path}`}
-            alt="포스터 이미지"
-            width={100}
-            height={150}
-            quality={100}
-            className="rounded-lg"
-          />
+          <Link href={`/detail/${movieId}`}>
+            <Image
+              src={`${baseImgUrl}w300_and_h450_bestv2${movieData.backdrop_path}`}
+              alt="포스터 이미지"
+              width={100}
+              height={150}
+              quality={100}
+              className="rounded-lg"
+            />
+          </Link>
         </div>
         <div className="flex flex-col gap-3 ml-3">
-          <strong className="h4_suit">{movieData.title}</strong>
+          <Link href={`/detail/${movieId}`}>
+            <strong className="h4_suit">{movieData.title}</strong>
+          </Link>
+
           <div className=" body1_regular_suit text-[#888888]">
             <div className="flex">
               {movieData.release_date.slice(0, 4)}
