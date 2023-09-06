@@ -30,27 +30,6 @@ const TrendMoives = async ({ genreId }: { genreId: string }) => {
           return (
             <>
               <MovieItem movie={movie} />
-              {/* <div className="flex-none py-6 first:pl-6 last:pr-6 relative">
-                <div key={movie.id}>
-                  <Link
-                    href={`${process.env.NEXT_PUBLIC_BASE_URL}/detail/${movie.id}/main`}
-                    className="w-56 h-full flex flex-col gap-2 items-center "
-                  >
-                    <Image
-                      src={`${process.env.NEXT_PUBLIC_TMDB_BASE_IMAGE_URL}w220_and_h330_bestv2${movie.poster_path}`}
-                      alt=""
-                      width={200}
-                      height={420}
-                      priority={false}
-                      className="rounded-2xl"
-                    ></Image>
-                    <div>{movie.title}</div>
-                  </Link>
-                  <div className="absolute top-7 right-5">
-                    <MovieLikes movieid={movie.id} />
-                  </div>
-                </div>
-              </div> */}
             </>
           );
         })}
