@@ -3,6 +3,7 @@ import React from 'react';
 import altImage from '../../../../public/anonymous-avatar-icon.png';
 import Link from 'next/link';
 import { ArrowRight, StarFill } from '@/styles/icons/Icons24';
+import { SVGTalkEndPoint, SVGTalkStartPoint } from '@/styles/icons/IconsETC';
 
 interface Props {
   movieData: MovieData;
@@ -27,14 +28,20 @@ const KeyInfomation = async ({ movieData }: Props) => {
           </section>
 
           <section id="detail-cont" className="w-[1250px] mx-auto flex flex-col gap-10 px-4 py-10">
-            <div className="text-sm h-[300px] flex">
+            <div className="text-sm h-[300px] flex relative">
               <div
                 className="w-[47px] h-[57px] self-end bg-white"
                 style={{ clipPath: 'polygon(100% 50%, 0% 100%, 100% 100%)' }}
               ></div>
-              <div className="flex flex-col flex-wrap gap-2 justify-center bg-white rounded-2xl rounded-bl-none font-bold text-2xl px-4">
+              <div className="w-full flex flex-col flex-wrap gap-2 justify-center items-center bg-white rounded-2xl rounded-bl-none font-bold text-2xl px-4">
                 {tagline && <p>"{tagline}"</p>}
                 <span>{overview}</span>
+              </div>
+              <div className="absolute left-16 top-5">
+                <SVGTalkStartPoint />
+              </div>
+              <div className="absolute right-5 top-5">
+                <SVGTalkEndPoint />
               </div>
             </div>
 
