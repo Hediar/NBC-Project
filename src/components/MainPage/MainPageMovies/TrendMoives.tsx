@@ -3,6 +3,7 @@ import MovieLikes from '../../MovieLikes/MovieLikes';
 import Image from 'next/image';
 import Link from 'next/link';
 import TrendMovieSlider from './TrendMovieSlider';
+import MovieItem from '@/components/common/MovieItem';
 
 export const revalidate = 0;
 
@@ -28,7 +29,8 @@ const TrendMoives = async ({ genreId }: { genreId: string }) => {
         {listMovies.map((movie: MovieData, idx: number) => {
           return (
             <>
-              <div className="flex-none py-6 first:pl-6 last:pr-6 relative">
+              <MovieItem movie={movie} />
+              {/* <div className="flex-none py-6 first:pl-6 last:pr-6 relative">
                 <div key={movie.id}>
                   <Link
                     href={`${process.env.NEXT_PUBLIC_BASE_URL}/detail/${movie.id}/main`}
@@ -48,7 +50,7 @@ const TrendMoives = async ({ genreId }: { genreId: string }) => {
                     <MovieLikes movieid={movie.id} />
                   </div>
                 </div>
-              </div>
+              </div> */}
             </>
           );
         })}

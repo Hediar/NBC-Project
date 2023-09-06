@@ -115,8 +115,8 @@ const MovieList = () => {
       </div>
       <div className="p-8">{contents}</div>
       {currentPage < dataList?.total_pages && ( // 다음 페이지가 있는 경우에만 더보기 버튼 표시
-        <div onClick={fetchMore} className="bg-blue-700 cursor-pointer text-center py-2 text-white">
-          더보기
+        <div onClick={fetchMore} className="full_button justify-center">
+          <div className="inline-flex items-center justify-center gap-1 px-5 py-2">더보기</div>
         </div>
       )}
     </div>
