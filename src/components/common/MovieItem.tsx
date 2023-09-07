@@ -17,6 +17,15 @@ const MovieItem = ({ movie }: { movie: MovieData }) => {
             src={`https://image.tmdb.org/t/p/w185${movie.poster_path}`}
             alt="poster"
           />
+          <Link
+            href={`/detail/${movie.id}`}
+            className="absolute bg-transparent  top-0 left-0 w-[120px] h-[80px]"
+          ></Link>
+          <Link
+            href={`/detail/${movie.id}`}
+            className="absolute bg-transparent w-full h-[calc(100%-90px)] md:h-[calc(100%-80px)]  top-[90px] md:top-[80px] "
+          ></Link>
+
           <div className="bg-gray-800 bg-opacity-30 rounded-xl py-1 px-1 absolute top-4 right-4 flex flex-col gap-[6px] items-center">
             <WatchLaterButton movieId={movie.id} />
             <MovieLikes movieid={movie.id} />

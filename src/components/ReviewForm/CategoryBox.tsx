@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 
 type Props = {
@@ -21,7 +23,7 @@ const CategoryBox = ({ CATEGORY, boxIndex, checkedList, checkHandler }: Props) =
           <li key={item + i} className="block w-full my-2">
             <input
               type="checkbox"
-              checked={checkedList.includes(item)}
+              checked={checkedList && checkedList.includes(item)}
               onChange={(e) => checkHandler(e, item)}
               value={item}
               className="peer sr-only"

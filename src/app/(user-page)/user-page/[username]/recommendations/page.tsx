@@ -52,7 +52,7 @@ const RecommendationPage = async ({ params }: Props) => {
     <>
       <UserPageMostWatchedGenres username={username} />
       {watched_movies.length === 0 ? (
-        <div className="flex flex-col items-center w-full mt-10 h-[calc(100%-54px)] ">
+        <div className="flex flex-col items-center w-full mt-10  h-screen">
           <h2 className="text-center font-bold text-2xl">{username}님을 위한 추천 리스트!</h2>
           <div className="flex gap-y-10 justify-center sm:gap-10 md:gap-5 gap-5 items-center h-full">
             <p className="w-full text-2xl text-center">추천을 받기 위해 평점이나 리뷰를 남겨주세요.</p>

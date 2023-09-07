@@ -34,9 +34,9 @@ const ReviewItem = ({ review }: Props) => {
           <span className="pl-5 text-neutral-800 text-sm font-normal">
             {dayjs(review.created_at).format('YYYY.MM.DD')}
           </span>
-          <Link href={`/review/edit/${review.reviewid}`} className="ml-auto">
+          {/* <Link href={`/review/edit/${review.reviewid}`} className="ml-auto">
             <Edit />
-          </Link>
+          </Link> */}
         </div>
 
         <div className="h-24 px-[40px] pt-[18px] bg-gradient-to-l from-orange-200 to-violet-200">
@@ -87,7 +87,7 @@ const ReviewItem = ({ review }: Props) => {
             ))}
           </ul>
 
-          <ReviewLikes reviewid={review.reviewid} />
+          {/* <ReviewLikes reviewid={review.reviewid} /> */}
         </div>
       </Link>
     </li>

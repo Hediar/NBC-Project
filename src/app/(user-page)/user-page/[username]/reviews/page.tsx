@@ -47,7 +47,7 @@ const MyReviewPage = () => {
   if (!reviews.length) return <ReviewListEmpty />;
 
   return (
-    <div>
+    <div className="mb-[300px]">
       <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2 p-2">
         <li className="border-dashed border-2 border-gray-400 rounded-2xl">
           <Link href={`/review/write`} className="flex w-full h-full justify-center items-center">

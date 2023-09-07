@@ -16,7 +16,7 @@ const LatestMovieSlider = ({ photoData }: Props) => {
           return (
             <div
               key={idx}
-              className="relative w-full h-full md:w-[740px] md:h-[608px] border border-solid rounded-md overflow-hidden bg-gradient-to-r from-[#F3C2B0] to-[#FFF2DD]"
+              className="relative w-full h-full sm:w-auto md:h-[608px] border border-solid rounded-md overflow-hidden bg-gradient-to-r from-[#F3C2B0] to-[#FFF2DD]"
             >
               <Link href={`/detail/${imageData.id}`} className="absolute top-[30px] left-7">
                 <Image

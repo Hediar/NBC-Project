@@ -49,7 +49,7 @@ const LikesListPage = async ({ params }: Props) => {
   const movieContents = movieDetails.map((movie) => <MovieItem key={movie.id} movie={movie} />);
 
   return (
-    <div className="flex flex-col items-center w-full mt-10">
+    <div className="flex flex-col items-center w-full mt-10 h-screen">
       <h2 className="text-center font-bold text-2xl py-10 px-4">
         {username}님이 좋아하신 {getLengthThruErrorCheck()}개의 영화입니다.
       </h2>

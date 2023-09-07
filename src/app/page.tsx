@@ -10,7 +10,7 @@ export const revalidate = 0;
 
 export default async function Home() {
   return (
-    <main>
+    <main className="w-full overflow-x-hidden">
       <section className="my-8">
         <div className="flex relative items-end md:flex-row my-[120px] justify-between">
           <h2 className="h3_suit mx-auto md:text-6xl leading-[72px]">😎장르별 인기 영화</h2>
