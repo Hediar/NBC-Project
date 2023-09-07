@@ -9,6 +9,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { getMovieDetail } from '@/api/tmdb';
 import { optionMark } from '@/static/optionMark';
 import { message } from 'antd';
+import { debounce } from 'lodash';
 
 interface Props {}
 
@@ -308,7 +309,7 @@ const DiscussionRegistPage = (props: Props) => {
           </button>
           <button
             className="border px-2 py-1 bg-black text-white font-bold hover:bg-gray-200 hover:text-gray-700 rounded-[10px]"
-            onClick={handleSubmit}
+            onClick={debounce(handleSubmit, 300)}
           >
             토론 게시하기
           </button>
