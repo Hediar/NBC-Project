@@ -31,9 +31,9 @@ const DiscussionTopic = async ({ postData }: Props) => {
         </header>
 
         <section className="min-h-[438px] px-[62px] py-[54px] flex flex-col items-center relative mt-5 border border-[#888888] rounded-[40px]">
-          <div className="flex flex-col justify-center items-center gap-[10px]">
-            <h3 className="h4_suit">{postData?.title}</h3>
-            <p className="body1_regular_suit text-[#888888]">{postData?.content}</p>
+          <div className="flex flex-col flex-wrap justify-center items-center gap-[10px]">
+            <h3 className="h4_suit">{postData?.title.slice(0, 10)}</h3>
+            <p className="body1_regular_suit text-[#888888]">{postData?.content.slice(0, 10)}</p>
           </div>
 
           {optionData?.length ? (
