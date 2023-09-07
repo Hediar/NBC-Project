@@ -83,7 +83,7 @@ const NewSignnIn = () => {
           localStorage.setItem('saved_email', emailValue);
         }
         router.refresh();
-        // router.replace(path);
+        router.replace(path);
         messageApi.open({
           type: 'success',
           content: '로그인 완료!'
