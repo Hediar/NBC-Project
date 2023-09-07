@@ -23,6 +23,9 @@ const theme = {
       itemSelectedColor: '#222222',
       horizontalItemSelectedColor: '#222222'
     }
+  },
+  token: {
+    colorPrimary: '#444'
   }
 };
 

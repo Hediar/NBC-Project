@@ -4,6 +4,7 @@ import altImage from '../../../../public/anonymous-avatar-icon.png';
 import Link from 'next/link';
 import { ArrowRight, StarFill } from '@/styles/icons/Icons24';
 import { SVGTalkEndPoint, SVGTalkStartPoint } from '@/styles/icons/IconsETC';
+import { extractMainColors, findBrightestTwoColors } from '@/api/findColors';
 
 interface Props {
   movieData: MovieData;
@@ -11,11 +12,24 @@ interface Props {
 const baseImgUrl = process.env.NEXT_PUBLIC_TMDB_BASE_IMAGE_URL;
 const KeyInfomation = async ({ movieData }: Props) => {
   const { id: movieId, poster_path, overview, tagline, vote_average, appearences, productions } = movieData;
+  const formData = new FormData();
+  const imageUrl = `${baseImgUrl}w300_and_h450_bestv2${poster_path}`;
+  formData.append('imageUrl', imageUrl.toString());
+  const res = await fetch('http://localhost:3000/api/imagecolorpicker', { method: 'post', body: formData });
+  const { message: rgb } = await res.json();
+
+  const [rgba1] = extractMainColors(rgb, 1);
 
   return (
     <div>
-      <main className="h-[500px] py-[40px] bg-gray-100">
-        <div className="flex">
+      <main
+        className="h-[500px] py-[40px]"
+        style={{
+          background: `linear-gradient(90deg, rgb(34,34,34) 0%, rgba(${rgba1[0]},${rgba1[1]},${rgba1[2]},1) 35%, rgba(235,235,235,1) 100%)`,
+          filter: `brightness(1.2)`
+        }}
+      >
+        <div className="flex w-4/5 mx-auto">
           <section>
             <Image
               src={`${baseImgUrl}w300_and_h450_bestv2${poster_path}`}
@@ -46,7 +60,7 @@ const KeyInfomation = async ({ movieData }: Props) => {
             </div>
 
             <div>
-              <span className="font-bold text-base flex">
+              <span className="font-bold text-base text-white flex">
                 평균 별점
                 <StarFill />
                 {(vote_average / 2).toFixed(2)}
@@ -56,7 +70,7 @@ const KeyInfomation = async ({ movieData }: Props) => {
         </div>
       </main>
 
-      <div>
+      <div className="w-4/5 mx-auto">
         <p className="font-bold text-2xl flex items-center mt-20">
           출연<span style={{ fontSize: '0.5px' }}>●</span>제작
         </p>
@@ -115,9 +129,8 @@ const KeyInfomation = async ({ movieData }: Props) => {
           더보기
           <ArrowRight />
         </Link>
-
-        <div className="border-b"></div>
       </div>
+      <div className="border-b"></div>
     </div>
   );
 };

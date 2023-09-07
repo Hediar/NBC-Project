@@ -12,22 +12,22 @@ export default async function Home() {
   return (
     <main>
       <section className="my-8">
-        <div className="flex flex-col items-end my-[120px] md:flex-row md:justify-between">
-          <h2 className="h1_suit mx-auto">😎장르별 인기 영화</h2>
-          <Link href={'/movielist'} className="flex mt-4 mr-[190px] md:mt-0">
+        <div className="flex relative items-end md:flex-row my-[120px] justify-between">
+          <h2 className="h3_suit mx-auto md:text-6xl leading-[72px]">😎장르별 인기 영화</h2>
+          <Link href={'/movielist'} className="flex absolute right-11 mt-4 md:mr-[190px] ">
             더보기 <ArrowRight2 />
           </Link>
         </div>
-        <div className="p-2 mx-32">
+        <div className="p-2 mx-5 md:mx-32">
           <KeywordButtons params={'all'} />
         </div>
         <TrendMoives genreId={'all'} />
       </section>
-      <section className="mt-[180px] mb-[160px] mx-[190px] flex flex-col md:flex-row">
-        <div className="md:w-1/2 mb-8 md:mb-0 mr-[58px]">
+      <section className="flex-row sm:flex lg:mt-[360px]">
+        <div className="sm:w-1/2 mb-8 md:mb-0 mr-[58px] lg:mb-[160px] 2xl:ml-[192px]">
           <LatestReviews />
         </div>
-        <div className="md:w-1/2">
+        <div className="sm:w-1/2 2xl:mr-[192px]">
           <LatestMovies />
         </div>
       </section>

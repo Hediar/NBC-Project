@@ -10,7 +10,7 @@ type Props = {
 
 const LatestMovieSlider = ({ photoData }: Props) => {
   return (
-    <div className="w-full md:w-[740px] h-auto md:h-[608px] rounded-md font-thin text-xl my-3 mr-5">
+    <div className="w-full p-5 md:w-[740px] h-auto md:h-[608px] rounded-md font-thin text-xl my-3 mr-5">
       <LatestMoviesCarousel
         slides={photoData.map((imageData, idx) => {
           return (

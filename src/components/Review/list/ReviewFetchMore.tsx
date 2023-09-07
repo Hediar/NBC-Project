@@ -34,6 +34,7 @@ const ReviewFetchMore = ({ searchParams }: Props) => {
     }
   }) as any;
   // console.log('✅reviews => ', reviews);
+  // console.log('✅reviews => ', reviews);
 
   useEffect(() => {
     if (!firstMount) {

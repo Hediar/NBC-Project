@@ -25,7 +25,7 @@ const MovieList = () => {
       const data = await contentPageGetDataSearch(searchMovieValue, searchType, page);
       setDataList(data);
       if (searchType === 'movie') {
-        const results = data;
+        const results = data.results;
         if (page === 1) {
           setFilterefData([...results]);
         } else {
@@ -115,7 +115,7 @@ const MovieList = () => {
       </div>
       <div className="p-8">{contents}</div>
       {currentPage < dataList?.total_pages && ( // 다음 페이지가 있는 경우에만 더보기 버튼 표시
-        <div onClick={fetchMore} className="full_button justify-center">
+        <div onClick={fetchMore} className="full_button">
           <div className="inline-flex items-center justify-center gap-1 px-5 py-2">더보기</div>
         </div>
       )}
