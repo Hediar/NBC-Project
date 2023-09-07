@@ -15,13 +15,13 @@ const MovieDetailBottomBar = ({ movieId }: Props) => {
     { name: '주요정보', url: 'main' },
     { name: '출연/제작', url: 'crew' },
     { name: '영상/포토', url: 'trailer' },
-    { name: '토론', url: 'discussion' },
-    { name: '리뷰', url: 'review' }
+    { name: '토론', url: 'discussion' }
+    // { name: '리뷰', url: 'review' }
   ];
 
   return (
     <nav className="mb-10 relative">
-      <ul className="flex gap-7">
+      <ul className="flex gap-7" style={{ width: '80%', margin: '0 auto' }}>
         {tags.map((tag, idx) => {
           return (
             <li key={idx}>

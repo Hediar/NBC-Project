@@ -29,6 +29,7 @@ const UpdatePassword = ({ user }: Props) => {
       </>
     );
   }
+
   const clickHandler = async () => {
     if (buttonRef.current?.innerText === '수정') {
       setIsDisabled(false);
@@ -42,7 +43,7 @@ const UpdatePassword = ({ user }: Props) => {
         data: { data: result, error }
       } = await axios.post('/auth/profile/password', { password: passwordValue, nonce: nonceValue });
       if (error) {
-        console.log(error);
+        // console.log(error);
         if (error.includes('6 characters')) {
           messageApi.open({
             type: 'warning',

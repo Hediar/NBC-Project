@@ -10,7 +10,7 @@ const AppearanceProduction = ({ movieData }: Props) => {
   const { appearences, productions } = movieData;
 
   return (
-    <div className="flex w-full justify-between">
+    <div className="flex w-4/5 mx-auto justify-between">
       <div className="flex w-1/2 flex-col gap-3">
         <p>출연</p>
         {appearences.map((cast, idx) => {

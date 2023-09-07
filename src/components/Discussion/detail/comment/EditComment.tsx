@@ -1,6 +1,5 @@
 'use client';
 
-import useToggleDiscussionCommentEditModal from '@/store/toggleDiscussionCommentEditModal';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
@@ -10,18 +9,16 @@ interface Props {
 
 const EditCommentButton = ({ postId }: Props) => {
   const router = useRouter();
-  const { isDiscussionCommentEditModalOpen, setIsDiscussionCommentEditModalOpen } =
-    useToggleDiscussionCommentEditModal();
 
   const deleteHandler = async () => {
-    if (confirm('수정하시겠습니까?')) {
-      setIsDiscussionCommentEditModalOpen(true, postId);
-    }
+    router.replace(`?edit-comment=true&postid=${postId}&scrollTo="comment-edit"`);
   };
 
   return (
     <>
-      <button onClick={deleteHandler}>수정</button>
+      <button id="comment-edit" onClick={deleteHandler}>
+        수정
+      </button>
     </>
   );
 };

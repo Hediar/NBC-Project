@@ -3,7 +3,7 @@ import React from 'react';
 
 const ReviewListEmpty = () => {
   return (
-    <div className="flex flex-col items-center justify-center  my-56">
+    <div className="flex flex-col items-center justify-center  my-56  ">
       <p className="font-bold text-2xl">작성한 리뷰가 없습니다.</p>
       <Link
         href={`/review/write`}

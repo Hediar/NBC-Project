@@ -18,9 +18,9 @@ const TrendMoives = async ({ genreId }: { genreId: string }) => {
   return (
     <>
       <TrendMovieSlider photoData={sliderMovies} />
-      <div className="flex gap-6 justify-center mx-11 sm:grid md:grid md:grid-cols-2 lg:grid-cols-3 xl:flex">
+      <div className="grid-cols-2 justify-center mx-11 md:grid md:grid-cols-2 gap-6 lg:grid-cols-3 xl:grid-cols-4 2xl:flex">
         {listMovies.map((movie: MovieData, idx: number) => (
-          <div key={movie.id} className="w-[240px] h-[467px]">
+          <div key={movie.id} className="w-auto md:w-[240px]">
             <MovieItem movie={movie} />
           </div>
         ))}

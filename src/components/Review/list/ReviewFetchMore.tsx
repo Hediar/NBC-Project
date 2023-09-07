@@ -12,7 +12,6 @@ type Props = {
 };
 
 const ReviewFetchMore = ({ searchParams }: Props) => {
-  console.log('왜안바껴searchParams => ', searchParams);
   const [firstMount, setFirstMount] = useState(true);
 
   const {
@@ -34,7 +33,8 @@ const ReviewFetchMore = ({ searchParams }: Props) => {
       return data.pages.map((pageData: any) => pageData.results).flat();
     }
   }) as any;
-  console.log('✅reviews => ', reviews);
+  // console.log('✅reviews => ', reviews);
+  // console.log('✅reviews => ', reviews);
 
   useEffect(() => {
     if (!firstMount) {
@@ -52,14 +52,16 @@ const ReviewFetchMore = ({ searchParams }: Props) => {
 
   return (
     <div>
-      <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-5">
+      <ul className="grid grid-cols-1 pb-3 md:grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-5">
         {reviews?.map((review: any, i: number) => (
           <ReviewItem key={i} review={review} />
         ))}
       </ul>
       {hasNextPage && (
-        <button type="button" disabled={isFetching} onClick={fetchMore} className="full_button mt-20">
-          {isFetching ? '로딩 중...' : '더 보기'}
+        <button type="button" disabled={isFetching} onClick={fetchMore} className="full_button w-full items-center">
+          <div className="inline-flex items-center justify-center gap-1 px-5 py-2">
+            {isFetching ? '로딩 중...' : '더 보기'}
+          </div>
         </button>
       )}
     </div>

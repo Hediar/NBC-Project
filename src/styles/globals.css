@@ -17,7 +17,7 @@ body {
 }
 /* DESIGN SYSTEM */
 .full_button {
-  @apply flex rounded-3xl border border-gray-300 bg-white w-[1540px] h-[70px] cursor-pointer;
+  @apply flex rounded-3xl border border-gray-300 bg-white h-[70px] cursor-pointer justify-center;
 }
 
 .large_default_button {
@@ -46,8 +46,12 @@ body {
   @apply transform ease-in-out duration-200 hover:scale-105 active:scale-95;
 }
 
+.change-info-input {
+  @apply w-[280px] sm:w-[350px] px-3 py-2.5 bg-white border shadow-sm border-slate-300 placeholder-slate-400  disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 focus:outline-none focus:border-gray-500 focus:ring-gray-500 block  rounded-md sm:text-sm focus:ring-1 focus:invalid:border-gray-400 focus:invalid:ring-red-400 invalid:border-pink-500 invalid:text-pink-600 disabled:shadow-none transform ease-in-out duration-150;
+}
+
 .custom_input {
-  @apply px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400  disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1 focus:invalid:border-gray-400 focus:invalid:ring-gray-400 invalid:border-pink-500 invalid:text-pink-600 disabled:shadow-none transform ease-in-out duration-150;
+  @apply px-3 py-2.5 bg-white border shadow-sm border-slate-300 placeholder-slate-400  disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 focus:outline-none focus:border-gray-500 focus:ring-gray-500 block w-full rounded-md sm:text-sm focus:ring-1 focus:invalid:border-gray-400 focus:invalid:ring-red-400 invalid:border-pink-500 invalid:text-pink-600 disabled:shadow-none transform ease-in-out duration-150;
 }
 .outer_div {
   @apply flex justify-between w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm transform ease-in-out duration-150;
@@ -64,6 +68,13 @@ body {
 
 .custom_button {
   @apply w-full bg-sky-500 hover:bg-sky-700 px-5 py-2.5 text-sm leading-5 rounded-md font-semibold text-white cursor-pointer disabled:bg-sky-800 transform ease-in-out duration-150;
+}
+
+.button-white {
+  @apply border border-gray-700 px-2.5 py-1 rounded-lg text-neutral-800 animate-200 hover:border-MainBlue1 hover:text-MainBlue1;
+}
+.button-dark {
+  @apply bg-[#4b4e5b] text-white border border-gray-700 px-2.5 py-1 rounded-lg hover:bg-[#686c80] animate-200;
 }
 
 .custom_button_cancel {
@@ -216,5 +227,5 @@ select:-webkit-autofill:focus {
 }
 
 .wrap {
-  @apply max-w-[1600px] px-5 mt-[30px] mb-[80px] lg:px-[30px] lg:mt-[60px] lg:mb-[200px];
+  @apply max-w-[1600px] px-5 mt-[30px] mb-[80px] lg:px-[30px] lg:mt-[60px] lg:mb-[200px] mx-auto;
 }

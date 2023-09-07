@@ -42,10 +42,10 @@ export default async function MovieDetailLayout({
     .single();
 
   return (
-    <section style={{ width: '80%', margin: '0 auto' }}>
+    <section>
       <MovieDetailInfo movieId={movieId} />
       {children}
-      <section>
+      <section style={{ width: '80%', margin: '0 auto' }}>
         {discussionPostData ? (
           <div className="flex">
             <main className="w-2/3 pr-10">

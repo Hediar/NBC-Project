@@ -3,6 +3,9 @@ import Image from 'next/image';
 import React from 'react';
 import MovieDetailBottomBar from './MovieDetailBottomBar';
 import { MOVIE_COUNTRIES } from '@/static/movieCountries';
+import WatchLaterButton from '../common/WatchLaterButton';
+import MovieLikes from '../MovieLikes/MovieLikes';
+import AddIgnoreMovieButton from '../common/AddIgnoreMovieButton';
 
 interface Props {
   movieId: string;
@@ -36,12 +39,17 @@ const MovieDetailInfo = async ({ movieId }: Props) => {
   return (
     <div>
       <div style={{ height: '500px', color: 'white' }}>
+        <div className="bg-gray-800 bg-opacity-30 rounded-xl py-1 px-1 absolute top-20 right-[11%] flex flex-col gap-[6px] items-center">
+          <WatchLaterButton movieId={movieData.id} />
+          <MovieLikes movieid={movieData.id} />
+          <AddIgnoreMovieButton movieid={movieData.id} />
+        </div>
         <div className="absolute w-full h-[500px] -z-50 left-0">
           <div
             className="min-w-[888px] h-full"
             style={{
               backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.2), rgba(0, 0, 0, 0.8)),
-                  url("${baseImgUrl}w1920_and_h1080_bestv2${movieData.backdrop_path}")`,
+              url("${baseImgUrl}w1920_and_h1080_bestv2${movieData.backdrop_path}")`,
               backgroundSize: '100%',
               backgroundPositionY: '10%',
               filter: 'brightness(1.35)'

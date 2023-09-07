@@ -38,7 +38,7 @@ const RecommendationList = async ({ username, watched_movies }: Props) => {
   // 1. 사용자 정보 조회
   const { data: userData, error: isUserNotSignedIn } = await supabase.auth.getUser();
   if (isUserNotSignedIn) {
-    console.log(isUserNotSignedIn);
+    // console.log(isUserNotSignedIn);
     return <>로그인을 해주세요.</>;
   }
 
