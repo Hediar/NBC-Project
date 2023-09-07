@@ -68,9 +68,9 @@ const CommentInput = ({ signedInUserId, discussionId }: Props) => {
             <button
               onClick={(e) => {
                 e.stopPropagation();
-                debounce(() => writeCommentHandler(), 200);
+                debounce(() => writeCommentHandler(), 200)();
               }}
-              className="primary_small_default_noIcon "
+              className="primary_small_default_noIcon"
             >
               작성
             </button>

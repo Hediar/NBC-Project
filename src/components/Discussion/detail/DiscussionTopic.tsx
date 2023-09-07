@@ -20,7 +20,7 @@ const DiscussionTopic = async ({ postData }: Props) => {
   ]);
 
   return (
-    <div className="mt-[50px]">
+    <div className="mt-[50px] sm:w-2/3">
       <h3 className="h3_suit flex">이 영화 토픽</h3>
       <div className="flex flex-col justify-between">
         <header className="w-full h-[60px] mt-10 rounded-[20px] bg-[#FFCF1F] flex gap-3 items-center px-6">
