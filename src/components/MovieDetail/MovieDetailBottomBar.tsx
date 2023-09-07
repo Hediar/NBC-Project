@@ -27,9 +27,9 @@ const MovieDetailBottomBar = ({ movieId }: Props) => {
             <li key={idx}>
               <Link href={`/detail/${movieId}/${tag.url}`}>
                 {tag.url === pathName ? (
-                  <p className="py-4 border-b-2 border-black font-bold z-10">{tag.name}</p>
+                  <p className="text-xs py-4 border-b-2 border-black sm:subtitle2_suit z-10">{tag.name}</p>
                 ) : (
-                  <p className="py-4 hover:border-b-2 border-gray-700 z-10">{tag.name}</p>
+                  <p className="text-xs py-4 hover:border-b-2 border-gray-700 sm:subtitle2_suit z-10">{tag.name}</p>
                 )}
               </Link>
             </li>

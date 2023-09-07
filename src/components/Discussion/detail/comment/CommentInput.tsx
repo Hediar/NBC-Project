@@ -49,7 +49,7 @@ const CommentInput = ({ signedInUserId, discussionId }: Props) => {
   const handleFocusing = () => {
     if (textareaRef.current) textareaRef.current.focus();
   };
-
+  if (commentValue.length > 300) setCommentValue(commentValue.slice(0, 300));
   return (
     <>
       {contextHolder}
@@ -63,13 +63,14 @@ const CommentInput = ({ signedInUserId, discussionId }: Props) => {
             value={commentValue}
             onChange={(e) => setCommentValue(e.target.value)}
           />
+          <div className="self-end">{commentValue.length}/300</div>
           <div className="self-end">
             <button
               onClick={(e) => {
                 e.stopPropagation();
-                debounce(() => writeCommentHandler(), 200);
+                debounce(() => writeCommentHandler(), 200)();
               }}
-              className="primary_small_default_noIcon "
+              className="primary_small_default_noIcon"
             >
               작성
             </button>

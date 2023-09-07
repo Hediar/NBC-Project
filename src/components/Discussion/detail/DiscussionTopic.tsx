@@ -20,20 +20,19 @@ const DiscussionTopic = async ({ postData }: Props) => {
   ]);
 
   return (
-    <div className="mt-[50px]">
+    <div className="mt-[50px] sm:w-2/3">
       <h3 className="h3_suit flex">이 영화 토픽</h3>
       <div className="flex flex-col justify-between">
         <header className="w-full h-[60px] mt-10 rounded-[20px] bg-[#FFCF1F] flex gap-3 items-center px-6">
           <div>
             <Image src={userData.avatar_url} alt="Image" width={40} height={40} className="rounded-full" />
           </div>
-          <span className="subtitle2_suit">{userData.username}</span>
+          <span className="subtitle2_suit">{userData.username.slice(0, 20)}</span>
         </header>
-
         <section className="min-h-[438px] px-[62px] py-[54px] flex flex-col items-center relative mt-5 border border-[#888888] rounded-[40px]">
-          <div className="flex flex-col flex-wrap justify-center items-center gap-[10px]">
-            <h3 className="h4_suit">{postData?.title.slice(0, 10)}</h3>
-            <p className="body1_regular_suit text-[#888888]">{postData?.content.slice(0, 10)}</p>
+          <div className="flex flex-col flex-wrap justify-center items-center flex-1 w-full gap-[10px] py-5 leading-snug">
+            <p className="h4_suit whitespace-normal break-all">{postData?.title}</p>
+            <p className="body1_regular_suit text-[#888888] whitespace-normal break-all">{postData?.content}</p>
           </div>
 
           {optionData?.length ? (
