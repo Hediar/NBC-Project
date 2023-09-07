@@ -65,6 +65,12 @@ const ChangePassword = ({ user }: Props) => {
   };
 
   const changePasswordHandler = async () => {
+    if (nonceValue.length !== 6) {
+      return messageApi.open({
+        type: 'error',
+        content: `올바른 코드를 적어주세요.`
+      });
+    }
     const {
       data: { data, error }
     } = await axios.post('/auth/profile/change-password', { nonce: nonceValue, password: passwordValue });
@@ -98,6 +104,7 @@ const ChangePassword = ({ user }: Props) => {
         {hasEmailSent && (
           <div className="flex flex-col gap-4">
             <input
+              minLength={6}
               disabled={disableInput}
               placeholder="6자리 코드"
               type="text"
