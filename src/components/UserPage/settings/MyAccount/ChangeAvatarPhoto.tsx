@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 'use client';
 
 import useUserInfoStore from '@/store/saveCurrentUserData';
@@ -88,7 +89,7 @@ const ChangeAvatarPhoto = ({ userData }: Props) => {
         <div className="h-full px-8 flex gap-4 items-center">
           <div className="relative w-10 h-10 overflow-visible">
             <img
-              className="w-full h-full rounded-full"
+              className="w-full h-full rounded-full shadow-sm shadow-gray-600"
               src={photoURLValue}
               alt="avatar"
               onClick={() => router.push('?my-account=true&upload-photo=true')}

@@ -77,7 +77,7 @@ const ChangeUsername = ({ userData }: Props) => {
         okType="default"
         cancelText="취소"
       >
-        <button className="w-12 h-[30px] px-2.5 py-1 bg-zinc-600 rounded-lg border border-zinc-600 gap-1.5 cursor-pointer text-white text-[14px]">
+        <button className=" h-[30px] px-3 py-1 bg-zinc-600 rounded-lg border border-zinc-600 gap-1.5 cursor-pointer text-white text-[14px] ">
           수정
         </button>
       </Popconfirm>
