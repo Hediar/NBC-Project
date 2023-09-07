@@ -48,6 +48,7 @@ const CommentInput = ({ signedInUserId, discussionId }: Props) => {
   const handleFocusing = () => {
     if (textareaRef.current) textareaRef.current.focus();
   };
+
   return (
     <>
       {contextHolder}
@@ -57,7 +58,7 @@ const CommentInput = ({ signedInUserId, discussionId }: Props) => {
           <textarea
             ref={textareaRef}
             className="w-5/6 h-[92px] border-none resize-none focus:outline-none text-base"
-            placeholder="내용을 입력해 주세요."
+            placeholder={`${signedInUserId ? '내용을 입력해주세요' : '로그인 해주세요'}`}
             value={commentValue}
             onChange={(e) => setCommentValue(e.target.value)}
           />

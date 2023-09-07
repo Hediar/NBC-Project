@@ -54,7 +54,7 @@ const ChangePassword = ({ user }: Props) => {
     } = await axios('/auth/profile/reauthenticate-user');
     if (error) {
       alert('error');
-      console.log(error);
+      // console.log(error);
     } else {
       setHasEmailSent(true);
       return messageApi.open({
@@ -70,7 +70,7 @@ const ChangePassword = ({ user }: Props) => {
     } = await axios.post('/auth/profile/change-password', { nonce: nonceValue, password: passwordValue });
 
     if (error) {
-      console.log(error);
+      // console.log(error);
       if (error.includes('New password should be different from the old password')) {
         return messageApi.open({
           type: 'error',

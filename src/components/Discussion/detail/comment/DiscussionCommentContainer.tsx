@@ -1,7 +1,6 @@
 import React from 'react';
 import { cookies } from 'next/headers';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import Image from 'next/image';
 import CommentInput from './CommentInput';
 import DisplayComments from './DisplayComments';
 
@@ -36,15 +35,8 @@ const DiscussionCommentContainer = async ({ discussionId }: Props) => {
 
   if (err) {
     return (
-      <div className="w-1/2 m-8 flex flex-col gap-4">
+      <div className="w-full flex flex-col gap-4">
         <div className="w-full flex gap-2 items-center">
-          <Image
-            className="h-8 w-8 rounded-full"
-            width={32}
-            height={32}
-            alt="user-profile"
-            src={'/anonymous-avatar-icon.png'}
-          />
           <CommentInput signedInUserId={signedInUserId} discussionId={discussionId} />
         </div>
 
@@ -54,22 +46,13 @@ const DiscussionCommentContainer = async ({ discussionId }: Props) => {
   }
 
   if (error) {
-    console.log(error);
+    // console.log(error);
     return <>에러가 발생했습니다.</>;
   }
-
-  const { username: currentUserUsername, avatar_url: currentUserAvatar_url } = signedInUserData;
 
   return (
     <div className="w-full flex flex-col gap-4">
       <div className="w-full flex gap-2 items-center">
-        {/* <Image
-          className="h-8 w-8 rounded-full"
-          width={32}
-          height={32}
-          alt="user-profile"
-          src={currentUserAvatar_url!}
-        /> */}
         <CommentInput signedInUserId={signedInUserId} discussionId={discussionId} />
       </div>
 

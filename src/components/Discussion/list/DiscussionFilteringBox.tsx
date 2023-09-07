@@ -1,3 +1,5 @@
+import { DropdownMenu } from '@/styles/icons/Icons24';
+import { SearchLined } from '@/styles/icons/Icons32';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
@@ -56,22 +58,16 @@ const DiscussionFilteringBox = ({ sortQuery = '' }: Props) => {
     <div className="flex justify-between p-2">
       <div className="flex items-center relative">
         <div
-          className="flex items-center"
+          className="w-[104px] h-11 pl-5 pr-2.5 py-2.5 bg-white rounded-xl border border-zinc-300 justify-start items-center gap-2 inline-flex"
           onClick={() => {
             setSortFilterOpen(!sortFilterOpen);
           }}
         >
-          <Image
-            className="cursor-pointer opacity-70 hover:opacity-100 transform hover:scale-110 hover:ease-out duration-200"
-            alt="dropdown"
-            src="/dropdown-arrow.svg"
-            width={20}
-            height={20}
-          />
-          {sortBy.text}
+          <div className="w-full text-neutral-800 text-base font-normal leading-snug">최신순</div>
+          <DropdownMenu className="cursor-pointer opacity-70 hover:opacity-100 transform hover:scale-110 hover:ease-out duration-200" />
         </div>
         {sortFilterOpen && (
-          <div className="absolute top-7 left-0 w-[5rem]">
+          <div className="absolute top-[40px] left-0 w-[5rem]">
             <ul className="border bg-white">
               {sortByDropdownValues.map((sortByObj) => {
                 return (
@@ -106,24 +102,36 @@ const DiscussionFilteringBox = ({ sortQuery = '' }: Props) => {
             e.preventDefault();
           }}
         >
-          <div
-            className="w-[100px] flex items-center border p-1"
-            onClick={() => {
-              setSearchFilterOpen(!searchFilterOpen);
-            }}
-          >
-            <span className="w-4/5">{searchBy.text}</span>
-            <Image
-              className="cursor-pointer opacity-70 hover:opacity-100 transform hover:scale-110 hover:ease-out duration-200"
-              alt="dropdown"
-              src="/dropdown-arrow.svg"
-              width={20}
-              height={20}
-            />
+          <div className="w-[570px] h-[52px] relative bg-white rounded-xl border border-zinc-300">
+            <div
+              className="flex justify-between w-1/5 h-5 left-[20px] top-[16px] absolute text-neutral-800 text-base font-normal leading-snug"
+              onClick={() => {
+                setSearchFilterOpen(!searchFilterOpen);
+              }}
+            >
+              <span>{searchBy.text}</span>
+              <DropdownMenu className="cursor-pointer opacity-70 hover:opacity-100 transform hover:scale-110 hover:ease-out duration-200" />
+            </div>
+            <div className="w-px h-6 left-[148px] top-[14px] absolute bg-gray-200" />
+            <div className="w-[343px] h-5 left-[165px] top-[16px] absolute text-zinc-300 text-base font-normal leading-snug">
+              <input
+                className="w-full text-black focus:outline-none"
+                name="discussion-searchbar"
+                type="text"
+                placeholder="검색어를 입력하세요"
+                value={searchVal}
+                onChange={(e) => {
+                  setSearchVal(e.target.value);
+                }}
+              />
+            </div>
+            <button className="w-8 h-8 left-[518px] top-[10px] absolute cursor-pointer" onClick={handleSearchValSubmit}>
+              <SearchLined />
+            </button>
           </div>
 
           {searchFilterOpen && (
-            <div className="absolute top-7">
+            <div className="absolute top-[40px] left-5">
               <ul className="border bg-white">
                 {searchByDropdownValues.map((searchByObj) => {
                   return (
@@ -142,16 +150,6 @@ const DiscussionFilteringBox = ({ sortQuery = '' }: Props) => {
               </ul>
             </div>
           )}
-          <input
-            name="discussion-searchbar"
-            type="text"
-            placeholder="검색어를 입력하세요"
-            value={searchVal}
-            onChange={(e) => {
-              setSearchVal(e.target.value);
-            }}
-          />
-          <button onClick={handleSearchValSubmit}>검색</button>
         </form>
       </div>
     </div>

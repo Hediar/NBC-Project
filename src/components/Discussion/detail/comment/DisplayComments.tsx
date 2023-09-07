@@ -8,31 +8,32 @@ import DeleteCommentButton from './DeleteComment';
 import EditCommentButton from './EditComment';
 import { experimental_useOptimistic as useOptimistic } from 'react';
 
-interface Props {
-  addedCommentsData: {
-    content: string;
+interface DiscussionCommentsData {
+  content: string;
+  created_at: string;
+  id: string;
+  post_id: number;
+  profiles: {
+    username: string;
+    avatar_url: string;
+  };
+  user_id: string;
+  discussion_comments_likes: {
+    comments_id: string;
     created_at: string;
-    id: string;
-    post_id: number;
-    profiles: {
-      username: string;
-      avatar_url: string;
-    };
+    id: number;
     user_id: string;
-    discussion_comments_likes: {
-      comments_id: string;
-      created_at: string;
-      id: number;
-      user_id: string;
-    };
-    user_has_liked_comment: boolean;
-    likes: number;
-  }[];
+  };
+  user_has_liked_comment: boolean;
+  likes: number;
+}
+interface Props {
+  addedCommentsData: DiscussionCommentsData[];
   signedInUserId: string;
 }
 
-const DisplayComments = ({ addedCommentsData, signedInUserId }: any) => {
-  const [optimisticComments, addOptimisticComments] = useOptimistic<any, any>(
+const DisplayComments = ({ addedCommentsData, signedInUserId }: Props) => {
+  const [optimisticComments, addOptimisticComments] = useOptimistic<DiscussionCommentsData[], DiscussionCommentsData>(
     addedCommentsData,
     (currentOptimisticComments, newComment) => {
       const newOptimisticComments = [...currentOptimisticComments];
@@ -42,7 +43,7 @@ const DisplayComments = ({ addedCommentsData, signedInUserId }: any) => {
     }
   );
 
-  const displayComments = optimisticComments?.map((comment: any) => {
+  const displayComments = optimisticComments?.map((comment) => {
     return (
       <div
         key={comment.id}

@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
 type Props = {
-  movieId: string;
+  movieId: string | number;
 };
 
 const baseImgUrl = process.env.NEXT_PUBLIC_TMDB_BASE_IMAGE_URL;
@@ -18,7 +18,7 @@ const ReviewMovie = ({ movieId }: Props) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      setMovieData(await getMovieDetail(movieId));
+      setMovieData(await getMovieDetail(movieId as string));
     };
     fetchData();
   }, [movieId]);

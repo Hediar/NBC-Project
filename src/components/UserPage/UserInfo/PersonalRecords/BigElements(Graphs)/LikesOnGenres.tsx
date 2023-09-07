@@ -13,7 +13,7 @@ const LikesOnGenres = async ({ username }: { username: string }) => {
   const { isError, error: fetchIdError, data: userId } = await idToUsername(supabase, username);
 
   if (isError) {
-    console.log(fetchIdError);
+    // console.log(fetchIdError);
     return (
       <RecordsContainerBig key="ecefff" bgColor="#ecefff" borderColor="#cad3fe" title="좋아요 누른 영화 장르">
         <div>
@@ -30,7 +30,7 @@ const LikesOnGenres = async ({ username }: { username: string }) => {
     .filter('user_id', 'cs', [`{${userId}}`]);
 
   if (fetchDataError) {
-    console.log(fetchDataError);
+    // console.log(fetchDataError);
     return (
       <RecordsContainerBig key="ecefff" bgColor="#ecefff" borderColor="#cad3fe" title="좋아요 누른 영화 장르">
         <div>

@@ -109,7 +109,7 @@ const SVGPlayButton = (props: SVGProps<SVGSVGElement>) => (
 const SVGPauseButton = (props: SVGProps<SVGSVGElement>) => (
   <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
     <circle opacity="0.8" cx="40" cy="40" r="40" fill="#4F4F4F" />
-    <path d="M30 23V57M50 23V57" stroke="white" strokeWidth="8" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M30 23V57M50 23V57" stroke="white" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 

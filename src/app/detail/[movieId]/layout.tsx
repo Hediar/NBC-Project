@@ -42,10 +42,10 @@ export default async function MovieDetailLayout({
     .single();
 
   return (
-    <section style={{ width: '80%', margin: '0 auto' }}>
+    <section>
       <MovieDetailInfo movieId={movieId} />
       {children}
-      <section>
+      <section style={{ width: '80%', margin: '0 auto' }}>
         {discussionPostData ? (
           <div className="flex">
             <main className="w-2/3 pr-10">
@@ -64,7 +64,10 @@ export default async function MovieDetailLayout({
             <p>
               이 영화의 <span className="font-bold">첫번째 토픽 주인공</span>이 되어보세요
             </p>
-            <Link href={`/discussion/regist`} className="border rounded-xl py-1 mb-5 hover:bg-gray-200">
+            <Link
+              href={`/discussion/regist?movieId=${movieId}`}
+              className="border rounded-xl py-1 mb-5 hover:bg-gray-200"
+            >
               작성하기
             </Link>
           </div>

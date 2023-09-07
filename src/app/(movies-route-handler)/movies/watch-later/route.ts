@@ -17,7 +17,7 @@ export const POST = async (request: Request): Promise<NextResponseType<{ message
   // 쿠키에서 로그인한 유저 정보를 받아서 user id를 저장
   const { data: userData, error } = await supabase.auth.getUser();
   if (error) {
-    console.log(error);
+    // console.log(error);
     return new NextResponse(JSON.stringify({ message: '유저를 찾을 수 없음.' }), {
       status: 404,
       statusText: 'Not Found'
@@ -67,7 +67,7 @@ export const POST = async (request: Request): Promise<NextResponseType<{ message
       .select();
 
     if (supabaseUpdateRequestError) {
-      console.log(supabaseUpdateRequestError);
+      // console.log(supabaseUpdateRequestError);
       return new NextResponse(JSON.stringify({ message: '삭제 실패' }), {
         status: 500,
         statusText: 'Internal Server Error'
@@ -84,7 +84,7 @@ export const POST = async (request: Request): Promise<NextResponseType<{ message
       .eq('userid', userId);
 
     if (watchLaterAddError) {
-      console.log(watchLaterAddError);
+      // console.log(watchLaterAddError);
       return new NextResponse(JSON.stringify({ message: '추가 실패' }), {
         status: 500,
         statusText: 'Internal Server Error'
