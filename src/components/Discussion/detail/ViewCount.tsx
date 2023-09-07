@@ -12,7 +12,7 @@ const ViewCount = ({ postId, viewCount }: Props) => {
     const checkSeenPosts = async () => {
       const formData = new FormData();
       formData.append('postId', postId.toString());
-      const res = await fetch('http://localhost:3000/api/discussion/view', { method: 'post', body: formData });
+      const res = await fetch(`${process.env.BASE_URL}/api/discussion/view`, { method: 'post', body: formData });
       const check = await res.json();
 
       if (check.message === '이미 봄') return;
