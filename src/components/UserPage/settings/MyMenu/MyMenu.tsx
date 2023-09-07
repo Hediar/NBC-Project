@@ -35,13 +35,13 @@ const MyMenu = async () => {
             userId={userId}
           />
           <ToggleIsPublic key="reviews" title="나의 리뷰" columnName="reviews" isPublic={reviews} userId={userId} />
-          <ToggleIsPublic
+          {/* <ToggleIsPublic
             key="discussion_post"
             title="나의 토론"
             columnName="discussion_post"
             isPublic={discussion_post}
             userId={userId}
-          />
+          /> */}
         </div>
       </div>
     </div>
