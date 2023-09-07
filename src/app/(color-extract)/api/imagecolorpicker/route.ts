@@ -22,14 +22,11 @@ export const POST = async (request: Request) => {
   const imageUrl = String(formData.get('imageUrl'));
   const { data, info } = await getImageData(imageUrl);
 
-  // 이미지를 16개의 정사각형으로 나누고 각 정사각형에 대한 평균 RGB 계산
   const { channels } = info;
-  const pixelCount = data.length / channels;
   const channelSums = [0, 0, 0];
   const squareAverages = [];
 
-  // 이미지를 16개의 정사각형으로 나누기
-  const gridSize = 4; // 4x4 격자로 나눔
+  const gridSize = 4;
   const squareWidth = Math.floor(info.width / gridSize);
   const squareHeight = Math.floor(info.height / gridSize);
 

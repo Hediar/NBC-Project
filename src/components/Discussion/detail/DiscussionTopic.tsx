@@ -73,7 +73,7 @@ const DiscussionTopic = async ({ postData }: Props) => {
 
         <div className="body1_bold_suit flex gap-5 my-10">
           <span>👆&nbsp;투표수&nbsp;{postData.vote_count}</span>
-          <span>💬&nbsp;댓글수&nbsp;{postData.view_count}</span>
+          <span>💬&nbsp;댓글수&nbsp;{postData.comment_count}</span>
         </div>
       </div>
     </div>
