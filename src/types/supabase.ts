@@ -10,7 +10,7 @@ declare global {
             created_at: string;
             id: string;
             post_id: number;
-            profiles: { username: string; avatar_url: string };
+            profiles: Json | null;
             user_id: string;
           };
           Insert: {
@@ -18,7 +18,7 @@ declare global {
             created_at?: string;
             id?: string;
             post_id: number;
-            profiles?: { username: string; avatar_url: string };
+            profiles?: Json | null;
             user_id: string;
           };
           Update: {
@@ -26,7 +26,7 @@ declare global {
             created_at?: string;
             id?: string;
             post_id?: number;
-            profiles?: { username: string; avatar_url: string };
+            profiles?: Json | null;
             user_id?: string;
           };
           Relationships: [
@@ -204,38 +204,63 @@ declare global {
             }
           ];
         };
-        movie_reviews: {
+        is_public: {
           Row: {
-            created_at: string;
-            id: number;
-            movieId: string;
-            quick_reviews: string[] | null;
-            review: string | null;
-            score: number | null;
-            userId: string;
+            discussion_post: boolean;
+            movielikes: boolean;
+            reviews: boolean;
+            user_id: string;
+            watch_later: boolean;
           };
           Insert: {
-            created_at?: string;
-            id?: number;
-            movieId: string;
-            quick_reviews?: string[] | null;
-            review?: string | null;
-            score?: number | null;
-            userId: string;
+            discussion_post?: boolean;
+            movielikes?: boolean;
+            reviews?: boolean;
+            user_id: string;
+            watch_later?: boolean;
           };
           Update: {
-            created_at?: string;
-            id?: number;
-            movieId?: string;
-            quick_reviews?: string[] | null;
-            review?: string | null;
-            score?: number | null;
-            userId?: string;
+            discussion_post?: boolean;
+            movielikes?: boolean;
+            reviews?: boolean;
+            user_id?: string;
+            watch_later?: boolean;
           };
           Relationships: [
             {
-              foreignKeyName: 'movie_reviews_userId_fkey';
-              columns: ['userId'];
+              foreignKeyName: 'is_public_user_id_fkey';
+              columns: ['user_id'];
+              referencedRelation: 'users';
+              referencedColumns: ['id'];
+            }
+          ];
+        };
+        movie_ratings: {
+          Row: {
+            created_at: string;
+            id: string;
+            movie_id: string;
+            ratings: number;
+            user_id: string;
+          };
+          Insert: {
+            created_at?: string;
+            id?: string;
+            movie_id: string;
+            ratings: number;
+            user_id: string;
+          };
+          Update: {
+            created_at?: string;
+            id?: string;
+            movie_id?: string;
+            ratings?: number;
+            user_id?: string;
+          };
+          Relationships: [
+            {
+              foreignKeyName: 'movie_ratings_user_id_fkey';
+              columns: ['user_id'];
               referencedRelation: 'users';
               referencedColumns: ['id'];
             }
@@ -256,6 +281,31 @@ declare global {
           };
           Relationships: [];
         };
+        reviewlikes: {
+          Row: {
+            count: number | null;
+            reviewid: string;
+            user_id: string[];
+          };
+          Insert: {
+            count?: number | null;
+            reviewid: string;
+            user_id: string[];
+          };
+          Update: {
+            count?: number | null;
+            reviewid?: string;
+            user_id?: string[];
+          };
+          Relationships: [
+            {
+              foreignKeyName: 'reviewlikes_reviewid_fkey';
+              columns: ['reviewid'];
+              referencedRelation: 'reviews';
+              referencedColumns: ['reviewid'];
+            }
+          ];
+        };
         reviews: {
           Row: {
             category: Json | null;
@@ -263,6 +313,7 @@ declare global {
             created_at: string;
             date: string | null;
             keyword: string[] | null;
+            movie_title: string | null;
             movieid: string;
             rating: number | null;
             review: string;
@@ -275,6 +326,7 @@ declare global {
             created_at?: string;
             date?: string | null;
             keyword?: string[] | null;
+            movie_title?: string | null;
             movieid: string;
             rating?: number | null;
             review: string;
@@ -287,6 +339,7 @@ declare global {
             created_at?: string;
             date?: string | null;
             keyword?: string[] | null;
+            movie_title?: string | null;
             movieid?: string;
             rating?: number | null;
             review?: string;
@@ -343,17 +396,14 @@ declare global {
           Row: {
             movies: string[];
             userid: string;
-            isPublic: boolean;
           };
           Insert: {
             movies: string[];
             userid: string;
-            isPublic?: boolean;
           };
           Update: {
             movies?: string[];
             userid?: string;
-            isPublic?: boolean;
           };
           Relationships: [
             {

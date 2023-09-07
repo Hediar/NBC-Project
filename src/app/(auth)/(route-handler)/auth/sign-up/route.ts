@@ -28,7 +28,7 @@ export const POST = async (request: Request) => {
   });
 
   if (error) {
-    // console.log(error);
+    console.log(error);
     if (error.message === 'User already registered') {
       return NextResponse.json({ error: true, message: 'User already registered.' });
     }
