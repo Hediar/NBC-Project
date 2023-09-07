@@ -14,7 +14,7 @@ export default async function Home() {
       <section className="my-8">
         <div className="flex flex-col items-end my-[120px] md:flex-row md:justify-between">
           <h2 className="h1_suit mx-auto">😎장르별 인기 영화</h2>
-          <Link href={'/movielist'} className="flex mt-4 mr-[190px] md:mt-0">
+          <Link href={'/movielist'} className="flex absolute right-11 mt-4 md:mr-[190px] ">
             더보기 <ArrowRight2 />
           </Link>
         </div>
