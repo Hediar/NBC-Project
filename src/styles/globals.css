@@ -216,5 +216,5 @@ select:-webkit-autofill:focus {
 }
 
 .wrap {
-  @apply max-w-[1600px] px-5 mt-[30px] mb-[80px] lg:px-[30px] lg:mt-[60px] lg:mb-[200px];
+  @apply max-w-[1600px] px-5 mt-[30px] mb-[80px] lg:px-[30px] lg:mt-[60px] lg:mb-[200px] mx-auto;
 }
