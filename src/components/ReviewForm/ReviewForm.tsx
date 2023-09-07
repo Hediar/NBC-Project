@@ -36,8 +36,10 @@ const ReviewForm = ({ movieId, editReview, movieButtonRef }: Props) => {
   const [checkedListC1, checkHandlerC1, setCheckedListC1] = useCheckbox();
   const [checkedListC2, checkHandlerC2, setCheckedListC2] = useCheckbox();
   const [checkedListC3, checkHandlerC3, setCheckedListC3] = useCheckbox();
-  const checkedListIndex = [checkedListC1, checkedListC2, checkedListC3];
-  const checkHandlerIndex = [checkHandlerC1, checkHandlerC2, checkHandlerC3];
+  const [checkedListC4, checkHandlerC4, setCheckedListC4] = useCheckbox();
+  const [checkedListC5, checkHandlerC5, setCheckedListC5] = useCheckbox();
+  const checkedListIndex = [checkedListC1, checkedListC2, checkedListC3, checkedListC4, checkedListC5];
+  const checkHandlerIndex = [checkHandlerC1, checkHandlerC2, checkHandlerC3, checkHandlerC4, checkHandlerC5];
 
   const {
     formState: { isSubmitting, isSubmitted, errors },
@@ -165,6 +167,8 @@ const ReviewForm = ({ movieId, editReview, movieButtonRef }: Props) => {
       setCheckedListC1(categoryArr[0]);
       setCheckedListC2(categoryArr[1]);
       setCheckedListC3(categoryArr[2]);
+      setCheckedListC4(categoryArr[3]);
+      setCheckedListC5(categoryArr[4]);
 
       setValue('selectedDate', new Date(date as string));
       setValue('review', review);
