@@ -4,7 +4,7 @@ import altImage from '../../../../public/anonymous-avatar-icon.png';
 import Link from 'next/link';
 import { ArrowRight, StarFill } from '@/styles/icons/Icons24';
 import { SVGTalkEndPoint, SVGTalkStartPoint } from '@/styles/icons/IconsETC';
-import { extractMainColors, findBrightestTwoColors } from '@/api/findColors';
+import { extractMainColors } from '@/api/findColors';
 
 interface Props {
   movieData: MovieData;
