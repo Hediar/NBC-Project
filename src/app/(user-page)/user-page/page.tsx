@@ -21,7 +21,7 @@ const RedirectToUserPageOrHome = async () => {
     .single();
 
   if (err) {
-    console.log(err);
+    // console.log(err);
   }
 
   const signedInUsername = signedInUsernameData!.username;

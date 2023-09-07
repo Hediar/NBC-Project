@@ -1,6 +1,5 @@
 import supabase from '@/supabase/config';
 import { getDetailData } from './tmdb';
-import { useSearchParams } from 'next/navigation';
 
 export const addReview = async (post: ReviewsTable) => {
   const fetchData = await supabase.from('reviews').insert([post]).select();
@@ -41,14 +40,32 @@ export const getLatestReviews = async () => {
     .select('*')
     .order('created_at', { ascending: false }) // 날짜 기준으로 내림차순 정렬
     .limit(4); // 가져올 개수 제한
+
+  // const getColors = async (imageurl: any) => {
+  //   const formData = new FormData();
+  //   formData.append('imageUrl', imageurl.toString());
+  //   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/imagecolorpicker`, {
+  //     method: 'post',
+  //     body: formData
+  //   });
+  //   const rgb = await res.json();
+  //   return rgb;
+  // };
+
   const addUserName = getReviews?.map(async (data) => {
     const { data: userData } = await supabase.from('users').select('*').eq('id', data.userid);
     const { data: reviewLikes } = await supabase.from('reviewlikes').select('count').eq('reviewid', data.reviewid);
 
     const usernameData = userData?.map((data) => data.username);
     const userAvatarURL = userData?.map((data) => data.avatar_url);
+    // const color = await getColors(userAvatarURL!);
 
-    const filterData = { ...data, username: usernameData!, userAvatarURL, reviewLikesCount: reviewLikes };
+    const filterData = {
+      ...data,
+      username: usernameData!,
+      userAvatarURL,
+      reviewLikesCount: reviewLikes
+    };
 
     return filterData;
   });
@@ -91,29 +108,29 @@ export async function fetchReviewData(
   if (q) {
     switch (filter) {
       case 'movie_title':
-        console.log(filter, ' => movie_title');
+        // console.log(filter, ' => movie_title');
         query = query.eq('movie_title', q);
         break;
       case 'review_cont':
-        console.log(filter, ' => review_cont');
+        // console.log(filter, ' => review_cont');
         query = query.eq('content, review', q);
         break;
       default:
-        console.log(filter, ' => default');
+        // console.log(filter, ' => default');
         query = query.eq('movie_title, content, review', q);
     }
   }
   switch (sort) {
     case 'likes':
-      console.log(sort, ' => likes');
+      // console.log(sort, ' => likes');
       query = query.order(`reviewlikes(count)`, { ascending: false, nullsFirst: false });
       break;
     case 'rating':
-      console.log(sort, ' => rating');
+      // console.log(sort, ' => rating');
       query = query.order('rating', { ascending: false });
       break;
     default:
-      console.log(sort, ' => new');
+      // console.log(sort, ' => new');
       query = query.order('created_at', { ascending: false });
   }
   query.range((pageParam - 1) * limit, pageParam * limit - 1);

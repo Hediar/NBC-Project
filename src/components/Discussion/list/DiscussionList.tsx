@@ -78,10 +78,12 @@ const DiscussionList = ({ pageNum }: Props) => {
 
       <div className="flex flex-col gap-5">
         {searchQuery && (
-          <p className="border-b text-center">
-            &quot;<span className="font-bold">{searchQuery}</span>&quot;와 관련된 {filteredPostData.length} 개의
-            토론입니다
-          </p>
+          <div className="text-center mb-20">
+            <span className="text-neutral-800 text-[32px] font-bold leading-10">“ {searchQuery} "</span>
+            <span className="text-neutral-800 text-[32px] font-normal leading-10">
+              와 관련된 {filteredPostData.length}개의 리뷰입니다
+            </span>
+          </div>
         )}
         {pagedPostData.length ? (
           pagedPostData?.map((post) => {

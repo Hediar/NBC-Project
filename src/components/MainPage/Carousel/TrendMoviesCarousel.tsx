@@ -1,10 +1,10 @@
 'use client';
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { ReactNode, useState, useEffect, useCallback } from 'react';
 import useEmblaCarousel, { EmblaCarouselType, EmblaOptionsType } from 'embla-carousel-react';
 import { NextButton, PrevButton } from '@/components/common/Slider/ArrowsDotsButtons';
 
 type PropType = {
-  slides: any[];
+  slides: ReactNode[];
   options?: EmblaOptionsType;
 };
 
@@ -21,15 +21,13 @@ const TrendMoviesCarousel: React.FC<PropType> = (props) => {
   const onInit = useCallback(() => {
     if (!emblaApi) return;
     setScrollSnaps(emblaApi.scrollSnapList());
-  }, []);
+  }, [emblaApi]);
 
-  const onSelect = useCallback(
-    (emblaApi: EmblaCarouselType) => {
-      setPrevBtnDisabled(!emblaApi.canScrollPrev());
-      setNextBtnDisabled(!emblaApi.canScrollNext());
-    },
-    [emblaApi]
-  );
+  const onSelect = useCallback((emblaApi: EmblaCarouselType) => {
+    if (!emblaApi) return;
+    setPrevBtnDisabled(!emblaApi.canScrollPrev());
+    setNextBtnDisabled(!emblaApi.canScrollNext());
+  }, []);
 
   useEffect(() => {
     if (!emblaApi) return;
@@ -37,24 +35,27 @@ const TrendMoviesCarousel: React.FC<PropType> = (props) => {
     onSelect(emblaApi);
     emblaApi.on('reInit', onSelect);
     emblaApi.on('select', onSelect);
-  }, [emblaApi, onSelect]);
+  }, [emblaApi, onSelect, onInit]);
 
   return (
-    <div className="w-full relative sm:h-[400px] md:h-[460px] lg:h-[665px] mb-5">
-      <div className="overflow-hidden relative sm:h-[400px] md:h-[460px] lg:h-[665px]" ref={emblaRef}>
-        <div className="flex flex-col flex-wrap h-44 flex-none ml-8 md:ml-28">
+    <div className="w-full relative md:mb-5">
+      <div
+        className="overflow-hidden h-[330px] sm:h-[400px] md:h-[460px] lg:h-[665px] xl:h-[500px] 2xl:h-[720px]"
+        ref={emblaRef}
+      >
+        <div className="flex flex-col flex-wrap h-[290px] flex-none ml-8 md:ml-28">
           {slides.map((slide, index) => (
-            <div className={'relative mx-1 sm:w-[100%] md:w-[60%] lg:w-[60%] xl:w-[60%]'} key={index}>
+            <div className={'relative mx-1 w-[100%] md:w-[90%] lg:w-[80%] xl:w-[70%] 2xl:w-[65%]'} key={index}>
               {slide}
             </div>
           ))}
         </div>
-      </div>
-      <div className="flex justify-between absolute left-[30px] top-[50%] -translate-y-1/2 bg-transparent cursor-pointer z-10">
-        <PrevButton onClick={scrollPrev} disabled={prevBtnDisabled} />
-      </div>
-      <div className="flex justify-between absolute right-[30px] top-[50%] -translate-y-1/2 bg-transparent cursor-pointer z-10">
-        <NextButton onClick={scrollNext} disabled={nextBtnDisabled} />
+        <div className="flex justify-between absolute left-[60px] top-1/2 -translate-y-1/2 bg-transparent cursor-pointer z-10 md:top-[40%] 2xl:top-[50%]">
+          <PrevButton onClick={scrollPrev} disabled={prevBtnDisabled} />
+        </div>
+        <div className="flex justify-between absolute right-[30px] top-1/2 -translate-y-1/2 bg-transparent cursor-pointer z-10 md:top-[40%] 2xl:top-[50%]">
+          <NextButton onClick={scrollNext} disabled={nextBtnDisabled} />
+        </div>
       </div>
     </div>
   );

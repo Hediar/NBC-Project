@@ -12,7 +12,14 @@ module.exports = {
   images: {
     formats: ['image/avif', 'image/webp'],
     pathname: '/**',
-    domains: ['www.themoviedb.org', 'lh3.googleusercontent.com', 'k.kakaocdn.net', 'i.ibb.co', 'image.tmdb.org'],
+    domains: [
+      'www.themoviedb.org',
+      'lh3.googleusercontent.com',
+      'k.kakaocdn.net',
+      'i.ibb.co',
+      'image.tmdb.org',
+      'aiwjpebjrijveiqokhsn.supabase.co'
+    ],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     remotePatterns: [
@@ -26,7 +33,7 @@ module.exports = {
 
 // Injected content via Sentry wizard below
 
-const { withSentryConfig } = require("@sentry/nextjs");
+const { withSentryConfig } = require('@sentry/nextjs');
 
 module.exports = withSentryConfig(
   module.exports,
@@ -37,8 +44,8 @@ module.exports = withSentryConfig(
     // Suppresses source map uploading logs during build
     silent: true,
 
-    org: "moviebabachallenge-441f53c97",
-    project: "javascript-nextjs",
+    org: 'moviebabachallenge-441f53c97',
+    project: 'javascript-nextjs'
   },
   {
     // For all available options, see:
@@ -51,20 +58,19 @@ module.exports = withSentryConfig(
     transpileClientSDK: true,
 
     // Routes browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers (increases server load)
-    tunnelRoute: "/monitoring",
+    tunnelRoute: '/monitoring',
 
     // Hides source maps from generated client bundles
     hideSourceMaps: true,
 
     // Automatically tree-shake Sentry logger statements to reduce bundle size
-    disableLogger: true,
+    disableLogger: true
   }
 );
 
-
 // Injected content via Sentry wizard below
 
-const { withSentryConfig } = require("@sentry/nextjs");
+const { withSentryConfig } = require('@sentry/nextjs');
 
 module.exports = withSentryConfig(
   module.exports,
@@ -75,8 +81,8 @@ module.exports = withSentryConfig(
     // Suppresses source map uploading logs during build
     silent: true,
 
-    org: "moviebabachallenge-441f53c97",
-    project: "javascript-nextjs",
+    org: 'moviebabachallenge-441f53c97',
+    project: 'javascript-nextjs'
   },
   {
     // For all available options, see:
@@ -89,12 +95,12 @@ module.exports = withSentryConfig(
     transpileClientSDK: true,
 
     // Routes browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers (increases server load)
-    tunnelRoute: "/monitoring",
+    tunnelRoute: '/monitoring',
 
     // Hides source maps from generated client bundles
     hideSourceMaps: true,
 
     // Automatically tree-shake Sentry logger statements to reduce bundle size
-    disableLogger: true,
+    disableLogger: true
   }
 );

@@ -89,7 +89,7 @@ const OptionVote = ({ postId, voteCount, checkUpdate }: Props) => {
   return (
     <>
       {contextHolder}
-      <div className="m-5 w-full px-20 py-3 max-h-[15rem] overflow-y-auto flex flex-col gap-3">
+      <div className="m-5 w-full px-20 py-3 max-h-[272px] overflow-y-auto flex flex-col gap-3">
         {optionData?.map((option, idx) => (
           <React.Fragment key={idx}>
             {selectedOption?.option_id === option.option_id ? (

@@ -20,7 +20,7 @@ export const POST = async (request: Request) => {
   });
 
   if (data.error) {
-    console.log(data.error);
+    // console.log(data.error);
     return NextResponse.redirect(`${requestUrl.origin}/sign-up?error=에러가 발생했습니다.`, { status: 301 });
   }
   return NextResponse.redirect(requestUrl.origin);

@@ -2,7 +2,6 @@
 import { getDiscussionPostDetail, getDiscussionPostOption } from '@/api/supabase-discussion';
 import ReviewMovie from '@/components/ReviewForm/ReviewMovie';
 import useDiscussionPostQuery from '@/hooks/useDiscussionPostQuery';
-import DrawSvgX from '@/static/DrawSvgX';
 import { optionMark } from '@/static/optionMark';
 import useUserInfoStore from '@/store/saveCurrentUserData';
 import { useRouter } from 'next/navigation';
@@ -107,15 +106,24 @@ const DiscussionEditPage = ({ params }: Props) => {
       } catch (error) {}
     }
   };
-
   return (
     <>
       {contextHolder}
       <div className="p-5 w-3/5">
         {/* S:: 영화 선택 */}
-        <div>
-          <ReviewMovie movieId={movieId as string} />
-        </div>
+        {movieId && (
+          <div
+            onClick={() => {
+              messageApi.open({
+                type: 'error',
+                content: '변경하실 수 없습니다'
+              });
+            }}
+          >
+            <ReviewMovie movieId={movieId} />
+          </div>
+        )}
+
         {/* E:: 영화 선택 */}
 
         <div className={`flex flex-col w-full mt-[${marginYGap}] font-bold`}>
@@ -182,9 +190,7 @@ const DiscussionEditPage = ({ params }: Props) => {
                   <div className="w-full">
                     <label htmlFor={`의견${optionMark[idx]}`}>의견{optionMark[idx]}</label>
                     {idx > 1 && idx >= initOptionLengthRef.current && (
-                      <button className="rounded-full p-1 ml-1 bg-gray-200" onClick={() => deleteOption(idx)}>
-                        <DrawSvgX size={12} />
-                      </button>
+                      <button className="rounded-full p-1 ml-1 bg-gray-200" onClick={() => deleteOption(idx)}></button>
                     )}
                     {idx < initOptionLengthRef.current ? (
                       <input

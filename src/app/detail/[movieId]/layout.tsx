@@ -1,4 +1,3 @@
-import DiscussionDetail from '@/components/Discussion/detail/DiscussionDetail';
 import MovieDetailInfo from '@/components/MovieDetail/MovieDetailInfo';
 import supabase from '@/supabase/config';
 import Link from 'next/link';
@@ -7,6 +6,8 @@ import { getMovieDetail } from '@/api/tmdb';
 import DiscussionTopic from '@/components/Discussion/detail/DiscussionTopic';
 import DiscussionCommentContainer from '@/components/Discussion/detail/comment/DiscussionCommentContainer';
 import RelatedDiscussionList from '@/components/Discussion/detail/related-discussion/RelatedDiscussionList';
+
+export const dynamic = 'force-dynamic';
 
 export async function generateMetadata(
   {
@@ -38,23 +39,22 @@ export default async function MovieDetailLayout({
     .from('discussion_post')
     .select('*')
     .eq('movie_id', movieId)
-    .order('vote_count', { ascending: false })
-    .single();
+    .order('created_at', { ascending: false });
 
   return (
-    <section style={{ width: '80%', margin: '0 auto' }}>
+    <section>
       <MovieDetailInfo movieId={movieId} />
       {children}
-      <section>
+      <section style={{ width: '80%', margin: '0 auto' }}>
         {discussionPostData ? (
           <div className="flex">
             <main className="w-2/3 pr-10">
-              <DiscussionTopic postData={discussionPostData} />
-              <DiscussionCommentContainer discussionId={discussionPostData.post_id} />
+              <DiscussionTopic postData={discussionPostData[0]} />
+              <DiscussionCommentContainer discussionId={discussionPostData[0].post_id} />
             </main>
 
             <section className="w-1/3">
-              <RelatedDiscussionList discussionId={discussionPostData.post_id} />
+              <RelatedDiscussionList discussionId={discussionPostData[0].post_id} />
             </section>
           </div>
         ) : (
@@ -64,7 +64,10 @@ export default async function MovieDetailLayout({
             <p>
               이 영화의 <span className="font-bold">첫번째 토픽 주인공</span>이 되어보세요
             </p>
-            <Link href={`/discussion/regist`} className="border rounded-xl py-1 mb-5 hover:bg-gray-200">
+            <Link
+              href={`/discussion/regist?movieId=${movieId}`}
+              className="border rounded-xl py-1 mb-5 hover:bg-gray-200"
+            >
               작성하기
             </Link>
           </div>

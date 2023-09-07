@@ -1,4 +1,7 @@
+import ChangeInfo from '@/components/UserPage/settings/ChangeInfo/ChangeInfo';
 import MyAccount from '@/components/UserPage/settings/MyAccount/MyAccount';
+import MyMenu from '@/components/UserPage/settings/MyMenu/MyMenu';
+
 import UserSettingsTabs from '@/components/UserPage/settings/UserSettingsTabs';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
@@ -34,14 +37,16 @@ const UserSettingsPage = async ({ params: { username }, searchParams }: Props) =
   const { data: userData } = await supabase.from('users').select('*').eq('id', user!.id).single();
 
   return (
-    <div className="w-full h-[calc(100vh)] sm:h-[calc(100vh-390px)]">
+    <div className="w-full h-[calc(100vh)]">
       <UserSettingsTabs />
-
-      {/* <UserSettingsProfile user={user!} userData={userData!} /> */}
-      {myAccount && <MyAccount userData={userData!} />}
-      {changeInfo && <></>}
-      {myMenu && <></>}
-      {deleteAccount && <></>}
+      {myAccount && <MyAccount user={user!} userData={userData!} />}
+      {changeInfo && <ChangeInfo user={user!} />}
+      {myMenu && <MyMenu />}
+      {deleteAccount && (
+        <div className="w-full h-full flex justify-center items-center">
+          <h1 className="font-semibold text-xl">업데이트 예정입니다.</h1>
+        </div>
+      )}
     </div>
   );
 };

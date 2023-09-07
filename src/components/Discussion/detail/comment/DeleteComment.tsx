@@ -15,7 +15,7 @@ const DeleteCommentButton = ({ postId }: Props) => {
       const supabase = createClientComponentClient();
       const { error } = await supabase.from('discussion_comments').delete().eq('id', postId);
       if (error) {
-        console.log(error);
+        // console.log(error);
         alert('에러가 발생했습니다. 다시 시도해주세요.');
       } else {
         alert('삭제 완료');

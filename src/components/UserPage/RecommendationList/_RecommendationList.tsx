@@ -4,6 +4,7 @@ import DisplayInfiniteMovies from '@/components/common/DisplayMoviesInfiniteScro
 import discoverMoviesWithGenreId from '@/api/discoverMoviesWithGenreId';
 import { cookies } from 'next/headers';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
+import idToUsername from '@/api/supabase/idToUsername';
 
 interface Props {
   username: string;
@@ -12,8 +13,21 @@ interface Props {
 
 const RecommendationList = async ({ username, watched_movies }: Props) => {
   const supabase = createServerComponentClient({ cookies });
+  //
+  // 유저가 좋아한 영화를 배열화 하기
+  const { data: user_id } = await idToUsername(supabase, username);
+
+  const { data: userLikedMoviesGroup } = await supabase
+    .from('movielikes')
+    .select('movieid')
+    .contains('user_id', [user_id]);
+
+  const usersLikedMovies = userLikedMoviesGroup!.map((el) => el.movieid);
+
+  //
   // 유저가 본 영화 데이터를 다 가져오기
-  const movieData = await getMovieDataWithMovieIds(watched_movies);
+  const movieData = await getMovieDataWithMovieIds(usersLikedMovies);
+
   // 영화 데이터들에서 [장르 id]를 추출
   const totalGenresId = getMovieGenresById(movieData);
   // 영화 데이터들에서 [장르 이름]을 추출
@@ -38,7 +52,7 @@ const RecommendationList = async ({ username, watched_movies }: Props) => {
   // 1. 사용자 정보 조회
   const { data: userData, error: isUserNotSignedIn } = await supabase.auth.getUser();
   if (isUserNotSignedIn) {
-    console.log(isUserNotSignedIn);
+    // console.log(isUserNotSignedIn);
     return <>로그인을 해주세요.</>;
   }
 

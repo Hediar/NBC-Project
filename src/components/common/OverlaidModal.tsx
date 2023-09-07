@@ -11,7 +11,6 @@ interface Props {
 
 const OverlaidModal = ({ children, scrollTo = '' }: Props) => {
   const overlayRef = useRef<HTMLDivElement>(null);
-
   const router = useRouter();
   const path = usePathname() ?? '';
   const redirectUrl = path;
