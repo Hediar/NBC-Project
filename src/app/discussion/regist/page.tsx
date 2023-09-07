@@ -8,7 +8,6 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
 import { getMovieDetail } from '@/api/tmdb';
 import { optionMark } from '@/static/optionMark';
-import DrawSvgX from '@/static/DrawSvgX';
 import { message } from 'antd';
 
 interface Props {}
@@ -267,9 +266,10 @@ const DiscussionRegistPage = (props: Props) => {
                           <label htmlFor={`의견${optionMark[idx]}`}>의견{optionMark[idx]}</label>
                         )}
                         {idx > 1 && (
-                          <button className="rounded-full p-1 ml-1 bg-gray-200" onClick={() => deleteOption(idx)}>
-                            <DrawSvgX size={12} />
-                          </button>
+                          <button
+                            className="rounded-full p-1 ml-1 bg-gray-200"
+                            onClick={() => deleteOption(idx)}
+                          ></button>
                         )}
                       </div>
 

@@ -343,14 +343,17 @@ declare global {
           Row: {
             movies: string[];
             userid: string;
+            isPublic: boolean;
           };
           Insert: {
             movies: string[];
             userid: string;
+            isPublic?: boolean;
           };
           Update: {
             movies?: string[];
             userid?: string;
+            isPublic?: boolean;
           };
           Relationships: [
             {

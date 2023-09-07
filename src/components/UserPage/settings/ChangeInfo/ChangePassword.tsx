@@ -13,6 +13,7 @@ interface Props {
 
 const ChangePassword = ({ user }: Props) => {
   const appMetadata = user.app_metadata;
+
   const [nonceValue, setNonceValue] = useState<string>('');
   const [passwordValue, setPasswordValue] = useState<string>('');
   const [hasEmailSent, setHasEmailSent] = useState<boolean>(false);
@@ -22,6 +23,19 @@ const ChangePassword = ({ user }: Props) => {
   const [showPassword, setShowPassword] = useState(false);
   const [passwordError, setPasswordError] = useState<string | null>(null);
   const [disableInput, setDisableInputs] = useState<boolean>(false);
+
+  if (appMetadata.provider !== 'email') {
+    return (
+      <>
+        <div className="w-full items-center sm:items-start flex flex-col gap-6">
+          <h1 className="font-bold w-full px-4">비밀번호 변경</h1>
+          <p className="w-full px-4 text-neutral-800 text-sm">
+            소셜계정으로 로그인하신 회원님은 비밀번호를 변경할 수 없습니다.
+          </p>
+        </div>
+      </>
+    );
+  }
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newPassword = e.target.value;
@@ -33,15 +47,6 @@ const ChangePassword = ({ user }: Props) => {
       setPasswordError(null);
     }
   };
-
-  if (appMetadata.provider !== 'email') {
-    return (
-      <div>
-        소셜 로그인을 이용중입니다. <br />
-        소셜 로그인 사용자는 비밀번호를 변경할 수 없습니다.
-      </div>
-    );
-  }
 
   const reauthenticateHandler = async () => {
     const {
@@ -89,7 +94,7 @@ const ChangePassword = ({ user }: Props) => {
     <>
       {contextHolder}
       <div className="w-full items-center sm:items-start flex flex-col gap-6">
-        <h1 className="w-full px-4">비밀번호 변경</h1>
+        <h1 className="font-bold w-full px-4">비밀번호 변경</h1>
         {hasEmailSent && (
           <div className="flex flex-col gap-4">
             <input
