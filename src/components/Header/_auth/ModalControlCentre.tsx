@@ -7,6 +7,7 @@ import SignUp from '@/components/Auth/SignUp/SignUp';
 import OverlaidModal from '@/components/common/OverlaidModal';
 import { useSearchParams } from 'next/navigation';
 import RateMovie from '@/components/common/RateMovie';
+import EditDiscussionCommentModal from '@/components/Discussion/detail/comment/EditCommentInput';
 
 const ModalControlCentre = ({ signedInUserId }: { signedInUserId: string }) => {
   const searchParams = useSearchParams();
@@ -19,6 +20,9 @@ const ModalControlCentre = ({ signedInUserId }: { signedInUserId: string }) => {
   const movieId = searchParams.get('id') as string;
 
   const isIgnoreMovieTrue = !!searchParams.get('ignore-movie');
+
+  const isEditCommentTrue = !!searchParams.get('edit-comment');
+  const editCommentPostId = searchParams.get('postid');
 
   const scrollTo = searchParams.get('scrollTo');
 
@@ -46,6 +50,12 @@ const ModalControlCentre = ({ signedInUserId }: { signedInUserId: string }) => {
       {!signedInUserId && isIgnoreMovieTrue && (
         <OverlaidModal>
           <SignIn />
+        </OverlaidModal>
+      )}
+
+      {isEditCommentTrue && (
+        <OverlaidModal scrollTo={scrollTo!}>
+          <EditDiscussionCommentModal postId={editCommentPostId!} />
         </OverlaidModal>
       )}
     </>

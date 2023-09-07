@@ -3,7 +3,9 @@
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useRouter } from 'next/navigation';
 import { throttle } from 'lodash';
-import React from 'react';
+import React, { useState } from 'react';
+import { HeartFilled } from '@/styles/icons/Icons32';
+import { HeartFilledColor, HeartLine } from '@/styles/icons/Icons24';
 
 type Props = {
   comment: {
@@ -30,7 +32,7 @@ type Props = {
 
 const LikeButton = ({ comment, addOptimisticComments }: Props) => {
   const router = useRouter();
-
+  const [isHover, setIsHover] = useState<boolean>(false);
   const handleLikes = throttle(async () => {
     await handleLike();
   }, 1000);
@@ -66,9 +68,18 @@ const LikeButton = ({ comment, addOptimisticComments }: Props) => {
   };
 
   return (
-    <button onClick={handleLikes} className="text-xl">
-      🩷
-    </button>
+    <>
+      {isHover ? (
+        <HeartFilledColor
+          className="cursor-pointer"
+          onMouseEnter={() => setIsHover(true)}
+          onMouseLeave={() => setIsHover(false)}
+          onClick={handleLikes}
+        />
+      ) : (
+        <HeartLine onMouseEnter={() => setIsHover(true)} onClick={handleLikes} />
+      )}
+    </>
   );
 };
 

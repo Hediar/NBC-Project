@@ -24,7 +24,7 @@ const SocialButtons = () => {
     <>
       <div className="w-full flex items-center justify-center gap-3">
         <div className="w-1/3 border-b-2 border-gray-300"></div>
-        <p className="text-[0.95rem] text-gray-600">간편 로그인</p>
+        <p className="text-[0.9rem] text-gray-600 min-w-[90px] text-center">간편 로그인</p>
         <div className="w-1/3 border-b-2 border-gray-300"></div>
       </div>
       <div className="flex justify-evenly items-center w-full">
