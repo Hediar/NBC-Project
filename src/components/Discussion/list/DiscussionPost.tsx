@@ -32,7 +32,7 @@ const DiscussionPost = async ({ post }: Props) => {
           <p className="text-xs">{post.movie_title}</p>
           <p className="text-base font-bold">{post.title}</p>
           <div>
-            <p className="w-4/5 flex text-sm overflow-hidden whitespace-nowrap text-ellipsis">
+            <div className="w-4/5 flex text-sm overflow-hidden whitespace-nowrap text-ellipsis">
               {optionData?.length ? (
                 <>
                   {optionData?.map((option, idx) =>
@@ -65,7 +65,7 @@ const DiscussionPost = async ({ post }: Props) => {
                   <div className="text-neutral-800 text-sm font-normal leading-[17px]">자유토론</div>
                 </div>
               )}
-            </p>
+            </div>
           </div>
         </div>
       </div>

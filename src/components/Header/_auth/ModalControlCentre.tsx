@@ -5,13 +5,16 @@ import React from 'react';
 import SignIn from '@/components/Auth/SignIn/SignIn';
 import SignUp from '@/components/Auth/SignUp/SignUp';
 import OverlaidModal from '@/components/common/OverlaidModal';
-import { useSearchParams } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import RateMovie from '@/components/common/RateMovie';
 import EditDiscussionCommentModal from '@/components/Discussion/detail/comment/EditCommentInput';
+import NewSignnIn from '@/components/Auth/SignIn/NewSignnIn';
+import NewSignUp from '@/components/Auth/SignUp/NewSignUp';
 
 const ModalControlCentre = ({ signedInUserId }: { signedInUserId: string }) => {
   const searchParams = useSearchParams();
   const isSignInTrue = !!searchParams.get('sign-in');
+
   const isForgotPasswordTrue = !!searchParams.get('forgot-password');
   const isSignUpTrue = !!searchParams.get('sign-up');
 
@@ -29,16 +32,18 @@ const ModalControlCentre = ({ signedInUserId }: { signedInUserId: string }) => {
   return (
     <>
       {isForgotPasswordTrue && <ForgotPasswordModal />}
-      {isSignInTrue && (
+      {/* {isSignInTrue && (
         <OverlaidModal scrollTo={scrollTo ?? ''}>
           <SignIn />
         </OverlaidModal>
-      )}
-      {isSignUpTrue && (
+      )} */}
+      {isSignInTrue && <NewSignnIn />}
+      {/* {isSignUpTrue && (
         <OverlaidModal>
           <SignUp />
         </OverlaidModal>
-      )}
+      )} */}
+      {isSignUpTrue && <NewSignUp />}
       {/* 유저가 로그인이 되어있으면 보여주고 아니면 로그인 화면 보여주기 */}
       {signedInUserId && isRateTrue ? (
         <OverlaidModal scrollTo={movieId}>
