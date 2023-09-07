@@ -1,6 +1,6 @@
 import { getNewMovies } from '@/api/tmdb';
 import dayjs from 'dayjs';
-import LatestMovieSlider from './MainPageMovies/LatestMovieSlider';
+import LatestMovieSlider from '../MainPageMovies/LatestMovieSlider';
 
 export const revailidate = 0;
 
