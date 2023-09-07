@@ -1,5 +1,6 @@
 'use client';
 import supabase from '@/supabase/config';
+import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react';
 
 type Props = {
@@ -8,12 +9,18 @@ type Props = {
 };
 
 const ViewCount = ({ postId, viewCount }: Props) => {
+  const router = useRouter();
   useEffect(() => {
+    if (!postId) return;
+
     const checkSeenPosts = async () => {
       const formData = new FormData();
       formData.append('postId', postId.toString());
-      const res = await fetch(`${process.env.BASE_URL}/api/discussion/view`, { method: 'post', body: formData });
+
+      const res = await fetch(`/api/discussion/view`, { method: 'post', body: formData });
       const check = await res.json();
+
+      if (check.error) return;
 
       if (check.message === '이미 봄') return;
 
@@ -22,9 +29,11 @@ const ViewCount = ({ postId, viewCount }: Props) => {
         .update({ view_count: viewCount + 1 })
         .eq('post_id', postId)
         .select();
+      router.refresh();
     };
     checkSeenPosts();
   }, []);
+
   return <></>;
 };
 
