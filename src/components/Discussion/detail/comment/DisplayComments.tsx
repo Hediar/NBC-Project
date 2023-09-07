@@ -8,25 +8,6 @@ import DeleteCommentButton from './DeleteComment';
 import EditCommentButton from './EditComment';
 import { experimental_useOptimistic as useOptimistic } from 'react';
 
-interface DiscussionCommentsData {
-  content: string;
-  created_at: string;
-  id: string;
-  post_id: number;
-  profiles: {
-    username: string;
-    avatar_url: string;
-  };
-  user_id: string;
-  discussion_comments_likes: {
-    comments_id: string;
-    created_at: string;
-    id: number;
-    user_id: string;
-  };
-  user_has_liked_comment: boolean;
-  likes: number;
-}
 interface Props {
   addedCommentsData: DiscussionCommentsData[];
   signedInUserId: string;
