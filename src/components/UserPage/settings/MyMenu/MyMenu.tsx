@@ -1,13 +1,20 @@
 import React from 'react';
-
+import { cookies } from 'next/headers';
 import ToggleWatchLater from './ToggleWatchLater';
 import axios from 'axios';
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 
 const MyMenu = async () => {
+  const supabase = createServerComponentClient({ cookies });
+  const {
+    data: { user }
+  } = await supabase.auth.getUser();
+  const userId = user!.id;
+
   const getWatchLaterIsPublicData = async () => {
     const {
       data: { data, error }
-    } = await axios('/auth/profile/set-boundary/watch-later');
+    } = await axios.post(`${process.env.BASE_URL}/auth/profile/set-boundary/watch-later`, { userId });
     return data.isPublic;
   };
   const isWatchLaterListPublic: boolean = await getWatchLaterIsPublicData();
