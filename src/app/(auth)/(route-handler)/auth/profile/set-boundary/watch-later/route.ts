@@ -4,12 +4,10 @@ import { NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
 
-export const GET = async () => {
+export const POST = async (req: Request) => {
+  const { userId } = await req.json();
+
   const supabase = createRouteHandlerClient<Database>({ cookies });
-  const {
-    data: { user }
-  } = await supabase.auth.getUser();
-  const userId = user!.id;
 
   const { data: isPublicData, error: isPublicError } = await supabase
     .from('watch_later')

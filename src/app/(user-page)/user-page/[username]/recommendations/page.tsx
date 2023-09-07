@@ -2,6 +2,7 @@ import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import UserPageMostWatchedGenres from '@/components/UserPage/UserInfo/MostWatchedGenres';
 import RecommendationList from '@/components/UserPage/RecommendationList/_RecommendationList';
+import idToUsername from '@/api/supabase/idToUsername';
 
 export const dynamic = 'force-dynamic';
 
@@ -48,11 +49,20 @@ const RecommendationPage = async ({ params }: Props) => {
   // layout에서 검증하므로 ! 사용
   const watched_movies: string[] = userData![0].watched_movies;
 
+  const { data: user_id } = await idToUsername(supabase, username);
+
+  const { data: userLikedMoviesGroup } = await supabase
+    .from('movielikes')
+    .select('movieid')
+    .contains('user_id', [user_id]);
+
+  const usersLikedMovies = userLikedMoviesGroup!.map((el) => el.movieid);
+
   return (
     <>
       <UserPageMostWatchedGenres username={username} />
-      {watched_movies.length === 0 ? (
-        <div className="flex flex-col items-center w-full mt-10  h-screen">
+      {watched_movies.length === 0 && usersLikedMovies.length === 0 ? (
+        <div className="flex flex-col items-center w-full mt-10  h-full">
           <h2 className="text-center font-bold text-2xl">{username}님을 위한 추천 리스트!</h2>
           <div className="flex gap-y-10 justify-center sm:gap-10 md:gap-5 gap-5 items-center h-full">
             <p className="w-full text-2xl text-center">추천을 받기 위해 평점이나 리뷰를 남겨주세요.</p>

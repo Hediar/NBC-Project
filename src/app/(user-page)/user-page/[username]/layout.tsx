@@ -45,7 +45,7 @@ export default async function Layout({
   const userMatch = await doesUsersMatch(supabase, decodedUsername);
 
   return (
-    <main className="bg-white flex-col sm:flex-row flex justify-center ">
+    <main className="bg-white flex-col sm:flex-row flex justify-center min-h-screen h-full">
       <aside className="sm:w-1/6 md:w-3/12 lg:w-2/12 border-r border-[#ebebeb] bg-[#fffdf9] ">
         <UserPageTabs username={decodedUsername} userMatch={userMatch} />
         <HiddenUserPageTabs username={decodedUsername} userMatch={userMatch} />
