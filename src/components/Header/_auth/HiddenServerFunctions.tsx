@@ -1,5 +1,4 @@
 import React from 'react';
-import getSignedInUserData_Public_Users from '@/api/supabase/getSignedInUserData(Public-Users)';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import SaveUserInfoToStore from './SaveUserInfoToStore';
@@ -15,7 +14,9 @@ const HiddenServerFunctions = async () => {
 
   const signedInUserId = user.id;
 
-  const { data: userData } = await getSignedInUserData_Public_Users(signedInUserId);
+  const { data: userData, error } = await supabase.from('users').select().eq('id', signedInUserId).single();
+
+  if (error) return <></>;
 
   return (
     <>
