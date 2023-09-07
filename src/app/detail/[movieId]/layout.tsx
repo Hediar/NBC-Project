@@ -1,4 +1,3 @@
-import DiscussionDetail from '@/components/Discussion/detail/DiscussionDetail';
 import MovieDetailInfo from '@/components/MovieDetail/MovieDetailInfo';
 import supabase from '@/supabase/config';
 import Link from 'next/link';
@@ -7,6 +6,8 @@ import { getMovieDetail } from '@/api/tmdb';
 import DiscussionTopic from '@/components/Discussion/detail/DiscussionTopic';
 import DiscussionCommentContainer from '@/components/Discussion/detail/comment/DiscussionCommentContainer';
 import RelatedDiscussionList from '@/components/Discussion/detail/related-discussion/RelatedDiscussionList';
+
+export const dynamic = 'force-dynamic';
 
 export async function generateMetadata(
   {
@@ -38,8 +39,7 @@ export default async function MovieDetailLayout({
     .from('discussion_post')
     .select('*')
     .eq('movie_id', movieId)
-    .order('vote_count', { ascending: false })
-    .single();
+    .order('created_at', { ascending: false });
 
   return (
     <section>
@@ -49,12 +49,12 @@ export default async function MovieDetailLayout({
         {discussionPostData ? (
           <div className="flex">
             <main className="w-2/3 pr-10">
-              <DiscussionTopic postData={discussionPostData} />
-              <DiscussionCommentContainer discussionId={discussionPostData.post_id} />
+              <DiscussionTopic postData={discussionPostData[0]} />
+              <DiscussionCommentContainer discussionId={discussionPostData[0].post_id} />
             </main>
 
             <section className="w-1/3">
-              <RelatedDiscussionList discussionId={discussionPostData.post_id} />
+              <RelatedDiscussionList discussionId={discussionPostData[0].post_id} />
             </section>
           </div>
         ) : (
