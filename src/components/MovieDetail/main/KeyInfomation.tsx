@@ -15,7 +15,7 @@ const KeyInfomation = async ({ movieData }: Props) => {
   const formData = new FormData();
   const imageUrl = `${baseImgUrl}w300_and_h450_bestv2${poster_path}`;
   formData.append('imageUrl', imageUrl.toString());
-  const res = await fetch('http://localhost:3000/api/imagecolorpicker', { method: 'post', body: formData });
+  const res = await fetch(`${process.env.BASE_URL}/api/imagecolorpicker`, { method: 'post', body: formData });
   const { message: rgb } = await res.json();
 
   const [rgba1] = extractMainColors(rgb, 1);
