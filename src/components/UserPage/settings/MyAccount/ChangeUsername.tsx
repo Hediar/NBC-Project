@@ -70,6 +70,7 @@ const ChangeUsername = ({ userData }: Props) => {
             value={usernameInputValue}
             onChange={(e) => inputOnChange(e)}
             pattern="/[^\w\dㄱ-ㅎㅏ-ㅣ가-힣\s]/"
+            maxLength={15}
           />
         }
         onConfirm={usernameChangeHandler}
