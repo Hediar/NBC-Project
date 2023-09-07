@@ -51,6 +51,9 @@ const WatchLaterButton = ({ movieId }: { movieId: string | number }) => {
   const supabase = createClientComponentClient<Database>();
 
   const checkWatchLater = async (movieId: number) => {
+    if (!userInfo.id) {
+      return;
+    }
     const { data: watchLaterMovies, error } = await supabase
       .from('watch_later')
       .select('movies')
@@ -58,10 +61,6 @@ const WatchLaterButton = ({ movieId }: { movieId: string | number }) => {
       .single();
 
     if (error) {
-      messageApi.open({
-        type: 'error',
-        content: '에러가 발생했습니다. 다시 시도해주세요.'
-      });
       return;
     }
 
