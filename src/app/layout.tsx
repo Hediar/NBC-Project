@@ -24,7 +24,9 @@ const theme = {
       horizontalItemSelectedColor: '#222222'
     }
   },
-  token: {}
+  token: {
+    colorPrimary: '#444'
+  }
 };
 
 export default function RootLayout(props: { children: React.ReactNode }) {
@@ -35,7 +37,7 @@ export default function RootLayout(props: { children: React.ReactNode }) {
           <ConfigProvider theme={theme}>
             <Header />
             {props.children}
-            {/* <Footer /> */}
+            <Footer />
           </ConfigProvider>
         </ReactQueryProvider>
         <ScrollToTopButton />
