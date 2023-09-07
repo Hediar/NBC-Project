@@ -2,6 +2,7 @@
 
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { message } from 'antd';
+import { debounce } from 'lodash';
 import { useRouter } from 'next/navigation';
 import React, { useRef, useState } from 'react';
 
@@ -66,7 +67,7 @@ const CommentInput = ({ signedInUserId, discussionId }: Props) => {
             <button
               onClick={(e) => {
                 e.stopPropagation();
-                writeCommentHandler();
+                debounce(() => writeCommentHandler(), 200);
               }}
               className="primary_small_default_noIcon "
             >

@@ -46,7 +46,7 @@ export default async function MovieDetailLayout({
       <MovieDetailInfo movieId={movieId} />
       {children}
       <section style={{ width: '80%', margin: '0 auto' }}>
-        {discussionPostData ? (
+        {discussionPostData?.length ? (
           <div className="flex">
             <main className="w-2/3 pr-10">
               <DiscussionTopic postData={discussionPostData[0]} />
