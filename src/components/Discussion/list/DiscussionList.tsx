@@ -78,7 +78,7 @@ const DiscussionList = ({ pageNum }: Props) => {
 
       <div className="flex flex-col gap-5">
         {searchQuery && (
-          <div className="text-center mb-20">
+          <div className="text-center my-20">
             <span className="text-neutral-800 text-[32px] font-bold leading-10">“ {searchQuery} "</span>
             <span className="text-neutral-800 text-[32px] font-normal leading-10">
               와 관련된 {filteredPostData.length}개의 리뷰입니다

@@ -47,7 +47,7 @@ const Option = ({ option, selected, votedOption, sumCount, settingNum, onClick }
       >
         <span className="font-bold text-white">{optionMark[settingNum]}</span>
       </div>
-      <div className="w-3/5 overflow-auto">
+      <div className="w-3/5 flex whitespace-nowrap break-all overflow-auto">
         <p>{option.content}</p>
       </div>
       {votedOption && (
