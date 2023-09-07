@@ -28,7 +28,7 @@ const DisplayComments = ({ addedCommentsData, signedInUserId }: Props) => {
     return (
       <div
         key={comment.id}
-        className="flex flex-col gap-3 w-full h-[142px] text-sm mb-2 p-5 border rounded-[20px] bg-[#EBEBEB]"
+        className="flex flex-col gap-3 w-full min-h-[142px] text-sm mb-2 p-5 border rounded-[20px] bg-[#EBEBEB]"
       >
         <div className="w-full flex items-center gap-3">
           <div>

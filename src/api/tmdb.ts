@@ -139,7 +139,7 @@ const getCreditsData = async (id: string) => {
 
 export const searchReviewMovies = async (query: string, currentPage: number = 1) => {
   const searchRes = await fetch(
-    `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}search/movie?query=${query}&include_adult=true&language=ko-KR&page=${currentPage}`,
+    `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}search/movie?query=${query}&include_adult=false&language=ko-KR&page=${currentPage}`,
     options
   );
   const searchData = await searchRes.json();
