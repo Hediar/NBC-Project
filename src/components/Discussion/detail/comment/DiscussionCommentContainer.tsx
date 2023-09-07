@@ -20,7 +20,7 @@ const DiscussionCommentContainer = async ({ discussionId }: Props) => {
   const { data: currentUserId, error: currentUserIdError } = await supabase.auth.getUser();
   const signedInUserId = currentUserId.user?.id as string;
 
-  const addedCommentsData =
+  const addedCommentsData: any =
     commentsData?.map((comment) => ({
       ...comment,
       user_has_liked_comment: !!comment.discussion_comments_likes.find((like) => like.user_id === signedInUserId),

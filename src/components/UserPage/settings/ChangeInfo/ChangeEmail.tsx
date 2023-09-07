@@ -11,8 +11,9 @@ interface Props {
 }
 
 const ChangeEmail = ({ user }: Props) => {
-  const userPrevEmail = user.email as string;
   const appMetadata = user.app_metadata;
+
+  const userPrevEmail = user.email as string;
 
   const [emailValue, setEmailValue] = useState<string>(userPrevEmail);
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
@@ -23,8 +24,12 @@ const ChangeEmail = ({ user }: Props) => {
   if (appMetadata.provider !== 'email') {
     return (
       <>
-        소셜 로그인을 이용중입니다. <br />
-        소셜 로그인 사용자는 이메일을 변경할 수 없습니다.
+        <div className="w-full items-center sm:items-start flex flex-col gap-6">
+          <h1 className="w-full px-4 font-bold">이메일 변경</h1>
+          <p className="w-full px-4 text-neutral-800 text-sm">
+            소셜계정으로 로그인하신 회원님은 이메일을 변경할 수 없습니다.
+          </p>
+        </div>
       </>
     );
   }
@@ -72,7 +77,7 @@ const ChangeEmail = ({ user }: Props) => {
     <>
       {contextHolder}
       <div className="w-full items-center sm:items-start flex flex-col gap-6 ">
-        <h1 className="w-full px-4">이메일 변경</h1>
+        <h1 className="font-bold w-full px-4">이메일 변경</h1>
         <input
           placeholder="이메일 주소"
           type="email"

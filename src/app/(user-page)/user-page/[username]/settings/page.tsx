@@ -1,5 +1,7 @@
 import ChangeInfo from '@/components/UserPage/settings/ChangeInfo/ChangeInfo';
 import MyAccount from '@/components/UserPage/settings/MyAccount/MyAccount';
+import MyMenu from '@/components/UserPage/settings/MyMenu/MyMenu';
+
 import UserSettingsTabs from '@/components/UserPage/settings/UserSettingsTabs';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
@@ -39,8 +41,12 @@ const UserSettingsPage = async ({ params: { username }, searchParams }: Props) =
       <UserSettingsTabs />
       {myAccount && <MyAccount user={user!} userData={userData!} />}
       {changeInfo && <ChangeInfo user={user!} />}
-      {myMenu && <></>}
-      {deleteAccount && <></>}
+      {myMenu && <MyMenu />}
+      {deleteAccount && (
+        <div className="w-full h-full flex justify-center items-center">
+          <h1 className="font-semibold text-xl">업데이트 예정입니다.</h1>
+        </div>
+      )}
     </div>
   );
 };
