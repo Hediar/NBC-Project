@@ -1,11 +1,11 @@
 import { getMovieDetail } from '@/api/tmdb';
-import Image from 'next/image';
 import React from 'react';
 import MovieDetailBottomBar from './MovieDetailBottomBar';
 import { MOVIE_COUNTRIES } from '@/static/movieCountries';
 import WatchLaterButton from '../common/WatchLaterButton';
 import MovieLikes from '../MovieLikes/MovieLikes';
 import AddIgnoreMovieButton from '../common/AddIgnoreMovieButton';
+import MovieProviders from './MovieProviders';
 
 interface Props {
   movieId: string;
@@ -16,29 +16,9 @@ const baseImgUrl = process.env.NEXT_PUBLIC_TMDB_BASE_IMAGE_URL;
 const MovieDetailInfo = async ({ movieId }: Props) => {
   const movieData = await getMovieDetail(movieId);
 
-  const renderProviders = (data: MovieProvider[]) => {
-    return (
-      <div className="flex gap-2">
-        {data.map((provider: MovieProvider, idx: number) => {
-          return (
-            <div key={idx}>
-              <Image
-                src={`${baseImgUrl}w100_and_h100_bestv2${provider.logo_path}`}
-                alt=""
-                width={60}
-                height={60}
-                quality={100}
-                className="rounded-full"
-              />
-            </div>
-          );
-        })}
-      </div>
-    );
-  };
   return (
     <div>
-      <div style={{ height: '500px', color: 'white' }}>
+      <div className="w-full aspect-[1920/1080] h-[500px] sm:text-white">
         <div className="bg-gray-800 bg-opacity-30 rounded-xl py-1 px-1 absolute top-20 right-[11%] flex flex-col gap-[6px] items-center">
           <WatchLaterButton movieId={movieData.id} />
           <MovieLikes movieid={movieData.id} />
@@ -46,7 +26,7 @@ const MovieDetailInfo = async ({ movieId }: Props) => {
         </div>
         <div className="absolute w-full h-[500px] -z-50 left-0">
           <div
-            className="min-w-[888px] h-full"
+            className="w-full aspect-[1920/1080] sm:min-w-[888px] sm:h-full"
             style={{
               backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.2), rgba(0, 0, 0, 0.8)),
               url("${baseImgUrl}w1920_and_h1080_bestv2${movieData.backdrop_path}")`,
@@ -86,13 +66,13 @@ const MovieDetailInfo = async ({ movieId }: Props) => {
               {movieData.watchProviders?.rent && (
                 <div id="provider-rent" className="flex flex-col gap-1">
                   <h5>Rent</h5>
-                  {renderProviders(movieData.watchProviders.rent)}
+                  <MovieProviders data={movieData.watchProviders.rent} />
                 </div>
               )}
               {movieData.watchProviders?.buy && (
                 <div id="provider-buy" className="flex flex-col gap-1">
                   <h5>Buy</h5>
-                  {renderProviders(movieData.watchProviders.buy)}
+                  <MovieProviders data={movieData.watchProviders.buy} />
                 </div>
               )}
             </div>

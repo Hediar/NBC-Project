@@ -63,7 +63,7 @@ const DiscussionFilteringBox = ({ sortQuery = '' }: Props) => {
             setSortFilterOpen(!sortFilterOpen);
           }}
         >
-          <div className="w-full text-neutral-800 text-base font-normal leading-snug">최신순</div>
+          <div className="w-full text-neutral-800 text-base font-normal leading-snug">{sortBy.text}</div>
           <DropdownMenu className="cursor-pointer opacity-70 hover:opacity-100 transform hover:scale-110 hover:ease-out duration-200" />
         </div>
         {sortFilterOpen && (

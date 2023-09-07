@@ -6,8 +6,8 @@ interface Props {
   params: { pageNum: string };
   searchParams: { q: string };
 }
+
 export const revalidate = 0;
-// export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: '토론 - 무비바바'

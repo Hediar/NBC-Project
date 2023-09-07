@@ -28,7 +28,13 @@ const DiscussionRegistPage = (props: Props) => {
     userInfo: { id: userId }
   } = useUserInfoStore();
   const [title, setTitle] = useState<string>('');
+  const titleLengthLimit = 50;
+  if (title.length > titleLengthLimit) setTitle(title.slice(0, titleLengthLimit));
+
   const [content, setContent] = useState<string>('');
+  const contentLengthLimit = 200;
+  if (content.length > contentLengthLimit) setContent(content.slice(0, contentLengthLimit));
+
   const [options, setOptions] = useState<Option[]>([{ text: '' }, { text: '' }]);
   const [isOptionOpen, setIsOptionOpen] = useState<boolean>(true);
 
@@ -174,14 +180,17 @@ const DiscussionRegistPage = (props: Props) => {
           <div>
             <label htmlFor="topic">토론 주제*</label>
             <input
+              className="border w-full px-[20px] py-[12px] rounded-[10px] mt-[6px]"
               ref={titleRef}
               type="text"
               name="topic"
-              className="border w-full px-[20px] py-[12px] rounded-[10px] mt-[6px]"
               placeholder="내용을 입력해주세요"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
             />
+            <span className="text-gray-300 text-sm">
+              {title.length}/{titleLengthLimit}
+            </span>
           </div>
 
           <div className={`mt-[${marginYGap}]`}>
@@ -194,6 +203,9 @@ const DiscussionRegistPage = (props: Props) => {
               value={content}
               onChange={(e) => setContent(e.target.value)}
             />
+            <span className="text-gray-300 text-sm">
+              {content.length}/{contentLengthLimit}
+            </span>
           </div>
         </div>
 
