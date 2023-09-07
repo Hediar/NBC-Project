@@ -139,6 +139,7 @@ const DiscussionRegistPage = (props: Props) => {
         content: '토론 글이 작성되었습니다'
       });
 
+      router.refresh();
       router.push('/discussion/list/1');
     } catch (error) {}
   };
