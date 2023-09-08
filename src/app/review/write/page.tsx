@@ -1,5 +1,3 @@
-// 임시 추가Q:: .../review/write로 링크걸면 .../review/[postId]로 이동되는 오류
-
 import ReviewWriteTemplate from '@/components/ReviewForm/ReviewWriteTemplate';
 import React from 'react';
 

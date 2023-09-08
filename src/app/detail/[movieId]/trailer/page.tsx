@@ -10,11 +10,10 @@ interface Props {
 
 const DetailTrailerPage = async ({ params }: Props) => {
   const { movieId } = params;
-  const movieData = await getMovieDetail(movieId);
 
   return (
     <div>
-      <MovieDetailTrailer movieData={movieData} />
+      <MovieDetailTrailer movieId={movieId} />
     </div>
   );
 };

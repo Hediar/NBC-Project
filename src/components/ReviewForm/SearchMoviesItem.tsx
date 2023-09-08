@@ -24,22 +24,54 @@ const SearchMoviesItem = ({ movie, handleClick }: Props) => {
 
   return (
     <li>
-      <button type="button" onClick={() => handleClick(movie.id)} className="lg:flex lg:items-center">
-        <Image
-          src={`${baseImgUrl}w300_and_h450_bestv2${movie.backdrop_path}`}
-          alt="포스터"
-          width={300}
-          height={450}
-          quality={100}
-          className="object-cover w-full h-auto rounded-lg lg:w-28"
-        />
-        <div className="flex flex-col justify-between lg:ml-3 text-left">
-          <strong>{movie.title}</strong>
-          <div>{movie.release_date.slice(0, 4)}</div>
-          <div>{detailData && detailData.genres.map((genre: MovieGenre) => `${genre.name} `)}</div>
-          <div>{detailData?.production_countries.length && detailData.production_countries[0]['iso_3166_1']}</div>
-          <div>{detailData && detailData.runtime}분</div>
-          <div>{movie.adult ? '청소년관람불가' : '전체관람가'}</div>
+      <button type="button" onClick={() => handleClick(movie.id)} className="flex items-center">
+        <div className="h-full relative">
+          <Image
+            src={`${baseImgUrl}w300_and_h450_bestv2${movie.backdrop_path}`}
+            alt="포스터 이미지"
+            width={60}
+            height={90}
+            quality={70}
+            className="rounded-lg"
+          />
+        </div>
+
+        <div className="flex flex-col gap-3 ml-2 text-left ">
+          <strong className="text-neutral-800 text-base font-normal leading-snug">{movie.title}</strong>
+          <div className="text-zinc-500 text-xs font-normal leading-5">
+            <div className="flex">
+              {movie.release_date.slice(0, 4)}
+              <div className="flex items-center justify-center p-1">
+                <svg width="2" height="2" viewBox="0 0 2 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="1" cy="1" r="1" fill="#888888" />
+                </svg>
+              </div>
+
+              {detailData?.genres.map((genre: MovieGenre, idx: number) =>
+                idx === detailData.genres.length - 1 ? `${genre.name}` : `${genre.name}/`
+              )}
+            </div>
+
+            <div className="flex">
+              {detailData?.production_countries?.length && detailData.production_countries[0]['iso_3166_1']}
+
+              <div className="flex items-center justify-center p-1">
+                <svg width="2" height="2" viewBox="0 0 2 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="1" cy="1" r="1" fill="#888888" />
+                </svg>
+              </div>
+
+              {detailData?.runtime}분
+
+              <div className="flex items-center justify-center p-1">
+                <svg width="2" height="2" viewBox="0 0 2 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="1" cy="1" r="1" fill="#888888" />
+                </svg>
+              </div>
+
+              {movie.adult ? '청소년관람불가' : '전체관람가'}
+            </div>
+          </div>
         </div>
       </button>
     </li>

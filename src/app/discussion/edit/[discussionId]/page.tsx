@@ -1,4 +1,5 @@
 'use client';
+
 import { getDiscussionPostDetail, getDiscussionPostOption } from '@/api/supabase-discussion';
 import ReviewMovie from '@/components/ReviewForm/ReviewMovie';
 import useDiscussionPostQuery from '@/hooks/useDiscussionPostQuery';
@@ -27,6 +28,7 @@ const DiscussionEditPage = ({ params }: Props) => {
   const {
     userInfo: { id: userId }
   } = useUserInfoStore();
+
   const [title, setTitle] = useState<string>();
   const [content, setContent] = useState<string>();
   const [movieId, setMovieId] = useState<string>();

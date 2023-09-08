@@ -21,7 +21,7 @@ const Nav = () => {
           </Link>
         </ul>
         <ul>
-          <Link className="hover:font-semibold animate-200 hover:text-orange-400" href={'/discussion/list/1'}>
+          <Link className="hover:font-semibold animate-200 hover:text-orange-400" href={'/discussion/list'}>
             토론
           </Link>
         </ul>
