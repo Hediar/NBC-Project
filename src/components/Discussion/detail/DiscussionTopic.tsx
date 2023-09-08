@@ -27,7 +27,7 @@ const DiscussionTopic = async ({ postData }: Props) => {
           <div>
             <Image src={userData.avatar_url} alt="Image" width={40} height={40} className="rounded-full" />
           </div>
-          <span className="subtitle2_suit">{userData.username.slice(0, 20)}</span>
+          <span className="subtitle2_suit">{userData.username && userData.username.slice(0, 15)}</span>
         </header>
         <section className="min-h-[438px] px-[62px] py-[54px] flex flex-col items-center relative mt-5 border border-[#888888] rounded-[40px]">
           <div className="flex flex-col flex-wrap justify-center items-center flex-1 w-full gap-[10px] py-5 leading-snug">

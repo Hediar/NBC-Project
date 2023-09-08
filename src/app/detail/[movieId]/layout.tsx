@@ -44,7 +44,9 @@ export default async function MovieDetailLayout({
   return (
     <section>
       <MovieDetailInfo movieId={movieId} />
+
       {children}
+
       <section style={{ width: '80%', margin: '0 auto' }}>
         {discussionPostData?.length ? (
           <div className="flex">

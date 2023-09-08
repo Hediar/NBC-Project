@@ -1,3 +1,5 @@
+'use client';
+
 import { DropdownMenu } from '@/styles/icons/Icons24';
 import { SearchLined } from '@/styles/icons/Icons32';
 import Image from 'next/image';
@@ -11,26 +13,28 @@ interface Props {
 
 interface FilterBy {
   text: string;
-  id: string;
+  title: string;
 }
 
 const DiscussionFilteringBox = ({ sortQuery = '' }: Props) => {
   const [sortFilterOpen, setSortFilterOpen] = useState<boolean>(false);
   const [searchFilterOpen, setSearchFilterOpen] = useState<boolean>(false);
   const searchByDropdownValues = [
-    { text: '전체', id: 'all' },
-    { text: '영화 제목', id: 'movie_title' },
-    { text: '토론 제목', id: 'discussion_title' },
-    { text: '내용', id: 'discussion_content' }
+    { text: '전체', title: 'all' },
+    { text: '영화 제목', title: 'movie_title' },
+    { text: '토론 제목', title: 'discussion_title' },
+    { text: '내용', title: 'discussion_content' }
   ];
   const sortByDropdownValues = [
-    { text: '최신순', id: 'new' },
-    { text: '조회순', id: 'view' },
-    { text: '투표순', id: 'vote' }
+    { text: '최신순', title: 'new' },
+    { text: '조회순', title: 'view' },
+    { text: '투표순', title: 'vote' }
   ];
   const [searchBy, setSearchBy] = useState<FilterBy>(searchByDropdownValues[0]);
   const [searchVal, setSearchVal] = useState('');
-  const [sortBy, setSortBy] = useState<FilterBy>(sortByDropdownValues.filter((obj) => obj.id.includes(sortQuery))[0]);
+  const [sortBy, setSortBy] = useState<FilterBy>(
+    sortByDropdownValues.filter((obj) => obj.title.includes(sortQuery))[0]
+  );
   const router = useRouter();
   const discussionUrl = usePathname();
   const searchParams = useSearchParams();
@@ -40,17 +44,17 @@ const DiscussionFilteringBox = ({ sortQuery = '' }: Props) => {
 
   const handleSearchValSubmit = () => {
     if (sort) {
-      router.push(`${discussionUrl.slice(0, -1)}1?search=${searchVal}&filter=${searchBy.id}&sort=${sort}`);
+      router.push(`${discussionUrl.slice(0, -1)}1?search=${searchVal}&filter=${searchBy.title}&sort=${sort}`);
     } else {
-      router.push(`${discussionUrl.slice(0, -1)}1?search=${searchVal}&filter=${searchBy.id}`);
+      router.push(`${discussionUrl.slice(0, -1)}1?search=${searchVal}&filter=${searchBy.title}`);
     }
   };
 
   const handleSortBySubmit = (obj: FilterBy) => {
     if (search) {
-      router.push(`${discussionUrl}?search=${search}&filter=${filter}&sort=${obj.id}`);
+      router.push(`${discussionUrl}?search=${search}&filter=${filter}&sort=${obj.title}`);
     } else {
-      router.push(`${discussionUrl}?sort=${obj.id}`);
+      router.push(`${discussionUrl}?sort=${obj.title}`);
     }
   };
 
@@ -73,7 +77,7 @@ const DiscussionFilteringBox = ({ sortQuery = '' }: Props) => {
                 return (
                   <li
                     className="px-3 hover:bg-gray-200 cursor-pointer"
-                    key={sortByObj.id}
+                    key={sortByObj.title}
                     onClick={() => {
                       setSortBy(sortByObj);
                       setSortFilterOpen(false);
@@ -137,7 +141,7 @@ const DiscussionFilteringBox = ({ sortQuery = '' }: Props) => {
                   return (
                     <li
                       className="px-3 hover:bg-gray-200 cursor-pointer"
-                      key={searchByObj.id}
+                      key={searchByObj.title}
                       onClick={() => {
                         setSearchBy(searchByObj);
                         setSearchFilterOpen(false);

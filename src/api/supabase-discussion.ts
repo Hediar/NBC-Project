@@ -1,8 +1,12 @@
 import supabase from '@/supabase/config';
 // get요청
-export const getDiscussionPost = async () => {
-  const { data } = await supabase.from('discussion_post').select('*').order('post_id', { ascending: false });
-  // .range((pageNum - 1) * 5, pageNum * 5 - 1);
+
+export const getDiscussionPost = async (pageParam: number) => {
+  const { data } = await supabase
+    .from('discussion_post')
+    .select('*')
+    .order('post_id', { ascending: false })
+    .range((pageParam - 1) * 5, pageParam * 5 - 1);
 
   return data;
 };

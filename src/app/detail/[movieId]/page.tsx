@@ -10,11 +10,10 @@ interface Props {
 
 const MovieDetail = async ({ params }: Props) => {
   const { movieId } = params;
-  const movieData = await getMovieDetail(movieId);
 
   return (
     <div>
-      <KeyInfomation movieData={movieData} />
+      <KeyInfomation movieId={movieId} />
     </div>
   );
 };
