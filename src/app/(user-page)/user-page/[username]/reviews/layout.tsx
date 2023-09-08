@@ -50,5 +50,5 @@ export default async function Layout({
       </div>
     );
   }
-  return <div className="h-[calc(100vh-134px)]">{children}</div>;
+  return <div className="max-w-[1280px] p-5">{children}</div>;
 }

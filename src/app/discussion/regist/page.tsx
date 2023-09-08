@@ -147,7 +147,7 @@ const DiscussionRegistPage = (props: Props) => {
       });
 
       router.refresh();
-      router.push('/discussion/list/1');
+      router.push('/discussion/list');
     } catch (error) {}
   };
 

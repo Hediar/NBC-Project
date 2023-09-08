@@ -1,5 +1,6 @@
 'use client';
 
+import { StarFilled, StarLined } from '@/styles/icons/Icons32';
 import React, { useEffect } from 'react';
 
 type Props = {
@@ -22,17 +23,29 @@ const StarBox = ({ fieldName, setValue, defaultValue, readOnly = false }: Props)
   }, [defaultValue]);
 
   return (
-    <>
+    <div className='flex items-center gap-1'>
       <span className="inline-block relative text-[32px] text-gray-300">
-        ★★★★★
+        <span className='flex w-40'>
+          <StarLined />
+          <StarLined />
+          <StarLined />
+          <StarLined />
+          <StarLined />
+        </span>
         <span
           style={{ width: `${rating * 20}%` }}
-          className={`absolute left-0 w-[${rating * 20}%] text-rose-500 overflow-hidden pointer-events-none`}
+          className={`absolute top-0 left-0 w-[${rating * 20}%] text-rose-500 overflow-hidden pointer-events-none`}
         >
-          ★★★★★
+          <span className='flex w-40'>
+          <StarFilled />
+          <StarFilled />
+          <StarFilled />
+          <StarFilled />
+          <StarFilled />
+          </span>
         </span>
         <input
-          className="absolute w-[100%] h-[100%] left-0 opacity-0"
+          className="absolute top-0 w-[100%] h-[100%] left-0 opacity-0 cursor-pointer"
           type="range"
           onChange={handleChange}
           value={rating}
@@ -43,8 +56,8 @@ const StarBox = ({ fieldName, setValue, defaultValue, readOnly = false }: Props)
           disabled={readOnly}
         />
       </span>
-      {rating}
-    </>
+      <span className='text-center text-zinc-500 text-xs font-normal leading-none'>{rating}</span>
+    </div>
   );
 };
 

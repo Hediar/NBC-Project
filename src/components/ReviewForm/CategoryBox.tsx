@@ -16,11 +16,11 @@ const CategoryBox = ({ CATEGORY, boxIndex, checkedList, checkHandler }: Props) =
   const cateName = `cate${boxIndex}`;
 
   return (
-    <div className="p-5 bg-slate-100 rounded-md">
-      <strong>{CATEGORY.title}</strong>
+    <div className="category-box">
+      <strong className='block mb-3 text-neutral-800 text-base font-bold leading-snug'>{CATEGORY.title}</strong>
       <ul>
         {CATEGORY.options.map((item, i) => (
-          <li key={item + i} className="block w-full my-2">
+          <li key={item + i} className="my-2">
             <input
               type="checkbox"
               checked={checkedList && checkedList.includes(item)}
@@ -32,7 +32,7 @@ const CategoryBox = ({ CATEGORY, boxIndex, checkedList, checkHandler }: Props) =
             />
             <label
               htmlFor={`${cateName}_${i}`}
-              className="flex items-center justify-between w-auto p-2 font-medium tracking-tight border rounded-md cursor-pointer bg-brand-light text-brand-black bg-white border-gray-200 peer-checked:text-teal-700 peer-checked:bg-teal-100 peer-checked:border-teal-300  peer-checked:decoration-brand-dark peer-checked:font-bold"
+              className="inline-block my-[1px] px-4 py-2 bg-white rounded-3xl border border-zinc-300 text-neutral-800 text-base font-normal leading-snug cursor-pointer peer-checked:border-2 peer-checked:my-0"
             >
               {item}
             </label>

@@ -1,13 +1,14 @@
 import Image from 'next/image';
 import React from 'react';
 import altImage from '../../../../public/anonymous-avatar-icon.png';
+import { getCreditsData } from '@/api/tmdb';
 
 interface Props {
-  movieData: MovieData;
+  movieId: string;
 }
 
-const AppearanceProduction = ({ movieData }: Props) => {
-  const { appearences, productions } = movieData;
+const AppearanceProduction = async ({ movieId }: Props) => {
+  const { appearences, productions } = await getCreditsData(movieId);
 
   return (
     <div className="flex w-4/5 mx-auto justify-between">

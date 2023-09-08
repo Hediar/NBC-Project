@@ -31,18 +31,14 @@ const ReviewFetchMore = ({ searchParams }: Props) => {
     },
     select: (data: any) => {
       return data.pages.map((pageData: any) => pageData.results).flat();
-    }
+    },
+    refetchOnMount: true,
+    retry: 0,
   }) as any;
-  // console.log('✅reviews => ', reviews);
-  // console.log('✅reviews => ', reviews);
 
   useEffect(() => {
-    if (!firstMount) {
       remove();
       refetch().then();
-    } else {
-      setFirstMount(false);
-    }
   }, [searchParams]);
 
   const fetchMore = () => {

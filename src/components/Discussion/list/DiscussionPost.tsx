@@ -1,15 +1,25 @@
-/* eslint-disable @next/next/no-img-element */
+'use client';
+
 import { getDiscussionPostOption } from '@/api/supabase-discussion';
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { baseImgUrl } from '@/static/baseImgUrl';
 import Image from 'next/image';
+
 interface Props {
   post: DiscussionPost;
 }
 
-const DiscussionPost = async ({ post }: Props) => {
-  const optionData = await getDiscussionPostOption(post.post_id);
+const DiscussionPost = ({ post }: Props) => {
+  const [optionData, setOptionData] = useState<DiscussionOption[]>();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const optionData = await getDiscussionPostOption(post.post_id);
+      setOptionData(optionData);
+    };
+    fetchData();
+  }, []);
 
   return (
     <Link
@@ -18,7 +28,6 @@ const DiscussionPost = async ({ post }: Props) => {
     >
       <div className="flex justify-center items-center p-3">
         <div className="h-[90px] mx-auto flex justify-center">
-          {/* 선택된 토론대상무비 이미지 넣을부분. */}
           <Image
             src={`${baseImgUrl}w300_and_h450_bestv2${post.movie_imgUrl}`}
             alt="테스트"
@@ -40,7 +49,7 @@ const DiscussionPost = async ({ post }: Props) => {
                   {optionData?.map((option, idx) =>
                     idx === optionData.length - 1 ? (
                       <div
-                        key={idx}
+                        key={option.option_id}
                         className="h-[29px] px-3 py-1.5 bg-white rounded-[22px] border border-zinc-300 justify-start items-center gap-2.5 inline-flex"
                       >
                         <p className="text-neutral-800 text-sm font-normal leading-[17px]">
@@ -48,11 +57,8 @@ const DiscussionPost = async ({ post }: Props) => {
                         </p>
                       </div>
                     ) : (
-                      <div key={idx} className="flex items-center">
-                        <div
-                          key={idx}
-                          className="h-[29px] px-3 py-1.5 bg-white rounded-[22px] border border-zinc-300 justify-start items-center gap-2.5 inline-flex"
-                        >
+                      <div key={option.option_id} className="flex items-center">
+                        <div className="h-[29px] px-3 py-1.5 bg-white rounded-[22px] border border-zinc-300 justify-start items-center gap-2.5 inline-flex">
                           <p className="text-neutral-800 text-sm font-normal leading-[17px]">
                             {option.content.length > 15 ? option.content.slice(0, 15) + '...' : option.content}
                           </p>

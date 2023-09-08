@@ -26,7 +26,7 @@ const EditDeleteBox = ({ postId, authorId }: Props) => {
       deletePostMutation.mutate(postId);
 
       messageApi.open({ type: 'success', content: '삭제되었습니다' });
-      router.push('/discussion/list/1');
+      router.push('/discussion/list');
     } catch (error) {
       //   console.log('에러==>>', error);
     }
