@@ -1,5 +1,6 @@
 import supabase from '@/supabase/config';
 import { getDetailData } from './tmdb';
+import { getColors } from '@/util/findColors';
 
 export const addReview = async (post: ReviewsTable) => {
   const fetchData = await supabase.from('reviews').insert([post]).select();
@@ -41,17 +42,6 @@ export const getLatestReviews = async () => {
     .order('created_at', { ascending: false }) // 날짜 기준으로 내림차순 정렬
     .limit(4); // 가져올 개수 제한
 
-  const getColors = async (imageurl: any) => {
-    const formData = new FormData();
-    formData.append('imageUrl', imageurl.toString());
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/imagecolorpicker`, {
-      method: 'post',
-      body: formData
-    });
-    const rgb = await res.json();
-    return rgb;
-  };
-
   const addUserName = getReviews?.map(async (data) => {
     const { data: userData } = await supabase.from('users').select('*').eq('id', data.userid);
     const { data: reviewLikes } = await supabase.from('reviewlikes').select('count').eq('reviewid', data.reviewid);
@@ -70,7 +60,7 @@ export const getLatestReviews = async () => {
       username: usernameData!,
       userAvatarURL,
       // reviewLikesCount: reviewLikes,
-      colors: color.message
+      colors: color
     };
     // console.log(reviewLikes);
     return filterData;
