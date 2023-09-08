@@ -38,7 +38,7 @@ const LatestMovieSlider = ({ photoData }: Props) => {
                 </div>
               </div>
               <div className="absolute bottom-0 left-0 right-0 h-[128px] bg-GreyScaleSilverGrey ">
-                <div className="h-[128px] flex justify-center items-center p-[16px] body1_regular_suit">
+                <div className="truncate h-[128px] flex justify-center items-center p-[16px] body1_regular_suit">
                   {imageData.overview}
                 </div>
               </div>
