@@ -49,9 +49,9 @@ const KeyInfomation = async ({ movieId }: Props) => {
                 className="w-[47px] h-[57px] self-end bg-white"
                 style={{ clipPath: 'polygon(100% 50%, 0% 100%, 100% 100%)' }}
               ></div>
-              <div className="w-full flex justify-center items-center bg-white rounded-2xl rounded-bl-none custom_mobile_suit sm:sm:text-[24px] sm:leading-[30px] px-5 py-20 ">
+              <div className="w-full flex justify-center items-center bg-white rounded-2xl rounded-bl-none border-none custom_mobile_suit sm:text-[24px] sm:leading-[30px] px-5 py-20 ">
                 <div className="h-full flex flex-col gap-1 items-center overflow-auto">
-                  {tagline && <p className="inline-block">"{tagline}"</p>}
+                  {tagline && <p>"{tagline}"</p>}
                   <p>{overview}</p>
                 </div>
               </div>
