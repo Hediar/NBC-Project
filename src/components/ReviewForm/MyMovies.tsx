@@ -42,10 +42,10 @@ const MyMovies = () => {
   }, [userInfo]);
 
   return (
-    <div>
-      <strong>나의 영화 리스트</strong>
-      <ul className="mx-auto grid max-w-full w-full grid-cols-2 gap-x-5 px-8 h-[300px]">
-        <li>
+    <div className="p-10 pb-5 bg-neutral-50 rounded-2xl border border-gray-200">
+      <strong className='subtitle2_suit'>나의 영화 리스트</strong>
+      <ul className="overflow-hidden relative mt-4 h-[338px]">
+        <li className='inline-block'>
           <input
             className="peer sr-only"
             type="radio"
@@ -55,32 +55,32 @@ const MyMovies = () => {
             defaultChecked
           />
           <label
-            className="flex justify-center cursor-pointer rounded-full border border-gray-300 bg-white py-2 px-4 hover:bg-gray-50 focus:outline-none peer-checked:border-transparent peer-checked:ring-2 peer-checked:ring-indigo-500 transition-all duration-500 ease-in-out"
+            className="inline-block mr-3 px-4 py-2 bg-white rounded-3xl border border-zinc-300 text-neutral-800 text-base font-normal leading-snug cursor-pointer peer-checked:bg-neutral-800 peer-checked:text-white transition-all duration-500 ease-in-out"
             htmlFor="myList-likes"
           >
-            좋아요 누른 콘텐츠
+            좋아요 누른 영화
           </label>
           <MyMoviesSwiper
             dataList={likesList}
             spaceBetween={20}
             slidesPerView={6}
-            className="absolute bg-white shadow-lg left-0 p-6 border mt-2 border-indigo-300 rounded-lg w-full mx-auto transition-all duration-500 ease-in-out translate-x-40 opacity-0 invisible peer-checked:opacity-100 peer-checked:visible peer-checked:translate-x-1"
+            className="absolute left-0 w-full mt-3 mx-auto transition-all duration-500 ease-in-out translate-x-40 opacity-0 invisible peer-checked:opacity-100 peer-checked:visible peer-checked:translate-x-1"
           />
         </li>
 
-        <li>
+        <li className='inline-block'>
           <input className="peer sr-only" type="radio" value="myList-watchLater" name="myList" id="myList-watchLater" />
           <label
-            className="flex justify-center cursor-pointer rounded-full border border-gray-300 bg-white py-2 px-4 hover:bg-gray-50 focus:outline-none peer-checked:border-transparent peer-checked:ring-2 peer-checked:ring-indigo-500 transition-all duration-500 ease-in-out"
+            className="inline-block mr-3 px-4 py-2 bg-white rounded-3xl border border-zinc-300 text-neutral-800 text-base font-normal leading-snug cursor-pointer peer-checked:bg-neutral-800 peer-checked:text-white transition-all duration-500 ease-in-out"
             htmlFor="myList-watchLater"
           >
-            찜한 콘텐츠
+            찜한 영화
           </label>
           <MyMoviesSwiper
             dataList={watchLaterList}
             spaceBetween={20}
             slidesPerView={6}
-            className="absolute bg-white shadow-lg left-0 p-6 border mt-2 border-indigo-300 rounded-lg w-full mx-auto transition-all duration-500 ease-in-out translate-x-40 opacity-0 invisible peer-checked:opacity-100 peer-checked:visible peer-checked:translate-x-1"
+            className="absolute left-0 w-full mt-3 mx-auto transition-all duration-500 ease-in-out translate-x-40 opacity-0 invisible peer-checked:opacity-100 peer-checked:visible peer-checked:translate-x-1"
           />
         </li>
       </ul>

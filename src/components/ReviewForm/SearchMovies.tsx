@@ -6,11 +6,12 @@ import React, { useState } from 'react';
 import Paging from '../common/Paging';
 import SearchMoviesItem from './SearchMoviesItem';
 import { debounce } from 'lodash';
+import { SearchLined } from '@/styles/icons/Icons32';
 
 const SearchMovies = () => {
   const [currentPage, setCurrentPage] = React.useState(1);
   const [totalPages, setTotalPages] = React.useState(1);
-  const dataPerPage: number = 3;
+  const dataPerPage: number = 4;
 
   const [searchMovies, setSearchMovies] = React.useState<TMDBSearchMovie[]>();
   const { saveSearchMovieId } = useReviewMovieStore();
@@ -40,18 +41,20 @@ const SearchMovies = () => {
   const isSearchNull = isSearchStart && !searchMovies.length;
 
   return (
-    <div>
-      <input
-        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-"
-        id="search"
-        name="search"
-        type="text"
-        placeholder="영화 검색"
-        onChange={handleChange}
-      />
-      <ul className={`overflow-auto h-44 grid grid-cols-${dataPerPage} gap-4 mt-2 p-2`}>
-        {!isSearchStart && <li>리뷰 남기실 콘텐츠를 검색해 주세요</li>}
-        {isSearchNull && <li>검색결과가 없습니다</li>}
+    <div className='flex flex-col items-center mt-[26px] mb-[60px]'>
+      <form className='search-form'>
+        <input
+          className="custom_input"
+          type="text"
+          placeholder="검색"
+          onChange={handleChange}
+        />
+        <button><SearchLined /></button>
+      </form>
+
+      <ul className={`overflow-auto grid grid-cols-1 gap-5 w-full min-h-[6rem] mt-[30px] sm:grid-cols-2 lg:grid-cols-4`}>
+        {!isSearchStart && <li className='col-span-4 display-[inherit] grid items-center text-center text-neutral-800 text-3xl font-bold leading-10'>리뷰 남기실 콘텐츠를 검색해 주세요</li>}
+        {isSearchNull && <li className='col-span-4 display-[inherit] grid items-center text-center text-neutral-800 text-3xl font-bold leading-10'>검색결과가 없습니다</li>}
         {isSearchStart &&
           searchMovies
             .slice(currentPage * dataPerPage - dataPerPage, currentPage * dataPerPage)
