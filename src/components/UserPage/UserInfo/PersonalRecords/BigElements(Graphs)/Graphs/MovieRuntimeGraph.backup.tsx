@@ -1,25 +1,10 @@
 'use client';
 
 import React from 'react';
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
-import { Bar } from 'react-chartjs-2';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Doughnut } from 'react-chartjs-2';
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
-
-export const options = {
-  indexAxis: 'y' as const,
-  elements: {
-    bar: {
-      borderWidth: 2
-    }
-  },
-  responsive: true,
-  plugins: {
-    legend: {
-      position: 'bottom' as const
-    }
-  }
-};
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 type Props = {
   titles: string[];
@@ -57,14 +42,12 @@ const MovieRuntimeGraph = ({ titles, runtimes }: Props) => {
           '#bb3b76',
           '#dbc071'
         ],
-        borderWidth: 1,
-        barThickness: 10,
-        categorySpacing: 20
+        borderWidth: 1
       }
     ]
   };
 
-  return <Bar data={data} options={options} />;
+  return <Doughnut data={data} />;
 };
 
 export default MovieRuntimeGraph;

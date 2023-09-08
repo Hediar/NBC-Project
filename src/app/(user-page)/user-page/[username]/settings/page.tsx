@@ -7,6 +7,8 @@ import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
+export const dynamic = 'force-dynamic';
+
 type SearchParams = {
   'my-account'?: boolean | undefined;
   'change-info'?: boolean | undefined;

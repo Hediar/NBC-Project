@@ -5,7 +5,7 @@ type UserData = Database['public']['Tables']['users']['Row'];
 
 const HeaderUser = ({ userData }: { userData: UserData }) => {
   return (
-    <div className="flex-row-reverse flex gap-5 items-center mr-4">
+    <div className="sm:flex-row-reverse flex gap-2 sm:gap-5 items-center mr-4">
       <HeaderMenuButton userData={userData} />
       <div className="rounded-full overflow-hidden shadow-sm shadow-gray-400">
         <Image

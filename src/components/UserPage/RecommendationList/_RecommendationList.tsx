@@ -6,6 +6,8 @@ import { cookies } from 'next/headers';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import idToUsername from '@/api/supabase/idToUsername';
 
+export const dynamic = 'force-dynamic';
+
 interface Props {
   username: string;
   watched_movies: string[];
