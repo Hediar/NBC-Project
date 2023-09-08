@@ -1,11 +1,12 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import RecordsContainerBig from '../_Containers/RecordsContainerBig';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import idToUsername from '@/api/supabase/idToUsername';
 import getGenresUserLikes from '@/api/movieStatistics/getGenresUserLikes';
 import NumberOfGenresGraph from './Graphs/NumberOfGenresGraph';
-import LoadingSpinner from '@/components/common/LoadingSpinner';
+
+export const dynamic = 'force-dynamic';
 
 const LikesOnGenres = async ({ username }: { username: string }) => {
   const supabase = createServerComponentClient<Database>({ cookies });

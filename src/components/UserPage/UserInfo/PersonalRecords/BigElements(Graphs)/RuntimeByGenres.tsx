@@ -5,6 +5,8 @@ import { getMovieTimeByGenres } from '@/api/movieStatistics/getRuntimesByGenres'
 import RecordsContainerBig from '../_Containers/RecordsContainerBig';
 import MovieRuntimeGraph from './Graphs/MovieRuntimeGraph.backup';
 
+export const dynamic = 'force-dynamic';
+
 type Props = {
   userId: string;
 };

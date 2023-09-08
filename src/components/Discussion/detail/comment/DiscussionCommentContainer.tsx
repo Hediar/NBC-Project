@@ -4,6 +4,8 @@ import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import CommentInput from './CommentInput';
 import DisplayComments from './DisplayComments';
 
+export const dynamic = 'force-dynamic';
+
 interface Props {
   discussionId: string;
 }
