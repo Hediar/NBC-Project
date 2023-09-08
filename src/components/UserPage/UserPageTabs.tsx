@@ -1,6 +1,3 @@
-import { cookies } from 'next/headers';
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import doesUsersMatch from '@/api/doesUserMatch';
 import {
   BookFilled,
   BookLined,

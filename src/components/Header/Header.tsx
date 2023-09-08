@@ -30,7 +30,7 @@ const Header = async () => {
             </Link>
             <Nav />
           </div>
-          <div className="flex gap-3 items-center">
+          <div className="flex sm:gap-3 items-center">
             {userData && <HeaderUser userData={userData} />}
             <AuthButton />
           </div>

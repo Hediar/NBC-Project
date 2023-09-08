@@ -1,6 +1,5 @@
 import isUsernameAvailable from '@/api/generateUsername/isUsernameAvailable';
 import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
-import { AxiosPromise } from 'axios';
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 

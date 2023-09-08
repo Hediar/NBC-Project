@@ -14,7 +14,7 @@ const RecordsContainerBig = ({ bgColor, borderColor, title, children }: Props) =
       style={{ backgroundColor: `${bgColor}`, border: `1px solid ${borderColor}` }}
     >
       <h2 className="absolute left-6 top-6 subtitle2_suit ">{title}</h2>
-      <div className="h-[300px] pt-10">{children}</div>
+      <div className="flex justify-center items-center h-[300px] pt-10">{children}</div>
     </div>
   );
 };

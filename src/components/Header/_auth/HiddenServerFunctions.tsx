@@ -3,6 +3,8 @@ import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import SaveUserInfoToStore from './SaveUserInfoToStore';
 
+export const dynamic = 'force-dynamic';
+
 // 세션이 무조건 있음.
 const HiddenServerFunctions = async () => {
   const supabase = createServerComponentClient<Database>({ cookies });
