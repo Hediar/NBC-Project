@@ -51,9 +51,8 @@ export const getLatestReviews = async () => {
     //   likesCount = reviewLikes[0].count;
     // }
     const usernameData = userData?.map((data) => data.username);
-    const userAvatarURL = userData?.map((data) => data.avatar_url);
+    const userAvatarURL = userData?.map((data) => data.avatar_url)[0];
     const color = await getColors(userAvatarURL!);
-    // console.log(color);
 
     const filterData = {
       ...data,
