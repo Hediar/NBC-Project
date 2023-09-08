@@ -14,16 +14,6 @@ const LatestReviews = async () => {
     const rgbColor = `rgb(${color[0]}, ${color[1]}, ${color[2]})`;
     return { rgbColortrans, rgbColor };
   });
-  // const bgClasses = getColors.map((color) => {
-  //   const hexColor = `#${color.map((channel: number) => channel.toString(16).padStart(2, '0')).join('')}`;
-  //   return `${hexColor}`;
-  // });
-
-  // const rgbToHex = (rgb: any) => {
-  //   return `#${rgb.map((channel: any) => channel.toString(16).padStart(2, '0')).join('')}`;
-  // };
-
-  // console.log('getColors', bgClasses);
 
   return (
     <div className="p-5">
