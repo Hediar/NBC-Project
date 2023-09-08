@@ -31,7 +31,7 @@ const TrailerSlider = ({ trailerKeys }: Props) => {
                 alt="Image"
                 onClick={() => showTrailer(KEY)}
               ></Image>
-              <div className="flex justify-between items-center absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-transparent cursor-pointer z-10 pointer-events-none">
+              <div className="flex justify-between items-center absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-transparent cursor-pointer z-10 pointer-events-none opacity-60">
                 <SVGPlayButton />
               </div>
             </React.Fragment>
@@ -43,8 +43,10 @@ const TrailerSlider = ({ trailerKeys }: Props) => {
           skipSnaps: false,
           inViewThreshold: 0.7
         }}
-        slideHeight="h-[12.5rem]"
-        slideWidth="w-1/4"
+        slideHeight="h-[220px] sm:h-[10.5rem] lg:h-[12.5rem]"
+        slideWidth="w-full sm:w-1/2 lg:w-1/4"
+        isSlideLength={true}
+        buttonPosition="center"
       />
     </div>
   );
