@@ -4,8 +4,7 @@ import ReactQueryProvider from './ReactQueryProvider';
 import Header from '@/components/Header/Header';
 import ScrollToTopButton from '@/components/common/ScrollToTopButton';
 import { ConfigProvider } from 'antd';
-
-// import { Analytics } from '@vercel/analytics/react';
+import { Analytics } from '@vercel/analytics/react';
 import Footer from '@/components/common/Footer';
 
 export const metadata: Metadata = {
@@ -34,12 +33,12 @@ export default function RootLayout(props: { children: React.ReactNode }) {
           <ConfigProvider theme={theme}>
             <Header />
             {props.children}
-            {/* <Footer /> */}
+            <Footer />
           </ConfigProvider>
         </ReactQueryProvider>
         <ScrollToTopButton />
       </body>
-      {/* <Analytics /> */}
+      <Analytics />
     </html>
   );
 }
