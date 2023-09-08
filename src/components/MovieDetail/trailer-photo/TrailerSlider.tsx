@@ -43,8 +43,10 @@ const TrailerSlider = ({ trailerKeys }: Props) => {
           skipSnaps: false,
           inViewThreshold: 0.7
         }}
-        slideHeight="h-[12.5rem]"
-        slideWidth="w-1/4"
+        slideHeight="h-[220px] sm:h-[10.5rem] lg:h-[12.5rem]"
+        slideWidth="w-full sm:w-1/2 lg:w-1/4"
+        isSlideLength={true}
+        buttonPosition="center"
       />
     </div>
   );

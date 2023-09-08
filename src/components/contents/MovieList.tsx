@@ -1,6 +1,6 @@
 'use client';
 
-import { getMovieListDataSearch, getMovieListNotSearch } from '@/api/tmdb';
+import { getMovieListDataSearch, getMovieListNotSearch, getTest } from '@/api/tmdb';
 import Search from '@/components/common/Search';
 import Sort from '@/components/contents/Sort';
 import { useEffect, useState } from 'react';
@@ -20,6 +20,8 @@ const MovieList = () => {
   const formattedCurrentDate = today.format('YYYY-MM-DD');
 
   const fetchMovieData = async (page: number) => {
+    const testData = await getTest('인어', 'movie', 2);
+    console.log(testData);
     if (searchMovieValue) {
       // 검색 했을 때
       const data = await getMovieListDataSearch(searchMovieValue, searchType, page);
