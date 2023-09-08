@@ -91,16 +91,12 @@ const LatestMovieSlider = async ({ photoData }: Props) => {
                 </div>
               </div>
               <div
-                className="absolute body1_regular_suit overflow-hidden p-[30px] bottom-0 left-0 right-0 h-32 justify-center items-center rounded-bl-[20px] rounded-br-[20px] border border-gray-200 "
+                className="absolute body1_regular_suit p-[30px] bottom-0 left-0 right-0 h-32 justify-center items-center rounded-bl-[20px] rounded-br-[20px] border border-gray-200 "
                 style={{
-                  background: `linear-gradient(90deg, ${bottomColor[idx]} 0%, #FBFBFB 100%)`,
-                  maxHeight: '500px',
-                  display: '-webkit-box',
-                  WebkitBoxOrient: 'vertical',
-                  WebkitLineClamp: 3
+                  background: `linear-gradient(90deg, ${bottomColor[idx]} 0%, #FBFBFB 100%)`
                 }}
               >
-                {imageData.overview}
+                <div className="line-clamp-3">{imageData.overview}</div>
               </div>
             </div>
           );
