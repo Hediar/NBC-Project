@@ -5,12 +5,14 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { baseImgUrl } from '@/static/baseImgUrl';
 import Image from 'next/image';
+
 interface Props {
   post: DiscussionPost;
 }
 
 const DiscussionPost = ({ post }: Props) => {
   const [optionData, setOptionData] = useState<DiscussionOption[]>();
+
   useEffect(() => {
     const fetchData = async () => {
       const optionData = await getDiscussionPostOption(post.post_id);
@@ -47,7 +49,7 @@ const DiscussionPost = ({ post }: Props) => {
                   {optionData?.map((option, idx) =>
                     idx === optionData.length - 1 ? (
                       <div
-                        key={idx}
+                        key={option.option_id}
                         className="h-[29px] px-3 py-1.5 bg-white rounded-[22px] border border-zinc-300 justify-start items-center gap-2.5 inline-flex"
                       >
                         <p className="text-neutral-800 text-sm font-normal leading-[17px]">
@@ -55,11 +57,8 @@ const DiscussionPost = ({ post }: Props) => {
                         </p>
                       </div>
                     ) : (
-                      <div key={idx} className="flex items-center">
-                        <div
-                          key={idx}
-                          className="h-[29px] px-3 py-1.5 bg-white rounded-[22px] border border-zinc-300 justify-start items-center gap-2.5 inline-flex"
-                        >
+                      <div key={option.option_id} className="flex items-center">
+                        <div className="h-[29px] px-3 py-1.5 bg-white rounded-[22px] border border-zinc-300 justify-start items-center gap-2.5 inline-flex">
                           <p className="text-neutral-800 text-sm font-normal leading-[17px]">
                             {option.content.length > 15 ? option.content.slice(0, 15) + '...' : option.content}
                           </p>

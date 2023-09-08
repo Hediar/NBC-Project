@@ -65,7 +65,7 @@ const KeyInfomation = async ({ movieId }: Props) => {
             <div>
               <span className="font-bold text-base text-white flex">
                 평균 별점
-                <StarLine />
+                <StarLine fill="white" />
                 {(vote_average / 2).toFixed(2)}
               </span>
             </div>

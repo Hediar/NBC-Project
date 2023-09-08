@@ -100,6 +100,7 @@ select:-webkit-autofill:focus {
   transition: background-color 5000s ease-in-out 0s;
 }
 
+/* @apply text-[60px] not-italic font-extrabold leading-[72px] */
 .h1_suit {
   font-family: var(--base-font);
   font-size: 60px;
