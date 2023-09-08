@@ -49,7 +49,7 @@ const DisplayComments = ({ addedCommentsData, signedInUserId }: Props) => {
           </div>
           <div className="flex gap-2 items-center">
             <span>좋아요 {comment.likes}개</span>
-            <button>답글</button>
+            {/* <button>답글</button> */}
             <span>{changeFormat(comment.created_at)}</span>
             <LikeButton comment={comment} addOptimisticComments={addOptimisticComments} />
             {signedInUserId === comment.user_id && <DeleteCommentButton postId={comment.id} />}
