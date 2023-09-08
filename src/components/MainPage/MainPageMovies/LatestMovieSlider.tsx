@@ -22,7 +22,7 @@ const LatestMovieSlider = ({ photoData }: Props) => {
                 <Image
                   width={320}
                   height={480}
-                  src={`${baseImgUrl}w780${imageData.poster_path}`}
+                  src={`${baseImgUrl}w220_and_h330_bestv2${imageData.poster_path}`}
                   className="object-cover rounded-md"
                   alt="Image"
                 />
