@@ -8,7 +8,6 @@ import HCaptcha from '@hcaptcha/react-hcaptcha';
 import { message } from 'antd';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
-import SocialButtons from '../SocialButtons';
 
 interface Data {
   error: boolean;
@@ -215,7 +214,8 @@ const NewSignnIn = () => {
               <div className="w-[25%] h-px bg-gray-200"></div>
             </div>
             <div className="flex w-[80%] max-w-[350px] justify-center items-center gap-4">
-              <SocialButtons />
+              <Kakao />
+              <Google />
             </div>
           </form>
         </div>
