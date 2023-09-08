@@ -32,7 +32,7 @@ export default function RootLayout(props: { children: React.ReactNode }) {
           <ConfigProvider theme={theme}>
             <Header />
             {props.children}
-            {/* <Footer /> */}
+            <Footer />
           </ConfigProvider>
         </ReactQueryProvider>
         <ScrollToTopButton />
