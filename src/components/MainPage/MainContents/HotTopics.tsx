@@ -2,6 +2,8 @@ import { getHotDiscussionPost } from '@/api/supabase-discussion';
 import { ArrowRight, ArrowRight2 } from '@/styles/icons/Icons24';
 import Link from 'next/link';
 
+export const revalidate = 0;
+
 const HotTopics = async () => {
   const discussionData = await getHotDiscussionPost();
 

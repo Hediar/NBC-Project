@@ -10,6 +10,7 @@ import HCaptcha from '@hcaptcha/react-hcaptcha';
 import { message } from 'antd';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
+import SocialButtons from '../SocialButtons';
 
 const NewSignUp = () => {
   const router = useRouter();
@@ -88,7 +89,7 @@ const NewSignUp = () => {
         }}
         className="z-50 flex justify-center items-center absolute top-0 left-0 w-full h-screen bg-[#44444444]"
       >
-        <div className="flex justify-center items-center w-full sm:w-1/2 h-max-[600px] xl:w-[35%]">
+        <div className="animate-300 flex justify-center items-center sm:min-w-[400px] w-full sm:w-1/2 lg:w-[35%] xl:w-[30%]  ">
           <form
             onSubmit={onSubmitHandler}
             className=" bg-white rounded-2xl py-[50px] border border-[#ccc] w-full h-full relative flex flex-col items-center justify-center"
@@ -168,8 +169,7 @@ const NewSignUp = () => {
               <div className="w-[25%] h-px bg-gray-200"></div>
             </div>
             <div className="flex w-[80%] max-w-[350px] justify-center items-center gap-4">
-              <Kakao />
-              <Google />
+              <SocialButtons />
             </div>
           </form>
         </div>

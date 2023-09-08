@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import SubmitButton from '@/components/Auth/SubmitButton';
 import { usePathname, useRouter } from 'next/navigation';
 import HCaptcha from '@hcaptcha/react-hcaptcha';
-import SocialButtons from '@/components/Auth/SocialButtons';
+import SocialButtons from '@/components/Auth/SocialButtons.backup';
 import SVG_ShowPassword from '@/styles/svg/SVG_ShowPassword';
 import SVG_HidePassword from '@/styles/svg/SVG_HidePassword';
 import { message } from 'antd';

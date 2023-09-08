@@ -3,7 +3,6 @@ import type { Metadata } from 'next';
 import ReactQueryProvider from './ReactQueryProvider';
 import Header from '@/components/Header/Header';
 import ScrollToTopButton from '@/components/common/ScrollToTopButton';
-import Footer from '@/components/common/Footer';
 import { ConfigProvider } from 'antd';
 import { Analytics } from '@vercel/analytics/react';
 
@@ -38,7 +37,7 @@ export default function RootLayout(props: { children: React.ReactNode }) {
         </ReactQueryProvider>
         <ScrollToTopButton />
       </body>
-      <Analytics />
+      {/* <Analytics /> */}
     </html>
   );
 }

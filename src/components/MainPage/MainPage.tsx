@@ -7,8 +7,6 @@ import LatestReviews from './MainContents/LatestReviews';
 import LatestMovies from './MainContents/LatestMovies';
 import HotTopics from './MainContents/HotTopics';
 
-export const revalidate = 0;
-
 const MainPage = ({ params }: { params: string }) => {
   return (
     <main className="w-full overflow-x-hidden">
