@@ -48,14 +48,14 @@ export default async function MovieDetailLayout({
       <section style={{ width: '80%', margin: '0 auto' }}>
         {discussionPostData?.length ? (
           <div className="flex">
-            <main className="w-2/3 pr-10">
+            <main className="w-full flex flex-col relative">
               <DiscussionTopic postData={discussionPostData[0]} />
               <DiscussionCommentContainer discussionId={discussionPostData[0].post_id} />
-            </main>
 
-            <section className="w-1/3">
-              <RelatedDiscussionList discussionId={discussionPostData[0].post_id} />
-            </section>
+              <section className="w-full sm:absolute sm:w-1/3 sm:left-2/3">
+                <RelatedDiscussionList discussionId={discussionPostData[0].post_id} />
+              </section>
+            </main>
           </div>
         ) : (
           <div className="w-full text-center flex flex-col gap-3 mt-[50px]">

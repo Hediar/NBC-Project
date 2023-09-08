@@ -1,8 +1,8 @@
 import { getNewMovies } from '@/api/tmdb';
 import dayjs from 'dayjs';
-import LatestMovieSlider from './MainPageMovies/LatestMovieSlider';
+import LatestMovieSlider from '../MainPageMovies/LatestMovieSlider';
 
-export const revailidate = 0;
+export const revailidate = 60;
 
 const LatestMovies = async () => {
   const currentDate = dayjs();

@@ -45,7 +45,7 @@ const DisplayComments = ({ addedCommentsData, signedInUserId }: Props) => {
 
         <div className="w-11/12 flex flex-col gap-1">
           <div className="flex items-center gap-4">
-            <p className="body1_regular_suit">{comment.content}</p>
+            <p className="body1_regular_suit whitespace-normal break-all">{comment.content}</p>
           </div>
           <div className="flex gap-2 items-center">
             <span>좋아요 {comment.likes}개</span>

@@ -14,7 +14,7 @@ const MovieItem = ({ movie }: { movie: MovieData }) => {
         <div className="relative">
           <img
             className="w-[140px] h-[210px] sm:w-[240px] sm:h-[360px] rounded-xl"
-            src={`https://image.tmdb.org/t/p/w185${movie.poster_path}`}
+            src={`https://image.tmdb.org/t/p/w780${movie.poster_path}`}
             alt="poster"
           />
           <Link

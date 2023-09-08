@@ -8,6 +8,7 @@ interface Props {
     username: string;
   };
 }
+
 export const dynamic = 'force-dynamic';
 
 const LikesListPage = async ({ params }: Props) => {
