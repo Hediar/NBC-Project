@@ -1,6 +1,6 @@
 'use client';
 
-import { contentPageGetDataDiscover, contentPageGetDataSearch, searchTMDB } from '@/api/tmdb';
+import { getMovieListDataSearch, getMovieListNotSearch } from '@/api/tmdb';
 import Search from '@/components/common/Search';
 import Sort from '@/components/contents/Sort';
 import { useEffect, useState } from 'react';
@@ -19,32 +19,10 @@ const MovieList = () => {
   const today = dayjs();
   const formattedCurrentDate = today.format('YYYY-MM-DD');
 
-  /**
-   * 
-   * const fetchMovieData = async (page: number) => {
-  const data = await fetchData(page);
-
-  setDataList(data);
-
-  let results;
-  if (searchType === 'movie') {
-    results = data.results;
-  } else {
-    results = data.results[0]?.known_for || [];
-  }
-
-  if (page === 1) {
-    setFilterefData(results);
-  } else {
-    setFilterefData((prevData) => [...prevData, ...results]);
-  }
-};
-   */
-
   const fetchMovieData = async (page: number) => {
     if (searchMovieValue) {
       // 검색 했을 때
-      const data = await contentPageGetDataSearch(searchMovieValue, searchType, page);
+      const data = await getMovieListDataSearch(searchMovieValue, searchType, page);
 
       setDataList(data);
       if (data.results) {
@@ -68,7 +46,7 @@ const MovieList = () => {
       }
     } else {
       // 검색 x
-      const data = await contentPageGetDataDiscover(sortingOption, formattedCurrentDate, page);
+      const data = await getMovieListNotSearch(sortingOption, formattedCurrentDate, page);
       setDataList(data);
       const results = data.results || [];
       if (page === 1) {

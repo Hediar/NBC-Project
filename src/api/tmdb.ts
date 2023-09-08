@@ -162,7 +162,7 @@ export const searchTMDB = async (query: string, searchType: string) => {
 };
 
 // 콘텐츠 페이지
-export const contentPageGetDataSearch = async (query: string, searchType: string, pageParam: number = 1) => {
+export const getMovieListDataSearch = async (query: string, searchType: string, pageParam: number = 1) => {
   const searchRes = await fetch(
     `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}search/${searchType}?query=${query}&include_adult=false&language=ko-KR&page=${pageParam}`,
     options
@@ -201,11 +201,7 @@ export const contentPageGetDataSearch = async (query: string, searchType: string
 //   return { results: slicedData, total_pages };
 // };
 
-export const contentPageGetDataDiscover = async (
-  sortType: string,
-  formattedCurrentDate: string,
-  pageParam: number = 1
-) => {
+export const getMovieListNotSearch = async (sortType: string, formattedCurrentDate: string, pageParam: number = 1) => {
   const searchRes = await fetch(
     `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}discover/movie?include_adult=false&include_video=false&language=ko-Kr&page=${pageParam}&primary_release_date.lte=${formattedCurrentDate}&region=KR&sort_by=${sortType}.desc&vote_count.gte=100`,
     options
