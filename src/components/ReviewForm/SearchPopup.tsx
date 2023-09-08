@@ -2,23 +2,21 @@
 
 import SearchMovies from './SearchMovies';
 import MyMovies from './MyMovies';
-import Modal from '../common/Modal';
 import { useSearchModalStore } from '@/store/useReviewStore';
+import { Modal } from 'antd';
 
 const SearchPopup = () => {
-  const { closeSearchModal } = useSearchModalStore();
+  const { isSearchModalOpen, closeSearchModal } = useSearchModalStore();
 
   return (
-    <Modal>
-      <div className="max-w-full w-[1024px]  p-3">
-        <div className="flex justify-between py-3">
-          <h2>리뷰 작성</h2>
-          <button onClick={() => closeSearchModal()}>닫기</button>
+    <>
+      <Modal title="리뷰 작성" open={isSearchModalOpen} onCancel={closeSearchModal} footer={null} width={1540}>
+        <div className='p-5'>
+          <SearchMovies />
+          <MyMovies />
         </div>
-        <SearchMovies />
-        <MyMovies />
-      </div>
-    </Modal>
+      </Modal>
+    </>
   );
 };
 

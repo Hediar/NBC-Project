@@ -39,7 +39,7 @@ const Paging = ({ currentPage, setCurrentPage, totalPages, pageRangeDisplayed = 
   }
 
   return (
-    <div style={{ display: 'flex', gap: '2rem', justifyContent: 'center' }}>
+    <div className='flex gap-1 justify-center mt-10'>
       {currentPage - pageRangeHalf > 1 && currentPage > pageRangeDisplayed && (
         <>
           <button
@@ -47,6 +47,7 @@ const Paging = ({ currentPage, setCurrentPage, totalPages, pageRangeDisplayed = 
               setCurrentPage(currentPage - pageRangeDisplayed);
             }}
             title="이전"
+            className={`w-8 h-8 p-2.5 rounded-lg border border-gray-200 flex-col justify-center items-center gap-2.5 inline-flex text-sm font-normal leading-none bg-white text-neutral-800`}
           >
             {'<<'}
           </button>
@@ -59,7 +60,7 @@ const Paging = ({ currentPage, setCurrentPage, totalPages, pageRangeDisplayed = 
           onClick={() => {
             setCurrentPage(page);
           }}
-          className={page === currentPage ? 'text-red-500 font-bold activeLink' : ''}
+          className={`w-8 h-8 p-2.5 rounded-lg border border-gray-200 flex-col justify-center items-center gap-2.5 inline-flex text-sm font-normal leading-none ${page === currentPage ? 'bg-neutral-800 text-white' : 'bg-white text-neutral-800'}`}
         >
           {page}
         </button>
@@ -72,6 +73,7 @@ const Paging = ({ currentPage, setCurrentPage, totalPages, pageRangeDisplayed = 
               setCurrentPage(currentPage + pageRangeDisplayed);
             }}
             title="다음"
+            className={`w-8 h-8 p-2.5 rounded-lg border border-gray-200 flex-col justify-center items-center gap-2.5 inline-flex text-sm font-normal leading-none bg-white text-neutral-800`}
           >
             {'>>'}
           </button>

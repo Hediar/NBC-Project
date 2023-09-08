@@ -13,10 +13,9 @@ import useUserInfoStore from '@/store/saveCurrentUserData';
 import { useReviewMovieStore, useReviewStore } from '../../store/useReviewStore';
 import { addReview, saveWatchList, updateReview } from '@/api/review';
 import StarBox from './StarBox';
-import Modal from '../common/Modal';
 import { useForm, useFieldArray, Controller } from 'react-hook-form';
 import { getDetailData } from '@/api/tmdb';
-import { message } from 'antd';
+import { Modal, message } from 'antd';
 
 interface Props {
   movieId?: string;
@@ -30,8 +29,8 @@ const ReviewForm = ({ movieId, editReview, movieButtonRef }: Props) => {
   const { userInfo } = useUserInfoStore();
   const { saveSearchMovieId } = useReviewMovieStore();
 
-  const [showModal, setShowModal] = React.useState(false);
-  const [onConfirm, setOnConfirm] = React.useState(false);
+  const [isSearchModalOpen, setIsSearchModalOpen] = React.useState(false);
+  const [IsConfirmed, setIsConfirmed] = React.useState(false);
 
   const [checkedListC1, checkHandlerC1, setCheckedListC1] = useCheckbox();
   const [checkedListC2, checkHandlerC2, setCheckedListC2] = useCheckbox();
@@ -139,8 +138,8 @@ const ReviewForm = ({ movieId, editReview, movieButtonRef }: Props) => {
   useEffect(() => {
     if (editReview || tempReview) {
       const getConfirm = () => {
-        !onConfirm && setShowModal(true);
-        return onConfirm;
+        !IsConfirmed && setIsSearchModalOpen(true);
+        return IsConfirmed;
       };
       const GetReviewForm = () => {
         const isEditTempReview = editReview && tempReview && editReview.reviewid == tempReview.reviewid && getConfirm();
@@ -178,20 +177,30 @@ const ReviewForm = ({ movieId, editReview, movieButtonRef }: Props) => {
 
       saveSearchMovieId(movieid);
     }
-  }, [userInfo, onConfirm]);
+  }, [userInfo, IsConfirmed]);
 
   const handleCancel = () => {
     router.back();
   };
+
+  const handleModalOk  = () => {
+    setIsSearchModalOpen(false);
+    setIsConfirmed(true);
+  }
+
+  const handleModalCancel = () => {
+    setIsSearchModalOpen(false);
+    setIsConfirmed(false);
+  }
 
   return (
     <>
       {contextHolder}
       <form>
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="date">
+          <label className="form-title" htmlFor="date">
             콘텐츠 본 날짜
-            <abbr title="required">*</abbr>
+            <abbr title="필수입력" className='required'><span>필수입력</span></abbr>
           </label>
           <Controller
             name="selectedDate"
@@ -207,7 +216,7 @@ const ReviewForm = ({ movieId, editReview, movieButtonRef }: Props) => {
                 selected={value}
                 onChange={onChange}
                 onBlur={onBlur}
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700"
+                className="custom_input"
                 maxDate={new Date()}
                 locale={ko}
                 dateFormat="yyyy/MM/dd" // 날짜 형태
@@ -222,11 +231,11 @@ const ReviewForm = ({ movieId, editReview, movieButtonRef }: Props) => {
             </small>
           )}
 
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="review">
+          <label className="form-title" htmlFor="review">
             어떤 점이 좋았나요?
-            <abbr title="required">*</abbr>
+            <abbr title="필수입력" className='required'><span>필수입력</span></abbr>
           </label>
-          <div className="grid grid-cols-3 md:grid-cols-6 gap-4 mt-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mt-2">
             {REVIEW_CATEGORY_LIST.map((category, i) => (
               <CategoryBox
                 key={'reviewCate' + i}
@@ -237,15 +246,15 @@ const ReviewForm = ({ movieId, editReview, movieButtonRef }: Props) => {
               />
             ))}
           </div>
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="review">
+          <label className="form-title" htmlFor="review">
             리뷰 한줄평
-            <abbr title="required">*</abbr>
+            <abbr title="필수입력" className='required'><span>필수입력</span></abbr>
           </label>
           <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-"
+            className="custom_input"
             id="review"
             type="text"
-            placeholder="리뷰를 작성하세요 필수입력테스트"
+            placeholder="리뷰를 작성하세요"
             {...register('review', { required: true })}
             aria-invalid={isSubmitted ? (errors.review ? 'true' : 'false') : undefined}
           />
@@ -254,33 +263,31 @@ const ReviewForm = ({ movieId, editReview, movieButtonRef }: Props) => {
               필수 입력입니다.
             </small>
           )}
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="review">
+          <label className="form-title" htmlFor="review">
             별점
-            <abbr title="required">*</abbr>
+            <abbr title="필수입력" className='required'><span>필수입력</span></abbr>
           </label>
           <div>
             <StarBox fieldName="rating" setValue={setValue} defaultValue={getValues().rating} />
           </div>
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="review">
+          <label className="form-title" htmlFor="review">
             키워드
           </label>
           <HashTagBox fieldArray={fieldArray} defaultValue={getValues().keyword} />
-          <small>쉼표 혹은 스페이스바를 입력하여 태그를 등록 할 수 있습니다. 등록된 태그를 클릭하면 삭제됩니다.</small>
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="content">
+          <label className="form-title" htmlFor="content">
             메모
           </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-"
+          <textarea
+            className="custom_input h-40"
             id="content"
-            type="text"
             placeholder="내용을 작성하세요"
             {...register('content')}
           />
-          <div className="w-full text-center mx-auto">
+          <div className="button_wrap">
             <button
               type="button"
               onClick={handleTempSave}
-              className="border border-gray-700 bg-gray-700 text-white rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-gray-800 focus:outline-none focus:shadow-outline"
+              className="button-white"
             >
               임시저장
             </button>
@@ -288,7 +295,7 @@ const ReviewForm = ({ movieId, editReview, movieButtonRef }: Props) => {
               type="button"
               onClick={handleSubmit(addPost)}
               disabled={isSubmitting}
-              className="mt-4 border border-indigo-500 bg-indigo-500 text-white rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-indigo-600 focus:outline-none focus:shadow-outline"
+              className="button-dark"
             >
               {isSubmitting ? '작성 중' : editReview ? '리뷰 수정하기' : '리뷰 작성하기'}
             </button>
@@ -299,33 +306,27 @@ const ReviewForm = ({ movieId, editReview, movieButtonRef }: Props) => {
         </div>
       </form>
 
-      {showModal && (
-        <Modal>
-          <p>
+      <Modal open={isSearchModalOpen} onCancel={handleModalCancel} footer={null} width={400}>
+          <p className='pt-[50px] pb-[30px] text-center text-neutral-800 text-xl font-normal leading-normal'>
             작성 중이던 내용이 있습니다
             <br />
             이어서 작성하시겠습니까?
           </p>
-          <div>
+          <div className='flex justify-center gap-3 mb-5'>
             <button
-              onClick={() => {
-                setShowModal(false);
-                setOnConfirm(false);
-              }}
+              className="button-white"
+              onClick={handleModalCancel}
             >
               취소
             </button>
             <button
-              onClick={() => {
-                setShowModal(false);
-                setOnConfirm(true);
-              }}
+              className="button-dark"
+              onClick={handleModalOk}
             >
               확인
             </button>
           </div>
         </Modal>
-      )}
     </>
   );
 };

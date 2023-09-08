@@ -12,7 +12,7 @@ type Props = {
 };
 
 const ReviewWriteTemplate = ({ paramMovieId, editReview }: Props) => {
-  const { isSearchModalOpen, openSearchModal } = useSearchModalStore();
+  const { openSearchModal } = useSearchModalStore();
 
   const { searchMovieId, saveSearchMovieId } = useReviewMovieStore();
   const movieId = searchMovieId ? (searchMovieId as string) : paramMovieId;
@@ -25,24 +25,25 @@ const ReviewWriteTemplate = ({ paramMovieId, editReview }: Props) => {
 
   return (
     <>
-      <div className="flex items-center w-full h-44 p-5 bg-slate-100 rounded-md">
+      <h2 className="mt-10 h3_suit">리뷰 작성</h2>
+      <div className="info-box">
         {movieId ? (
           <ReviewMovie movieId={movieId} />
         ) : (
-          <div className="w-full text-center mx-auto">
+          <div className="flex items-center justify-center w-full h-[152px] text-center mx-auto">
             <button
               onClick={() => {
                 openSearchModal();
               }}
               ref={movieButtonRef}
-              className="mt-4 border border-indigo-500 bg-indigo-500 text-white rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-indigo-600 focus:outline-none focus:shadow-outline"
+              className="button-dark !px-5 !py-2.5 !text-2xl"
             >
               리뷰 남길 콘텐츠 고르기
             </button>
           </div>
         )}
       </div>
-      {isSearchModalOpen && <SearchPopup />}
+      <SearchPopup />
 
       <ReviewForm movieId={movieId} editReview={editReview} movieButtonRef={movieButtonRef} />
     </>

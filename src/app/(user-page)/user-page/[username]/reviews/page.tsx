@@ -4,6 +4,7 @@ import { getReviews, countRowsNumber } from '@/api/review';
 import ReviewItem from '@/components/ReviewList/ReviewItem';
 import ReviewListEmpty from '@/components/ReviewList/ReviewListEmpty';
 import useUserInfoStore from '@/store/saveCurrentUserData';
+import { Plus } from '@/styles/icons/Icons24';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
@@ -48,10 +49,11 @@ const MyReviewPage = () => {
 
   return (
     <div className="mb-[300px]">
-      <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2 p-2">
-        <li className="border-dashed border-2 border-gray-400 rounded-2xl">
-          <Link href={`/review/write`} className="flex w-full h-full justify-center items-center">
-            + 리뷰작성
+      <ul className="grid grid-cols-1 lg:grid-cols-2 gap-5 mt-2">
+        <li className="flex items-center justify-center px-10 py-5 border-dashed border-2 border-zinc-300 rounded-2xl bg-neutral-50 ">
+          <Link href={`/review/write`} className="button-dark subtitle1_suit !flex items-center gap-[6px] !py-[10px] !px-5">
+           리뷰 작성하기
+           <Plus />
           </Link>
         </li>
 
@@ -65,9 +67,11 @@ const MyReviewPage = () => {
           <button
             onClick={handleClick}
             type="button"
-            className="border border-gray-200 bg-gray-200 text-gray-700 rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-gray-300 focus:outline-none focus:shadow-outline"
+            className="full_button w-full items-center mt-20"
           >
-            더 보기{`(${currentPage}/${Math.ceil(totalRowsNumber! / (REVIEWS_LIMIT + 1))})`}
+            <div className="inline-flex items-center justify-center gap-1 px-5 py-2">
+              더 보기{`(${currentPage}/${Math.ceil(totalRowsNumber! / (REVIEWS_LIMIT + 1))})`}
+            </div>
           </button>
         )}
       </div>

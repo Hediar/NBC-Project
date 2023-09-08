@@ -18,16 +18,13 @@ type Props = {
 };
 
 export const dynamic = 'force-dynamic';
+export const revalidate = 0 ;
 
 const ReviewDetail = async ({ params }: Props) => {
   const { postId } = params;
 
   const { data: review, error } = await supabase.from('reviews').select('*').eq('reviewid', postId).single();
-
-  // const { data: users } = await supabase.from('users').select('*').eq('id', review.userid);
-  // const user = users![0];
   const user = await getUserProfile(review.userid);
-
   const movieData = await getMovieDetail(review.movieid);
 
   const reviewCategories = [].concat(...JSON.parse(review.category));

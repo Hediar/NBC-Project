@@ -119,3 +119,19 @@ export const ArrowRight2 = (props: SVGProps<SVGSVGElement>) => (
     />
   </svg>
 );
+
+export const Plus = (props: SVGProps<SVGSVGElement>) => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M4 12L20 12" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M12 20L12 4" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+
+);
+
+export const More = (props: SVGProps<SVGSVGElement>) => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="12" cy="6" r="2" fill="#4F4F4F"/>
+    <circle cx="12" cy="12" r="2" fill="#4F4F4F"/>
+    <circle cx="12" cy="18" r="2" fill="#4F4F4F"/>
+  </svg>
+);

@@ -61,12 +61,12 @@ const MyMoviesSwiper = ({ dataList, spaceBetween, slidesPerView, className }: Pr
                   <Image
                     src={`${baseImgUrl}w342${movie.poster_path}`}
                     alt=""
-                    width={342}
-                    height={450}
-                    quality={100}
-                    className="rounded-lg h-[170px]"
+                    width={160}
+                    height={240}
+                    quality={80}
+                    className="rounded-lg w-40 h-60"
                   />
-                  <span>{movie.title}</span>
+                  <span className='block mt-1 text-left text-neutral-800 text-base font-bold leading-snug'>{movie.title}</span>
                 </button>
               </div>
             </SwiperSlide>

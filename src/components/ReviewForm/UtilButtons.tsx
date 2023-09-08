@@ -1,24 +1,30 @@
 'use client';
 
 import useUserInfoStore from '@/store/saveCurrentUserData';
-import { Edit } from '@/styles/icons/Icons24';
+import { Edit, More } from '@/styles/icons/Icons24';
 import supabase from '@/supabase/config';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
-import { message } from 'antd';
+import { Dropdown, MenuProps, message } from 'antd';
 
 type Props = {
   postId: string;
   userId: string;
+  className?: string;
 };
 
-const UtilButtons = ({ postId, userId }: Props) => {
+const UtilButtons = ({ postId, userId, className }: Props) => {
   const router = useRouter();
   const [messageApi, contextHolder] = message.useMessage();
 
   const [mounted, setMounted] = useState<boolean>(false);
   const { userInfo } = useUserInfoStore();
+
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    e.stopPropagation();
+  }
 
   const delButtonHandler = async () => {
     if (confirm('정말 삭제하시겠습니까?')) {
@@ -41,21 +47,31 @@ const UtilButtons = ({ postId, userId }: Props) => {
     setMounted(true);
   }, []);
 
+  const items: MenuProps['items'] = [
+    {
+      key: '1',
+      label: (
+        <Link href={`/review/edit/${postId}`}>수정하기</Link>
+      ),
+    },
+    {
+      key: '2',
+      label: (
+        <button onClick={delButtonHandler}>삭제</button>
+      ),
+    }
+  ];
+
   return (
     mounted && (
-      <>
+      <div className={className}>
         {contextHolder}
         {userId === userInfo.id ? (
-          <div className="flex items-center gap-5">
-            {/* <button onClick={editButtonHandler}>수정</button> */}
-            <Link href={`/review/edit/${postId}`} className="ml-auto">
-              <Edit />
-            </Link>
-
-            <button onClick={delButtonHandler}>삭제</button>
-          </div>
+          <Dropdown menu={{ items }} placement="bottomRight">
+            <button onClick={handleClick}><span className='sr-only'>메뉴</span><More /></button>
+          </Dropdown>
         ) : null}
-      </>
+      </div>
     )
   );
 };
