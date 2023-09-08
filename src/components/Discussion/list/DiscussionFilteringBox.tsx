@@ -1,5 +1,6 @@
 'use client';
 
+import useUserInfoStore from '@/store/saveCurrentUserData';
 import { DropdownMenu } from '@/styles/icons/Icons24';
 import { SearchLined } from '@/styles/icons/Icons32';
 import Link from 'next/link';
@@ -16,18 +17,21 @@ interface FilterBy {
 }
 
 const DiscussionFilteringBox = ({ sortQuery = '' }: Props) => {
+  const {
+    userInfo: { id: userId }
+  } = useUserInfoStore();
   const [sortFilterOpen, setSortFilterOpen] = useState<boolean>(false);
   const [searchFilterOpen, setSearchFilterOpen] = useState<boolean>(false);
+  const sortByDropdownValues = [
+    { text: '최신순', title: 'new' },
+    { text: '조회순', title: 'view' },
+    { text: '투표순', title: 'vote' }
+  ];
   const searchByDropdownValues = [
     { text: '전체', title: 'all' },
     { text: '영화 제목', title: 'movie_title' },
     { text: '토론 제목', title: 'discussion_title' },
     { text: '내용', title: 'discussion_content' }
-  ];
-  const sortByDropdownValues = [
-    { text: '최신순', title: 'new' },
-    { text: '조회순', title: 'view' },
-    { text: '투표순', title: 'vote' }
   ];
   const [searchBy, setSearchBy] = useState<FilterBy>(searchByDropdownValues[0]);
   const [searchVal, setSearchVal] = useState('');
@@ -90,12 +94,16 @@ const DiscussionFilteringBox = ({ sortQuery = '' }: Props) => {
             </ul>
           </div>
         )}
-        <Link
-          href={`/discussion/regist`}
-          className="border py-1 px-2 rounded-xl bg-gray-400 text-white hover:bg-gray-500"
-        >
-          글 작성
-        </Link>
+        {userId ? (
+          <Link
+            href={`/discussion/regist`}
+            className="border py-1 px-2 rounded-xl bg-gray-400 text-white hover:bg-gray-500"
+          >
+            글 작성
+          </Link>
+        ) : (
+          <button className="border py-1 px-2 rounded-xl bg-gray-400 text-white hover:bg-gray-500">글 작성</button>
+        )}
       </div>
 
       <div className="flex items-center gap-2">

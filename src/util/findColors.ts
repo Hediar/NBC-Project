@@ -3,6 +3,17 @@ const rgbToGrayScale = (rgb: number[]): number => {
   const [r, g, b] = rgb;
   return 0.2989 * r + 0.587 * g + 0.114 * b;
 };
+export const getColors = async (imageurl: string) => {
+  const formData = new FormData();
+  formData.append('imageUrl', imageurl.toString());
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/imagecolorpicker`, {
+    method: 'post',
+    body: formData
+  });
+  const data = await res.json();
+  const rgb = data.message;
+  return rgb;
+};
 
 export const findBrightestTwoColors = (colors: number[][]): number[][] => {
   if (colors.length < 2) {
@@ -57,4 +68,16 @@ export const extractMainColors = (rgb: number[][], numberOfMainColors: number): 
   }
 
   return mainColors;
+};
+
+// 밝기 조절
+export const lightenColor = (rgb: number[]) => {
+  const [r, g, b] = rgb;
+  const factor = 0.8; // 조절하려는 밝기 정도 (0.2는 20% 밝게 조절)
+
+  const newR = Math.min(r + (255 - r) * factor, 255);
+  const newG = Math.min(g + (255 - g) * factor, 255);
+  const newB = Math.min(b + (255 - b) * factor, 255);
+
+  return [newR, newG, newB];
 };

@@ -26,7 +26,7 @@ const RelatedDiscussionPost = ({ relatedDiscussionData, relatedOption }: Props) 
                 자유토론
               </span>
             )}
-            <span>💬댓글수&nbsp;{relatedDiscussionData.view_count}</span>
+            <span>💬댓글수&nbsp;{relatedDiscussionData.comment_count}</span>
           </div>
 
           <Link
