@@ -38,13 +38,13 @@ const HashTagBox = ({ fieldArray, defaultValue }: Props) => {
   }, [defaultValue]);
 
   return (
-    <div className="flex shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-">
+    <div className="custom_input !flex">
       <ul className="flex flex-wrap">
         {fields.map(({ value }: { value: string }, i: number) => (
           <li
             key={value + i}
             onClick={() => deleteTagItem(i)}
-            className="m-1 rounded-full  text-cyan-700 bg-cyan-100 border border-cyan-300 py-1 px-2 text-xs font-medium"
+            className="m-1 rounded-full  text-cyan-700 bg-cyan-100 border border-cyan-300 py-1 px-2 text-xs font-medium cursor-pointer"
           >
             {value}
           </li>
@@ -56,7 +56,7 @@ const HashTagBox = ({ fieldArray, defaultValue }: Props) => {
         value={tagItem}
         onChange={(e) => setTagItem(e.target.value)}
         onKeyUp={onKeyUp}
-        placeholder="해시태그 입력"
+        placeholder="쉼표 혹은 스페이스바를 입력하여 태그를 등록 할 수 있습니다. 등록된 태그를 클릭하면 삭제됩니다."
       />
     </div>
   );
