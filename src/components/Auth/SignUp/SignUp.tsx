@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import SubmitButton from '@/components/Auth/SubmitButton';
-import SocialButtons from '@/components/Auth/SocialButtons.backup';
+import SocialButtons from '@/components/Auth/SocialButtons';
 import HCaptcha from '@hcaptcha/react-hcaptcha';
 import { usePathname, useRouter } from 'next/navigation';
 import { message } from 'antd';
