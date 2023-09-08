@@ -3,7 +3,7 @@ import { cookies } from 'next/headers';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { getMovieTimeByGenres } from '@/api/movieStatistics/getRuntimesByGenres';
 import RecordsContainerBig from '../_Containers/RecordsContainerBig';
-import MovieRuntimeGraph from './Graphs/MovieRuntimeGraph';
+import MovieRuntimeGraph from './Graphs/MovieRuntimeGraph.backup';
 
 type Props = {
   userId: string;
