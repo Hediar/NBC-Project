@@ -31,7 +31,7 @@ const MovieDetailInfo = async ({ movieId }: Props) => {
             alt="Image"
             width={1920}
             height={1080}
-            className="w-full mt-[-10%] brightness-110"
+            className="w-full mt-[-10%]"
           />
 
           <div id="detail-cont" className="absolute w-[80%] left-[10%] bottom-0 mb-20">
@@ -79,6 +79,7 @@ const MovieDetailInfo = async ({ movieId }: Props) => {
           )}
         </div>
       </div>
+
       <MovieDetailBottomBar movieId={movieId} movieData={movieData} />
     </div>
   );

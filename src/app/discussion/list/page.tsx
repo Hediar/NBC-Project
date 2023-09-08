@@ -3,11 +3,6 @@ import React from 'react';
 import { Metadata } from 'next';
 import DiscussionFilteringBox from '@/components/Discussion/list/DiscussionFilteringBox';
 
-interface Props {
-  params: { pageNum: string };
-  searchParams: { q: string };
-}
-
 // export const revalidate = 0;
 
 export const metadata: Metadata = {
@@ -20,7 +15,7 @@ interface Props {
 
 const DiscussionListPage = ({ searchParams }: Props) => {
   return (
-    <div>
+    <div className="wrap">
       <DiscussionFilteringBox sortQuery="" />
 
       <DiscussionList />

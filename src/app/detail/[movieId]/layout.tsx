@@ -39,7 +39,8 @@ export default async function MovieDetailLayout({
     .from('discussion_post')
     .select('*')
     .eq('movie_id', movieId)
-    .order('created_at', { ascending: false });
+    .order('created_at', { ascending: false })
+    .single();
 
   return (
     <section>
@@ -51,11 +52,11 @@ export default async function MovieDetailLayout({
         {discussionPostData?.length ? (
           <div className="flex">
             <main className="w-full flex flex-col relative">
-              <DiscussionTopic postData={discussionPostData[0]} />
-              <DiscussionCommentContainer discussionId={discussionPostData[0].post_id} />
+              <DiscussionTopic postData={discussionPostData} />
+              <DiscussionCommentContainer discussionId={discussionPostData.post_id} />
 
               <section className="w-full sm:absolute sm:w-1/3 sm:left-2/3">
-                <RelatedDiscussionList discussionId={discussionPostData[0].post_id} />
+                <RelatedDiscussionList discussionId={discussionPostData.post_id} />
               </section>
             </main>
           </div>

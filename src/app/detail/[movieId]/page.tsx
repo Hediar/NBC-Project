@@ -1,4 +1,3 @@
-import { getMovieDetail } from '@/api/tmdb';
 import KeyInfomation from '@/components/MovieDetail/main/KeyInfomation';
 import React from 'react';
 

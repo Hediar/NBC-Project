@@ -2,38 +2,107 @@
 import React, { useEffect, useState } from 'react';
 import DiscussionPost from './DiscussionPost';
 import { getDiscussionPost } from '@/api/supabase-discussion';
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
-import Link from 'next/link';
-import DiscussionFilteringBox from './DiscussionFilteringBox';
+import { debounce } from 'lodash';
 import { useSearchParams } from 'next/navigation';
+import { ArrowDown } from '@/styles/icons/Icons24';
+
+const searchP = 'h3_suit flex justify-center my-16';
 
 const DiscussionList = () => {
+  const [firstMount, setFirstMount] = useState<boolean>(true);
   const [pageNum, setPageNum] = useState<number>(1);
+  const [hasNextPage, setHasNextPage] = useState<boolean>(true);
   const [postData, setPostData] = useState<DiscussionPost[]>([]);
+  const [filteredData, setFilteredData] = useState<DiscussionPost[]>([]);
+  const searchParams = useSearchParams();
+
+  const query = {
+    rangeNum: pageNum,
+    sort: searchParams.get('sort') ?? '',
+    filter: searchParams.get('filter') ?? '',
+    search: searchParams.get('search') ?? ''
+  };
+
   useEffect(() => {
     const fetchData = async () => {
-      const fetchedPostData = await getDiscussionPost(pageNum);
-      setPostData([...postData, ...fetchedPostData!]);
+      const fetchedPostData = await getDiscussionPost();
+      if (fetchedPostData) setPostData(fetchedPostData);
     };
     fetchData();
-  }, [pageNum]);
+    setFirstMount(false);
+  }, []);
+
+  useEffect(() => {
+    const { rangeNum, sort, filter, search } = query;
+    const showNum = 5;
+    if (postData.length) {
+      const getPostDataBySortQuery = (): DiscussionPost[] => {
+        switch (sort) {
+          case 'new':
+            return postData.slice().sort((a, b) => b.post_id - a.post_id);
+          case 'view':
+            return postData.slice().sort((a, b) => b.view_count - a.view_count);
+          case 'vote':
+            return postData.slice().sort((a, b) => b.vote_count - a.vote_count);
+          default:
+            return postData.slice();
+        }
+      };
+
+      const getPostDataBySearchQuery = (data: DiscussionPost[]) => {
+        switch (filter) {
+          case 'all':
+            return data.filter(
+              (post) =>
+                post.movie_title?.includes(search) || post.title.includes(search) || post.content.includes(search)
+            );
+          case 'movie_title':
+            return data.filter((post) => post.movie_title?.includes(search));
+          case 'discussion_title':
+            return data.filter((post) => post.title.includes(search));
+          case 'discussion_content':
+            return data.filter((post) => post.content.includes(search));
+          default:
+            return data;
+        }
+      };
+
+      const sortedData = getPostDataBySortQuery();
+      const filteredData = getPostDataBySearchQuery(sortedData).slice(0, rangeNum * showNum);
+      const hasNextPage = !!getPostDataBySearchQuery(sortedData).slice(rangeNum * showNum).length;
+
+      setFilteredData(filteredData);
+      setHasNextPage(hasNextPage);
+    }
+  }, [searchParams, pageNum, postData]);
 
   return (
-    <div className="w-4/5 mx-auto">
-      <div className="flex flex-col gap-5">
-        {postData?.length
-          ? postData?.map((post: any, index: number) => {
-              return <DiscussionPost key={index} post={post} />;
-            })
-          : null}
+    <div className="">
+      {query.search && !!filteredData.length && (
+        <p className={`${searchP}`}>
+          "{query.search}"와 관련된 {filteredData.length}개의 토론입니다
+        </p>
+      )}
+      <div className="flex flex-col gap-5 mt-4">
+        {filteredData?.length && !firstMount ? (
+          filteredData?.map((post: any, index: number) => {
+            return <DiscussionPost key={index} post={post} />;
+          })
+        ) : (
+          <p className={`${searchP}`}>"{query.search}"와 관련된 토론이 없습니다</p>
+        )}
       </div>
-      <button
-        onClick={() => {
-          setPageNum(pageNum + 1);
-        }}
-      >
-        더보기
-      </button>
+      {hasNextPage && (
+        <button
+          className="full_button my-16"
+          onClick={() => {
+            debounce(() => setPageNum(pageNum + 1), 200)();
+          }}
+        >
+          더보기
+          <ArrowDown />
+        </button>
+      )}
     </div>
   );
 };

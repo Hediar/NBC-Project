@@ -4,7 +4,7 @@ import ReactQueryProvider from './ReactQueryProvider';
 import Header from '@/components/Header/Header';
 import ScrollToTopButton from '@/components/common/ScrollToTopButton';
 import { ConfigProvider } from 'antd';
-import { Analytics } from '@vercel/analytics/react';
+// import { Analytics } from '@vercel/analytics/react';
 
 export const metadata: Metadata = {
   title: '무비바바 | 영화추천, 영화만담의 페이지',

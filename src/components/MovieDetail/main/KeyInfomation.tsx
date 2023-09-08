@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import React from 'react';
-import { StarFill } from '@/styles/icons/Icons24';
+import { StarLine } from '@/styles/icons/Icons24';
 import { SVGTalkEndPoint, SVGTalkStartPoint } from '@/styles/icons/IconsETC';
-import { extractMainColors } from '@/api/findColors';
+import { extractMainColors, findBrightestTwoColors } from '@/api/findColors';
 import PreviewAppearance from './PreviewAppearance';
 import { getDetailData } from '@/api/tmdb';
 
@@ -19,14 +19,14 @@ const KeyInfomation = async ({ movieId }: Props) => {
   const res = await fetch(`${process.env.BASE_URL}/api/imagecolorpicker`, { method: 'post', body: formData });
   const { message: rgb } = await res.json();
   const [rgba1] = extractMainColors(rgb, 1);
+  const [darknessRGB, brightnessRGB] = findBrightestTwoColors(rgb);
 
   return (
     <div>
       <main
         className="h-[500px] py-[40px] relative"
         style={{
-          background: `linear-gradient(90deg, rgb(34,34,34) 0%, rgba(${rgba1[0]},${rgba1[1]},${rgba1[2]},1) 35%, rgba(235,235,235,1) 100%)`,
-          filter: `brightness(1.2)`
+          background: `linear-gradient(90deg, rgb(${darknessRGB[0]},${darknessRGB[1]},${darknessRGB[2]}) 0%, rgba(${rgba1[0]},${rgba1[1]},${rgba1[2]},1) 35%, rgba(${brightnessRGB[0]},${brightnessRGB[1]},${brightnessRGB[2]},1) 100%)`
         }}
       >
         <div className="flex w-full sm:w-4/5 mx-auto relative">
@@ -49,7 +49,7 @@ const KeyInfomation = async ({ movieId }: Props) => {
                 className="w-[47px] h-[57px] self-end bg-white"
                 style={{ clipPath: 'polygon(100% 50%, 0% 100%, 100% 100%)' }}
               ></div>
-              <div className="w-full flex justify-center items-center bg-white rounded-2xl rounded-bl-none custom_mobile_suit sm:h4_suit px-5 py-20 ">
+              <div className="w-full flex justify-center items-center bg-white rounded-2xl rounded-bl-none custom_mobile_suit sm:sm:text-[24px] sm:leading-[30px] px-5 py-20 ">
                 <div className="h-full flex flex-col gap-1 items-center overflow-auto">
                   {tagline && <p className="inline-block">"{tagline}"</p>}
                   <p>{overview}</p>
@@ -65,7 +65,7 @@ const KeyInfomation = async ({ movieId }: Props) => {
             <div>
               <span className="font-bold text-base text-white flex">
                 평균 별점
-                <StarFill />
+                <StarLine />
                 {(vote_average / 2).toFixed(2)}
               </span>
             </div>

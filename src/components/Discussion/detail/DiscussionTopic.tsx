@@ -29,7 +29,8 @@ const DiscussionTopic = async ({ postData }: Props) => {
           </div>
           <span className="subtitle2_suit">{userData.username && userData.username.slice(0, 15)}</span>
         </header>
-        <section className="min-h-[438px] px-[62px] py-[54px] flex flex-col items-center relative mt-5 border border-[#888888] rounded-[40px]">
+
+        <section className="min-h-[438px] p-3 xl:px-[62px] sm:py-[54px] flex flex-col items-center relative mt-5 border border-[#888888] rounded-[40px]">
           <div className="flex flex-col flex-wrap justify-center items-center flex-1 w-full gap-[10px] py-5 leading-snug">
             <p className="h4_suit whitespace-normal break-all">{postData?.title}</p>
             <p className="body1_regular_suit text-[#888888] whitespace-normal break-all">{postData?.content}</p>
