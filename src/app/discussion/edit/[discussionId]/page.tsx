@@ -1,4 +1,5 @@
 'use client';
+
 import { getDiscussionPostDetail, getDiscussionPostOption } from '@/api/supabase-discussion';
 import ReviewMovie from '@/components/ReviewForm/ReviewMovie';
 import useDiscussionPostQuery from '@/hooks/useDiscussionPostQuery';

@@ -1,4 +1,3 @@
-import { getMovieDetail } from '@/api/tmdb';
 import AppearanceProduction from '@/components/MovieDetail/appearance-production/AppearanceProduction';
 import React from 'react';
 
@@ -8,10 +7,10 @@ interface Props {
 
 const DetailCrewPage = async ({ params }: Props) => {
   const { movieId } = params;
-  const movieData = await getMovieDetail(movieId);
+
   return (
     <div>
-      <AppearanceProduction movieData={movieData} />
+      <AppearanceProduction movieId={movieId} />
     </div>
   );
 };

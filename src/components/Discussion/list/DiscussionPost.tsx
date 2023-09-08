@@ -1,15 +1,23 @@
-/* eslint-disable @next/next/no-img-element */
+'use client';
+
 import { getDiscussionPostOption } from '@/api/supabase-discussion';
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { baseImgUrl } from '@/static/baseImgUrl';
 import Image from 'next/image';
 interface Props {
   post: DiscussionPost;
 }
 
-const DiscussionPost = async ({ post }: Props) => {
-  const optionData = await getDiscussionPostOption(post.post_id);
+const DiscussionPost = ({ post }: Props) => {
+  const [optionData, setOptionData] = useState<DiscussionOption[]>();
+  useEffect(() => {
+    const fetchData = async () => {
+      const optionData = await getDiscussionPostOption(post.post_id);
+      setOptionData(optionData);
+    };
+    fetchData();
+  }, []);
 
   return (
     <Link
@@ -18,7 +26,6 @@ const DiscussionPost = async ({ post }: Props) => {
     >
       <div className="flex justify-center items-center p-3">
         <div className="h-[90px] mx-auto flex justify-center">
-          {/* 선택된 토론대상무비 이미지 넣을부분. */}
           <Image
             src={`${baseImgUrl}w300_and_h450_bestv2${post.movie_imgUrl}`}
             alt="테스트"

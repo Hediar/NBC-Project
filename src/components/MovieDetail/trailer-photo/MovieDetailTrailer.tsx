@@ -1,13 +1,14 @@
 import React from 'react';
 import Slider from '../../common/Slider/Slider';
 import TrailerSlider from './TrailerSlider';
+import { getImageData, getTrailerData } from '@/api/tmdb';
 
 interface Props {
-  movieData: MovieData;
+  movieId: string;
 }
 
-const MovieDetailTrailer = ({ movieData }: Props) => {
-  const { trailerKeys, backdropImages } = movieData;
+const MovieDetailTrailer = async ({ movieId }: Props) => {
+  const [trailerKeys, backdropImages] = await Promise.all([getTrailerData(movieId), getImageData(movieId)]);
 
   return (
     <div className="mt-10 mb-20">

@@ -1,4 +1,4 @@
-import { getMovieDetail } from '@/api/tmdb';
+import { getDetailData, getProviderData } from '@/api/tmdb';
 import React from 'react';
 import MovieDetailBottomBar from './MovieDetailBottomBar';
 import { MOVIE_COUNTRIES } from '@/static/movieCountries';
@@ -6,6 +6,7 @@ import WatchLaterButton from '../common/WatchLaterButton';
 import MovieLikes from '../MovieLikes/MovieLikes';
 import AddIgnoreMovieButton from '../common/AddIgnoreMovieButton';
 import MovieProviders from './MovieProviders';
+import Image from 'next/image';
 
 interface Props {
   movieId: string;
@@ -14,7 +15,7 @@ interface Props {
 const baseImgUrl = process.env.NEXT_PUBLIC_TMDB_BASE_IMAGE_URL;
 
 const MovieDetailInfo = async ({ movieId }: Props) => {
-  const movieData = await getMovieDetail(movieId);
+  const [movieData, watchProviders] = await Promise.all([getDetailData(movieId), getProviderData(movieId)]);
 
   return (
     <div>
@@ -24,17 +25,14 @@ const MovieDetailInfo = async ({ movieId }: Props) => {
           <MovieLikes movieid={movieData.id} />
           <AddIgnoreMovieButton movieid={movieData.id} />
         </div>
-        <div className="absolute w-full h-[500px] -z-50 left-0">
-          <div
-            className="w-full aspect-[1920/1080] sm:min-w-[888px] sm:h-full"
-            style={{
-              backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.2), rgba(0, 0, 0, 0.8)),
-              url("${baseImgUrl}w1920_and_h1080_bestv2${movieData.backdrop_path}")`,
-              backgroundSize: '100%',
-              backgroundPositionY: '10%',
-              filter: 'brightness(1.35)'
-            }}
-          ></div>
+        <div className="absolute w-full h-[500px] -z-50 left-0 overflow-hidden">
+          <Image
+            src={`${baseImgUrl}w1920_and_h1080_bestv2${movieData.backdrop_path}`}
+            alt="Image"
+            width={1920}
+            height={1080}
+            className="w-full mt-[-10%]"
+          />
 
           <div id="detail-cont" className="absolute w-[80%] left-[10%] bottom-0 mb-20">
             <h1 className="font-bold text-[2rem] mb-2">{movieData.title}</h1>
@@ -61,18 +59,18 @@ const MovieDetailInfo = async ({ movieId }: Props) => {
               <div>상영시간: {movieData.runtime}분</div>
             </div>
           </div>
-          {movieData.watchProviders ? (
-            <div id="providers-cont" className="absolute bottom-10 right-[10%] flex gap-3 pb-2">
-              {movieData.watchProviders?.rent && (
+          {watchProviders ? (
+            <div id="providers-cont" className="absolute top-32 sm:top-auto sm:bottom-10 right-[10%] flex gap-3 pb-2">
+              {watchProviders?.rent && (
                 <div id="provider-rent" className="flex flex-col gap-1">
                   <h5>Rent</h5>
-                  <MovieProviders data={movieData.watchProviders.rent} />
+                  <MovieProviders data={watchProviders.rent} />
                 </div>
               )}
-              {movieData.watchProviders?.buy && (
+              {watchProviders?.buy && (
                 <div id="provider-buy" className="flex flex-col gap-1">
                   <h5>Buy</h5>
-                  <MovieProviders data={movieData.watchProviders.buy} />
+                  <MovieProviders data={watchProviders.buy} />
                 </div>
               )}
             </div>
