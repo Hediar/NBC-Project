@@ -14,10 +14,6 @@ type Props = {
 const ReviewFetchMore = ({ searchParams }: Props) => {
   const [firstMount, setFirstMount] = useState(true);
 
-//   , {
-//     refetchOnMount: true,
-// retry: 0,
-//   }
   const {
     data: reviews,
     hasNextPage,
@@ -39,16 +35,10 @@ const ReviewFetchMore = ({ searchParams }: Props) => {
     refetchOnMount: true,
     retry: 0,
   }) as any;
-  // console.log('✅reviews => ', reviews);
-  // console.log('✅reviews => ', reviews);
 
   useEffect(() => {
-    // if (!firstMount) {
       remove();
       refetch().then();
-    // } else {
-    //   setFirstMount(false);
-    // }
   }, [searchParams]);
 
   const fetchMore = () => {

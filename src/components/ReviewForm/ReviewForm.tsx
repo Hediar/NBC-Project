@@ -16,6 +16,7 @@ import StarBox from './StarBox';
 import { useForm, useFieldArray, Controller } from 'react-hook-form';
 import { getDetailData } from '@/api/tmdb';
 import { Modal, message } from 'antd';
+import { debounce } from 'lodash';
 
 interface Props {
   movieId?: string;
@@ -284,6 +285,9 @@ const ReviewForm = ({ movieId, editReview, movieButtonRef }: Props) => {
             {...register('content')}
           />
           <div className="button_wrap">
+            <button type="button" onClick={handleCancel} className="button-white">
+              돌아가기
+            </button>
             <button
               type="button"
               onClick={handleTempSave}
@@ -293,14 +297,11 @@ const ReviewForm = ({ movieId, editReview, movieButtonRef }: Props) => {
             </button>
             <button
               type="button"
-              onClick={handleSubmit(addPost)}
+              onClick={handleSubmit(debounce(addPost, 300))}
               disabled={isSubmitting}
               className="button-dark"
             >
               {isSubmitting ? '작성 중' : editReview ? '리뷰 수정하기' : '리뷰 작성하기'}
-            </button>
-            <button type="button" onClick={handleCancel}>
-              돌아가기
             </button>
           </div>
         </div>

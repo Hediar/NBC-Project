@@ -6,7 +6,7 @@ import supabase from '@/supabase/config';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
-import { Dropdown, MenuProps, message } from 'antd';
+import { Dropdown, MenuProps, Modal, message } from 'antd';
 
 type Props = {
   postId: string;
@@ -19,29 +19,38 @@ const UtilButtons = ({ postId, userId, className }: Props) => {
   const [messageApi, contextHolder] = message.useMessage();
 
   const [mounted, setMounted] = useState<boolean>(false);
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
   const { userInfo } = useUserInfoStore();
 
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleMenuClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     e.stopPropagation();
   }
 
-  const delButtonHandler = async () => {
-    if (confirm('정말 삭제하시겠습니까?')) {
-      const { data, error } = await supabase.from('reviews').delete().eq('reviewid', postId);
-      if (error)
-        return messageApi.open({
-          type: 'warning',
-          content: '오류가 발생했습니다.' + error.message
-        });
-
-      messageApi.open({
-        type: 'success',
-        content: '삭제되었습니다.'
-      });
-      router.push('/');
-    }
+  const delButtonHandler = () => {
+    setIsModalOpen(true);
   };
+  
+  const handleModalOk  = async () => {
+    const { data, error } = await supabase.from('reviews').delete().eq('reviewid', postId);
+    if (error)
+      return messageApi.open({
+        type: 'warning',
+        content: '오류가 발생했습니다.' + error.message
+      });
+
+    messageApi.open({
+      type: 'success',
+      content: '삭제되었습니다.'
+    });
+
+    setIsModalOpen(false);
+    router.push('/review');
+  }
+  
+  const handleModalCancel = () => {
+    setIsModalOpen(false);
+  }
 
   useEffect(() => {
     setMounted(true);
@@ -57,7 +66,7 @@ const UtilButtons = ({ postId, userId, className }: Props) => {
     {
       key: '2',
       label: (
-        <button onClick={delButtonHandler}>삭제</button>
+        <button onClick={delButtonHandler}>삭제하기</button>
       ),
     }
   ];
@@ -67,9 +76,31 @@ const UtilButtons = ({ postId, userId, className }: Props) => {
       <div className={className}>
         {contextHolder}
         {userId === userInfo.id ? (
-          <Dropdown menu={{ items }} placement="bottomRight">
-            <button onClick={handleClick}><span className='sr-only'>메뉴</span><More /></button>
-          </Dropdown>
+          <>
+            <Dropdown menu={{ items }} placement="bottomRight">
+              <button onClick={handleMenuClick}><span className='sr-only'>메뉴</span><More /></button>
+            </Dropdown>
+
+            <Modal open={isModalOpen} onCancel={handleModalCancel} footer={null} width={400}>
+              <p className='pt-[50px] pb-[30px] text-center subtitle2_suit'>
+              정말 삭제하시겠습니까?
+              </p>
+              <div className='flex justify-center gap-3 mb-5'>
+                <button
+                  className="button-white"
+                  onClick={handleModalCancel}
+                >
+                  취소
+                </button>
+                <button
+                  className="button-dark"
+                  onClick={handleModalOk}
+                >
+                  확인
+                </button>
+              </div>
+            </Modal>
+        </>
         ) : null}
       </div>
     )

@@ -2,6 +2,7 @@
 
 import { Select, Space } from 'antd';
 import Search from 'antd/es/input/Search';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
@@ -26,10 +27,10 @@ const ReviewFilteringBox = () => {
   };
 
   return (
-    <div className="flex justify-between mb-12">
+    <div className="flex w-full mb-12">
       <Select
         defaultValue="new"
-        style={{ width: 120 }}
+        className='w-28 mr-auto'
         onChange={handleSortChange}
         options={[
           { value: 'new', label: '최신순' },
@@ -38,11 +39,10 @@ const ReviewFilteringBox = () => {
         ]}
       />
 
-      {/* 검색: 전체, 영화제목, 리뷰내용 - ?filter=movie_title | review_cont <br />  */}
       <Space.Compact>
         <Select
           defaultValue="all"
-          style={{ width: 120 }}
+          className='w-28'
           onChange={handleFilterChange}
           options={[
             { value: 'all', label: '전체' },
@@ -50,8 +50,10 @@ const ReviewFilteringBox = () => {
             { value: 'review_cont', label: '리뷰내용' }
           ]}
         />
-        <Search placeholder="input search text" onSearch={onSearch} style={{ width: 200 }} />
+        <Search placeholder="input search text" onSearch={onSearch} className='w-52' />
       </Space.Compact>
+
+      <Link href={'/review/write'} className='button-dark ml-2'>리뷰 작성</Link>
     </div>
   );
 };

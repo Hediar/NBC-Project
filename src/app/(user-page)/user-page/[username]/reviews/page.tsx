@@ -5,6 +5,7 @@ import ReviewItem from '@/components/ReviewList/ReviewItem';
 import ReviewListEmpty from '@/components/ReviewList/ReviewListEmpty';
 import useUserInfoStore from '@/store/saveCurrentUserData';
 import { Plus } from '@/styles/icons/Icons24';
+import { debounce } from 'lodash';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
@@ -65,7 +66,7 @@ const MyReviewPage = () => {
       <div className="w-full text-center mx-auto">
         {isTotalPage ? null : (
           <button
-            onClick={handleClick}
+            onClick={debounce(handleClick, 300)}
             type="button"
             className="full_button w-full items-center mt-20"
           >
