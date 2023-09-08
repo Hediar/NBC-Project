@@ -9,7 +9,6 @@ import { ArrowDown } from '@/styles/icons/Icons24';
 const searchP = 'h3_suit flex justify-center my-16';
 
 const DiscussionList = () => {
-  const [firstMount, setFirstMount] = useState<boolean>(true);
   const [pageNum, setPageNum] = useState<number>(1);
   const [hasNextPage, setHasNextPage] = useState<boolean>(true);
   const [postData, setPostData] = useState<DiscussionPost[]>([]);
@@ -29,7 +28,6 @@ const DiscussionList = () => {
       if (fetchedPostData) setPostData(fetchedPostData);
     };
     fetchData();
-    setFirstMount(false);
   }, []);
 
   useEffect(() => {
@@ -84,15 +82,12 @@ const DiscussionList = () => {
         </p>
       )}
       <div className="flex flex-col gap-5 mt-4">
-        {filteredData?.length && !firstMount ? (
-          filteredData?.map((post: any, index: number) => {
-            return <DiscussionPost key={index} post={post} />;
-          })
-        ) : (
-          <p className={`${searchP}`}>"{query.search}"와 관련된 토론이 없습니다</p>
-        )}
+        {!!filteredData?.length &&
+          filteredData?.map((post) => {
+            return <DiscussionPost key={post.post_id} post={post} />;
+          })}
       </div>
-      {hasNextPage && (
+      {hasNextPage && !!filteredData?.length && (
         <button
           className="full_button my-16"
           onClick={() => {

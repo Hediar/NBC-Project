@@ -28,6 +28,7 @@ const DiscussionEditPage = ({ params }: Props) => {
   const {
     userInfo: { id: userId }
   } = useUserInfoStore();
+
   const [title, setTitle] = useState<string>();
   const [content, setContent] = useState<string>();
   const [movieId, setMovieId] = useState<string>();

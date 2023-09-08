@@ -20,7 +20,7 @@ const LatestReviews = async () => {
     return `#${rgb.map((channel: any) => channel.toString(16).padStart(2, '0')).join('')}`;
   };
 
-  console.log('getColors', bgClasses);
+  // console.log('getColors', bgClasses);
   return (
     <div className="p-5">
       <div className="flex justify-between items-end">

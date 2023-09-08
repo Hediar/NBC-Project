@@ -19,19 +19,20 @@ const MovieDetailInfo = async ({ movieId }: Props) => {
 
   return (
     <div>
-      <div className="w-full aspect-[1920/1080] h-[500px] sm:text-white">
-        <div className="bg-gray-800 bg-opacity-30 rounded-xl py-1 px-1 absolute top-20 right-[11%] flex flex-col gap-[6px] items-center">
+      <div className="w-full h-[400px] lg:h-[500px] sm:text-white relative">
+        <div className="bg-gray-800 bg-opacity-30 rounded-xl py-1 px-1 absolute top-10 right-[11%] flex flex-col gap-[6px] items-center">
           <WatchLaterButton movieId={movieData.id} />
           <MovieLikes movieid={movieData.id} />
           <AddIgnoreMovieButton movieid={movieData.id} />
         </div>
-        <div className="absolute w-full h-[500px] -z-50 left-0 overflow-hidden">
+        <div className="absolute w-full h-[400px] lg:h-[500px] -z-50 left-0 overflow-hidden">
           <Image
             src={`${baseImgUrl}w1920_and_h1080_bestv2${movieData.backdrop_path}`}
             alt="Image"
             width={1920}
             height={1080}
             className="w-full mt-[-10%]"
+            priority={true}
           />
 
           <div id="detail-cont" className="absolute w-[80%] left-[10%] bottom-0 mb-20">
