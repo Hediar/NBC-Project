@@ -11,8 +11,9 @@ const LatestReviews = async () => {
   const backgroundColors = ['bg-MainYellow2', 'bg-MainBlue2', 'bg-MainPurple2', 'bg-MainOrange2'];
   const getColors = latestReviewData.map((data) => data.colors[8]);
   const bgStyles = getColors.map((color) => {
+    const rgbColortrans = `rgb(${color[0]}, ${color[1]}, ${color[2]}, 0.5)`;
     const rgbColor = `rgb(${color[0]}, ${color[1]}, ${color[2]})`;
-    return [rgbColor];
+    return { rgbColortrans, rgbColor };
   });
   // const bgClasses = getColors.map((color) => {
   //   const hexColor = `#${color.map((channel: number) => channel.toString(16).padStart(2, '0')).join('')}`;
@@ -24,7 +25,7 @@ const LatestReviews = async () => {
   // };
 
   // console.log('getColors', bgClasses);
-  // console.log(bgStyles);
+
   return (
     <div className="p-5">
       <div className="flex justify-between items-end">
@@ -39,7 +40,10 @@ const LatestReviews = async () => {
             <Link key={review.reviewid} href={`/review/${review.reviewid}`} className="w-full mb-16 m-4">
               <div
                 className={`p-4 border border-gray-300 rounded-xl h-36`}
-                style={{ backgroundColor: `${bgStyles[index]}` }}
+                style={{
+                  backgroundColor: `${bgStyles[index].rgbColortrans}`,
+                  borderColor: `${bgStyles[index].rgbColor}`
+                }}
               >
                 <div className="flex justify-between">
                   <div className="flex">
@@ -52,7 +56,7 @@ const LatestReviews = async () => {
                     />
                     <span className="font-bold mb-2">{review.username}</span>
                   </div>
-                  <SVGTalkEndPoint />
+                  <SVGTalkEndPoint className="opacity-20" />
                 </div>
 
                 <div className="overflow-ellipsis w-[680px]">{review.content}</div>
