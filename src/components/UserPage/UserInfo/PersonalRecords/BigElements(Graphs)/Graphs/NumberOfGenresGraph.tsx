@@ -6,6 +6,20 @@ import { Doughnut } from 'react-chartjs-2';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
+export const options = {
+  elements: {
+    bar: {
+      borderWidth: 2
+    }
+  },
+  responsive: true,
+  plugins: {
+    legend: {
+      position: 'right' as const
+    }
+  }
+};
+
 type Props = {
   genreNames: string[];
   quantities: number[];
@@ -47,7 +61,7 @@ const NumberOfGenresGraph = ({ genreNames, quantities }: Props) => {
     ]
   };
 
-  return <Doughnut data={data} />;
+  return <Doughnut data={data} options={options} />;
 };
 
 export default NumberOfGenresGraph;
