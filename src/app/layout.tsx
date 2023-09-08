@@ -37,7 +37,7 @@ export default function RootLayout(props: { children: React.ReactNode }) {
         </ReactQueryProvider>
         <ScrollToTopButton />
       </body>
-      <Analytics />
+      {/* <Analytics /> */}
     </html>
   );
 }
