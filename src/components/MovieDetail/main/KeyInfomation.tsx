@@ -2,7 +2,7 @@ import Image from 'next/image';
 import React from 'react';
 import { StarLine } from '@/styles/icons/Icons24';
 import { SVGTalkEndPoint, SVGTalkStartPoint } from '@/styles/icons/IconsETC';
-import { extractMainColors, findBrightestTwoColors } from '@/api/findColors';
+import { extractMainColors, findBrightestTwoColors, getColors } from '@/util/findColors';
 import PreviewAppearance from './PreviewAppearance';
 import { getDetailData } from '@/api/tmdb';
 
@@ -13,11 +13,7 @@ const baseImgUrl = process.env.NEXT_PUBLIC_TMDB_BASE_IMAGE_URL;
 
 const KeyInfomation = async ({ movieId }: Props) => {
   const { poster_path, overview, tagline, vote_average } = await getDetailData(movieId);
-  const formData = new FormData();
-  const imageUrl = `${baseImgUrl}w300_and_h450_bestv2${poster_path}`;
-  formData.append('imageUrl', imageUrl.toString());
-  const res = await fetch(`${process.env.BASE_URL}/api/imagecolorpicker`, { method: 'post', body: formData });
-  const { message: rgb } = await res.json();
+  const rgb = await getColors(`${baseImgUrl}w300_and_h450_bestv2${poster_path}`);
   const [rgba1] = extractMainColors(rgb, 1);
   const [darknessRGB, brightnessRGB] = findBrightestTwoColors(rgb);
 
