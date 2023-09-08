@@ -5,6 +5,7 @@ import NumberOfMoviesWatched from './SmallElements/NumberOfMoviesWatched';
 import TotalWatchingTime from './SmallElements/TotalWatchingTime';
 
 export const dynamic = 'force-dynamic';
+
 interface Props {
   params: string;
 }

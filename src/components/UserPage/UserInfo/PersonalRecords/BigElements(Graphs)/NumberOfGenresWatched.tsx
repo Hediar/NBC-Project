@@ -5,6 +5,8 @@ import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { getNumbersOfGenresWatched } from '@/api/movieStatistics/getNumbersOfGenresWatched';
 import NumberOfGenresGraph from './Graphs/NumberOfGenresGraph';
 
+export const dynamic = 'force-dynamic';
+
 type Props = {
   userId: string;
 };
