@@ -27,7 +27,10 @@ const UtilButtons = ({ postId, userId, className }: Props) => {
     e.stopPropagation();
   };
 
-  const delButtonHandler = () => {
+  const delButtonHandler = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    e.stopPropagation();
+
     setIsModalOpen(true);
   };
 
@@ -46,6 +49,7 @@ const UtilButtons = ({ postId, userId, className }: Props) => {
 
     setIsModalOpen(false);
     router.push('/review');
+    router.refresh();
   };
 
   const handleModalCancel = () => {
