@@ -33,7 +33,7 @@ export const getTrendingMovies = async () => {
 export const getNewMovies = async (formattedCurrentDate: string, formattedOneMonthPrev: string) => {
   try {
     const movies = await fetch(
-      `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}discover/movie?include_adult=false&include_video=false&language=ko-KR&page=1&release_date.gte=${formattedOneMonthPrev}&release_date.lte=${formattedCurrentDate}&region=KR&sort_by=primary_release_date.desc&vote_count.gte=100`,
+      `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}discover/movie?include_adult=false&include_video=false&language=ko-KR&page=1&release_date.gte=${formattedOneMonthPrev}&release_date.lte=${formattedCurrentDate}&region=KR&sort_by=primary_release_date.desc&vote_count.gte=50`,
       options
     );
     const movieData = await movies.json();
@@ -71,22 +71,19 @@ export const fetchTrendMoviesByGenre = async (genreId: number | string) => {
 
 export const getMovieDetail = async (id: string) => {
   try {
-    const [detailData, trailerData, watchProviderData, imageData, creditsData] = await Promise.all([
+    const [detailData, watchProviders, backdropImages, creditsData] = await Promise.all([
       getDetailData(id),
-      getTrailerData(id),
+
       getProviderData(id),
       getImageData(id),
       getCreditsData(id)
     ]);
 
-    const trailerKeys = trailerData.results.map((result: TrailerData) => result.key);
-    const watchProviders = watchProviderData.results['KR'];
-    const backdropImages = imageData.backdrops;
     const { appearences, productions } = creditsData;
 
     const movieDetailData = {
       ...detailData,
-      trailerKeys,
+
       watchProviders,
       backdropImages,
       appearences,
@@ -106,28 +103,28 @@ export const getDetailData = async (id: string) => {
   return detailData;
 };
 
-const getTrailerData: any = async (id: string) => {
+export const getTrailerData = async (id: string) => {
   const trailerRes = await fetch(`${process.env.NEXT_PUBLIC_TMDB_BASE_DETAIL_URL}${id}/videos?language=ko-KR`, options);
   const trailerData = await trailerRes.json();
-
-  return trailerData;
+  const trailerKeys = trailerData.results.map((result: TrailerData) => result.key);
+  return trailerKeys;
 };
 
 export const getProviderData = async (id: string) => {
   const watchProviderRes = await fetch(`${process.env.NEXT_PUBLIC_TMDB_BASE_DETAIL_URL}${id}/watch/providers`, options);
   const watchProviderData = await watchProviderRes.json();
-
-  return watchProviderData;
+  const watchProviders = watchProviderData.results['KR'];
+  return watchProviders;
 };
 
-const getImageData = async (id: string) => {
+export const getImageData = async (id: string) => {
   const imageRes = await fetch(`${process.env.NEXT_PUBLIC_TMDB_BASE_DETAIL_URL}${id}/images`, options);
   const imageData = await imageRes.json();
-
-  return imageData;
+  const backdropImages = imageData.backdrops;
+  return backdropImages;
 };
 
-const getCreditsData = async (id: string) => {
+export const getCreditsData = async (id: string): Promise<Pick<MovieData, 'appearences' | 'productions'>> => {
   const creditsRes = await fetch(
     `${process.env.NEXT_PUBLIC_TMDB_BASE_DETAIL_URL}${id}/credits?language=ko-KR`,
     options

@@ -1,4 +1,3 @@
-import { getMovieDetail } from '@/api/tmdb';
 import KeyInfomation from '@/components/MovieDetail/main/KeyInfomation';
 import React from 'react';
 
@@ -10,11 +9,10 @@ interface Props {
 
 const MovieDetail = async ({ params }: Props) => {
   const { movieId } = params;
-  const movieData = await getMovieDetail(movieId);
 
   return (
     <div>
-      <KeyInfomation movieData={movieData} />
+      <KeyInfomation movieId={movieId} />
     </div>
   );
 };

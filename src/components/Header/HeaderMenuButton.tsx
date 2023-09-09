@@ -21,7 +21,7 @@ const HeaderMenuButton = ({ userData }: { userData: UserData }) => {
       <Link className="text-center hover:opacity-80" href={'/review'}>
         리뷰
       </Link>
-      <Link className="text-center hover:opacity-80" href={'/discussion/list/1'}>
+      <Link className="text-center hover:opacity-80" href={'/discussion/list'}>
         토론
       </Link>
       <Link className="text-center hover:opacity-80" href={`/user-page/${username}/info`}>

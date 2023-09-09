@@ -1,5 +1,4 @@
 import { optionMark } from '@/static/optionMark';
-import CheckMark from '@/styles/svg/CheckMark';
 
 interface OptionProps {
   option: DiscussionOption;
