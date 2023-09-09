@@ -1,25 +1,14 @@
-import React from 'react';
 import AuthButton from './_auth/AuthButtons';
 import HeaderUser from './HeaderUser';
 import Link from 'next/link';
 import HiddenServerFunctions from './_auth/HiddenServerFunctions';
 import ModalControlCentre from './_auth/ModalControlCentre';
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
 import Logo from '@/styles/svg/Logo';
 import Nav from './Nav';
-
-export const dynamic = 'force-dynamic';
+import authApi from '@/util/supabase/auth/authApi';
 
 const Header = async () => {
-  const supabase = createServerComponentClient({ cookies });
-  const {
-    data: { user }
-  } = await supabase.auth.getUser();
-  const userId = user?.id;
-
-  const { data: userData, error: userDataError } = await supabase.from('users').select().eq('id', userId).single();
-
+  const { userId } = await authApi('userId');
   return (
     <>
       <header className="flex justify-center h-[70px] border-b border-[#ebebeb] bg-white">
@@ -31,13 +20,13 @@ const Header = async () => {
             <Nav />
           </div>
           <div className="flex sm:gap-3 items-center">
-            {userData && <HeaderUser userData={userData} />}
+            <HeaderUser />
             <AuthButton />
           </div>
         </div>
       </header>
       <HiddenServerFunctions />
-      <ModalControlCentre signedInUserId={userId ?? ''} />
+      <ModalControlCentre userId={userId ?? ''} />
     </>
   );
 };
