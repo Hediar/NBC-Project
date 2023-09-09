@@ -8,6 +8,8 @@ import dayjs from 'dayjs';
 import { getUserProfile } from '@/api/review';
 import Link from 'next/link';
 import { Edit } from '@/styles/icons/Icons24';
+import ReviewLikes from '@/components/Review/ReviewLikes';
+import { HeartLined } from '@/styles/icons/Icons32';
 
 interface Params {
   postId: string;
@@ -18,7 +20,7 @@ type Props = {
 };
 
 export const dynamic = 'force-dynamic';
-export const revalidate = 0 ;
+export const revalidate = 0;
 
 const ReviewDetail = async ({ params }: Props) => {
   const { postId } = params;
@@ -121,7 +123,9 @@ const ReviewDetail = async ({ params }: Props) => {
           <div>{review.content}</div>
         </div>
 
-        {/* <div className="flex items-center h-16 px-5 ">좋아요 자리</div> */}
+        <div className="flex justify-center items-center h-16 px-5 ">
+          <ReviewLikes reviewid={review.reviewid} size="32" />
+        </div>
       </div>
       {/* 컨텐츠 E */}
     </div>
