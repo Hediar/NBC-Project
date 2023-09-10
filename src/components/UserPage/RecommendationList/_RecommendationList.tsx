@@ -1,64 +1,35 @@
+import { cookies } from 'next/headers';
 import getMovieDataWithMovieIds from '@/api/getMovieDataWithMovieIds';
 import { getMovieGenresById, getMovieGenresByName, sortByMostFrequent } from '@/api/getMovieGenres';
 import DisplayInfiniteMovies from '@/components/common/DisplayMoviesInfiniteScroll';
 import discoverMoviesWithGenreId from '@/api/discoverMoviesWithGenreId';
-import { cookies } from 'next/headers';
+import authApi from '@/util/supabase/auth/auth';
+import NewSignnIn from '@/components/Auth/SignIn/NewSignnIn';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import idToUsername from '@/api/supabase/idToUsername';
 
 export const dynamic = 'force-dynamic';
 
 interface Props {
   username: string;
-  watched_movies: string[];
+  likedMovies: string[];
 }
 
-const RecommendationList = async ({ username, watched_movies }: Props) => {
+const RecommendationList = async ({ username, likedMovies }: Props) => {
   const supabase = createServerComponentClient({ cookies });
-  //
-  // 유저가 좋아한 영화를 배열화 하기
-  const { data: user_id } = await idToUsername(supabase, username);
-
-  const { data: userLikedMoviesGroup } = await supabase
-    .from('movielikes')
-    .select('movieid')
-    .contains('user_id', [user_id]);
-
-  const usersLikedMovies = userLikedMoviesGroup!.map((el) => el.movieid);
-
-  //
-  // 유저가 본 영화 데이터를 다 가져오기
-  const movieData = await getMovieDataWithMovieIds(usersLikedMovies);
-
-  // 영화 데이터들에서 [장르 id]를 추출
+  const movieData = await getMovieDataWithMovieIds(likedMovies);
   const totalGenresId = getMovieGenresById(movieData);
-  // 영화 데이터들에서 [장르 이름]을 추출
   const totalGenresName = getMovieGenresByName(movieData);
 
-  // 추출한 장르 id[]에서 가장 많이 나온 순서대로 나열한 뒤 3개를 가져옴(sortByMostFrequent함수의 2번째 인자)
   const threeMostGenresId = sortByMostFrequent(totalGenresId, 3);
-  // 3개의 가장 많이 보는 장르 id
   const [genreId1, genreId2, genreId3] = threeMostGenresId;
-  //
 
-  // 추출한 장르 이름[]에서 가장 많이 나온 순서대로 나열한 뒤 3개를 가져옴
   const threeMostGenresName = sortByMostFrequent(totalGenresName, 3);
-  // 3개의 가장 많이 보는 장르 이름
   const [GerneName_A, GerneName_B, GerneName_C] = threeMostGenresName.map((gerneName) => gerneName);
-  //
 
   const threeRecommendationPages = await discoverMoviesWithGenreId(threeMostGenresId, 1);
 
   // 무시하기 필터링
-
-  // 1. 사용자 정보 조회
-  const { data: userData, error: isUserNotSignedIn } = await supabase.auth.getUser();
-  if (isUserNotSignedIn) {
-    // console.log(isUserNotSignedIn);
-    return <>로그인을 해주세요.</>;
-  }
-
-  const userId = userData.user.id;
+  const { userId } = await authApi.get('userId');
 
   const { data: ignoreList, error: fetchIgnoreDataError } = await supabase
     .from('ignored_movies')

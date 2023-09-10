@@ -1,151 +1,210 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
-import SubmitButton from '@/components/Auth/SubmitButton';
-import SocialButtons from '@/components/Auth/SocialButtons';
+import useToggleSignUpModal from '@/store/toggleSignUpModal';
+import Logo from '@/styles/svg/Logo';
 import HCaptcha from '@hcaptcha/react-hcaptcha';
-import { usePathname, useRouter } from 'next/navigation';
-import { message } from 'antd';
+import { Button, Input, message } from 'antd';
+import { useRouter } from 'next/navigation';
+import React, { useEffect, useRef, useState } from 'react';
 
-function SignUp() {
+const SignUp = () => {
   const router = useRouter();
-  const path = usePathname() ?? '';
-  const emailValue = useRef<string>('');
+
+  const [emailValue, setEmailValue] = useState<string>('');
   const [passwordValue, setPasswordValue] = useState<string>('');
-  const [confirmingPasswordValue, setConfirmingPasswordValue] = useState<string>('');
-  const [isPasswordMatch, setIsPasswordMatch] = useState<boolean>(false);
-  const [isError, setIsError] = useState<boolean>(false);
+  const [password2Value, setPassword2Value] = useState<string>('');
+  const [usernameValue, setUsernameValue] = useState<string>('');
   const [captchaToken, setCaptchaToken] = useState<any>();
-  const [passwordError, setPasswordError] = useState<string | null>(null);
   const [messageApi, contextHolder] = message.useMessage();
+  const captchaRef = useRef<any>(null);
 
-  const handlePasswordChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    set: React.Dispatch<React.SetStateAction<string>>
-  ) => {
-    const newPassword = e.target.value;
-    set(newPassword);
-
-    if (!/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/.test(newPassword)) {
-      setPasswordError('비밀번호는 최소 8자 이상이어야 하며, 최소 하나의 대문자, 소문자, 숫자가 포함되어야 합니다.');
-    } else {
-      setPasswordError(null);
-    }
-  };
+  const [shouldDisable, setShouldDisable] = useState<boolean>(true);
+  const [isClicked, setIsClicked] = useState<boolean>(false);
+  const { isModalOpen, setIsModalOpen } = useToggleSignUpModal();
 
   useEffect(() => {
-    if (!passwordValue || !confirmingPasswordValue) {
-      setIsPasswordMatch(false);
-      return;
+    if (passwordValue.length < 6) {
+      setShouldDisable(true);
     }
-    if (passwordValue !== confirmingPasswordValue) {
-      setIsPasswordMatch(false);
-      return;
-    } else {
-      setIsPasswordMatch(true);
-      return;
+    if (emailValue.length > 0 && passwordValue.length > 8 && password2Value.length > 8 && usernameValue.length >= 2) {
+      setShouldDisable(false);
     }
-  }, [passwordValue, confirmingPasswordValue]);
+  }, [emailValue, passwordValue]);
 
-  const signupHandler = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData();
-    formData.append('email', emailValue.current);
-    formData.append('password', passwordValue);
-    formData.append('captchaToken', captchaToken);
+  useEffect(() => {
+    const signupHandler = async () => {
+      const formData = new FormData();
+      formData.append('email', emailValue);
+      formData.append('password', passwordValue);
+      formData.append('username', usernameValue);
+      formData.append('captchaToken', captchaToken);
 
-    const res = await fetch('/auth/sign-up', { method: 'post', body: formData });
-    const data = await res.json();
-    if (data.error) {
-      if (data.message === 'User already registered.') {
-        setIsError(true);
+      setIsClicked(true);
+
+      const res = await fetch('/auth/sign-up', { method: 'post', body: formData });
+      const data = await res.json();
+      if (data.error) {
+        if (data.message === 'User already registered.') {
+          setIsClicked(false);
+          return messageApi.open({
+            type: 'warning',
+            content: '이미 등록된 이메일입니다.'
+          });
+        }
+        if (data.message.includes('captcha 오류')) {
+          setIsClicked(false);
+          return messageApi.open({
+            type: 'error',
+            content: 'captcha오류입니다. 다시 시도해주세요.'
+          });
+        }
+        router.refresh();
+      } else {
         messageApi.open({
-          type: 'warning',
-          content: '이미 등록된 이메일입니다.'
+          type: 'success',
+          content: '회원가입 완료!'
         });
-      }
-      if (data.message.includes('captcha 오류')) {
-        setIsError(true);
-        messageApi.open({
-          type: 'error',
-          content: 'captcha오류입니다. 다시 시도해주세요.'
-        });
-      }
+        setTimeout(() => {
+          setIsClicked(false);
+          setIsModalOpen(false);
 
-      router.refresh();
-    } else {
-      router.refresh();
-      router.replace(path);
-      messageApi.open({
-        type: 'success',
-        content: '회원가입 완료!'
+          setTimeout(() => {
+            router.refresh();
+          }, 200);
+        }, 1000);
+      }
+    };
+    if (captchaToken) {
+      signupHandler();
+    }
+  }, [captchaToken]);
+
+  const onSubmitHandler = async () => {
+    if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(emailValue)) {
+      return messageApi.open({
+        type: 'error',
+        content: '올바른 이메일 형식이 아닙니다.',
+        duration: 3
       });
+    } else if (passwordValue !== password2Value) {
+      return messageApi.open({
+        type: 'error',
+        content: '비밀번호가 일치하지 않습니다.',
+        duration: 3
+      });
+    } else if (!/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/.test(passwordValue)) {
+      return messageApi.open({
+        type: 'error',
+        content: '비밀번호는 최소 8자 이상이어야 하며, 최소 하나의 대문자, 소문자, 숫자가 포함되어야 합니다.',
+        duration: 5
+      });
+    } else if (!/^[a-zA-Z가-힣\s0-9]+$/.test(usernameValue)) {
+      return messageApi.open({
+        type: 'error',
+        content: '닉네임은 한글과 알파벳, 숫자 그리고 띄어쓰기가 가능합니다. 특수문자는 허용되지 않습니다.',
+        duration: 5
+      });
+    } else {
+      setIsClicked(true);
+      await captchaRef.current.execute();
     }
   };
 
   return (
     <>
       {contextHolder}
-      <div className="flex justify-center items-center h-full bg-gray-200">
-        <form
-          onSubmit={signupHandler}
-          className="animate-300 w-[calc(100vw-100px)] sm:w-96 flex flex-col gap-3 shadow-lg shadow-gray-300 p-9 items-center bg-slate-50 rounded-md "
-        >
-          <h1>Sign Up Page</h1>
-          <input
-            className="custom_input"
-            type="email"
-            name="email"
-            placeholder="email"
-            onChange={(e) => (emailValue.current = e.target.value)}
-            required
-          />
-          <input
-            className="custom_input"
-            type="password"
-            name="password"
-            placeholder="password"
-            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-            required
-            onChange={(e) => handlePasswordChange(e, setPasswordValue)}
-            autoComplete="new-password"
-          />
-          <input
-            className="custom_input "
-            type="password"
-            name="confirming password"
-            placeholder="confirm password"
-            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-            required
-            onChange={(e) => handlePasswordChange(e, setConfirmingPasswordValue)}
-          />
+      <div className="flex justify-center items-center w-full">
+        <form className="pt-[50px] pb-[70px] w-full h-full relative flex flex-col items-center justify-center">
           <HCaptcha
+            ref={captchaRef}
             sitekey="6c9d3095-7348-4fe3-bf72-1f2b2b7ef34d"
-            // sitekey="10000000-ffff-ffff-ffff-000000000001"
-            onVerify={(token) => {
-              setCaptchaToken(token);
-            }}
+            size="invisible"
+            onVerify={(token) => setCaptchaToken(token)}
+            onError={() => captchaRef.current.reset()}
+            onExpire={() => captchaRef.current.reset()}
           />
 
-          <SubmitButton
-            inputValue="회원가입하기"
-            loadingMessage="회원가입 요청 중..."
-            shouldDisable={!isPasswordMatch}
-            isError={isError}
-            setIsError={setIsError}
-            passwordError={passwordError}
-          />
-          <div className="flex gap-2 items-center">
-            <p className="text-sm">이미 아이디가 있으신가요?</p>
-            <button type="button" onClick={() => router.replace('?sign-in=true')} className="hover:underline">
-              로그인하기
-            </button>
+          <Logo className="mb-6 lg:hidden" />
+          <Logo className="hidden mb-6 lg:block" width={250} height={100} />
+          <h1 className="text-neutral-800 text-lg font-bold mb-4 lg:text-2xl ">회원가입</h1>
+          <div className="w-full flex flex-col items-center gap-4">
+            <div className="w-[80%] max-w-[350px] flex flex-col gap-2">
+              <label htmlFor="email" className="text-neutral-800 font-semibold">
+                이메일
+              </label>
+              <Input
+                name="email"
+                className="py-2 sm:py-2.5"
+                type="email"
+                placeholder="이메일을 입력하세요"
+                autoComplete="on"
+                value={emailValue}
+                onChange={(e) => setEmailValue(e.target.value)}
+                required
+              />
+            </div>
+
+            <div className="w-[80%] max-w-[350px] flex flex-col gap-2">
+              <label htmlFor="password" className="text-neutral-800 font-semibold">
+                비밀번호
+              </label>
+              <Input.Password
+                className="py-2 sm:py-2.5"
+                placeholder="비밀번호를 입력하세요"
+                onChange={(e) => setPasswordValue(e.target.value)}
+                autoComplete="new-password"
+                value={passwordValue}
+                maxLength={21}
+                minLength={8}
+                required
+              />
+            </div>
+
+            <div className="w-[80%] max-w-[350px] flex flex-col gap-2">
+              <label htmlFor="password" className="text-neutral-800 font-semibold">
+                비밀번호 확인
+              </label>
+              <Input.Password
+                className="py-2 sm:py-2.5"
+                placeholder="비밀번호를 입력하세요"
+                onChange={(e) => setPassword2Value(e.target.value)}
+                value={password2Value}
+                autoComplete="new-password"
+                maxLength={21}
+                minLength={8}
+                required
+              />
+            </div>
+
+            <div className="w-[80%] max-w-[350px] flex flex-col gap-2">
+              <label htmlFor="password" className="text-neutral-800 font-semibold">
+                닉네임 <span className="text-sm font-normal text-gray-500">(2자리 이상 15자리 이하)</span>
+              </label>
+              <Input
+                className="py-2 sm:py-2.5"
+                placeholder="사용하실 닉네임을 입력하세요"
+                onChange={(e) => setUsernameValue(e.target.value)}
+                value={usernameValue}
+                maxLength={15}
+                minLength={2}
+                required
+              />
+            </div>
+            <Button
+              className="mt-3 w-[80%] max-w-[350px] h-full p-2.5 bg-GreyScaleBlack"
+              disabled={shouldDisable}
+              loading={isClicked}
+              type="primary"
+              onClick={onSubmitHandler}
+            >
+              회원가입
+            </Button>
           </div>
-          <SocialButtons />
         </form>
       </div>
     </>
   );
-}
+};
 
 export default SignUp;
