@@ -5,10 +5,11 @@ import HiddenServerFunctions from './_auth/HiddenServerFunctions';
 import ModalControlCentre from './_auth/ModalControlCentre';
 import Logo from '@/styles/svg/Logo';
 import Nav from './Nav';
-import authApi from '@/util/supabase/auth/authApi';
+import authApi from '@/util/supabase/auth/auth';
 
 const Header = async () => {
-  const { userId } = await authApi('userId');
+  const { userId } = await authApi.get('userId');
+
   return (
     <>
       <header className="flex justify-center h-[70px] border-b border-[#ebebeb] bg-white">

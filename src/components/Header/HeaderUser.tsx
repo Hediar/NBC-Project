@@ -1,9 +1,9 @@
 import Image from 'next/image';
 import HeaderMenuButton from './HeaderMenuButton';
-import authApi from '@/util/supabase/auth/authApi';
+import authApi from '@/util/supabase/auth/auth';
 
 const HeaderUser = async () => {
-  const { userData } = await authApi('userData');
+  const { userData } = await authApi.get('userData');
 
   return (
     <div className="sm:flex-row-reverse flex gap-2 sm:gap-5 items-center mr-4">
@@ -19,8 +19,6 @@ const HeaderUser = async () => {
               height={32}
               objectFit="cover"
               objectPosition="center"
-              placeholder="blur"
-              blurDataURL={'/anonymous-avatar-icon.png'}
             />
           </div>
           <h3 className="hidden lg:block body1_regular_suit">{userData.username}</h3>

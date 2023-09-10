@@ -10,10 +10,9 @@ export const dynamic = 'force-dynamic';
 
 interface Props {
   username: string;
-  watched_movies: string[];
 }
 
-const RecommendationList = async ({ username, watched_movies }: Props) => {
+const RecommendationList = async ({ username }: Props) => {
   const supabase = createServerComponentClient({ cookies });
   //
   // 유저가 좋아한 영화를 배열화 하기

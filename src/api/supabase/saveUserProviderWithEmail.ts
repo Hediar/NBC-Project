@@ -1,7 +1,7 @@
 import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
 import { cache } from 'react';
 import { cookies } from 'next/headers';
-import getSession from '../../util/supabase/auth/authApi';
+import getSession from '../../util/supabase/auth/auth';
 
 const saveUserProviderWithEmail = cache(async () => {
   try {

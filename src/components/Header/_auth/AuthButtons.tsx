@@ -1,11 +1,11 @@
 import SignOutButton from './SignOutButton';
 import Link from 'next/link';
-import getSession from '@/util/supabase/auth/authApi';
+import authApi from '@/util/supabase/auth/auth';
 
 export const dynamic = 'force-dynamic';
 
 const AuthButton = async () => {
-  const { session } = await getSession('session');
+  const { session } = await authApi.get('session');
 
   if (session) {
     return (
