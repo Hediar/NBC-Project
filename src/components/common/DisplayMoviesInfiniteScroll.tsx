@@ -6,6 +6,7 @@
 import { useEffect, useState } from 'react';
 import MovieItem from './MovieItem';
 import { debounce } from 'lodash';
+import SkeletonMovieItem from './skeleton/MovieItem';
 
 interface Props {
   movieData: MovieFetchResult;
@@ -17,7 +18,8 @@ interface Props {
 const DisplayInfiniteMovies = ({ movieData, discoverMoviesWithGenreId, genreIdArray, ignoredList }: Props) => {
   const [dataToProject, setDataToProject] = useState<MovieData[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [isOnHover, setIsOnHover] = useState<boolean>(false);
+  const [isDataLoaded, setIsDataLoaded] = useState<boolean>(false);
+  const [content, setContent] = useState<JSX.Element[]>([]);
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
     const container = e.target as HTMLDivElement;
@@ -41,9 +43,15 @@ const DisplayInfiniteMovies = ({ movieData, discoverMoviesWithGenreId, genreIdAr
     getMoreData(currentPage);
   }, [currentPage]);
 
-  if (!dataToProject) return <>nothing</>;
+  useEffect(() => {
+    if (dataToProject.length === 0) {
+      setContent([1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((el, index) => <SkeletonMovieItem key={index} />));
+    } else if (dataToProject.length > 0) {
+      setContent(dataToProject.map((movie) => <MovieItem key={movie.id} movie={movie} />));
+    }
+  }, [dataToProject]);
 
-  const content = dataToProject.map((movie) => <MovieItem key={movie.id} movie={movie} />);
+  if (!dataToProject) return <>nothing</>;
 
   return (
     <div className="overflow-x-scroll overflow-y-hidden " onScroll={debounce(handleScroll, 300)}>

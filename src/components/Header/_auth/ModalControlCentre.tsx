@@ -1,19 +1,13 @@
 'use client';
 
-import ForgotPasswordModal from '@/components/Auth/ForgotPassword/ForgotPasswordModal';
 import OverlaidModal from '@/components/common/OverlaidModal';
 import { useSearchParams } from 'next/navigation';
 import RateMovie from '@/components/common/RateMovie';
 import EditDiscussionCommentModal from '@/components/Discussion/detail/comment/EditCommentInput';
 import NewSignnIn from '@/components/Auth/SignIn/NewSignnIn';
-import NewSignUp from '@/components/Auth/SignUp/NewSignUp';
 
 const ModalControlCentre = ({ userId }: { userId: string }) => {
   const searchParams = useSearchParams();
-  const isSignInTrue = !!searchParams.get('sign-in');
-
-  const isForgotPasswordTrue = !!searchParams.get('forgot-password');
-  const isSignUpTrue = !!searchParams.get('sign-up');
 
   const isRateTrue = !!searchParams.get('rate-movie');
   const title = decodeURIComponent(searchParams.get('title') as string);
@@ -28,9 +22,6 @@ const ModalControlCentre = ({ userId }: { userId: string }) => {
 
   return (
     <>
-      {isForgotPasswordTrue && <ForgotPasswordModal />}
-      {isSignInTrue && <NewSignnIn />}
-      {isSignUpTrue && <NewSignUp />}
       {userId && isRateTrue ? (
         <OverlaidModal scrollTo={movieId}>
           <RateMovie title={title} movieId={movieId} />

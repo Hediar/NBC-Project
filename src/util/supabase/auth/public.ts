@@ -12,16 +12,22 @@ type FindParamsType = {
 };
 
 interface GetReturnType {
-  username: Database['public']['Tables']['users']['Row']['username'] | null;
-  id: Database['public']['Tables']['users']['Row']['id'] | null;
-  likedMovies: string[] | null;
+  username?: Database['public']['Tables']['users']['Row']['username'] | null;
+  id?: Database['public']['Tables']['users']['Row']['id'] | null;
+  likedMovies?: string[] | null;
 }
 
 const publicApi = {
   get: cache(
     async <T extends GetTargetType>(
       target: T,
-      params: T extends 'id to username' ? { id: string } : T extends 'username to id' ? { username: string } : never
+      params: T extends 'id to username'
+        ? { id: string }
+        : T extends 'username to id'
+        ? { username: string }
+        : T extends 'liked movies'
+        ? { id: string }
+        : never
     ): Promise<GetReturnType> => {
       const supabase = createClientComponentClient<Database>();
       const id = 'id' in params ? params.id : '';
@@ -31,47 +37,47 @@ const publicApi = {
         try {
           const { data, error } = await supabase.from('users').select('username').eq('id', id).single();
           if (error) {
-            return { username: null } as GetReturnType;
+            return { username: null };
           } else {
-            return { username: data.username } as GetReturnType;
+            return { username: data.username };
           }
         } catch (error) {
-          return { username: null } as GetReturnType;
+          return { username: null };
         }
       };
 
-      const usernameToId = async (username: string): Promise<GetReturnType> => {
+      const usernameToId = async (username: string): Promise<Pick<GetReturnType, 'id'>> => {
         try {
           const { data, error } = await supabase.from('users').select('id').eq('username', username).single();
           if (error) {
-            return { id: null } as GetReturnType;
+            return { id: null };
           } else {
-            return { id: data.id } as GetReturnType;
+            return { id: data.id };
           }
         } catch (error) {
-          return { id: null } as GetReturnType;
+          return { id: null };
         }
       };
 
-      const likedMovies = async (id: string): Promise<GetReturnType> => {
+      const likedMovies = async (id: string): Promise<Pick<GetReturnType, 'likedMovies'>> => {
         try {
           const { data, error } = await supabase.from('movielikes').select('movieid').contains('user_id', [id]);
           if (error) {
-            return { likedMovies: null } as GetReturnType;
+            return { likedMovies: null };
           } else {
             const likedMovies = data!.map((el) => el.movieid);
-            return { likedMovies } as GetReturnType;
+            return { likedMovies };
           }
         } catch (error) {
-          return { likedMovies: null } as GetReturnType;
+          return { likedMovies: null };
         }
       };
 
-      if (target === 'id to username') return (await userIdToUsername(id)) as GetReturnType;
-      if (target === 'username to id') return (await usernameToId(username)) as GetReturnType;
-      if (target === 'liked movies') return (await likedMovies(id)) as GetReturnType;
+      if (target === 'id to username') return await userIdToUsername(id);
+      if (target === 'username to id') return await usernameToId(username);
+      if (target === 'liked movies') return await likedMovies(id);
 
-      return { username: null } as GetReturnType;
+      return { username: null } as Partial<GetReturnType>;
     }
   ),
   find: cache(async (target: FindTargetType, { database, select, eq: { key, value }, single }: FindParamsType) => {

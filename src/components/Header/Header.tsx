@@ -16,7 +16,8 @@ const Header = async () => {
         <div className="w-11/12 xl:w-10/12 h-full flex items-center justify-between animate-300">
           <div className="flex items-center gap-[60px]">
             <Link href={'/'} className="text-white text-xl font-bold tracking-wider">
-              <Logo />
+              <Logo className="hidden sm:block" />
+              <Logo className="sm:hidden" width={120} />
             </Link>
             <Nav />
           </div>

@@ -13,15 +13,17 @@ const SignOutButton = () => {
 
   const clickHandler = async () => {
     await axios.post('/auth/sign-out');
-    router.refresh();
+    messageApi.open({ content: '로그아웃 되었습니다.', type: 'success' });
     deleteUserInfo();
-    messageApi.open({ content: '로그아웃 되었습니다.', type: 'success', duration: 1000 });
+    setTimeout(() => {
+      router.refresh();
+    }, 1500);
   };
 
   return (
     <>
       {messageContent}
-      <div className="body1_regular_suit flex items-center">
+      <div className="body1_regular_suit text-sm sm:text-base  flex items-center">
         <button onClick={clickHandler} className="hidden lg:block hover:font-semibold animate-200">
           로그아웃
         </button>

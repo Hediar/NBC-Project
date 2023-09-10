@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 @import url('https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/variable/woff2/SUIT-Variable.css');
 
 :root {
@@ -51,10 +52,10 @@ body {
 }
 
 .custom_input {
-  @apply px-3 py-2.5 bg-white border shadow-sm border-slate-300 placeholder-slate-400  disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 focus:outline-none focus:border-gray-500 focus:ring-gray-500 block w-full rounded-md sm:text-sm focus:ring-1 focus:invalid:border-gray-400 focus:invalid:ring-red-400 invalid:border-pink-500 invalid:text-pink-600 disabled:shadow-none transform ease-in-out duration-150;
+  @apply px-3 py-2.5 bg-white border shadow-sm border-slate-300 placeholder-slate-400  disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1 focus:invalid:border-gray-400 focus:invalid:ring-red-400 invalid:border-pink-500 invalid:text-pink-600 disabled:shadow-none animate-200;
 }
 .outer_div {
-  @apply flex justify-between w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm transform ease-in-out duration-150;
+  @apply flex justify-between w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm animate-200;
 }
 .outer_div_on_focus {
   @apply outline-none border-sky-500 ring-1 ring-sky-500;
@@ -71,7 +72,7 @@ body {
 }
 
 .custom_button {
-  @apply w-full bg-sky-500 hover:bg-sky-700 px-5 py-2.5 text-sm leading-5 rounded-md font-semibold text-white cursor-pointer disabled:bg-sky-800 transform ease-in-out duration-150;
+  @apply w-full bg-gray-600 hover:bg-gray-700 px-5 py-2.5 text-sm leading-5 rounded-md font-semibold text-white cursor-pointer disabled:bg-sky-800 transform ease-in-out duration-150;
 }
 
 .button-white {
@@ -157,11 +158,7 @@ select:-webkit-autofill:focus {
   line-height: 22px; /* 137.5% */
 }
 .body1_regular_suit {
-  font-family: var(--base-font);
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 22px; /* 137.5% */
+  @apply text-base font-normal leading-[22px];
 }
 .body2_suit {
   font-family: var(--base-font);

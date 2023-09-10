@@ -49,7 +49,7 @@ const RecommendationPage = async ({ params }: Props) => {
           </div>
         </div>
       ) : (
-        <RecommendationList username={pageUsername} />
+        <RecommendationList username={pageUsername} likedMovies={likedMovies} />
       )}
     </>
   );

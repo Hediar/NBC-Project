@@ -5,99 +5,122 @@ import supabase from '@/supabase/config';
 import HCaptcha from '@hcaptcha/react-hcaptcha';
 import axios from 'axios';
 import { usePathname, useRouter } from 'next/navigation';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { message } from 'antd';
-import Modal from '@/components/common/Modal';
+import useToggleForgotPassword from '@/store/forgotPasswordToggle';
 
 const ForgotPasswordModal = () => {
   const router = useRouter();
   const path = usePathname() ?? '';
-  const emailRef = useRef<string>('');
+  const [emailValue, setEmailValue] = useState<string>('');
+  const captchaRef = useRef<any>(null);
   const [captchaToken, setCaptchaToken] = useState<any>();
   const [isClicked, setIsClicked] = useState<boolean>(false);
   const [messageApi, contextHolder] = message.useMessage();
+  const { setIsForgotPasswordOpen } = useToggleForgotPassword();
 
-  const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
-    setIsClicked(true);
-    e.preventDefault();
-    const emailValue = emailRef.current;
-    const { data: providerData } = await supabase.from('users').select('provider').eq('email', emailValue).single();
-    if (providerData?.provider === 'google' || providerData?.provider === 'kakao') {
-      setIsClicked(false);
-      messageApi.open({
-        type: 'info',
-        content: '소셜 로그인 사용자는 비밀번호 찾기를 사용할 수 없습니다.\n소셜 로그인은 비밀번호를 사용하지 않습니다.'
-      });
-      router.replace('?sign-in=true');
-      return;
-    }
+  useEffect(() => {
+    const executeSubmit = async () => {
+      setIsClicked(true);
 
-    const {
-      data: { data, error }
-    } = await axios.post('/auth/profile/forgot-password', { email: emailValue, captchaToken });
-
-    if (error) {
-      // console.log(error);
-      if (error.message.includes('captcha')) {
+      const { data: providerData } = await supabase.from('users').select('provider').eq('email', emailValue).single();
+      if (providerData?.provider === 'google' || providerData?.provider === 'kakao') {
         setIsClicked(false);
         messageApi.open({
           type: 'error',
-          content: 'Captcha오류입니다. 다시 시도해주세요.'
+          content:
+            '소셜 로그인 사용자는 비밀번호 찾기를 사용할 수 없습니다.\n소셜 로그인은 비밀번호를 사용하지 않습니다.'
         });
+        setTimeout(() => {
+          router.replace('?sign-in=true');
+        }, 3000);
         return;
       }
-      if (error.message.includes('requires an email')) {
+
+      const {
+        data: { data, error }
+      } = await axios.post('/auth/profile/forgot-password', { email: emailValue, captchaToken });
+
+      if (error) {
+        console.log(error);
+        if (error.message.includes('captcha')) {
+          setIsClicked(false);
+          messageApi.open({
+            type: 'error',
+            content: 'Captcha오류입니다. 다시 시도해주세요.'
+          });
+          return;
+        }
+        if (error.message.includes('requires an email')) {
+          setIsClicked(false);
+          messageApi.open({
+            type: 'warning',
+            content: '이메일을 작성해주세요.'
+          });
+          return;
+        }
         setIsClicked(false);
         messageApi.open({
-          type: 'warning',
-          content: '이메일을 작성해주세요.'
+          type: 'error',
+          content: '에러가 발생했습니다. 다시 시도해주세요.'
         });
         return;
+      } else {
+        messageApi.open({
+          type: 'success',
+          content: '해당 계정의 수신함을 확인해주세요.'
+        });
+        setIsClicked(false);
+        setTimeout(() => {
+          setIsForgotPasswordOpen(false);
+        }, 2000);
       }
-      setIsClicked(false);
-      messageApi.open({
+    };
+    if (captchaToken) {
+      executeSubmit();
+    }
+  }, [captchaToken]);
+
+  const submitHandler = async () => {
+    if (emailValue === '') {
+      return messageApi.open({
         type: 'error',
-        content: '에러가 발생했습니다. 다시 시도해주세요.'
+        content: '이메일을 입력해주세요.'
       });
-      return;
     } else {
-      messageApi.open({
-        type: 'info',
-        content: '해당 계정의 수신함을 확인해주세요.'
-      });
-      setIsClicked(false);
-      router.replace(path);
+      captchaRef.current.execute();
     }
   };
 
   const cancelHandler = () => {
-    router.replace('?sign-in=true');
+    setIsForgotPasswordOpen(false);
   };
+
   return (
     <>
       {contextHolder}
-      <Modal>
-        <form className="p-8 flex flex-col gap-4 bg-white rounded-md" onSubmit={(e) => submitHandler(e)}>
-          <h1 className="text-center font-semibold text-xl">비밀번호 찾기</h1>
-          <p className="text-center text-sm">등록하신 이메일을 입력해주세요.</p>
-          <input className="custom_input" type="email" onChange={(e) => (emailRef.current = e.target.value)} />
-          <HCaptcha
-            sitekey="6c9d3095-7348-4fe3-bf72-1f2b2b7ef34d"
-            onVerify={(token) => {
-              setCaptchaToken(token);
-            }}
-          />
-          <div className="flex gap-2 w-full">
-            <button type="submit" className="custom_button">
-              확인
-            </button>
-            <button onClick={cancelHandler} type="button" className="custom_button_cancel">
-              취소
-            </button>
-          </div>
-          {isClicked && <LoadingSpinner />}
-        </form>
-      </Modal>
+      <div className="p-8 flex flex-col gap-4 bg-white rounded-md">
+        <h1 className="text-center font-semibold text-xl">비밀번호 찾기</h1>
+        <p className="text-center text-base">등록하신 이메일을 입력해주세요.</p>
+        <input className="custom_input" type="email" onChange={(e) => setEmailValue(e.target.value)} />
+        <HCaptcha
+          ref={captchaRef}
+          sitekey="6c9d3095-7348-4fe3-bf72-1f2b2b7ef34d"
+          size="invisible"
+          onVerify={(token) => setCaptchaToken(token)}
+          onError={() => captchaRef.current.reset()}
+          onExpire={() => captchaRef.current.reset()}
+        />
+        <div className="flex gap-2 w-full">
+          <button onClick={submitHandler} className="custom_button">
+            확인
+          </button>
+          <button onClick={cancelHandler} type="button" className="custom_button_cancel">
+            취소
+          </button>
+        </div>
+        {isClicked && <LoadingSpinner />}
+      </div>
     </>
   );
 };
