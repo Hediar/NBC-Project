@@ -1,6 +1,7 @@
 'use client';
 
 import { getReviews, countRowsNumber } from '@/api/review';
+import MyReviewListLoading from '@/components/ReviewList/MyReviewListLoading';
 import ReviewItem from '@/components/ReviewList/ReviewItem';
 import ReviewListEmpty from '@/components/ReviewList/ReviewListEmpty';
 import useUserInfoStore from '@/store/saveCurrentUserData';
@@ -12,6 +13,7 @@ import { useEffect, useState } from 'react';
 const MyReviewPage = () => {
   const { userInfo } = useUserInfoStore();
 
+  const [isLoading, setIsLoading] = useState(true);
   const [reviews, setReviews] = useState<ReviewsTable[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [hasNextPage, setHasNextPage] = useState<boolean>();
@@ -20,12 +22,11 @@ const MyReviewPage = () => {
   const REVIEWS_LIMIT = 3;
 
   const handleClick = () => {
-    console.log('hasNextPage : ', hasNextPage);
     hasNextPage && setCurrentPage(currentPage + 1);
   };
 
   useEffect(() => {
-    const getMoreData = async (page: number) => {
+    const fetchMore = async (page: number) => {
       if (totalRowsNumber === null) {
         const fetchRowNumberData = await countRowsNumber('reviews');
         setTotalRowsNumber(fetchRowNumberData!);
@@ -34,17 +35,20 @@ const MyReviewPage = () => {
 
       const { data, error } = await getReviews({ userid: userInfo.id!, page, limit: REVIEWS_LIMIT });
       setReviews([...reviews, ...(data as ReviewsTable[])]);
+      setIsLoading(false);
 
       totalRowsNumber !== null && totalRowsNumber! > reviews.length + REVIEWS_LIMIT * 3 + 1
         ? setHasNextPage(true)
         : setHasNextPage(false);
     };
-    if (userInfo.id) getMoreData(currentPage);
+
+    // setIsLoading(true);
+    if (userInfo.id) fetchMore(currentPage);
   }, [userInfo, totalRowsNumber, currentPage]);
 
-  if (!reviews.length) return <ReviewListEmpty />;
+  if (isLoading) return <MyReviewListLoading />;
+  if (reviews.length == 1) return <ReviewListEmpty />;
 
-  console.log('❤hasNextPage -> ', hasNextPage);
   return (
     <div className="mb-[300px]">
       <ul className="grid grid-cols-1 lg:grid-cols-2 gap-5 mt-2">

@@ -8,18 +8,21 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import UtilButtons from '../ReviewForm/UtilButtons';
 import PosterBaseColor from '../Review/list/PosterBaseColor';
+import { MyReviewItemLoading } from './MyReviewListLoading';
 
 interface Props {
   review: ReviewsTable;
 }
 
 const ReviewItem = ({ review }: Props) => {
+  const [isLoading, setIsLoading] = useState(true);
   const [movieData, setMovieData] = useState<MovieData>();
 
   useEffect(() => {
     const getMovieData = async () => {
       const fetchData = await getMovieDetail(review.movieid);
       setMovieData(fetchData);
+      setIsLoading(false);
     };
     getMovieData();
   }, []);
@@ -28,7 +31,8 @@ const ReviewItem = ({ review }: Props) => {
   const reviewKeywords = review.keyword!.map((item: string) => JSON.parse(item));
   const baseImgUrl = process.env.NEXT_PUBLIC_TMDB_BASE_IMAGE_URL;
 
-  if (!movieData) return;
+  if (isLoading) return <MyReviewItemLoading />;
+
   return (
     <li className="min-h-[384px]">
       <Link

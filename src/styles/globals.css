@@ -309,3 +309,15 @@ select:-webkit-autofill:focus {
 .search-form button {
   @apply absolute top-1/2 right-5 -translate-y-1/2;
 }
+
+.skeleton-ui {
+  @apply animate-pulse;
+}
+
+.skeleton-ui .skeleton-img {
+  @apply bg-gray-300 rounded-lg dark:bg-gray-600;
+}
+
+.skeleton-ui .skeleton-text {
+  @apply min-w-[6em] max-w-full bg-gray-200 h-[22px] rounded-lg dark:bg-gray-700;
+}

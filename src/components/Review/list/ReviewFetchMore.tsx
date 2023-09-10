@@ -1,7 +1,7 @@
 'use client';
 
 import { fetchReviewData } from '@/api/review';
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { UseInfiniteQueryResult, useInfiniteQuery } from '@tanstack/react-query';
 import React, { useEffect, useState } from 'react';
 import ReviewItem from './ReviewItem';
 
@@ -12,6 +12,8 @@ type Props = {
 };
 
 const ReviewFetchMore = ({ searchParams }: Props) => {
+  const [mounted, setMounted] = useState<boolean>(false);
+
   const {
     data: reviews,
     hasNextPage,
@@ -30,13 +32,18 @@ const ReviewFetchMore = ({ searchParams }: Props) => {
     select: (data: any) => {
       return data.pages.map((pageData: any) => pageData.results).flat();
     },
-    // refetchOnMount: true,
+    suspense: true,
+    refetchOnMount: true,
     retry: 0
   }) as any;
 
   useEffect(() => {
-    remove();
-    refetch().then();
+    if (mounted) {
+      remove();
+      refetch().then();
+    } else {
+      setMounted(true);
+    }
   }, [searchParams]);
 
   const fetchMore = () => {
@@ -44,11 +51,10 @@ const ReviewFetchMore = ({ searchParams }: Props) => {
     fetchNextPage();
   };
 
-  console.log('reviews => ', reviews);
   return (
     <div>
       <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-5">
-        {reviews?.map((review: any, i: number) => (
+        {reviews.map((review: any, i: number) => (
           <ReviewItem key={i} review={review} />
         ))}
       </ul>

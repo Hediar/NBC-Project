@@ -63,11 +63,11 @@ const UtilButtons = ({ postId, userId, className }: Props) => {
   const items: MenuProps['items'] = [
     {
       key: '1',
-      label: <Link href={`/review/edit/${postId}`}>수정하기</Link>
+      label: <Link href={`/review/edit/${postId}`}>수정</Link>
     },
     {
       key: '2',
-      label: <button onClick={delButtonHandler}>삭제하기</button>
+      label: <button onClick={delButtonHandler}>삭제</button>
     }
   ];
 
