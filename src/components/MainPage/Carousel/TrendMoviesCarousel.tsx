@@ -38,22 +38,19 @@ const TrendMoviesCarousel: React.FC<PropType> = (props) => {
   }, [emblaApi, onSelect, onInit]);
 
   return (
-    <div className="w-full relative md:mb-5">
-      <div
-        className="overflow-hidden h-[330px] sm:h-[400px] md:h-[460px] lg:h-[665px] xl:h-[500px] 2xl:h-[720px]"
-        ref={emblaRef}
-      >
-        <div className="flex flex-col flex-wrap h-[290px] flex-none ml-8 md:ml-28">
+    <div className="w-full relative rounded-md">
+      <div className="overflow-hidden relative rounded-md" ref={emblaRef}>
+        <div className={`flex flex-col flex-wrap h-[460px] flex-none`}>
           {slides.map((slide, index) => (
-            <div className={'relative mx-1 w-[100%] md:w-[90%] lg:w-[80%] xl:w-[70%] 2xl:w-[65%]'} key={index}>
+            <div className={`w-full sm:w-2/5 h-full relative mx-1`} key={index}>
               {slide}
             </div>
           ))}
         </div>
-        <div className="flex justify-between absolute left-[60px] top-1/2 -translate-y-1/2 bg-transparent cursor-pointer z-10 md:top-[40%] 2xl:top-[50%]">
+        <div className="flex justify-between items-center absolute left-0 top-1/2 -translate-y-1/2 bg-transparent cursor-pointer z-10">
           <PrevButton onClick={scrollPrev} disabled={prevBtnDisabled} />
         </div>
-        <div className="flex justify-between absolute right-[30px] top-1/2 -translate-y-1/2 bg-transparent cursor-pointer z-10 md:top-[40%] 2xl:top-[50%]">
+        <div className="flex justify-between items-center absolute right-0 top-1/2 -translate-y-1/2 bg-transparent cursor-pointer z-10">
           <NextButton onClick={scrollNext} disabled={nextBtnDisabled} />
         </div>
       </div>
