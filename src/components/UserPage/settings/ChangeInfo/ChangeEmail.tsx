@@ -2,7 +2,7 @@
 
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { User } from '@supabase/supabase-js';
-import { Popconfirm, message } from 'antd';
+import { Button, Input, Popconfirm, message } from 'antd';
 import { useRouter } from 'next/navigation';
 import React, { useRef, useState } from 'react';
 
@@ -25,8 +25,8 @@ const ChangeEmail = ({ user }: Props) => {
     return (
       <>
         <div className="w-full items-center sm:items-start flex flex-col gap-6">
-          <h1 className="w-full px-4 font-bold">이메일 변경</h1>
-          <p className="w-full px-4 text-neutral-800 text-sm">
+          <h1 className="sm:text-start text-center w-full sm:px-4 font-bold">이메일 변경</h1>
+          <p className="w-full px-4 text-neutral-800 text-sm sm:text-base">
             소셜계정으로 로그인하신 회원님은 이메일을 변경할 수 없습니다.
           </p>
         </div>
@@ -77,17 +77,16 @@ const ChangeEmail = ({ user }: Props) => {
     <>
       {contextHolder}
       <div className="w-full items-center sm:items-start flex flex-col gap-6 ">
-        <h1 className="font-bold w-full px-4">이메일 변경</h1>
-        <input
+        <h1 className="sm:text-start text-center font-bold w-full px-4">이메일 변경</h1>
+        <Input
           placeholder="이메일 주소"
           type="email"
-          className="custom_input"
-          style={{ width: '350px' }}
+          className="py-2.5 max-w-[350px]"
           value={emailValue}
           onChange={(e) => setEmailValue(e.target.value)}
           disabled={isDisabled}
         />
-        <div>
+        <div className="w-full flex flex-col items-center max-w-[350px]">
           {isDisabled && (
             <Popconfirm
               title="이메일 변경"
@@ -97,9 +96,9 @@ const ChangeEmail = ({ user }: Props) => {
               okType="default"
               cancelText="취소"
             >
-              <div className="w-[350px] sm:w-auto">
-                <button className="w-full button-dark">수정하기</button>
-              </div>
+              <Button type="primary" className="w-full max-w-[350px] sm:w-full button-dark py-2 h-full">
+                수정하기
+              </Button>
             </Popconfirm>
           )}
           {!isDisabled && (
@@ -111,9 +110,9 @@ const ChangeEmail = ({ user }: Props) => {
               okType="default"
               cancelText="취소"
             >
-              <div className="w-[350px] sm:w-auto">
-                <button className="w-full button-dark">변경하기</button>
-              </div>
+              <Button type="primary" className="w-full max-w-[350px] sm:w-full button-dark py-2 h-full">
+                변경하기
+              </Button>
             </Popconfirm>
           )}
         </div>

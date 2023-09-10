@@ -42,8 +42,8 @@ export default async function Layout({
 
   if (!isPublic && !isOwnPage) {
     return (
-      <div className="w-full bg-white pb-10">
-        <div className="flex flex-col items-center w-full mt-10 h-[calc(100%-54px)] gap-16">
+      <div className="w-full bg-white pb-10 h-full">
+        <div className="flex flex-col items-center w-full mt-10 gap-16 ">
           <h2 className="text-center font-bold text-2xl">{username}님의 영화 찜 목록</h2>
           <p className="text-2xl ">{username}님의 영화 찜 목록이 비공개 상태입니다.</p>
         </div>
@@ -51,5 +51,5 @@ export default async function Layout({
     );
   }
 
-  return <div className="w-full bg-white pb-10">{children}</div>;
+  return <div className="w-full bg-white pb-10 h-full">{children}</div>;
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import NewSignnIn from '@/components/Auth/SignIn/NewSignnIn';
+import SignIn from '@/components/Auth/SignIn/SignIn';
 import { Button, Modal } from 'antd';
 import React, { useState } from 'react';
 
@@ -31,7 +31,7 @@ const SignInButton = () => {
           setIsModalOpen(false);
         }}
       >
-        <NewSignnIn />
+        <SignIn />
       </Modal>
     </>
   );

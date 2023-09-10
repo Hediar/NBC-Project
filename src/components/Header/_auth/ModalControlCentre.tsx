@@ -4,7 +4,7 @@ import OverlaidModal from '@/components/common/OverlaidModal';
 import { useSearchParams } from 'next/navigation';
 import RateMovie from '@/components/common/RateMovie';
 import EditDiscussionCommentModal from '@/components/Discussion/detail/comment/EditCommentInput';
-import NewSignnIn from '@/components/Auth/SignIn/NewSignnIn';
+import NewSignnIn from '@/components/Auth/SignIn/SignIn';
 
 const ModalControlCentre = ({ userId }: { userId: string }) => {
   const searchParams = useSearchParams();

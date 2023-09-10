@@ -10,7 +10,7 @@ type Props = {
 const RecordsContainerBig = ({ bgColor, borderColor, title, children }: Props) => {
   return (
     <div
-      className={`w-full xl:w-1/3 2xl:w-1/3 py-6 rounded-xl shadow1 relative flex justify-center items-center animate-300`}
+      className={`w-full xl:w-1/3 2xl:w-1/3 py-6 rounded-xl shadow1 relative flex justify-center items-center animate-300 `}
       style={{ backgroundColor: `${bgColor}`, border: `1px solid ${borderColor}` }}
     >
       <h2 className="absolute left-6 top-6 subtitle2_suit ">{title}</h2>
