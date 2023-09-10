@@ -2,10 +2,8 @@
 
 import { User } from '@supabase/supabase-js';
 import React, { useRef, useState } from 'react';
-import { Popconfirm, message } from 'antd';
+import { Button, Input, Popconfirm, message } from 'antd';
 import axios from 'axios';
-import SVG_HidePassword from '@/styles/svg/SVG_HidePassword';
-import SVG_ShowPassword from '@/styles/svg/SVG_ShowPassword';
 
 interface Props {
   user: User;
@@ -29,7 +27,7 @@ const ChangePassword = ({ user }: Props) => {
       <>
         <div className="w-full items-center sm:items-start flex flex-col gap-6">
           <h1 className="font-bold w-full px-4">비밀번호 변경</h1>
-          <p className="w-full px-4 text-neutral-800 text-sm">
+          <p className=" w-full px-4 text-neutral-800 sm:text-base text-sm">
             소셜계정으로 로그인하신 회원님은 비밀번호를 변경할 수 없습니다.
           </p>
         </div>
@@ -100,49 +98,30 @@ const ChangePassword = ({ user }: Props) => {
     <>
       {contextHolder}
       <div className="w-full items-center sm:items-start flex flex-col gap-6">
-        <h1 className="font-bold w-full px-4">비밀번호 변경</h1>
+        <h1 className="text-center sm:text-start font-bold w-full px-4">비밀번호 변경</h1>
         {hasEmailSent && (
-          <div className="flex flex-col gap-4">
-            <input
+          <div className="w-full flex flex-col items-center sm:items-start gap-4">
+            <Input
               minLength={6}
               disabled={disableInput}
               placeholder="6자리 코드"
               type="text"
-              className="custom_input"
-              style={{ width: '350px' }}
+              className="w-full py-2.5 max-w-[350px]"
               value={nonceValue}
               onChange={(e) => setNonceValue(e.target.value)}
             />
-            <div ref={outerDivRef} className="outer_div" style={{ width: '350px' }}>
-              <input
-                disabled={disableInput}
-                className="inner_input"
-                type={showPassword ? 'text' : 'password'}
-                name="password"
-                placeholder="비밀번호"
-                style={{ width: '350px' }}
-                value={passwordValue}
-                onChange={(e) => handlePasswordChange(e)}
-                onFocus={() => {
-                  outerDivRef.current?.classList.add('outer_div_on_focus');
-                }}
-                onBlur={() => {
-                  outerDivRef.current?.classList.remove('outer_div_on_focus');
-                }}
-                onInvalid={() => {
-                  outerDivRef.current?.classList.add('outer_div_on_invalid');
-                }}
-                pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                required
-              />
-              <button type="button" onClick={() => setShowPassword(!showPassword)}>
-                {showPassword ? (
-                  <SVG_HidePassword className="w-6 h-6 opacity-30 hover:opacity-80 transform ease-in-out duration-200" />
-                ) : (
-                  <SVG_ShowPassword className="w-6 h-6 opacity-30 hover:opacity-80 transform ease-in-out duration-200" />
-                )}
-              </button>
-            </div>
+
+            <Input.Password
+              disabled={disableInput}
+              className="w-full py-2.5 max-w-[350px]"
+              type={showPassword ? 'text' : 'password'}
+              name="password"
+              placeholder="비밀번호"
+              value={passwordValue}
+              onChange={(e) => handlePasswordChange(e)}
+              pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+              required
+            />
           </div>
         )}
         {/* sends code */}
@@ -155,9 +134,9 @@ const ChangePassword = ({ user }: Props) => {
             okType="default"
             cancelText="취소"
           >
-            <div className="w-[350px] sm:w-auto">
-              <button className="w-full button-dark">메일 인증하기</button>
-            </div>
+            <Button type="primary" className="w-full max-w-[350px] sm:w-full button-dark py-2.5 h-full">
+              메일 인증하기
+            </Button>
           </Popconfirm>
         )}
         {/* 2: got the code */}
@@ -170,11 +149,9 @@ const ChangePassword = ({ user }: Props) => {
             okType="danger"
             cancelText="취소"
           >
-            <div className="w-[350px] sm:w-auto">
-              <button disabled={disableInput} className="w-full button-dark ">
-                변경하기
-              </button>
-            </div>
+            <Button type="primary" className="w-full max-w-[350px] sm:w-full button-dark py-2 h-full">
+              변경하기
+            </Button>
           </Popconfirm>
         )}
       </div>

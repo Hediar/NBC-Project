@@ -50,7 +50,7 @@ export default async function Layout({
         <UserPageTabs username={decodedUsername} userMatch={userMatch} />
         <HiddenUserPageTabs username={decodedUsername} userMatch={userMatch} />
       </aside>
-      <section className="overflow-hidden w-full change sm:w-5/6 md:w-9/12 lg:w-10/12  flex flex-col items-center">
+      <section className="overflow-scroll h-full w-full change sm:w-5/6 md:w-9/12 lg:w-10/12 flex flex-col items-center">
         {children}
       </section>
     </main>

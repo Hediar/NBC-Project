@@ -4,7 +4,7 @@ import { getMovieGenresById, getMovieGenresByName, sortByMostFrequent } from '@/
 import DisplayInfiniteMovies from '@/components/common/DisplayMoviesInfiniteScroll';
 import discoverMoviesWithGenreId from '@/api/discoverMoviesWithGenreId';
 import authApi from '@/util/supabase/auth/auth';
-import NewSignnIn from '@/components/Auth/SignIn/NewSignnIn';
+import NewSignnIn from '@/components/Auth/SignIn/SignIn';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 
 export const dynamic = 'force-dynamic';

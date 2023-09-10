@@ -5,7 +5,7 @@
 import SVG_Google from '@/styles/svg/Google_SVG';
 import SVG_Kakao from '@/styles/svg/Kakao_SVG';
 import Logo from '@/styles/svg/Logo';
-import { Button, Modal } from 'antd';
+import { Button, Divider, Modal } from 'antd';
 import React, { useState } from 'react';
 import SignUp from './SignUp';
 
@@ -34,7 +34,9 @@ const NewSignUp = () => {
           </div>
           <div className="w-[80%] flex gap-2 justify-center items-center mb-10">
             <div className="w-[30%] h-px bg-gray-200"></div>
-            <p className="px-4 text-neutral-800 text-base font-normal">또는</p>
+            <Divider type="horizontal" orientation="center" className="px-4 text-neutral-800 text-base font-normal">
+              또는
+            </Divider>
             <div className="w-[30%] h-px bg-gray-200"></div>
           </div>
           <div className="flex flex-col w-[80%] gap-3">

@@ -3,6 +3,7 @@
 import React from 'react';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
+import trimArrayToLength from '@/util/tripArrayToLength';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -26,12 +27,17 @@ type Props = {
 };
 
 const NumberOfGenresGraph = ({ genreNames, quantities }: Props) => {
+  const clonedGenreNames = structuredClone(genreNames);
+  const clonedQuantities = structuredClone(quantities);
+  trimArrayToLength(clonedGenreNames, 5);
+  trimArrayToLength(clonedQuantities, 5);
+
   const data = {
-    labels: genreNames,
+    labels: clonedGenreNames,
     datasets: [
       {
         label: '편 (개)',
-        data: quantities,
+        data: clonedQuantities,
         backgroundColor: [
           'rgba(255, 99, 132, 0.5)',
           'rgba(111, 165, 252, 0.5)',
@@ -61,7 +67,7 @@ const NumberOfGenresGraph = ({ genreNames, quantities }: Props) => {
     ]
   };
 
-  return <Doughnut data={data} options={options} />;
+  return <Doughnut className="px-2" data={data} options={options} />;
 };
 
 export default NumberOfGenresGraph;
