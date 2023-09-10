@@ -1,12 +1,13 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import Link from 'next/link';
 import Image from 'next/image';
 import ReviewLikes from '../ReviewLikes';
 import { Edit, StarFill } from '@/styles/icons/Icons24';
 import UtilButtons from '@/components/ReviewForm/UtilButtons';
+import PosterBaseColor from './PosterBaseColor';
 
 type Props = {
   review: any;
@@ -38,8 +39,10 @@ const ReviewItem = ({ review }: Props) => {
           </div>
         </div>
 
-        <div className="h-24 px-[40px] pt-[18px] bg-gradient-to-l from-orange-200 to-violet-200">
-          <div className="flex gap-3 items-center">
+        <div className="relative h-24 px-[40px] pt-[18px] bg-gradient-to-l from-orange-200 to-violet-200">
+          <PosterBaseColor poster_path={review.movieDetail.backdrop_path} />
+
+          <div className="relative flex gap-3 items-center">
             <div className="flex-none w-[60px] h-[90px]">
               <Image
                 className="object-cover w-full rounded"

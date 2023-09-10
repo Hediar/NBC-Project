@@ -7,6 +7,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import UtilButtons from '../ReviewForm/UtilButtons';
+import PosterBaseColor from '../Review/list/PosterBaseColor';
 
 interface Props {
   review: ReviewsTable;
@@ -30,9 +31,14 @@ const ReviewItem = ({ review }: Props) => {
   if (!movieData) return;
   return (
     <li className="min-h-[384px]">
-      <Link href={`/review/${review.reviewid}`} className="overflow-hidden flex flex-col relative w-full h-full p-5 pb-4 rounded-2xl shadow sm:p-10 sm:pb-8">
-        <div className='absolute top-0 left-0 w-full h-[90px] px-[40px] pt-[18px] bg-gradient-to-l from-orange-200 to-violet-200'></div>
-        <div className='flex flex-col items-center gap-5 relative z-[1] sm:flex-row sm:items-start'>
+      <Link
+        href={`/review/${review.reviewid}`}
+        className="overflow-hidden flex flex-col relative w-full h-full p-5 pb-4 rounded-2xl shadow sm:p-10 sm:pb-8"
+      >
+        <div className="absolute top-0 left-0 w-full h-[90px] px-[40px] pt-[18px] bg-gradient-to-l from-orange-200 to-violet-200">
+          <PosterBaseColor poster_path={movieData!.backdrop_path} />
+        </div>
+        <div className="flex flex-col items-center gap-5 relative z-[1] sm:flex-row sm:items-start">
           <div className="overflow-hidden w-40 max-h-60 rounded-xl">
             <Image
               className="object-cover w-full"
@@ -44,15 +50,11 @@ const ReviewItem = ({ review }: Props) => {
             />
           </div>
 
-          <div className='w-full text-center sm:text-left'>
-            <div className="body3_suit text-neutral-800 ">
-              {dayjs(review.created_at).format('YYYY.MM.DD')}
-            </div>
-            <strong className="body1_bold_suit mt-1">
-              {movieData!.title}
-            </strong>
+          <div className="w-full text-center sm:text-left">
+            <div className="body3_suit text-neutral-800 ">{dayjs(review.created_at).format('YYYY.MM.DD')}</div>
+            <strong className="body1_bold_suit mt-1">{movieData!.title}</strong>
             <div className="flex justify-center gap-1 mt-[22px] sm:justify-start">
-              <StarFill className="w-4" /> 
+              <StarFill className="w-4" />
               <span className="text-neutral-800 text-[13px] font-normal">{review.rating}</span>
             </div>
             <p className="body1_regular_suit mt-3">{review.review}</p>
@@ -79,7 +81,7 @@ const ReviewItem = ({ review }: Props) => {
           ))}
         </ul>
 
-        <UtilButtons postId={review.reviewid!} userId={review.userid} className='absolute top-5 right-5' />
+        <UtilButtons postId={review.reviewid!} userId={review.userid} className="absolute top-5 right-5" />
       </Link>
     </li>
   );

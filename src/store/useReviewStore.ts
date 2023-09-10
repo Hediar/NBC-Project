@@ -19,9 +19,7 @@ export const useReviewStore = create(
 
 interface ReturnMovieTypes {
   searchMovieId: number | string | null;
-  // searchMovieInfo: MovieData | null;
   saveSearchMovieId: (newMovieId?: number | string | null) => void;
-  // saveSearchMovieInfo: (newMovieInfo?: MovieData | null) => void;
 }
 export const useReviewMovieStore = create<ReturnMovieTypes>((set) => {
   return {
