@@ -41,7 +41,7 @@ const RecommendationPage = async ({ params }: Props) => {
   return (
     <>
       <UserPageMostWatchedGenres username={pageUsername} />
-      {!likedMovies ? (
+      {likedMovies!.length === 0 ? (
         <div className="flex flex-col items-center w-full mt-10  h-full">
           <h2 className="text-center font-bold text-2xl">{pageUsername}님을 위한 추천 리스트!</h2>
           <div className="flex gap-y-10 justify-center sm:gap-10 md:gap-5 gap-5 items-center h-full">
@@ -49,7 +49,7 @@ const RecommendationPage = async ({ params }: Props) => {
           </div>
         </div>
       ) : (
-        <RecommendationList username={pageUsername} likedMovies={likedMovies} />
+        <RecommendationList username={pageUsername} likedMovies={likedMovies!} />
       )}
     </>
   );
