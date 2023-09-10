@@ -17,6 +17,21 @@ body {
   font-family: var(--base-font);
 }
 /* DESIGN SYSTEM */
+
+.centered {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.centered-absolute {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .full_button {
   @apply w-full flex rounded-3xl border border-gray-300 bg-white h-[70px] cursor-pointer justify-center items-center active:bg-[#DDDDDD] active:text-white;
 }

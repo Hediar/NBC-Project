@@ -1,20 +1,32 @@
 'use client';
 
 import NewSignUp from '@/components/Auth/SignUp/NewSignUp';
-import { Modal } from 'antd';
-import { useState } from 'react';
+import useToggleSignUpModal from '@/store/toggleSignUpModal';
+import { Button, Modal } from 'antd';
 
 const SignUpButton = () => {
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const { isModalOpen, setIsModalOpen } = useToggleSignUpModal();
+
   return (
     <>
-      <button
-        onClick={() => setIsModalOpen(!isModalOpen)}
+      <Button
+        type="text"
+        loading={isModalOpen}
+        onClick={() => {
+          setIsModalOpen(true);
+        }}
         className="text-sm sm:text-base pt-[2px] hover:font-semibold animate-200"
       >
         회원가입
-      </button>
-      <Modal centered open={isModalOpen} footer={null} onCancel={() => setIsModalOpen(false)}>
+      </Button>
+      <Modal
+        centered
+        open={isModalOpen}
+        footer={null}
+        onCancel={() => {
+          setIsModalOpen(false);
+        }}
+      >
         <NewSignUp />
       </Modal>
     </>

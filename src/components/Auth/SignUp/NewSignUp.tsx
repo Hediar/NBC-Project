@@ -1,198 +1,57 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @next/next/no-img-element */
+
 'use client';
 
-import LoadingSpinner from '@/components/common/LoadingSpinner';
+import SVG_Google from '@/styles/svg/Google_SVG';
+import SVG_Kakao from '@/styles/svg/Kakao_SVG';
 import Logo from '@/styles/svg/Logo';
-import HCaptcha from '@hcaptcha/react-hcaptcha';
-import { Button, Input, Modal, message } from 'antd';
-import { useRouter } from 'next/navigation';
-import React, { useEffect, useRef, useState } from 'react';
-import SocialButtons from '../SocialButtons';
+import { Button, Modal } from 'antd';
+import React, { useState } from 'react';
+import SignUp from './SignUp';
 
 const NewSignUp = () => {
-  const router = useRouter();
-
-  const [emailValue, setEmailValue] = useState<string>('');
-  const [passwordValue, setPasswordValue] = useState<string>('');
-  const [password2Value, setPassword2Value] = useState<string>('');
-  const [usernameValue, setUsernameValue] = useState<string>('');
-  const [captchaToken, setCaptchaToken] = useState<any>();
-  const [messageApi, contextHolder] = message.useMessage();
-  const captchaRef = useRef<any>(null);
-
-  const [shouldDisable, setShouldDisable] = useState<boolean>(true);
-  const [isClicked, setIsClicked] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (passwordValue.length < 6) {
-      setShouldDisable(true);
-    }
-    if (emailValue.length > 6 && passwordValue.length > 6) {
-      setShouldDisable(false);
-    }
-  }, [emailValue, passwordValue]);
-
-  useEffect(() => {
-    const signupHandler = async () => {
-      const formData = new FormData();
-      formData.append('email', emailValue);
-      formData.append('password', passwordValue);
-      formData.append('username', usernameValue);
-      formData.append('captchaToken', captchaToken);
-
-      const res = await fetch('/auth/sign-up', { method: 'post', body: formData });
-      const data = await res.json();
-      if (data.error) {
-        if (data.message === 'User already registered.') {
-          messageApi.open({
-            type: 'warning',
-            content: '이미 등록된 이메일입니다.'
-          });
-        }
-        if (data.message.includes('captcha 오류')) {
-          messageApi.open({
-            type: 'error',
-            content: 'captcha오류입니다. 다시 시도해주세요.'
-          });
-        }
-
-        router.refresh();
-      } else {
-        router.refresh();
-        messageApi.open({
-          type: 'success',
-          content: '회원가입 완료!'
-        });
-      }
-    };
-    if (captchaToken) {
-      signupHandler();
-    }
-  }, [captchaToken]);
-
-  const onSubmitHandler = async () => {
-    if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(emailValue)) {
-      return messageApi.open({
-        type: 'error',
-        content: '올바른 이메일 형식이 아닙니다.',
-        duration: 3
-      });
-    } else if (passwordValue !== password2Value) {
-      return messageApi.open({
-        type: 'error',
-        content: '비밀번호가 일치하지 않습니다.',
-        duration: 3
-      });
-    } else if (!/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/.test(passwordValue)) {
-      return messageApi.open({
-        type: 'error',
-        content: '비밀번호는 최소 8자 이상이어야 하며, 최소 하나의 대문자, 소문자, 숫자가 포함되어야 합니다.',
-        duration: 5
-      });
-    } else if (!/^[a-zA-Z가-힣\s0-9]+$/.test(usernameValue)) {
-      return messageApi.open({
-        type: 'error',
-        content: '닉네임은 한글과 알파벳, 숫자 그리고 띄어쓰기가 가능합니다. 특수문자는 허용되지 않습니다.',
-        duration: 5
-      });
-    } else {
-      await captchaRef.current.execute();
-    }
-  };
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   return (
     <>
-      {contextHolder}
-      {isClicked && <LoadingSpinner />}
       <div className="flex justify-center items-center w-full">
-        <form className="pt-[50px] pb-[70px] w-full h-full relative flex flex-col items-center justify-center">
-          <HCaptcha
-            ref={captchaRef}
-            sitekey="6c9d3095-7348-4fe3-bf72-1f2b2b7ef34d"
-            size="invisible"
-            onVerify={(token) => setCaptchaToken(token)}
-            onError={() => captchaRef.current.reset()}
-            onExpire={() => captchaRef.current.reset()}
-          />
-
-          <Logo className="mb-6 lg:hidden" />
-          <Logo className="hidden mb-6 lg:block" width={250} height={100} />
-          <h1 className="text-neutral-800 text-lg font-bold mb-4 lg:text-2xl ">회원가입</h1>
-          <div className="w-full flex flex-col items-center gap-4">
-            <div className="w-[80%] max-w-[350px] flex flex-col gap-2">
-              <label htmlFor="email" className="text-neutral-800 font-semibold">
-                이메일
-              </label>
-              <Input
-                name="email"
-                className="py-2 sm:py-2.5"
-                type="email"
-                placeholder="이메일을 입력하세요"
-                autoComplete="on"
-                value={emailValue}
-                onChange={(e) => setEmailValue(e.target.value)}
-                required
-              />
-            </div>
-
-            <div className="w-[80%] max-w-[350px] flex flex-col gap-2">
-              <label htmlFor="password" className="text-neutral-800 font-semibold">
-                비밀번호
-              </label>
-              <Input.Password
-                className="py-2 sm:py-2.5"
-                placeholder="비밀번호를 입력하세요"
-                onChange={(e) => setPasswordValue(e.target.value)}
-                autoComplete="new-password"
-                value={passwordValue}
-                maxLength={21}
-                minLength={8}
-                required
-              />
-            </div>
-
-            <div className="w-[80%] max-w-[350px] flex flex-col gap-2">
-              <label htmlFor="password" className="text-neutral-800 font-semibold">
-                비밀번호 확인
-              </label>
-              <Input.Password
-                className="py-2 sm:py-2.5"
-                placeholder="비밀번호를 입력하세요"
-                onChange={(e) => setPassword2Value(e.target.value)}
-                value={password2Value}
-                autoComplete="new-password"
-                maxLength={21}
-                minLength={8}
-                required
-              />
-            </div>
-
-            <div className="w-[80%] max-w-[350px] flex flex-col gap-2">
-              <label htmlFor="password" className="text-neutral-800 font-semibold">
-                닉네임 <span className="text-sm font-normal text-gray-500">(2자리 이상 15자리 이하)</span>
-              </label>
-              <Input
-                className="py-2 sm:py-2.5"
-                placeholder="사용하실 닉네임을 입력하세요"
-                onChange={(e) => setUsernameValue(e.target.value)}
-                value={usernameValue}
-                maxLength={15}
-                minLength={2}
-                required
-              />
-            </div>
+        <div className="py-[40px]  w-full h-full relative flex flex-col items-center justify-center">
+          <div className="mb-6">
+            <Logo className="lg:hidden" />
+            <Logo className="hidden lg:block" width={250} height={100} />
+          </div>
+          <div className="mb-24">
+            <h1 className="text-neutral-800 text-lg font-bold  lg:text-2xl ">반가워요👋</h1>
+          </div>
+          <div className="w-[80%] mb-20">
             <Button
-              className="mt-3 w-[80%] max-w-[350px] h-full p-2.5 bg-GreyScaleBlack"
-              disabled={shouldDisable}
-              loading={false}
               type="primary"
-              onClick={onSubmitHandler}
+              className="text-base sm:text-lg bg-GreyScaleBlack w-full h-full py-2.5"
+              onClick={() => setIsModalOpen(true)}
             >
-              회원가입
+              이메일로 가입하기
             </Button>
           </div>
-        </form>
+          <div className="w-[80%] flex gap-2 justify-center items-center mb-10">
+            <div className="w-[30%] h-px bg-gray-200"></div>
+            <p className="px-4 text-neutral-800 text-base font-normal">또는</p>
+            <div className="w-[30%] h-px bg-gray-200"></div>
+          </div>
+          <div className="flex flex-col w-[80%] gap-3">
+            <Button className="text-sm sm:text-base bg-[#f9e000] h-full py-2 flex justify-center items-center gap-4 border-0 animate-300 hover:scale-[1.02]">
+              <SVG_Kakao />
+              <span>카카오로 가입하기</span>
+            </Button>
+            <Button className="text-sm sm:text-base border-0 ring-1 ring-[#dddddd] h-full py-2 flex justify-center items-center gap-4 animate-300 hover:scale-[1.02]">
+              <SVG_Google />
+              <span>구글로 가입하기</span>
+            </Button>
+          </div>
+        </div>
       </div>
+      <Modal centered open={isModalOpen} footer={null} onCancel={() => setIsModalOpen(false)}>
+        <SignUp />
+      </Modal>
     </>
   );
 };

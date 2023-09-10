@@ -3,7 +3,7 @@
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 import Logo from '@/styles/svg/Logo';
 import HCaptcha from '@hcaptcha/react-hcaptcha';
-import { Checkbox, Input, Modal, message } from 'antd';
+import { Button, Checkbox, Input, Modal, message } from 'antd';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
 import ForgotPasswordModal from '../ForgotPassword/ForgotPasswordModal';
@@ -59,20 +59,23 @@ const NewSignnIn = () => {
 
       if (error) {
         if (message.includes('captcha 오류')) {
-          messageApi.open({
+          setIsClicked(false);
+          return messageApi.open({
             type: 'error',
             content: 'captcha오류입니다. 다시 시도해주세요.'
           });
           // setMessage('captcha오류입니다. 다시 시도해주세요.');
         }
         if (message.includes('틀립니다')) {
-          messageApi.open({
+          setIsClicked(false);
+          return messageApi.open({
             type: 'error',
             content: '이메일이나 비밀번호가 틀립니다.'
           });
         }
         if (message.includes('에러가')) {
-          messageApi.open({
+          setIsClicked(false);
+          return messageApi.open({
             type: 'error',
             content: '에러가 발생했습니다. 다시 시도해주세요.'
           });
@@ -86,8 +89,11 @@ const NewSignnIn = () => {
           content: '로그인 완료!'
         });
         setTimeout(() => {
-          router.refresh();
-        }, 1500);
+          setIsClicked(false);
+          setTimeout(() => {
+            router.refresh();
+          }, 200);
+        }, 1000);
       }
     };
     if (captchaToken) {
@@ -95,8 +101,8 @@ const NewSignnIn = () => {
     }
   }, [captchaToken]);
 
-  const onSubmitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const onSubmitHandler = async () => {
+    setIsClicked(true);
     if (!/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/.test(passwordValue)) {
       return messageApi.open({
         type: 'error',
@@ -111,12 +117,7 @@ const NewSignnIn = () => {
   return (
     <>
       {contextHolder}
-      {isClicked && <LoadingSpinner />}
-
-      <form
-        onSubmit={onSubmitHandler}
-        className="py-[50px] w-full h-full relative flex flex-col items-center justify-center"
-      >
+      <form className="py-[50px] w-full h-full relative flex flex-col items-center justify-center">
         {!isForgotPasswordOpen && (
           <HCaptcha
             ref={captchaRef}
@@ -158,8 +159,12 @@ const NewSignnIn = () => {
           </div>
         </div>
 
-        <div className="w-[80%] max-w-[350px] flex justify-between text-sm gap-2 mb-4">
-          <button type="button" onClick={() => setIsForgotPasswordOpen(true)} className="text-sm">
+        <div className="w-[80%] max-w-[350px] flex flex-row-reverse sm:flex-row justify-between text-sm gap-2 mb-4">
+          <button
+            type="button"
+            onClick={() => setIsForgotPasswordOpen(true)}
+            className="text-sm sm:text-base hover:underline"
+          >
             비밀번호 찾기
           </button>
           <Modal
@@ -172,18 +177,26 @@ const NewSignnIn = () => {
           >
             <ForgotPasswordModal />
           </Modal>
-          <div className="flex gap-1 items-center">
-            <Checkbox onChange={(e) => setCheckboxValue(e.target.checked)}>이메일 저장</Checkbox>
+          <div className="flex sm:gap-1 items-center">
+            <Checkbox className="text-sm sm:text-base" onChange={(e) => setCheckboxValue(e.target.checked)}>
+              이메일 저장
+            </Checkbox>
           </div>
         </div>
 
-        <button className="mb-5 w-[80%] max-w-[350px] custom_button" type="submit" disabled={shouldDisable}>
+        <Button
+          className="w-[80%] max-w-[350px] h-full p-2.5 bg-gray-600 mb-5 hover:bg-gray-800"
+          type="primary"
+          disabled={shouldDisable}
+          loading={isClicked}
+          onClick={onSubmitHandler}
+        >
           로그인
-        </button>
+        </Button>
 
         <div className="w-[80%] max-w-[350px] flex gap-2 justify-center items-center mb-5">
           <div className="w-[25%] h-px bg-gray-200"></div>
-          <span className="px-3 text-neutral-800 text-sm">간편 로그인</span>
+          <span className="sm:px-3 text-neutral-800 text-sm">간편 로그인</span>
           <div className="w-[25%] h-px bg-gray-200"></div>
         </div>
         <SocialButtons />
