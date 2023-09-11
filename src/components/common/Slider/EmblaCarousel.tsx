@@ -3,19 +3,31 @@ import React, { ReactNode, useCallback, useEffect, useState } from 'react';
 import useEmblaCarousel, { EmblaOptionsType } from 'embla-carousel-react';
 import { NextButton, PrevButton } from './ArrowsDotsButtons';
 
-type PropType = {
+interface PropType {
   options?: EmblaOptionsType;
   slides: ReactNode[];
   slideWidth: string;
   slideHeight: string;
   buttonPosition: string;
   isSlideLength: boolean;
-};
+  buttonPositionStyleL?: string;
+  buttonPositionStyleR?: string;
+}
 
-const carouselButton = `w-8 h-8 flex justify-between items-center absolute top-1/2 -translate-y-1/2 bg-transparent cursor-pointer z-10`;
+const carouselButton = `flex justify-between items-center absolute top-1/2 -translate-y-1/2 bg-transparent cursor-pointer z-10`;
 
 export const EmblaCarousel = (props: PropType) => {
-  const { options, slides, slideHeight, slideWidth, buttonPosition, isSlideLength } = props; // props로 가져온 옵션과 슬라이드 리스트
+  const {
+    options,
+    slides,
+    slideHeight,
+    slideWidth,
+    buttonPosition,
+    isSlideLength,
+    buttonPositionStyleL,
+    buttonPositionStyleR
+  } = props; // props로 가져온 옵션과 슬라이드 리스트
+
   const [prevBtnDisabled, setPrevBtnDisabled] = useState(true);
   const [nextBtnDisabled, setNextBtnDisabled] = useState(true);
   const [emblaRef, embla] = useEmblaCarousel(options); // 슬라이더 구현에 필요한 요소들을 useEmblaCarousel 에서 가져온다.
@@ -24,11 +36,7 @@ export const EmblaCarousel = (props: PropType) => {
   const scrollPrev = useCallback(() => embla && embla.scrollPrev(), [embla]);
   const scrollNext = useCallback(() => embla && embla.scrollNext(), [embla]);
   // 이 코드는 구현할 때 사용하지 않았다. 하지만 나중에 혹시 쓰일 수 있을 것 같아서 남겨뒀다.
-  const scrollTo = useCallback((index: number) => embla && embla.scrollTo(index), [embla]);
 
-  const onInit = useCallback(() => {
-    if (!embla) return;
-  }, []);
   // 현재 선택된 슬라이더의 순서(인덱스)를 저장을 위한 함수
   const onSelect = useCallback(() => {
     if (!embla) return;
@@ -40,11 +48,10 @@ export const EmblaCarousel = (props: PropType) => {
 
   useEffect(() => {
     if (!embla) return;
-    onInit();
     onSelect();
 
     embla.on('select', onSelect);
-  }, [embla, onInit, onSelect]);
+  }, [embla, onSelect]);
 
   return (
     <div className="w-full relative rounded-md">
@@ -68,10 +75,10 @@ export const EmblaCarousel = (props: PropType) => {
 
         {buttonPosition === 'center' && (
           <>
-            <div className={`${carouselButton} left-10`}>
+            <div className={`${carouselButton} left-10 ${buttonPositionStyleL}`}>
               <PrevButton onClick={scrollPrev} disabled={prevBtnDisabled} />
             </div>
-            <div className={`${carouselButton} right-10`}>
+            <div className={`${carouselButton} right-10 ${buttonPositionStyleR}`}>
               <NextButton onClick={scrollNext} disabled={nextBtnDisabled} />
             </div>
           </>

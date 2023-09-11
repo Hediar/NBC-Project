@@ -10,9 +10,9 @@ const HotTopics = async () => {
   return (
     <>
       <div className="md:mx-[190px] py-[100px]">
-        <div className="flex justify-between items-end mt-[100px] mb-[120px]">
-          <h1 className="h3_suit mx-auto md:text-6xl leading-[72px]">🔥지금 핫한 토픽</h1>
-          <Link href={'/discussion/list'} className="flex">
+        <div className="flex flex-col sm:flex-wrap justify-between items-end mt-[100px] mb-[120px]">
+          <h1 className="h3_suit mx-auto xl:text-6xl leading-[72px]">🔥지금 핫한 토픽</h1>
+          <Link href={'/discussion/list'} className="flex p-5 sm:p-0">
             더보기 <ArrowRight2 />
           </Link>
         </div>

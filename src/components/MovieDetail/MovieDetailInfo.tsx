@@ -19,25 +19,28 @@ const MovieDetailInfo = async ({ movieId }: Props) => {
 
   return (
     <div>
-      <div className="w-full h-[400px] lg:h-[500px] sm:text-white relative">
-        <div className="bg-gray-800 bg-opacity-30 rounded-xl py-1 px-1 absolute top-10 right-[11%] flex flex-col gap-[6px] items-center">
+      <div className="w-full h-[400px] sm:text-white relative">
+        <div className="bg-gray-800 bg-opacity-30 rounded-xl py-1 px-1 absolute top-5 sm:top-10 right-[11%] flex flex-col gap-[6px] items-center">
           <WatchLaterButton movieId={movieData.id} />
           <MovieLikes movieid={movieData.id} />
           <AddIgnoreMovieButton movieid={movieData.id} />
         </div>
-        <div className="absolute w-full h-[400px] lg:h-[500px] -z-50 left-0 overflow-hidden">
-          <Image
-            src={`${baseImgUrl}w1920_and_h1080_bestv2${movieData.backdrop_path}`}
-            alt="Image"
-            width={1920}
-            height={1080}
-            className="w-full mt-[-10%]"
-            priority={true}
-          />
+        <div className="absolute w-full h-[400px] -z-50 left-0 overflow-hidden ">
+          <div className="relative">
+            <Image
+              src={`${baseImgUrl}w1920_and_h1080_bestv2${movieData.backdrop_path}`}
+              alt="Image"
+              width={1920}
+              height={1080}
+              className="w-full mt-[-5%]"
+              priority={true}
+            />
+            <div className="w-full h-full left-0 top-0 absolute bg-gradient-to-b from-black to-black opacity-70" />
+          </div>
 
-          <div id="detail-cont" className="absolute w-[80%] left-[10%] bottom-0 mb-20">
-            <h1 className="font-bold text-[2rem] mb-2">{movieData.title}</h1>
-            <div className="text-xl">
+          <div id="detail-cont" className="absolute w-[80%] left-[10%] -bottom-12 mb-20 sm:bottom-0">
+            <h1 className="h3_suit mb-2">{movieData.title}</h1>
+            <div className="text-xl font-bold leading-normal">
               <div className="flex items-center">
                 <span>{movieData.release_date.slice(0, 4)}</span>
                 <span style={{ fontSize: '0.5px' }}>●</span>
@@ -61,16 +64,19 @@ const MovieDetailInfo = async ({ movieId }: Props) => {
             </div>
           </div>
           {watchProviders ? (
-            <div id="providers-cont" className="absolute top-32 sm:top-auto sm:bottom-10 right-[10%] flex gap-3 pb-2">
+            <div
+              id="providers-cont"
+              className="absolute top-32 sm:top-auto sm:bottom-10 right-[10%] flex gap-3 pb-2 caption_suit text-white"
+            >
               {watchProviders?.rent && (
                 <div id="provider-rent" className="flex flex-col gap-1">
-                  <h5>Rent</h5>
+                  <p>Rent</p>
                   <MovieProviders data={watchProviders.rent} />
                 </div>
               )}
               {watchProviders?.buy && (
                 <div id="provider-buy" className="flex flex-col gap-1">
-                  <h5>Buy</h5>
+                  <p>Buy</p>
                   <MovieProviders data={watchProviders.buy} />
                 </div>
               )}
