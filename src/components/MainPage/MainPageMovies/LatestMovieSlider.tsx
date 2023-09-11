@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import { baseImgUrl } from '@/static/baseImgUrl';
-import LatestMoviesCarousel from '../Carousel/LatestMoviesCarousel';
 import Link from 'next/link';
 import { StarFill } from '@/styles/icons/Icons24';
 import { extractMainColors, findBrightestTwoColors, getColors, lightenColor } from '@/util/findColors';
@@ -47,7 +46,7 @@ const LatestMovieSlider = async ({ photoData }: Props) => {
   return (
     <>
       <div className="hidden xl:block w-full p-5 h-full md:h-[608px] font-thin text-xl my-3 mr-5">
-        <LatestMoviesCarousel
+        <EmblaCarousel
           slides={photoData.map((imageData, idx) => {
             return (
               <div key={idx}>
@@ -102,7 +101,7 @@ const LatestMovieSlider = async ({ photoData }: Props) => {
         />
       </div>
       <div className="w-[320px] h-[657px] font-thin text-xl my-3 xl:hidden ">
-        <LatestMoviesCarousel
+        <EmblaCarousel
           slides={photoData.map((imageData, idx) => {
             return (
               <div key={idx}>
@@ -156,6 +155,8 @@ const LatestMovieSlider = async ({ photoData }: Props) => {
           slideWidth="w-full"
           buttonPosition="center"
           isSlideLength={false}
+          buttonPositionStyleL="left-1"
+          buttonPositionStyleR="right-5"
         />
       </div>
     </>

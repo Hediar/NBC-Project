@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import React from 'react';
 import { baseImgUrl } from '@/static/baseImgUrl';
-import TrendMoviesCarousel from '../Carousel/TrendMoviesCarousel';
 import Link from 'next/link';
 import EmblaCarousel from '@/components/common/Slider/EmblaCarousel';
 
@@ -12,7 +11,7 @@ type Props = {
 const TrendMovieSlider = ({ photoData }: Props) => {
   return (
     <div className="flex justify-center w-full rounded-md my-3">
-      <TrendMoviesCarousel
+      <EmblaCarousel
         slides={photoData.map((imageData, idx) => {
           return (
             <Link href={`/detail/${imageData.id}`} key={idx}>

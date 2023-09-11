@@ -18,7 +18,7 @@ const LatestReviews = async () => {
   return (
     <div className="p-5">
       <div className="flex justify-between items-end">
-        <h1 className="h3_suit md:text-6xl leading-[72px]">🧐최신 리뷰</h1>
+        <h1 className="h3_suit xl:text-6xl leading-[72px]">🧐최신 리뷰</h1>
         <Link href={'/review'} className="flex">
           더보기 <ArrowRight2 />
         </Link>
@@ -54,7 +54,7 @@ const LatestReviews = async () => {
                   <SVGTalkEndPoint className="opacity-20" />
                 </div>
 
-                <div className="truncate w-full py-[10px]">{review.content}</div>
+                <div className="truncate w-full py-[10px]">{review.review}</div>
                 <div className="flex justify-between ">
                   <span className="flex">
                     <HeartLine />
