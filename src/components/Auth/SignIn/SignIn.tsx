@@ -188,7 +188,7 @@ const SignIn = () => {
         </div>
 
         <Button
-          className="w-[80%] max-w-[350px] h-full p-2.5 bg-gray-600 mb-5 hover:bg-gray-800"
+          className="w-[80%] max-w-[350px] h-full p-2.5 bg-gray-600 mb-5  disabled:hover:bg-slate-50"
           type="primary"
           disabled={shouldDisable}
           loading={isClicked}
