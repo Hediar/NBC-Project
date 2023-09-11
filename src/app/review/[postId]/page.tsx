@@ -6,10 +6,8 @@ import Image from 'next/image';
 import React from 'react';
 import dayjs from 'dayjs';
 import { getUserProfile } from '@/api/review';
-import Link from 'next/link';
-import { Edit } from '@/styles/icons/Icons24';
 import ReviewLikes from '@/components/Review/ReviewLikes';
-import { HeartLined } from '@/styles/icons/Icons32';
+import { HeartLined, StarLined } from '@/styles/icons/Icons32';
 
 interface Params {
   postId: string;
@@ -22,7 +20,7 @@ type Props = {
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-const ReviewDetail = async ({ params }: Props) => {
+const ReviewDetailPage = async ({ params }: Props) => {
   const { postId } = params;
 
   const { data: review, error } = await supabase.from('reviews').select('*').eq('reviewid', postId).single();
@@ -120,7 +118,7 @@ const ReviewDetail = async ({ params }: Props) => {
             <StarBox defaultValue={review.rating} readOnly={true} />
           </div>
 
-          <div>{review.content}</div>
+          <pre>{review.content}</pre>
         </div>
 
         <div className="flex justify-center items-center h-16 px-5 ">
@@ -132,4 +130,4 @@ const ReviewDetail = async ({ params }: Props) => {
   );
 };
 
-export default ReviewDetail;
+export default ReviewDetailPage;
