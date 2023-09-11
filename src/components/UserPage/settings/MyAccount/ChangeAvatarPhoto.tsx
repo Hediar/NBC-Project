@@ -85,9 +85,9 @@ const ChangeAvatarPhoto = ({ userData }: Props) => {
   return (
     <>
       {contextHolder}
-      <div className="h-40 w-10/12 md:h-20 rounded-xl bg-white border border-[#888] shadow-sm shadow-gray-400">
-        <div className="h-full px-8 flex gap-4 items-center">
-          <div className="relative w-10 h-10 overflow-visible">
+      <div className="mt-4 sm:mt-0 h-full py-4 sm:py-0 sm:h-40 w-full sm:w-10/12 md:h-20 rounded-xl bg-white border border-[#888] shadow-sm shadow-gray-400">
+        <div className="h-full px-1 sm:px-8 flex justify-center sm:justify-normal flex-col sm:flex-row gap-4 items-center">
+          <div className="relative w-16 h-16 sm:w-10 sm:h-10 overflow-visible ">
             <img
               className="w-full h-full rounded-full shadow-sm shadow-gray-600"
               src={photoURLValue}

@@ -16,11 +16,11 @@ const items: MenuProps['items'] = [
   {
     label: '나의 메뉴',
     key: 'my-menu'
-  },
-  {
-    label: '계정 삭제',
-    key: 'delete-account'
   }
+  // {
+  //   label: '계정 삭제',
+  //   key: 'delete-account'
+  // }
 ];
 
 const UserSettingsTabs = () => {

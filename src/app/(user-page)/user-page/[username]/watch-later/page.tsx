@@ -2,6 +2,7 @@ import { cookies } from 'next/headers';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import getMovieDataWithMovieIds from '@/api/getMovieDataWithMovieIds';
 import MovieItem from '@/components/common/MovieItem';
+import { Space } from 'antd';
 
 export const dynamic = 'force-dynamic';
 
@@ -50,11 +51,13 @@ const ToWatchListPage = async ({ params }: Props) => {
   const movieContents = movieDetails.map((movie) => <MovieItem key={movie.id} movie={movie} />);
 
   return (
-    <div className="flex flex-col items-center w-full mt-10 h-screen">
+    <div className="flex flex-col items-center w-full mt-10">
       <h2 className="text-center font-bold text-2xl py-10 px-4">
         {username}님이 찜한 {getLengthThruErrorCheck()}개의 영화입니다.
       </h2>
-      <div className="w-10/12 flex flex-wrap gap-5 gap-y-10 mt-10 justify-center ">{movieContents}</div>
+      <Space className="px-10 justify-center " size={[24, 48]} wrap>
+        {movieContents}
+      </Space>
     </div>
   );
 };

@@ -4,6 +4,7 @@
 import toggleIsPublicData from '@/api/supabase/toggleIsPublicData';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Switch, message } from 'antd';
+import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
 type Props = {
@@ -14,6 +15,7 @@ type Props = {
 };
 
 const ToggleIsPublic = ({ title, columnName, isPublic, userId }: Props) => {
+  const router = useRouter();
   const [messageApi, contextHolder] = message.useMessage();
 
   const [toggleValue, setToggleValue] = useState<boolean>(isPublic);
@@ -39,6 +41,7 @@ const ToggleIsPublic = ({ title, columnName, isPublic, userId }: Props) => {
 
       if (isSuccess) {
         setIsSuccessCount(isSuccessCount + 1);
+        router.refresh();
       }
     };
     initiateAsyncFunction();
@@ -63,7 +66,7 @@ const ToggleIsPublic = ({ title, columnName, isPublic, userId }: Props) => {
   return (
     <>
       {contextHolder}
-      <div className="w-64 h-12 px-3 py-2 bg-neutral-50 rounded-xl border border-gray-200 justify-between items-center gap-5 inline-flex">
+      <div className="w-full sm:w-64 h-12 px-3 py-2 bg-neutral-50 rounded-xl border border-gray-200 justify-between items-center gap-5 inline-flex">
         <p className="text-neutral-800 text-sm">{title}</p>
         <Switch checked={toggleValue} onChange={OnChangeHandler} />
       </div>

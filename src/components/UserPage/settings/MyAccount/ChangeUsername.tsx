@@ -1,5 +1,5 @@
 import useUserInfoStore from '@/store/saveCurrentUserData';
-import { Input, Popconfirm, message } from 'antd';
+import { Button, Input, Popconfirm, message } from 'antd';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import React, { ChangeEvent, useState } from 'react';
@@ -60,8 +60,8 @@ const ChangeUsername = ({ userData }: Props) => {
     router.replace(`${process.env.NEXT_PUBLIC_BASE_URL}/user-page/${usernameInputValue}/settings?my-account=true`);
   };
   return (
-    <div className="flex gap-4">
-      <p className="text-neutral-800 text-xl font-bold leading-normal">{username}</p>
+    <div className=" w-[90%] flex flex-col sm:flex-row gap-2 sm:gap-4">
+      <p className="text-center sm:text-start text-neutral-800 text-xl font-bold leading-normal">{username}</p>
       <Popconfirm
         title="수정할 닉네임을 적어주세요."
         description={
@@ -78,9 +78,12 @@ const ChangeUsername = ({ userData }: Props) => {
         okType="default"
         cancelText="취소"
       >
-        <button className=" h-[30px] px-3 py-1 bg-zinc-600 rounded-lg border border-zinc-600 gap-1.5 cursor-pointer text-white text-[14px] ">
+        <Button
+          type="primary"
+          className=" h-[30px] px-3 py-1 bg-zinc-600 rounded-lg border border-zinc-600 gap-1.5 cursor-pointer text-white text-[14px] "
+        >
           수정
-        </button>
+        </Button>
       </Popconfirm>
     </div>
   );

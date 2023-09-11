@@ -162,7 +162,7 @@ export const searchTMDB = async (query: string, searchType: string) => {
 };
 
 // 콘텐츠 페이지
-export const contentPageGetDataSearch = async (query: string, searchType: string, pageParam: number = 1) => {
+export const getMovieListDataSearch = async (query: string, searchType: string, pageParam: number = 1) => {
   const searchRes = await fetch(
     `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}search/${searchType}?query=${query}&include_adult=false&language=ko-KR&page=${pageParam}`,
     options
@@ -172,40 +172,75 @@ export const contentPageGetDataSearch = async (query: string, searchType: string
   return searchData;
 };
 
-// export const contentPageGetDataSearch = async (query: string, searchType: string, pageParam: number = 1) => {
-//   const itemsPerPage = 18; // 페이지당 아이템 개수
-//   const previousItemsToKeep = (pageParam - 1) * 2; // 이전 페이지에서 유지할 아이템 개수
+// 데이터 18개로 자르기
+export const getTest = async (query: string, searchType: string, pageParam: number = 1) => {
+  // const itemsPerPage = 18; // 페이지당 아이템 개수
+  // const previousItemsToKeep = ((pageParam % 11) - 1) * 2; // 이전 페이지에서 유지할 아이템 개수
 
-//   // 현재 페이지에서 필요한 아이템 개수 계산
-//   const itemsToFetch = itemsPerPage - previousItemsToKeep;
+  // // 페이지당 데이터를 가져오는 요청
+  // const searchRes = await fetch(
+  //   `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}search/${searchType}?query=${query}&include_adult=false&language=ko-KR&page=${pageParam}`,
+  //   options
+  // );
+  // const searchData = await searchRes.json();
 
-//   // 페이지당 데이터를 가져오는 요청
-//   const searchRes = await fetch(
-//     `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}search/${searchType}?query=${query}&include_adult=false&language=ko-KR&page=${pageParam}`,
-//     options
-//   );
-//   const searchData = await searchRes.json();
+  // // 이전 페이지 데이터
+  // let prevData;
+  // if (pageParam !== 1) {
+  //   const getPrevPage = await fetch(
+  //     `${
+  //       process.env.NEXT_PUBLIC_TMDB_BASE_URL
+  //     }search/${searchType}?query=${query}&include_adult=false&language=ko-KR&page=${pageParam - 1}`,
+  //     options
+  //   );
+  //   prevData = await searchRes.json();
+  // }
 
-//   // 이전 페이지에서 유지할 아이템 가져오기
-//   const previousItems = searchData.results.slice(0, previousItemsToKeep);
+  // // 이전 페이지에서 유지할 데이터
+  // const previousItems = prevData.results.slice(19 - previousItemsToKeep, 19);
 
-//   // 현재 페이지에서 필요한 아이템 가져오기
-//   const currentItems = searchData.results.slice(previousItemsToKeep, previousItemsToKeep + itemsToFetch);
+  // // 현재 페이지에서 필요한 데이터 가져오기
+  // const currentItems = searchData.results.slice(0, 17 - previousItemsToKeep);
+  const itemsPerPage = 18; // 페이지당 아이템 개수
+  const itemsToFetch = itemsPerPage; // 현재 페이지에서 필요한 아이템 개수는 고정
 
-//   // 페이지당 아이템 개수만큼만 잘라서 반환
-//   const slicedData = previousItems.concat(currentItems);
+  // 페이지당 데이터를 가져오는 요청
+  const searchRes = await fetch(
+    `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}search/${searchType}?query=${query}&include_adult=false&language=ko-KR&page=${pageParam}`,
+    options
+  );
+  const searchData = await searchRes.json();
 
-//   // total_pages 계산
-//   const total_pages = Math.ceil(searchData.total_results / itemsPerPage);
-//   console.log(slicedData);
-//   return { results: slicedData, total_pages };
-// };
+  // 이전 페이지 데이터 (pageParam가 1인 경우, 이전 페이지 데이터는 빈 배열)
+  let prevData = { results: [] };
+  if (pageParam !== 1) {
+    const getPrevPage = await fetch(
+      `${
+        process.env.NEXT_PUBLIC_TMDB_BASE_URL
+      }search/${searchType}?query=${query}&include_adult=false&language=ko-KR&page=${pageParam - 1}`,
+      options
+    );
+    prevData = await getPrevPage.json();
+  }
+  // 이전 페이지에서 유지할 데이터 개수 계산
+  const previousItemsToKeep = Math.min((pageParam - 1) * 2, prevData.results.length);
 
-export const contentPageGetDataDiscover = async (
-  sortType: string,
-  formattedCurrentDate: string,
-  pageParam: number = 1
-) => {
+  // 현재 페이지에서 필요한 데이터 가져오기
+  const currentItemsToFetch = itemsToFetch - previousItemsToKeep;
+  const currentItems = searchData.results.slice(0, currentItemsToFetch);
+
+  // 이전 페이지에서 유지할 데이터 가져오기
+  const previousItems = prevData.results.slice(prevData.results.length - previousItemsToKeep);
+
+  const slicedData = [...previousItems, ...currentItems];
+
+  // total_pages 계산
+  const total_pages = Math.ceil(searchData.total_results / itemsPerPage);
+
+  return { page: pageParam, results: slicedData, total_pages, total_results: searchData.total_results };
+};
+
+export const getMovieListNotSearch = async (sortType: string, formattedCurrentDate: string, pageParam: number = 1) => {
   const searchRes = await fetch(
     `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}discover/movie?include_adult=false&include_video=false&language=ko-Kr&page=${pageParam}&primary_release_date.lte=${formattedCurrentDate}&region=KR&sort_by=${sortType}.desc&vote_count.gte=100`,
     options
@@ -213,6 +248,48 @@ export const contentPageGetDataDiscover = async (
   const sortData = await searchRes.json();
 
   return sortData;
+};
+
+export const getTestNotSearch = async (sortType: string, formattedCurrentDate: string, pageParam: number = 1) => {
+  const itemsPerPage = 18; // 페이지당 아이템 개수
+  const itemsToFetch = itemsPerPage; // 현재 페이지에서 필요한 아이템 개수는 고정
+
+  // 페이지당 데이터를 가져오는 요청
+  const searchRes = await fetch(
+    `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}discover/movie?include_adult=false&include_video=false&language=ko-Kr&page=${pageParam}&primary_release_date.lte=${formattedCurrentDate}&region=KR&sort_by=${sortType}.desc&vote_count.gte=100`,
+    options
+  );
+  const searchData = await searchRes.json();
+
+  // 이전 페이지 데이터 (pageParam가 1인 경우, 이전 페이지 데이터는 빈 배열)
+  let prevData = { results: [] };
+  if (pageParam !== 1) {
+    const getPrevPage = await fetch(
+      `${
+        process.env.NEXT_PUBLIC_TMDB_BASE_URL
+      }discover/movie?include_adult=false&include_video=false&language=ko-Kr&page=${
+        pageParam - 1
+      }&primary_release_date.lte=${formattedCurrentDate}&region=KR&sort_by=${sortType}.desc&vote_count.gte=100`,
+      options
+    );
+    prevData = await getPrevPage.json();
+  }
+  // 이전 페이지에서 유지할 데이터 개수 계산
+  const previousItemsToKeep = Math.min((pageParam - 1) * 2, prevData.results.length);
+
+  // 현재 페이지에서 필요한 데이터 가져오기
+  const currentItemsToFetch = itemsToFetch - previousItemsToKeep;
+  const currentItems = searchData.results.slice(0, currentItemsToFetch);
+
+  // 이전 페이지에서 유지할 데이터 가져오기
+  const previousItems = prevData.results.slice(prevData.results.length - previousItemsToKeep);
+
+  const slicedData = [...previousItems, ...currentItems];
+
+  // total_pages 계산
+  const total_pages = Math.ceil(searchData.total_results / itemsPerPage);
+
+  return { page: pageParam, results: slicedData, total_pages, total_results: searchData.total_results };
 };
 
 export { tmdbOptions };
