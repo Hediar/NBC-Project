@@ -1,5 +1,6 @@
 import KeyInfomation from '@/components/MovieDetail/main/KeyInfomation';
-import React from 'react';
+import KeyInfomationSuspense from '@/components/MovieDetail/main/KeyInfomationSuspense';
+import React, { Suspense } from 'react';
 
 interface Props {
   params: {
@@ -12,7 +13,9 @@ const MovieDetail = async ({ params }: Props) => {
 
   return (
     <div>
-      <KeyInfomation movieId={movieId} />
+      <Suspense fallback={<KeyInfomationSuspense />}>
+        <KeyInfomation movieId={movieId} />
+      </Suspense>
     </div>
   );
 };

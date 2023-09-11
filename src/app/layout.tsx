@@ -18,6 +18,9 @@ const theme = {
       /* here is your component tokens */
       itemSelectedColor: '#222222',
       horizontalItemSelectedColor: '#222222'
+    },
+    Message: {
+      zIndexPopup: 1070
     }
   },
   token: {

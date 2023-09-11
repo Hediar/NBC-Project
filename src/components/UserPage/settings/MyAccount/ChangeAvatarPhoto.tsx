@@ -3,16 +3,29 @@
 
 import useUserInfoStore from '@/store/saveCurrentUserData';
 import EditPhoto from '@/styles/svg/Edit';
-import { message } from 'antd';
+import { Dropdown, MenuProps, Modal, message } from 'antd';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
 import ChangeUsername from './ChangeUsername';
+import ChooseProfile from './ChooseProfile';
+import useToggleChangeAvatar from '@/store/toggleChangeAvatarModal';
 
 interface Props {
   userData: Database['public']['Tables']['users']['Row'];
 }
 
 const ChangeAvatarPhoto = ({ userData }: Props) => {
+  const items: MenuProps['items'] = [
+    {
+      label: <span>기본 프로필</span>,
+      key: '기본 프로필'
+    },
+    {
+      label: <span>사진</span>,
+      key: '사진'
+    }
+  ];
+
   const avatarUrl = userData.avatar_url!;
   const userId = userData.id!;
 
@@ -24,6 +37,7 @@ const ChangeAvatarPhoto = ({ userData }: Props) => {
   const router = useRouter();
 
   const [messageApi, contextHolder] = message.useMessage();
+  const { isChangeAvatarModalOpen, setIsChangeAvatarModalOpen } = useToggleChangeAvatar();
 
   useEffect(() => {
     if (avatarUrl) {
@@ -82,37 +96,55 @@ const ChangeAvatarPhoto = ({ userData }: Props) => {
     }
   };
 
+  const onClick: MenuProps['onClick'] = ({ key }) => {
+    if (key === '기본 프로필') {
+      setIsChangeAvatarModalOpen(true);
+    } else if (key === '사진') {
+      fileInputRef.current.click();
+    } else {
+      return;
+    }
+  };
+
   return (
     <>
       {contextHolder}
       <div className="mt-4 sm:mt-0 h-full py-4 sm:py-0 sm:h-40 w-full sm:w-10/12 md:h-20 rounded-xl bg-white border border-[#888] shadow-sm shadow-gray-400">
         <div className="h-full px-1 sm:px-8 flex justify-center sm:justify-normal flex-col sm:flex-row gap-4 items-center">
-          <div className="relative w-16 h-16 sm:w-10 sm:h-10 overflow-visible ">
-            <img
-              className="w-full h-full rounded-full shadow-sm shadow-gray-600"
-              src={photoURLValue}
-              alt="avatar"
-              onClick={() => router.push('?my-account=true&upload-photo=true')}
-            />
-            <input
-              ref={fileInputRef}
-              className="hidden"
-              type="file"
-              name="avatar"
-              onChange={(e) => handleFileChange(e)}
-            />
-            <EditPhoto
-              className="p-[5px] bg-white rounded-full absolute -bottom-1 -right-1 cursor-pointer"
-              onClick={() => {
-                fileInputRef.current.click();
-              }}
-              width={25}
-              height={25}
-            />
-          </div>
+          <Dropdown menu={{ items, onClick }} trigger={['click']}>
+            <div className="relative w-16 h-16 sm:w-10 sm:h-10 overflow-visible ">
+              <img
+                className="w-full h-full rounded-full shadow-sm shadow-gray-600 cursor-pointer"
+                src={photoURLValue}
+                alt="avatar"
+                onClick={() => router.push('?my-account=true&upload-photo=true')}
+              />
+              <input
+                ref={fileInputRef}
+                className="hidden"
+                type="file"
+                name="avatar"
+                onChange={(e) => handleFileChange(e)}
+              />
+              <EditPhoto
+                className="p-[5px] bg-white rounded-full absolute -bottom-1 -right-1 cursor-pointer"
+                onClick={(e) => e.preventDefault()}
+                width={25}
+                height={25}
+              />
+            </div>
+          </Dropdown>
           <ChangeUsername userData={userData} />
         </div>
       </div>
+      <Modal
+        footer={false}
+        open={isChangeAvatarModalOpen}
+        onCancel={() => setIsChangeAvatarModalOpen(false)}
+        title="기본 프로필"
+      >
+        <ChooseProfile />
+      </Modal>
     </>
   );
 };

@@ -9,14 +9,10 @@ export const metadata: Metadata = {
   title: '토론 - 무비바바'
 };
 
-interface Props {
-  searchParams: { [key: string]: string | string[] | undefined };
-}
-
-const DiscussionListPage = ({ searchParams }: Props) => {
+const DiscussionListPage = () => {
   return (
     <div className="wrap">
-      <DiscussionFilteringBox sortQuery="" />
+      <DiscussionFilteringBox />
 
       <DiscussionList />
     </div>

@@ -1,6 +1,6 @@
-import { getMovieDetail } from '@/api/tmdb';
 import MovieDetailTrailer from '@/components/MovieDetail/trailer-photo/MovieDetailTrailer';
-import React from 'react';
+import MovieDetailTrailerSuspense from '@/components/MovieDetail/trailer-photo/MovieDetailTrailerSuspense';
+import React, { Suspense } from 'react';
 
 interface Props {
   params: {
@@ -13,7 +13,9 @@ const DetailTrailerPage = async ({ params }: Props) => {
 
   return (
     <div>
-      <MovieDetailTrailer movieId={movieId} />
+      <Suspense fallback={<MovieDetailTrailerSuspense />}>
+        <MovieDetailTrailer movieId={movieId} />
+      </Suspense>
     </div>
   );
 };
