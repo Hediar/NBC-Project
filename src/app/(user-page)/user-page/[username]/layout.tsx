@@ -5,7 +5,6 @@ import { cookies } from 'next/headers';
 import UserPageTabs from '@/components/UserPage/UserPageTabs';
 import HiddenUserPageTabs from '@/components/UserPage/HiddenUserPageTabs';
 import doesUsersMatch from '@/api/doesUserMatch';
-import { Suspense } from 'react';
 
 export const dynamic = 'force-dynamic';
 
@@ -46,7 +45,7 @@ export default async function Layout({
   const userMatch = await doesUsersMatch(supabase, decodedUsername);
 
   return (
-    <main className="bg-white flex-col sm:flex-row flex justify-center min-h-screen h-full">
+    <main className="bg-white flex-col sm:flex-row flex justify-center sm:h-[calc(100vh-370px)] pb-5 sm:pb-0">
       <aside className="sm:w-1/6 md:w-3/12 lg:w-2/12 border-r border-[#ebebeb] bg-[#fffdf9] ">
         <UserPageTabs username={decodedUsername} userMatch={userMatch} />
         <HiddenUserPageTabs username={decodedUsername} userMatch={userMatch} />
