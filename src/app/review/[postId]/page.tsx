@@ -8,6 +8,8 @@ import dayjs from 'dayjs';
 import { getUserProfile } from '@/api/review';
 import ReviewLikes from '@/components/Review/ReviewLikes';
 import { HeartLined, StarLined } from '@/styles/icons/Icons32';
+import WatchLaterButton from '@/components/common/WatchLaterButton';
+import MovieLikes from '@/components/MovieLikes/MovieLikes';
 
 interface Params {
   postId: string;
@@ -35,7 +37,7 @@ const ReviewDetailPage = async ({ params }: Props) => {
     <div>
       <p className="mt-10 h3_suit">리뷰 상세</p>
       <div className="flex items-center w-full mt-5 mb-10 px-10 py-5 rounded-[20px] shadow1 border">
-        <div className="h-full relative">
+        <div className="relative h-full">
           <Image
             src={`${baseImgUrl}w300_and_h450_bestv2${movieData.backdrop_path}`}
             alt="포스터 이미지"
@@ -44,8 +46,12 @@ const ReviewDetailPage = async ({ params }: Props) => {
             quality={100}
             className="rounded-lg"
           />
+          <div className="bg-gray-800 bg-opacity-30 rounded-lg py-1 px-1 absolute top-[10px] right-[10px] flex flex-col gap-[6px] items-center">
+            <WatchLaterButton movieId={review.movieid} />
+            <MovieLikes movieid={review.movieid} />
+          </div>
         </div>
-        <div className="flex flex-col gap-3 ml-3">
+        <div className="flex flex-col gap-3 ml-6">
           <strong className="h4_suit">{movieData.title}</strong>
           <div className=" body1_regular_suit text-[#888888]">
             <div className="flex">
