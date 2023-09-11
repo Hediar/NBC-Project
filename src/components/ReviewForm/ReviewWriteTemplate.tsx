@@ -20,7 +20,9 @@ const ReviewWriteTemplate = ({ paramMovieId, editReview }: Props) => {
   const movieButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    return saveSearchMovieId();
+    return () => {
+      saveSearchMovieId();
+    };
   }, []);
 
   return (
