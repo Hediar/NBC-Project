@@ -3,14 +3,14 @@ import React, { ReactNode, useCallback, useEffect, useState } from 'react';
 import useEmblaCarousel, { EmblaOptionsType } from 'embla-carousel-react';
 import { NextButton, PrevButton } from './ArrowsDotsButtons';
 
-type PropType = {
+interface PropType {
   options?: EmblaOptionsType;
   slides: ReactNode[];
   slideWidth: string;
   slideHeight: string;
   buttonPosition: string;
   isSlideLength: boolean;
-};
+}
 
 const carouselButton = `flex justify-between items-center absolute top-1/2 -translate-y-1/2 bg-transparent cursor-pointer z-10`;
 
