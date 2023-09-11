@@ -1,4 +1,3 @@
-import KeyInfomation from '@/components/MovieDetail/main/KeyInfomation';
 import React from 'react';
 
 interface Props {
@@ -10,11 +9,7 @@ interface Props {
 const DetailMainPage = async ({ params }: Props) => {
   const { movieId } = params;
 
-  return (
-    <div>
-      <KeyInfomation movieId={movieId} />
-    </div>
-  );
+  return <div></div>;
 };
 
 export default DetailMainPage;

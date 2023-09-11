@@ -12,8 +12,10 @@ const Slider = ({ photoData }: Props) => {
   return (
     <div className="flex justify-center items-center w-full rounded-md font-thin text-xl my-3">
       <EmblaCarousel
-        slides={photoData.map((imageData, idx) => {
-          return (
+        slides={photoData.map((imageData, idx) =>
+          imageData.file_path === 'DUMMY' ? (
+            <div key={idx} className="bg-slate-100 h-full"></div>
+          ) : (
             <Image
               key={idx}
               layout="fill"
@@ -22,8 +24,8 @@ const Slider = ({ photoData }: Props) => {
               alt="Image"
               style={{ aspectRatio: `${imageData.aspect_ratio}` }}
             ></Image>
-          );
-        })}
+          )
+        )}
         options={{
           align: 'start',
           loop: true,
