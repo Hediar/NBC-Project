@@ -39,7 +39,7 @@ const UserSettingsPage = async ({ params: { username }, searchParams }: Props) =
   const { data: userData } = await supabase.from('users').select('*').eq('id', user!.id).single();
 
   return (
-    <div className="w-full h-[calc(100vh)]">
+    <div className="w-full">
       <UserSettingsTabs />
       {myAccount && <MyAccount user={user!} userData={userData!} />}
       {changeInfo && <ChangeInfo user={user!} />}
