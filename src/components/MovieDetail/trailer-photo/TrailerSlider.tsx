@@ -17,12 +17,23 @@ const TrailerSlider = ({ trailerKeys }: Props) => {
     setTrailerKey(key);
   };
 
+  const drawPlayBtn = () => {
+    return (
+      <div className="flex justify-between items-center absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-transparent cursor-pointer z-10 pointer-events-none opacity-60">
+        <SVGPlayButton />
+      </div>
+    );
+  };
   return (
     <div className="flex justify-center items-center w-full h-44 rounded-md font-thin text-xl my-3">
       {isTrailerShow && <TrailerPlay trailerKey={trailerKey} closeBtn={setIsTrailerShow} />}
       <EmblaCarousel
-        slides={trailerKeys.map((KEY, idx) => {
-          return (
+        slides={trailerKeys.map((KEY, idx) =>
+          KEY === 'DUMMY' ? (
+            <div key={idx} className="bg-slate-100 h-full">
+              {drawPlayBtn()}
+            </div>
+          ) : (
             <React.Fragment key={idx}>
               <Image
                 layout="fill"
@@ -31,12 +42,10 @@ const TrailerSlider = ({ trailerKeys }: Props) => {
                 alt="Image"
                 onClick={() => showTrailer(KEY)}
               ></Image>
-              <div className="flex justify-between items-center absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-transparent cursor-pointer z-10 pointer-events-none opacity-60">
-                <SVGPlayButton />
-              </div>
+              {drawPlayBtn()}
             </React.Fragment>
-          );
-        })}
+          )
+        )}
         options={{
           align: 'start',
           loop: true,

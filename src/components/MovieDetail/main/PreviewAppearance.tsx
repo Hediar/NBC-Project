@@ -13,8 +13,8 @@ interface Props {
 }
 
 const PreviewAppearance = ({ movieId, appearences, productions }: Props) => {
-  const [appearencesData, setAppearencesData] = useState<TMDBCreditCast[]>([...appearences.slice(0, 4)]);
-  const [productionsData, setProductionsData] = useState<TMDBCreditCrew[]>([...productions.slice(0, 4)]);
+  const [appearencesData, setAppearencesData] = useState<TMDBCreditCast[]>([...appearences.slice(0, 9)]);
+  const [productionsData, setProductionsData] = useState<TMDBCreditCrew[]>([...productions.slice(0, 9)]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -109,13 +109,6 @@ const PreviewAppearance = ({ movieId, appearences, productions }: Props) => {
       </div>
 
       <div className="mb-20"></div>
-      {/* <Link
-        href={`/detail/${movieId}/crew`}
-        className="flex items-center justify-center border w-full rounded-[20px] text-center subtitle1_suit py-5 mb-20"
-      >
-        더보기
-        <ArrowRight />
-      </Link> */}
     </div>
   );
 };
