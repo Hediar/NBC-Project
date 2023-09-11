@@ -46,7 +46,7 @@ const LatestMovieSlider = async ({ photoData }: Props) => {
 
   return (
     <>
-      <div className="hidden sm:block w-full p-5 h-full md:h-[608px] font-thin text-xl my-3 mr-5">
+      <div className="hidden xl:block w-full p-5 h-full md:h-[608px] font-thin text-xl my-3 mr-5">
         <LatestMoviesCarousel
           slides={photoData.map((imageData, idx) => {
             return (
@@ -101,7 +101,7 @@ const LatestMovieSlider = async ({ photoData }: Props) => {
           isSlideLength={false}
         />
       </div>
-      <div className="w-[320px] h-[657px] font-thin text-xl my-3 sm:hidden ">
+      <div className="w-[320px] h-[657px] font-thin text-xl my-3 xl:hidden ">
         <LatestMoviesCarousel
           slides={photoData.map((imageData, idx) => {
             return (
@@ -113,7 +113,7 @@ const LatestMovieSlider = async ({ photoData }: Props) => {
                     filter: `brightness(1.07)`
                   }}
                 >
-                  <Link href={`/detail/${imageData.id}`} className="absolute top-[30px] left-9">
+                  <Link href={`/detail/${imageData.id}`} className="absolute top-[30px] left-10">
                     <Image
                       width={240}
                       height={360}

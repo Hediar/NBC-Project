@@ -54,7 +54,7 @@ const LatestReviews = async () => {
                   <SVGTalkEndPoint className="opacity-20" />
                 </div>
 
-                <div className="truncate w-[680px]">{review.content}</div>
+                <div className="truncate w-full">{review.content}</div>
                 <div className="flex justify-between">
                   <span className="flex">
                     <HeartLine />

@@ -54,19 +54,19 @@ export const LatestMoviesCarousel = (props: PropType) => {
         </div>
         {buttonPosition === 'center' && (
           <>
-            <div className={`${carouselButton} left-10`}>
+            <div className={`${carouselButton} left-5`}>
               <PrevButton onClick={scrollPrev} disabled={prevBtnDisabled} />
             </div>
-            <div className={`${carouselButton} right-10`}>
+            <div className={`${carouselButton} right-5`}>
               <NextButton onClick={scrollNext} disabled={nextBtnDisabled} />
             </div>
           </>
         )}
 
         {buttonPosition === 'rightTop' && (
-          <div className="absolute top-[40px] right-[40px] z-10">
+          <div className="absolute top-[30px] right-[30px] z-10">
             <div className="flex items-center">
-              <PrevButton onClick={scrollPrev} disabled={prevBtnDisabled} className="p-1 rounded-full cursor-pointer" />
+              <PrevButton onClick={scrollPrev} disabled={prevBtnDisabled} className="p-2 rounded-full cursor-pointer" />
               <NextButton onClick={scrollNext} disabled={nextBtnDisabled} className="p-1 rounded-full cursor-pointer" />
             </div>
           </div>
