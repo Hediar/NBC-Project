@@ -46,6 +46,21 @@ const DiscussionRegistPage = (props: Props) => {
   const movie_id = searchParams.get('movieId') ?? '';
 
   useEffect(() => {
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      if (title !== '') {
+        event.preventDefault();
+        event.returnValue = '작성한 내용을 저장하지 않고 페이지를 떠나시겠습니까?';
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [title]);
+
+  useEffect(() => {
     return saveSearchMovieId();
   }, []);
 
@@ -77,6 +92,8 @@ const DiscussionRegistPage = (props: Props) => {
   const deleteOption = (idx: number) => {
     setOptions(options.filter((_, index) => index !== idx));
   };
+
+  const handleCancel = () => router.back();
 
   const handleSubmit = async () => {
     if (!userId) {
@@ -316,9 +333,15 @@ const DiscussionRegistPage = (props: Props) => {
         </div>
 
         <div className="flex justify-center gap-3">
-          <button className="border px-2 py-1 bg-gray-300 text-white font-bold hover:bg-gray-200 hover:text-gray-700 rounded-[10px]">
-            임시저장
+          <button
+            className="border px-2 py-1 bg-gray-300 text-white font-bold hover:bg-gray-200 hover:text-gray-700 rounded-[10px]"
+            onClick={handleCancel}
+          >
+            돌아가기
           </button>
+          {/* <button className="border px-2 py-1 bg-gray-300 text-white font-bold hover:bg-gray-200 hover:text-gray-700 rounded-[10px]">
+            임시저장
+          </button> */}
           <button
             className="border px-2 py-1 bg-black text-white font-bold hover:bg-gray-200 hover:text-gray-700 rounded-[10px]"
             onClick={debounce(handleSubmit, 300)}

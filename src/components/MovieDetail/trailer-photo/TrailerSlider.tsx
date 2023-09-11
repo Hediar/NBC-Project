@@ -31,7 +31,7 @@ const TrailerSlider = ({ trailerKeys }: Props) => {
                 alt="Image"
                 onClick={() => showTrailer(KEY)}
               ></Image>
-              <div className="flex justify-between items-center absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-transparent cursor-pointer z-10 pointer-events-none">
+              <div className="flex justify-between items-center absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-transparent cursor-pointer z-10 pointer-events-none opacity-60">
                 <SVGPlayButton />
               </div>
             </React.Fragment>

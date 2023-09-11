@@ -1,79 +1,130 @@
-import { getCreditsData } from '@/api/tmdb';
+'use client';
+
 import { ArrowRight } from '@/styles/icons/Icons24';
 import Image from 'next/image';
 import Link from 'next/link';
 import altImage from '../../../../public/anonymous-avatar-icon.png';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface Props {
   movieId: string;
+  appearences: TMDBCreditCast[];
+  productions: TMDBCreditCrew[];
 }
 
-const PreviewAppearance = async ({ movieId }: Props) => {
-  const { appearences, productions } = await getCreditsData(movieId);
+const PreviewAppearance = ({ movieId, appearences, productions }: Props) => {
+  const [appearencesData, setAppearencesData] = useState<TMDBCreditCast[]>([...appearences.slice(0, 4)]);
+  const [productionsData, setProductionsData] = useState<TMDBCreditCrew[]>([...productions.slice(0, 4)]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setAppearencesData(appearences);
+      setProductionsData(productions);
+    }, 500);
+  }, []);
 
   return (
     <div className="w-4/5 mx-auto">
       <p className="font-bold text-2xl flex items-center mt-20">
         출연<span style={{ fontSize: '0.5px' }}>●</span>제작
       </p>
-      <div className="flex justify-between m-5">
-        {appearences.map((cast, idx) => {
-          if (idx < 4) {
+
+      {/* <div className='flex'> */}
+      <div className="relative">
+        <div
+          className="w-full h-full absolute right-0"
+          style={{ boxShadow: '-39px 0px 29px -14px rgba(240,240,240,0.85) inset' }}
+        ></div>
+        <div className="flex items-center p-10 gap-2 sm:gap-0 overflow-auto relative mb-10">
+          {appearencesData.map((cast, idx) => {
             return (
-              <div key={idx} className="flex w-1/4">
-                <Image
-                  src={`${process.env.NEXT_PUBLIC_TMDB_BASE_PROFILE_IMG_URL + cast.profile_path}`}
-                  width={50}
-                  height={50}
-                  alt=""
-                  className="rounded-full"
-                />
-                <div className="flex flex-col m-2">
-                  <span className="font-bold text-base">{cast.name}</span>
-                  <p className="text-sm text-gray-500">{cast.character}</p>
+              <div key={idx} className="flex gap-2 min-w-[300px]">
+                <div className={`${Style.profileImgDiv}`}>
+                  {cast.profile_path ? (
+                    <Image
+                      src={`${process.env.NEXT_PUBLIC_TMDB_BASE_PROFILE_IMG_URL + cast.profile_path}`}
+                      alt=""
+                      width={80}
+                      height={80}
+                      className="rounded-full"
+                      placeholder="blur"
+                      blurDataURL="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mO8UA8AAiUBUcc3qzwAAAAASUVORK5CYII="
+                    />
+                  ) : (
+                    <Image src={altImage} alt="" width={80} height={80} className="rounded-full" />
+                  )}
+                </div>
+
+                <div className="m-2">
+                  <span className={`${Style.name}`}>{cast.name}</span>
+                  <p className={`${Style.otherInfo}`}>{cast.character}</p>
                 </div>
               </div>
             );
-          }
-        })}
+          })}
+        </div>
       </div>
 
-      <div className="flex justify-between m-5">
-        {productions.map((crew, idx) => {
-          if (idx < 4) {
+      <div className="relative">
+        <div
+          className="w-full h-full absolute right-0"
+          style={{ boxShadow: '-39px 0px 29px -14px rgba(240,240,240,0.85) inset' }}
+        ></div>
+        <div className="flex items-center p-10 gap-2 sm:gap-0 overflow-auto relative">
+          {productionsData.map((crew, idx) => {
             return (
-              <div key={idx} className="flex w-1/4">
-                {crew.profile_path ? (
-                  <Image
-                    src={`${process.env.NEXT_PUBLIC_TMDB_BASE_PROFILE_IMG_URL + crew.profile_path}`}
-                    alt=""
-                    width={50}
-                    height={50}
-                    className="rounded-full"
-                  />
-                ) : (
-                  <Image src={altImage} alt="" width={50} height={50} className="rounded-full" />
-                )}
-                <div className="flex flex-col m-2">
-                  <span className="font-bold text-base">{crew.name}</span>
-                  <p className="text-sm text-gray-500">{crew.job}</p>
+              <div key={idx} className="flex gap-2 min-w-[300px]">
+                <div className={`${Style.profileImgDiv}`}>
+                  {crew.profile_path ? (
+                    <Image
+                      src={`${process.env.NEXT_PUBLIC_TMDB_BASE_PROFILE_IMG_URL + crew.profile_path}`}
+                      alt=""
+                      width={80}
+                      height={80}
+                      className="rounded-full"
+                      placeholder="blur"
+                      blurDataURL="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mO8UA8AAiUBUcc3qzwAAAAASUVORK5CYII="
+                    />
+                  ) : (
+                    <Image
+                      src={altImage}
+                      alt=""
+                      width={80}
+                      height={80}
+                      className="rounded-full"
+                      placeholder="blur"
+                      blurDataURL="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mO8UA8AAiUBUcc3qzwAAAAASUVORK5CYII="
+                    />
+                  )}
+                </div>
+
+                <div className="m-2">
+                  <span className={`${Style.name}`}>{crew.name}</span>
+                  <p className={`${Style.otherInfo}`}>{crew.job}</p>
                 </div>
               </div>
             );
-          }
-        })}
+          })}
+        </div>
       </div>
 
-      <Link
+      <div className="mb-20"></div>
+      {/* <Link
         href={`/detail/${movieId}/crew`}
         className="flex items-center justify-center border w-full rounded-[20px] text-center subtitle1_suit py-5 mb-20"
       >
         더보기
         <ArrowRight />
-      </Link>
+      </Link> */}
     </div>
   );
 };
 
 export default PreviewAppearance;
+
+const Style = {
+  infoDiv: 'w-1/2 flex flex-col gap-5',
+  profileImgDiv: 'min-w-[80px] h-[80px] flex bg-zinc-300 rounded-full shadow1',
+  name: 'text-neutral-800 text-xl font-bold leading-normal',
+  otherInfo: 'text-neutral-800 text-sm font-normal leading-snug'
+};
