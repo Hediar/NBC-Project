@@ -7,8 +7,8 @@ import { Dropdown, MenuProps, Modal, message } from 'antd';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
 import ChangeUsername from './ChangeUsername';
-import useProfileChooseModalToggle from '@/store/profileChooseModalToggle';
 import ChooseProfile from './ChooseProfile';
+import useToggleChangeAvatar from '@/store/toggleChangeAvatarModal';
 
 interface Props {
   userData: Database['public']['Tables']['users']['Row'];
@@ -37,7 +37,7 @@ const ChangeAvatarPhoto = ({ userData }: Props) => {
   const router = useRouter();
 
   const [messageApi, contextHolder] = message.useMessage();
-  const [isProfileModalOpen, setIsProfileModalOpen] = useState<boolean>(false);
+  const { isChangeAvatarModalOpen, setIsChangeAvatarModalOpen } = useToggleChangeAvatar();
 
   useEffect(() => {
     if (avatarUrl) {
@@ -98,7 +98,7 @@ const ChangeAvatarPhoto = ({ userData }: Props) => {
 
   const onClick: MenuProps['onClick'] = ({ key }) => {
     if (key === '기본 프로필') {
-      setIsProfileModalOpen(true);
+      setIsChangeAvatarModalOpen(true);
     } else if (key === '사진') {
       fileInputRef.current.click();
     } else {
@@ -137,7 +137,12 @@ const ChangeAvatarPhoto = ({ userData }: Props) => {
           <ChangeUsername userData={userData} />
         </div>
       </div>
-      <Modal footer={false} open={isProfileModalOpen} onCancel={() => setIsProfileModalOpen(false)} title="기본 프로필">
+      <Modal
+        footer={false}
+        open={isChangeAvatarModalOpen}
+        onCancel={() => setIsChangeAvatarModalOpen(false)}
+        title="기본 프로필"
+      >
         <ChooseProfile />
       </Modal>
     </>

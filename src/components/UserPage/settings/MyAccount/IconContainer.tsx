@@ -1,20 +1,29 @@
 'use client';
 
-import axios from 'axios';
-import { ReactNode, useEffect, useState } from 'react';
+import useIsProfileSelected from '@/store/isProfileSelected';
+import { ReactNode } from 'react';
 
-const IconContainer = ({ url, children }: { url: string; children: ReactNode }) => {
-  const [isSelected, setIsSelected] = useState<boolean>(false);
+interface Props {
+  targetId: number;
+  children: ReactNode;
+}
+
+const IconContainer = ({ targetId, children }: Props) => {
+  const { target, isSelected, setIsProfileSelected } = useIsProfileSelected();
 
   const onClickHandler = async () => {
-    setIsSelected(true);
+    if (target !== targetId) {
+      setIsProfileSelected(targetId, true);
+    } else if (target === targetId) {
+      setIsProfileSelected(null, false);
+    }
   };
 
   return (
     <div
       onClick={onClickHandler}
-      className={`animate-300 hover:scale-105 cursor-pointer bg-white p-1 shadow-md shadow-gray-200 rounded-full ${
-        isSelected && 'border-1 border-gray-400'
+      className={`animate-200 hover:scale-105 cursor-pointer bg-white p-1 shadow-md shadow-gray-200 rounded-full border-[1.5px]   ${
+        isSelected && target === targetId ? 'border-gray-400' : 'border-transparent'
       } `}
     >
       {children}
@@ -23,7 +32,3 @@ const IconContainer = ({ url, children }: { url: string; children: ReactNode }) 
 };
 
 export default IconContainer;
-
-// const {
-//   data: { url1 }
-// } = await axios.post('/auth/profile/change-avatar', JSON.stringify({ url }));
