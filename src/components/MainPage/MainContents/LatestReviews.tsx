@@ -25,6 +25,8 @@ const LatestReviews = async () => {
       </div>
       <div className="p-5">
         {latestReviewData?.map((review, index) => {
+          const likesCount = (review.reviewLikesCount && review.reviewLikesCount.length) || 0;
+          // console.log(likesCount);
           return (
             <Link
               key={review.reviewid}
@@ -56,7 +58,7 @@ const LatestReviews = async () => {
                 <div className="flex justify-between">
                   <span className="flex">
                     <HeartLine />
-                    {/* {review.reviewLikesCount.length ? review.reviewLikesCount : 0} */}
+                    {likesCount}
                   </span>
                   <ArrowRight />
                 </div>

@@ -31,7 +31,7 @@ const TrendMovieSlider = ({ photoData }: Props) => {
           loop: true
         }}
       /> */}
-      <EmblaCarousel
+      <TrendMoviesCarousel
         slides={photoData.map((imageData, idx) => {
           return (
             <Link href={`/detail/${imageData.id}`} key={idx}>

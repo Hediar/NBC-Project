@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { StarFill } from '@/styles/icons/Icons24';
 import { extractMainColors, findBrightestTwoColors, getColors, lightenColor } from '@/util/findColors';
 import EmblaCarousel from '@/components/common/Slider/EmblaCarousel';
+import { getProviderData } from '@/api/tmdb';
 
 type Props = {
   photoData: MovieData[];
@@ -20,10 +21,13 @@ const LatestMovieSlider = async ({ photoData }: Props) => {
   );
   const rgbToString = (rgb: number[]) => `rgb(${rgb.join(', ')})`;
 
-  // const getMainColors = getStyles.map((colors) => {
-  //   const mainColor = extractMainColors(colors, 1)[0];
-  //   return rgbToString([...mainColor, 0.6]);
-  // });
+  const getOTT = await Promise.all(
+    photoData.map(async (data: MovieData) => {
+      const stringId = data.id.toString();
+      const ott = await getProviderData(stringId);
+      return ott;
+    })
+  );
 
   const firstMainColor = getStyles.map((colors) => rgbToString([colors[8], 0.5]));
 
@@ -41,8 +45,8 @@ const LatestMovieSlider = async ({ photoData }: Props) => {
   });
 
   return (
-    <div className="w-full p-5 h-auto md:h-[608px] font-thin text-xl my-3 mr-5">
-      <EmblaCarousel
+    <div className="hidden sm:block w-full p-5 h-full md:h-[608px] font-thin text-xl my-3 mr-5">
+      <LatestMoviesCarousel
         slides={photoData.map((imageData, idx) => {
           return (
             <div key={idx}>

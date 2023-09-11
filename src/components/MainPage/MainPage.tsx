@@ -23,7 +23,7 @@ const MainPage = ({ params }: { params: string }) => {
         <TrendMoives genreId={params} />
       </section>
       <section className="flex-row sm:flex lg:mt-[360px]">
-        <div className="sm:w-1/2 mb-8 md:mb-0 mr-[58px] lg:mb-[160px] 2xl:ml-[192px]">
+        <div className="sm:w-1/2 mb-8 md:mb-0 mr-5 lg:mb-[160px] 2xl:ml-[192px]">
           <LatestReviews />
         </div>
         <div className="sm:w-1/2 2xl:mr-[192px]">
