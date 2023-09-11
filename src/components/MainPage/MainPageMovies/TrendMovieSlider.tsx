@@ -31,7 +31,7 @@ const TrendMovieSlider = ({ photoData }: Props) => {
           loop: true
         }}
         slideWidth={'w-full sm:w-2/5'}
-        slideHeight={'h-[195px] sm:h-[230px] lg:h-[460px]'}
+        slideHeight={'h-[195px] sm:h-[230px] xl:h-[460px]'}
         isSlideLength={false}
         buttonPosition={'center'}
       />
