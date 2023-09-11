@@ -13,7 +13,7 @@ const MovieProviders = ({ data }: Props) => {
         return (
           <div key={idx}>
             <Image
-              src={`${baseImgUrl}w100_and_h100_bestv2${provider.logo_path}`}
+              src={`${baseImgUrl}w500/${provider.logo_path}`}
               alt=""
               width={60}
               height={60}

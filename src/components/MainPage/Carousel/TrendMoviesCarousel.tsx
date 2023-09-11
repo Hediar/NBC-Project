@@ -54,10 +54,10 @@ const TrendMoviesCarousel: React.FC<PropType> = (props) => {
         </div>
         {buttonPosition === 'center' && (
           <>
-            <div className={`${carouselButton} left-10`}>
+            <div className={`${carouselButton} left-10 w-[30px] h-[30px]`}>
               <PrevButton onClick={scrollPrev} disabled={prevBtnDisabled} />
             </div>
-            <div className={`${carouselButton} right-10`}>
+            <div className={`${carouselButton} right-10 w-[30px] h-[30px]`}>
               <NextButton onClick={scrollNext} disabled={nextBtnDisabled} />
             </div>
           </>
