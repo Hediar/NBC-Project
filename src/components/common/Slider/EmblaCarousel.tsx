@@ -27,6 +27,9 @@ export const EmblaCarousel = (props: PropType) => {
     buttonPositionStyleL,
     buttonPositionStyleR
   } = props; // props로 가져온 옵션과 슬라이드 리스트
+=========
+  const { options, slides, slideHeight, slideWidth, isSlideLength, buttonPosition } = props; // props로 가져온 옵션과 슬라이드 리스트
+>>>>>>>>> Temporary merge branch 2
   const [prevBtnDisabled, setPrevBtnDisabled] = useState(true);
   const [nextBtnDisabled, setNextBtnDisabled] = useState(true);
   const [emblaRef, embla] = useEmblaCarousel(options); // 슬라이더 구현에 필요한 요소들을 useEmblaCarousel 에서 가져온다.
