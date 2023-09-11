@@ -18,7 +18,7 @@ const MyMenu = async () => {
   const { watch_later, movielikes, reviews, discussion_post } = is_publicData!;
 
   return (
-    <div className="p-10">
+    <div className="w-full mt-4 sm:mt-0 sm:p-10">
       <div className="w-full sm:w-10/12 bg-white border border-[#888] shadow-sm shadow-gray-400 px-8 py-10 rounded-2xl">
         <h1 className="text-neutral-800 font-bold mb-4 text-lg">나의 목록 공개</h1>
         <div className="flex flex-col gap-4">

@@ -4,6 +4,7 @@ import LatestMoviesCarousel from '../Carousel/LatestMoviesCarousel';
 import Link from 'next/link';
 import { StarFill } from '@/styles/icons/Icons24';
 import { extractMainColors, findBrightestTwoColors, getColors, lightenColor } from '@/util/findColors';
+import EmblaCarousel from '@/components/common/Slider/EmblaCarousel';
 
 type Props = {
   photoData: MovieData[];
@@ -41,7 +42,7 @@ const LatestMovieSlider = async ({ photoData }: Props) => {
 
   return (
     <div className="w-full p-5 h-auto md:h-[608px] font-thin text-xl my-3 mr-5">
-      <LatestMoviesCarousel
+      <EmblaCarousel
         slides={photoData.map((imageData, idx) => {
           return (
             <div key={idx}>
@@ -91,6 +92,8 @@ const LatestMovieSlider = async ({ photoData }: Props) => {
         }}
         slideHeight="h-[608px]"
         slideWidth="w-full"
+        buttonPosition="rightTop"
+        isSlideLength={false}
       />
     </div>
   );
