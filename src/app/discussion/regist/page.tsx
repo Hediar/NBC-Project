@@ -93,6 +93,8 @@ const DiscussionRegistPage = (props: Props) => {
     setOptions(options.filter((_, index) => index !== idx));
   };
 
+  const handleCancel = () => router.back();
+
   const handleSubmit = async () => {
     if (!userId) {
       messageApi.open({
@@ -331,9 +333,15 @@ const DiscussionRegistPage = (props: Props) => {
         </div>
 
         <div className="flex justify-center gap-3">
-          <button className="border px-2 py-1 bg-gray-300 text-white font-bold hover:bg-gray-200 hover:text-gray-700 rounded-[10px]">
-            임시저장
+          <button
+            className="border px-2 py-1 bg-gray-300 text-white font-bold hover:bg-gray-200 hover:text-gray-700 rounded-[10px]"
+            onClick={handleCancel}
+          >
+            돌아가기
           </button>
+          {/* <button className="border px-2 py-1 bg-gray-300 text-white font-bold hover:bg-gray-200 hover:text-gray-700 rounded-[10px]">
+            임시저장
+          </button> */}
           <button
             className="border px-2 py-1 bg-black text-white font-bold hover:bg-gray-200 hover:text-gray-700 rounded-[10px]"
             onClick={debounce(handleSubmit, 300)}
