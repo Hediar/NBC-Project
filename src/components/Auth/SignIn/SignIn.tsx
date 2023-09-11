@@ -103,6 +103,7 @@ const SignIn = () => {
   const onSubmitHandler = async () => {
     setIsClicked(true);
     if (!/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/.test(passwordValue)) {
+      setIsClicked(false);
       return messageApi.open({
         type: 'error',
         content: '비밀번호는 최소 8자 이상이어야 하며, 최소 하나의 대문자, 소문자, 숫자가 포함되어야 합니다.',
@@ -125,6 +126,7 @@ const SignIn = () => {
             onVerify={(token) => setCaptchaToken(token)}
             onError={() => captchaRef.current.reset()}
             onExpire={() => captchaRef.current.reset()}
+            onClose={() => setIsClicked(false)}
           />
         )}
         <Logo className="mb-6 lg:hidden" />

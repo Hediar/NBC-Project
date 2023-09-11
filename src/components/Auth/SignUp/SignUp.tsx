@@ -82,24 +82,28 @@ const SignUp = () => {
 
   const onSubmitHandler = async () => {
     if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(emailValue)) {
+      setIsClicked(false);
       return messageApi.open({
         type: 'error',
         content: '올바른 이메일 형식이 아닙니다.',
         duration: 3
       });
     } else if (passwordValue !== password2Value) {
+      setIsClicked(false);
       return messageApi.open({
         type: 'error',
         content: '비밀번호가 일치하지 않습니다.',
         duration: 3
       });
     } else if (!/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/.test(passwordValue)) {
+      setIsClicked(false);
       return messageApi.open({
         type: 'error',
         content: '비밀번호는 최소 8자 이상이어야 하며, 최소 하나의 대문자, 소문자, 숫자가 포함되어야 합니다.',
         duration: 5
       });
     } else if (!/^[a-zA-Z가-힣\s0-9]+$/.test(usernameValue)) {
+      setIsClicked(false);
       return messageApi.open({
         type: 'error',
         content: '닉네임은 한글과 알파벳, 숫자 그리고 띄어쓰기가 가능합니다. 특수문자는 허용되지 않습니다.',
@@ -123,6 +127,7 @@ const SignUp = () => {
             onVerify={(token) => setCaptchaToken(token)}
             onError={() => captchaRef.current.reset()}
             onExpire={() => captchaRef.current.reset()}
+            onClose={() => setIsClicked(false)}
           />
 
           <Logo className="mb-6 lg:hidden" />
