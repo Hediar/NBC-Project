@@ -47,7 +47,7 @@ const MyReviewPage = ({ isUserMatch }: { isUserMatch: boolean }) => {
   }, [userInfo, totalRowsNumber, currentPage]);
 
   if (isLoading) return <MyReviewListLoading />;
-  if (reviews.length == 1) return <ReviewListEmpty isUserMatch={isUserMatch} />;
+  if (reviews.length == 0) return <ReviewListEmpty isUserMatch={isUserMatch} />;
 
   return (
     <div className="mb-[300px]">

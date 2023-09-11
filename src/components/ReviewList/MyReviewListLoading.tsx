@@ -6,7 +6,7 @@ type Props = {};
 
 const MyReviewListLoading = (props: Props) => {
   const REPEAT_NUMBER = 3;
-  const lists = Array.from(Array(REPEAT_NUMBER), (x) => <MyReviewItemLoading />);
+  const lists = Array.from(Array(REPEAT_NUMBER), (x) => <MyReviewItemLoading key={Math.random()} />);
 
   return (
     <div>

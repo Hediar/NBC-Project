@@ -3,7 +3,7 @@ import React from 'react';
 
 const ReviewFetchMoreSuspense = () => {
   const REPEAT_NUMBER = 9;
-  const lists = Array.from(Array(REPEAT_NUMBER), (x) => <ReviewItem />);
+  const lists = Array.from(Array(REPEAT_NUMBER), (x) => <ReviewItem key={Math.random()} />);
 
   return (
     <div>
