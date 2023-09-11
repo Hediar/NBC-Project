@@ -5,6 +5,7 @@ import { cookies } from 'next/headers';
 import UserPageTabs from '@/components/UserPage/UserPageTabs';
 import HiddenUserPageTabs from '@/components/UserPage/HiddenUserPageTabs';
 import doesUsersMatch from '@/api/doesUserMatch';
+import { Suspense } from 'react';
 
 export const dynamic = 'force-dynamic';
 
