@@ -46,6 +46,21 @@ const DiscussionRegistPage = (props: Props) => {
   const movie_id = searchParams.get('movieId') ?? '';
 
   useEffect(() => {
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      if (title !== '') {
+        event.preventDefault();
+        event.returnValue = '작성한 내용을 저장하지 않고 페이지를 떠나시겠습니까?';
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [title]);
+
+  useEffect(() => {
     return saveSearchMovieId();
   }, []);
 
