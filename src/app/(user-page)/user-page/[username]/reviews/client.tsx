@@ -1,6 +1,7 @@
 'use client';
 
 import { getReviews, countRowsNumber } from '@/api/review';
+import MyReviewListLoading from '@/components/ReviewList/MyReviewListLoading';
 import ReviewItem from '@/components/ReviewList/ReviewItem';
 import ReviewListEmpty from '@/components/ReviewList/ReviewListEmpty';
 import useUserInfoStore from '@/store/saveCurrentUserData';
@@ -12,41 +13,41 @@ import { useEffect, useState } from 'react';
 const MyReviewPage = ({ isUserMatch }: { isUserMatch: boolean }) => {
   const { userInfo } = useUserInfoStore();
 
+  const [isLoading, setIsLoading] = useState(true);
   const [reviews, setReviews] = useState<ReviewsTable[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [isTotalPage, setIsTotalPage] = useState(false);
+  const [hasNextPage, setHasNextPage] = useState<boolean>();
   const [totalRowsNumber, setTotalRowsNumber] = useState<number | null>(null);
 
   const REVIEWS_LIMIT = 3;
 
   const handleClick = () => {
-    setCurrentPage(currentPage + 1);
+    hasNextPage && setCurrentPage(currentPage + 1);
   };
 
   useEffect(() => {
-    const getMoreData = async (page: number) => {
+    const fetchMore = async (page: number) => {
       if (totalRowsNumber === null) {
         const fetchRowNumberData = await countRowsNumber('reviews');
         setTotalRowsNumber(fetchRowNumberData!);
+        return;
       }
 
       const { data, error } = await getReviews({ userid: userInfo.id!, page, limit: REVIEWS_LIMIT });
       setReviews([...reviews, ...(data as ReviewsTable[])]);
+      setIsLoading(false);
 
-      // console.log(
-      //   'totalRowsNumber <= reviews.length+3+1 => ',
-      //   totalRowsNumber,
-      //   reviews.length + 3 + 1,
-      //   totalRowsNumber! <= reviews.length + 3 + 1
-      // );
-      totalRowsNumber !== null && totalRowsNumber! <= reviews.length + REVIEWS_LIMIT + 1
-        ? setIsTotalPage(true)
-        : setIsTotalPage(false);
+      totalRowsNumber !== null && totalRowsNumber! > reviews.length + REVIEWS_LIMIT * 3 + 1
+        ? setHasNextPage(true)
+        : setHasNextPage(false);
     };
-    if (userInfo.id) getMoreData(currentPage);
-  }, [userInfo, currentPage]);
 
-  if (!reviews.length) return <ReviewListEmpty isUserMatch={isUserMatch} />;
+    // setIsLoading(true);
+    if (userInfo.id) fetchMore(currentPage);
+  }, [userInfo, totalRowsNumber, currentPage]);
+
+  if (isLoading) return <MyReviewListLoading />;
+  if (reviews.length == 0) return <ReviewListEmpty isUserMatch={isUserMatch} />;
 
   return (
     <div className="mb-[300px]">
@@ -69,10 +70,10 @@ const MyReviewPage = ({ isUserMatch }: { isUserMatch: boolean }) => {
       </ul>
 
       <div className="w-full text-center mx-auto">
-        {isTotalPage ? null : (
+        {hasNextPage && (
           <button onClick={debounce(handleClick, 300)} type="button" className="full_button w-full items-center mt-20">
             <div className="inline-flex items-center justify-center gap-1 px-5 py-2">
-              더 보기{`(${currentPage}/${Math.ceil(totalRowsNumber! / (REVIEWS_LIMIT + 1))})`}
+              더 보기{`(${currentPage}/${Math.ceil(totalRowsNumber! / (REVIEWS_LIMIT + 1) - 1)})`}
             </div>
           </button>
         )}
