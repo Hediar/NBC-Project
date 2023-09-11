@@ -40,7 +40,7 @@ const DiscussionPost = ({ post }: Props) => {
 
       <div className="w-3/5 p-1">
         <div className="w-full overflow-x-auto flex flex-col gap-1">
-          <p className="text-xs absolute top-3 left-5 sm:relative sm:top-auto sm:left-auto">{post.movie_title}</p>
+          <p className="body3_suit absolute top-3 left-5 sm:relative sm:top-auto sm:left-auto">{post.movie_title}</p>
           <p className="text-sm sm:text-base font-bold">
             {post.title.length > 25 ? post.title.slice(0, 25) + '...' : post.title}
           </p>
@@ -80,7 +80,7 @@ const DiscussionPost = ({ post }: Props) => {
         </div>
       </div>
 
-      <div className="absolute w-4/5 left-5 bottom-4 text-xs sm:text-sm break-words m-auto flex items-center justify-between sm:gap-1 sm:w-1/5 sm:bottom-auto sm:left-auto sm:relative sm:flex-col">
+      <div className="absolute w-4/5 left-5 bottom-4 body3_suit sm:text-sm break-words m-auto flex items-center justify-between sm:gap-1 sm:w-1/5 sm:bottom-auto sm:left-auto sm:relative sm:flex-col">
         <p>👀확인:{post.view_count}</p>
         {!optionData?.length || <p>👆투표수:{post.vote_count}</p>}
         <p>💬댓글수:{post.comment_count}</p>
