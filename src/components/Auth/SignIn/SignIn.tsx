@@ -8,6 +8,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import ForgotPasswordModal from '../ForgotPassword/ForgotPasswordModal';
 import useToggleForgotPassword from '@/store/forgotPasswordToggle';
 import SocialButtons from '../SocialButtons';
+import useToggleSignInModal from '@/store/toggleSignInModal';
 
 interface Data {
   error: boolean;
@@ -15,6 +16,7 @@ interface Data {
 }
 
 const SignIn = () => {
+  const { setIsSignInModalOpen } = useToggleSignInModal();
   const router = useRouter();
 
   const [emailValue, setEmailValue] = useState<string>('');
@@ -89,6 +91,7 @@ const SignIn = () => {
         });
         setTimeout(() => {
           setIsClicked(false);
+          setIsSignInModalOpen(false);
           setTimeout(() => {
             router.refresh();
           }, 200);
