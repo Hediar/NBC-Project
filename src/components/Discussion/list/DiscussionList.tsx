@@ -1,4 +1,5 @@
 'use client';
+
 import React, { useEffect, useState } from 'react';
 import DiscussionPost from './DiscussionPost';
 import { getDiscussionPost } from '@/api/supabase-discussion';
@@ -76,7 +77,7 @@ const DiscussionList = () => {
 
   return (
     <div className="">
-      {query.search && !!filteredData.length && (
+      {query.search && (
         <p className={`${searchP}`}>
           "{query.search}"와 관련된 {filteredData.length}개의 토론입니다
         </p>

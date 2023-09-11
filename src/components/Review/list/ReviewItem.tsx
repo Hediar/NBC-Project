@@ -1,11 +1,13 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import Link from 'next/link';
 import Image from 'next/image';
 import ReviewLikes from '../ReviewLikes';
 import { Edit, StarFill } from '@/styles/icons/Icons24';
+import UtilButtons from '@/components/ReviewForm/UtilButtons';
+import PosterBaseColor from './PosterBaseColor';
 
 type Props = {
   review: any;
@@ -30,17 +32,17 @@ const ReviewItem = ({ review }: Props) => {
               quality={100}
             />
           </div>
-          <div className="pl-2 text-neutral-800 text-base font-bold leading-snug">{review.userDetail.username}</div>
-          <span className="pl-5 text-neutral-800 text-sm font-normal">
-            {dayjs(review.created_at).format('YYYY.MM.DD')}
-          </span>
-          {/* <Link href={`/review/edit/${review.reviewid}`} className="ml-auto">
-            <Edit />
-          </Link> */}
+          <div className="pl-2 body1_bold_suit">{review.userDetail.username}</div>
+          <span className="pl-5 body2_suit">{dayjs(review.created_at).format('YYYY.MM.DD')}</span>
+          <div className="ml-auto">
+            <UtilButtons postId={review.reviewid} userId={review.userid} />
+          </div>
         </div>
 
-        <div className="h-24 px-[40px] pt-[18px] bg-gradient-to-l from-orange-200 to-violet-200">
-          <div className="flex gap-3 items-center">
+        <div className="relative h-24 px-[40px] pt-[18px] bg-gradient-to-l from-orange-200 to-violet-200">
+          <PosterBaseColor poster_path={review.movieDetail.backdrop_path} />
+
+          <div className="relative flex gap-3 items-center">
             <div className="flex-none w-[60px] h-[90px]">
               <Image
                 className="object-cover w-full rounded"
@@ -52,9 +54,7 @@ const ReviewItem = ({ review }: Props) => {
               />
             </div>
             <div>
-              <strong className="text-neutral-800 text-base font-normal leading-snug">
-                {review.movieDetail.title}
-              </strong>
+              <strong className="body1_regular_suit">{review.movieDetail.title}</strong>
               <div className="flex gap-1">
                 <StarFill className="w-4" />
                 <span className="text-neutral-800 text-[13px] font-normal">{review.rating}</span>
@@ -63,16 +63,16 @@ const ReviewItem = ({ review }: Props) => {
           </div>
         </div>
 
-        <div className="flex flex-col justify-end items-center flex-1 gap-[14px] py-6 mx-6 ">
-          <div className="flex flex-col justify-center items-center flex-1 w-full py-5 text-neutral-800 text-base font-normal leading-snug">
+        <div className="flex flex-col justify-end items-center flex-1 pt-10 pb-5 mx-6 ">
+          <div className="flex flex-col justify-center items-center flex-1 w-full body1_regular_suit">
             <p>{review.review}</p>
             <p>{review.content}</p>
           </div>
-          <ul className="flex flex-wrap gap-2 justify-center">
+          <ul className="flex flex-wrap gap-2 mt-3 mb-[15px] justify-center">
             {reviewCategories.map((category: string, i: number) => (
               <li
                 key={category + i}
-                className="min-w-[70px] min-h-[29px] px-3 py-1.5 bg-rose-100 rounded-lg border border-white justify-center items-center gap-2.5 inline-flex text-neutral-800 text-sm font-normal leading-[17px]"
+                className="min-w-[70px] min-h-[29px] px-3 py-1.5 bg-rose-100 rounded-lg border border-white justify-center items-center gap-2.5 inline-flex body2_suit"
               >
                 {category}
               </li>
@@ -80,14 +80,14 @@ const ReviewItem = ({ review }: Props) => {
             {reviewKeywords.map((keyword: { value: string }, i: number) => (
               <li
                 key={i}
-                className="min-w-[70px] min-h-[29px] px-3 py-1.5 bg-rose-100 rounded-lg border border-white justify-center items-center gap-2.5 inline-flex text-neutral-800 text-sm font-normal leading-[17px]"
+                className="min-w-[70px] min-h-[29px] px-3 py-1.5 bg-rose-100 rounded-lg border border-white justify-center items-center gap-2.5 inline-flex body2_suit"
               >
                 {keyword.value}
               </li>
             ))}
           </ul>
 
-          {/* <ReviewLikes reviewid={review.reviewid} /> */}
+          <ReviewLikes reviewid={review.reviewid} />
         </div>
       </Link>
     </li>

@@ -92,7 +92,7 @@ const ReviewForm = ({ movieId, editReview, movieButtonRef }: Props) => {
           type: 'error',
           content: '리뷰를 등록할 수 없습니다. ' + error.message
         });
-      saveWatchList(userInfo.id!, movieId!);
+      await saveWatchList(userInfo.id!, movieId!);
       saveTempReview();
       messageApi.open({
         type: 'success',
@@ -100,6 +100,7 @@ const ReviewForm = ({ movieId, editReview, movieButtonRef }: Props) => {
       });
 
       router.push(`/review/${data![0].reviewid}`);
+      router.refresh();
     } catch (error) {
       if (error)
         return messageApi.open({
@@ -176,6 +177,7 @@ const ReviewForm = ({ movieId, editReview, movieButtonRef }: Props) => {
       setValue('content', content);
       setValue('rating', rating || 0);
 
+      console.log('폼 채우기 movieid => ', movieid);
       saveSearchMovieId(movieid);
     }
   }, [userInfo, IsConfirmed]);
@@ -184,15 +186,15 @@ const ReviewForm = ({ movieId, editReview, movieButtonRef }: Props) => {
     router.back();
   };
 
-  const handleModalOk  = () => {
+  const handleModalOk = () => {
     setIsSearchModalOpen(false);
     setIsConfirmed(true);
-  }
+  };
 
   const handleModalCancel = () => {
     setIsSearchModalOpen(false);
     setIsConfirmed(false);
-  }
+  };
 
   return (
     <>
@@ -201,7 +203,9 @@ const ReviewForm = ({ movieId, editReview, movieButtonRef }: Props) => {
         <div className="mb-4">
           <label className="form-title" htmlFor="date">
             콘텐츠 본 날짜
-            <abbr title="필수입력" className='required'><span>필수입력</span></abbr>
+            <abbr title="필수입력" className="required">
+              <span>필수입력</span>
+            </abbr>
           </label>
           <Controller
             name="selectedDate"
@@ -234,7 +238,9 @@ const ReviewForm = ({ movieId, editReview, movieButtonRef }: Props) => {
 
           <label className="form-title" htmlFor="review">
             어떤 점이 좋았나요?
-            <abbr title="필수입력" className='required'><span>필수입력</span></abbr>
+            <abbr title="필수입력" className="required">
+              <span>필수입력</span>
+            </abbr>
           </label>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mt-2">
             {REVIEW_CATEGORY_LIST.map((category, i) => (
@@ -249,7 +255,9 @@ const ReviewForm = ({ movieId, editReview, movieButtonRef }: Props) => {
           </div>
           <label className="form-title" htmlFor="review">
             리뷰 한줄평
-            <abbr title="필수입력" className='required'><span>필수입력</span></abbr>
+            <abbr title="필수입력" className="required">
+              <span>필수입력</span>
+            </abbr>
           </label>
           <input
             className="custom_input"
@@ -266,7 +274,9 @@ const ReviewForm = ({ movieId, editReview, movieButtonRef }: Props) => {
           )}
           <label className="form-title" htmlFor="review">
             별점
-            <abbr title="필수입력" className='required'><span>필수입력</span></abbr>
+            <abbr title="필수입력" className="required">
+              <span>필수입력</span>
+            </abbr>
           </label>
           <div>
             <StarBox fieldName="rating" setValue={setValue} defaultValue={getValues().rating} />
@@ -288,11 +298,7 @@ const ReviewForm = ({ movieId, editReview, movieButtonRef }: Props) => {
             <button type="button" onClick={handleCancel} className="button-white">
               돌아가기
             </button>
-            <button
-              type="button"
-              onClick={handleTempSave}
-              className="button-white"
-            >
+            <button type="button" onClick={handleTempSave} className="button-white">
               임시저장
             </button>
             <button
@@ -308,26 +314,20 @@ const ReviewForm = ({ movieId, editReview, movieButtonRef }: Props) => {
       </form>
 
       <Modal open={isSearchModalOpen} onCancel={handleModalCancel} footer={null} width={400}>
-          <p className='pt-[50px] pb-[30px] text-center text-neutral-800 text-xl font-normal leading-normal'>
-            작성 중이던 내용이 있습니다
-            <br />
-            이어서 작성하시겠습니까?
-          </p>
-          <div className='flex justify-center gap-3 mb-5'>
-            <button
-              className="button-white"
-              onClick={handleModalCancel}
-            >
-              취소
-            </button>
-            <button
-              className="button-dark"
-              onClick={handleModalOk}
-            >
-              확인
-            </button>
-          </div>
-        </Modal>
+        <p className="pt-[50px] pb-[30px] text-center text-neutral-800 text-xl font-normal leading-normal">
+          작성 중이던 내용이 있습니다
+          <br />
+          이어서 작성하시겠습니까?
+        </p>
+        <div className="flex justify-center gap-3 mb-5">
+          <button className="button-white" onClick={handleModalCancel}>
+            취소
+          </button>
+          <button className="button-dark" onClick={handleModalOk}>
+            확인
+          </button>
+        </div>
+      </Modal>
     </>
   );
 };

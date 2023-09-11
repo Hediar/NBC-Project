@@ -25,13 +25,16 @@ const UtilButtons = ({ postId, userId, className }: Props) => {
   const handleMenuClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     e.stopPropagation();
-  }
+  };
 
-  const delButtonHandler = () => {
+  const delButtonHandler = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    e.stopPropagation();
+
     setIsModalOpen(true);
   };
-  
-  const handleModalOk  = async () => {
+
+  const handleModalOk = async () => {
     const { data, error } = await supabase.from('reviews').delete().eq('reviewid', postId);
     if (error)
       return messageApi.open({
@@ -46,11 +49,12 @@ const UtilButtons = ({ postId, userId, className }: Props) => {
 
     setIsModalOpen(false);
     router.push('/review');
-  }
-  
+    router.refresh();
+  };
+
   const handleModalCancel = () => {
     setIsModalOpen(false);
-  }
+  };
 
   useEffect(() => {
     setMounted(true);
@@ -59,15 +63,11 @@ const UtilButtons = ({ postId, userId, className }: Props) => {
   const items: MenuProps['items'] = [
     {
       key: '1',
-      label: (
-        <Link href={`/review/edit/${postId}`}>수정하기</Link>
-      ),
+      label: <Link href={`/review/edit/${postId}`}>수정</Link>
     },
     {
       key: '2',
-      label: (
-        <button onClick={delButtonHandler}>삭제하기</button>
-      ),
+      label: <button onClick={delButtonHandler}>삭제</button>
     }
   ];
 
@@ -76,31 +76,26 @@ const UtilButtons = ({ postId, userId, className }: Props) => {
       <div className={className}>
         {contextHolder}
         {userId === userInfo.id ? (
-          <>
+          <div className="h-6">
             <Dropdown menu={{ items }} placement="bottomRight">
-              <button onClick={handleMenuClick}><span className='sr-only'>메뉴</span><More /></button>
+              <button onClick={handleMenuClick}>
+                <span className="sr-only">메뉴</span>
+                <More />
+              </button>
             </Dropdown>
 
             <Modal open={isModalOpen} onCancel={handleModalCancel} footer={null} width={400}>
-              <p className='pt-[50px] pb-[30px] text-center subtitle2_suit'>
-              정말 삭제하시겠습니까?
-              </p>
-              <div className='flex justify-center gap-3 mb-5'>
-                <button
-                  className="button-white"
-                  onClick={handleModalCancel}
-                >
+              <p className="pt-[50px] pb-[30px] text-center subtitle2_suit">정말 삭제하시겠습니까?</p>
+              <div className="flex justify-center gap-3 mb-5">
+                <button className="button-white" onClick={handleModalCancel}>
                   취소
                 </button>
-                <button
-                  className="button-dark"
-                  onClick={handleModalOk}
-                >
+                <button className="button-dark" onClick={handleModalOk}>
                   확인
                 </button>
               </div>
             </Modal>
-        </>
+          </div>
         ) : null}
       </div>
     )
