@@ -13,9 +13,9 @@ const MyAccount = async ({ userData, user }: Props) => {
   const lastConnected = changeFormat(user.last_sign_in_at!);
 
   return (
-    <div className="w-full items-center lg:items-start flex flex-col gap-4 p-10">
+    <div className="w-full items-center lg:items-start flex flex-col gap-4 sm:p-10">
       <ChangeAvatarPhoto userData={userData} />
-      <div className="flex flex-col gap-7 w-10/12 bg-white border border-[#888] shadow-sm shadow-gray-400 p-8 h-96 rounded-2xl">
+      <div className="w-full flex flex-col gap-7 sm:w-10/12 bg-white border border-[#888] shadow-sm shadow-gray-400 p-8 h-full sm:h-96 rounded-2xl">
         <div className="flex flex-col gap-2">
           <div className="flex gap-[10px] items-center">
             <h2 className="font-bold text-sm">로그인 수단</h2>

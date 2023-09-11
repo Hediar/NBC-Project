@@ -19,7 +19,7 @@ const NumberOfGenresWatched = async ({ userId }: Props) => {
   return (
     <>
       {genresResult.length !== 0 ? (
-        <RecordsContainerBig key="faf0ff" bgColor="#faf0ff" borderColor="#f0d6fc" title="내가 본 영화 장르">
+        <RecordsContainerBig key="faf0ff" bgColor="#faf0ff" borderColor="#f0d6fc" title="내가 본 영화 장르 TOP 5">
           <Suspense fallback={<NumberOfGenresGraph genreNames={[]} quantities={[]} />}>
             <NumberOfGenresGraph genreNames={genresResult} quantities={genresQuantitiesResult} />
           </Suspense>

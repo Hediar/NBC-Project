@@ -47,7 +47,7 @@ const LikesOnGenres = async ({ username }: { username: string }) => {
   return (
     <>
       {genresResult.length !== 0 ? (
-        <RecordsContainerBig key="ecefff" bgColor="#ecefff" borderColor="#cad3fe" title="좋아요 누른 영화 장르">
+        <RecordsContainerBig key="ecefff" bgColor="#ecefff" borderColor="#cad3fe" title="좋아요 누른 영화 장르 TOP 5">
           <NumberOfGenresGraph genreNames={genresResult} quantities={genresQuantitiesResult} />
         </RecordsContainerBig>
       ) : (

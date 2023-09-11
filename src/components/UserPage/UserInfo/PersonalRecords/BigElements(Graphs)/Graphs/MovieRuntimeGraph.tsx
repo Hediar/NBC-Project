@@ -3,6 +3,7 @@
 import React from 'react';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
+import trimArrayToLength from '@/util/tripArrayToLength';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -27,12 +28,17 @@ type Props = {
 };
 
 const MovieRuntimeGraph = ({ titles, runtimes }: Props) => {
+  const clonedTitles = structuredClone(titles);
+  const clonedRuntimes = structuredClone(runtimes);
+  trimArrayToLength(clonedTitles, 5);
+  trimArrayToLength(clonedRuntimes, 5);
+
   const data = {
-    labels: titles,
+    labels: clonedTitles,
     datasets: [
       {
         label: '관람 시간(hour)',
-        data: runtimes,
+        data: clonedRuntimes,
         backgroundColor: [
           'rgba(111, 165, 252, 0.5)',
           'rgba(255, 99, 132, 0.5)',

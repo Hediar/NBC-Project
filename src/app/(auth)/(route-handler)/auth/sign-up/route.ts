@@ -1,7 +1,6 @@
 import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
-import generateUniqueRandomUsername from '@/api/generateUsername/generateUniqueRandomUsername';
 
 export const dynamic = 'force-dynamic';
 
@@ -10,10 +9,9 @@ export const POST = async (request: Request) => {
   const formData = await request.formData();
   const email = String(formData.get('email'));
   const password = String(formData.get('password'));
+  const username = String(formData.get('username'));
   const captchaToken = String(formData.get('captchaToken'));
   const supabase = createRouteHandlerClient<Database>({ cookies });
-
-  const randomUsername = await generateUniqueRandomUsername(supabase);
 
   const { error } = await supabase.auth.signUp({
     email,
@@ -21,9 +19,7 @@ export const POST = async (request: Request) => {
     options: {
       emailRedirectTo: `${requestUrl.origin}/auth/callback`,
       captchaToken: captchaToken,
-      data: {
-        username: randomUsername
-      }
+      data: { username }
     }
   });
 
