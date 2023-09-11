@@ -26,7 +26,7 @@ const LatestReviews = async () => {
       <div className="p-5">
         {latestReviewData?.map((review, index) => {
           const likesCount = (review.reviewLikesCount && review.reviewLikesCount.length) || 0;
-          // console.log(likesCount);
+          // console.log(index, review);
           return (
             <Link
               key={review.reviewid}
@@ -34,7 +34,7 @@ const LatestReviews = async () => {
               className="w-full mb-16 m-4 shadow-neutral-400"
             >
               <div
-                className={`p-4 border border-opacity-20 rounded-[20px] shadow h-36`}
+                className={`p-5 px-7 border border-opacity-20 rounded-[20px] shadow h-36`}
                 style={{
                   backgroundColor: `${bgStyles[index].rgbColortrans}`,
                   borderColor: `${bgStyles[index].rgbColor}`
@@ -54,8 +54,8 @@ const LatestReviews = async () => {
                   <SVGTalkEndPoint className="opacity-20" />
                 </div>
 
-                <div className="truncate w-full">{review.content}</div>
-                <div className="flex justify-between">
+                <div className="truncate w-full py-[10px]">{review.content}</div>
+                <div className="flex justify-between ">
                   <span className="flex">
                     <HeartLine />
                     {likesCount}
