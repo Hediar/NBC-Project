@@ -157,6 +157,14 @@ select:-webkit-autofill:focus {
   font-weight: 700;
   line-height: 24px; /* 120% */
 }
+.subtitle2_regular {
+  /* font/subtitle2(bold) */
+  font-family: var(--base-font);
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* 120% */
+}
 .subtitle3_suit {
   font-family: var(--base-font);
   font-size: 20px;
