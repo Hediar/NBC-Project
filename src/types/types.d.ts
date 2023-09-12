@@ -155,7 +155,7 @@ declare global {
     user_id: string;
     title: string;
     content: string;
-    movie_id: string;
+    movie_id: number;
     movie_title: string;
     movie_imgUrl: string;
     movie_genreIds: number[];
@@ -307,5 +307,20 @@ declare global {
     };
     user_has_liked_comment: boolean;
     likes: number;
+  }
+
+  interface AddUserData {
+    user_id: string;
+    option_id: number;
+    post_id: number;
+  }
+
+  interface UpdateDiscussionPost {
+    userId: string;
+    title: string | undefined;
+    content: string | undefined;
+    options: { text: string }[];
+    postId: string;
+    startNum: number;
   }
 }
