@@ -61,13 +61,13 @@ const MovieLikes = (props: { movieid: number }) => {
       {contextHolder}
       <button onClick={likeButtonHandler}>
         {likecurrentuser ? (
-          <HeartFilledColor className="animate-200 hover:scale-110" />
+          <HeartFilledColor className="movie-like animate-200 hover:scale-110" />
         ) : (
           <HeartLineWhite
             fill={isOnHover ? 'white' : 'transparent'}
             onMouseEnter={() => setIsOnHover(true)}
             onMouseLeave={() => setIsOnHover(false)}
-            className="cursor-pointer animate-200 hover:scale-110"
+            className="movie-like cursor-pointer animate-200 hover:scale-110"
           />
         )}
       </button>
