@@ -41,6 +41,7 @@ const Search = ({
     debouncedHandleChange(value);
 
     if (!value) {
+      setSearchInput('');
       setSearchResults([]);
     }
   };
