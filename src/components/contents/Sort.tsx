@@ -20,7 +20,7 @@ const Sort = ({
   ];
 
   return (
-    <div>
+    <div className="pb-5">
       <Sorting options={sortingOptions} selectedOption={sortingOption} onChange={handleSortingChange} />
     </div>
   );
