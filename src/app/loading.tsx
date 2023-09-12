@@ -1,10 +1,8 @@
-import MainPageLoading from '@/components/MainPage/MainPageSkeleton';
-import LoadingSpinner from '@/components/common/LoadingSpinner';
+import NewLoading from '@/components/common/NewLoading';
 import React from 'react';
 
 const loading = () => {
-  // return <LoadingSpinner />;
-  return <MainPageLoading />;
+  return <NewLoading />;
 };
 
 export default loading;
