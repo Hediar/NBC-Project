@@ -1,19 +1,15 @@
-import React from 'react';
 import RecordsContainerBig from '../_Containers/RecordsContainerBig';
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
-import idToUsername from '@/api/supabase/idToUsername';
 import getGenresUserLikes from '@/api/movieStatistics/getGenresUserLikes';
 import NumberOfGenresGraph from './Graphs/NumberOfGenresGraph';
+import publicApi from '@/util/supabase/auth/public';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
 export const dynamic = 'force-dynamic';
 
 const LikesOnGenres = async ({ username }: { username: string }) => {
-  const supabase = createServerComponentClient<Database>({ cookies });
+  const { id: userId } = await publicApi.get('username to id', { username });
 
-  const { isError, error: fetchIdError, data: userId } = await idToUsername(supabase, username);
-
-  if (isError) {
+  if (!userId) {
     // console.log(fetchIdError);
     return (
       <RecordsContainerBig key="ecefff" bgColor="#ecefff" borderColor="#cad3fe" title="좋아요 누른 영화 장르">
@@ -24,7 +20,7 @@ const LikesOnGenres = async ({ username }: { username: string }) => {
       </RecordsContainerBig>
     );
   }
-
+  const supabase = createClientComponentClient();
   const { data: movieIds, error: fetchDataError } = await supabase
     .from('movielikes')
     .select('movieid')
