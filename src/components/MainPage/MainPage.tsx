@@ -1,12 +1,11 @@
 import { ArrowRight2 } from '@/styles/icons/Icons24';
 import Link from 'next/link';
-import React, { Suspense } from 'react';
+import React from 'react';
 import KeywordButtons from './MainPageMovies/KeywordButtons';
 import TrendMoives from './MainPageMovies/TrendMoives';
 import LatestReviews from './MainContents/LatestReviews';
 import LatestMovies from './MainContents/LatestMovies';
 import HotTopics from './MainContents/HotTopics';
-import MainPageLoading from './MainPageSkeleton';
 
 const MainPage = ({ params }: { params: string }) => {
   return (
@@ -34,7 +33,6 @@ const MainPage = ({ params }: { params: string }) => {
       <section className=" bg-GreyScaleWhite2">
         <HotTopics />
       </section>
-      {/* <MainPageLoading /> */}
     </main>
   );
 };
