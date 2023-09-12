@@ -3,21 +3,20 @@ import ReviewMovie from '@/components/ReviewForm/ReviewMovie';
 import SearchPopup from '@/components/ReviewForm/SearchPopup';
 import useUserInfoStore from '@/store/saveCurrentUserData';
 import { useReviewMovieStore, useSearchModalStore } from '@/store/useReviewStore';
-import supabase from '@/supabase/config';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
 import { getMovieDetail } from '@/api/tmdb';
 import { optionMark } from '@/static/optionMark';
 import { message } from 'antd';
 import { debounce } from 'lodash';
+import { addNewDiscussionPost } from '@/api/supabase-discussion';
+import useLeaveConfirmation from '@/hooks/useLeaveConfiramation';
 
 interface Props {}
 
-interface Option {
-  text: string;
-}
-
 const marginYGap = '25px';
+const titleLengthLimit = 50;
+const contentLengthLimit = 200;
 
 const DiscussionRegistPage = (props: Props) => {
   const [messageApi, contextHolder] = message.useMessage();
@@ -28,14 +27,8 @@ const DiscussionRegistPage = (props: Props) => {
     userInfo: { id: userId }
   } = useUserInfoStore();
   const [title, setTitle] = useState<string>('');
-  const titleLengthLimit = 50;
-  if (title.length > titleLengthLimit) setTitle(title.slice(0, titleLengthLimit));
-
   const [content, setContent] = useState<string>('');
-  const contentLengthLimit = 200;
-  if (content.length > contentLengthLimit) setContent(content.slice(0, contentLengthLimit));
-
-  const [options, setOptions] = useState<Option[]>([{ text: '' }, { text: '' }]);
+  const [options, setOptions] = useState<{ text: string }[]>([{ text: '' }, { text: '' }]);
   const [isOptionOpen, setIsOptionOpen] = useState<boolean>(true);
 
   const router = useRouter();
@@ -45,20 +38,21 @@ const DiscussionRegistPage = (props: Props) => {
   const searchParams = useSearchParams();
   const movie_id = searchParams.get('movieId') ?? '';
 
+  const { confirmationModal } = useLeaveConfirmation(true);
+
+  //뒤로가기 방지
   useEffect(() => {
-    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
-      if (title !== '') {
-        event.preventDefault();
-        event.returnValue = '작성한 내용을 저장하지 않고 페이지를 떠나시겠습니까?';
+    const preventGoBack = () => {
+      if (confirm('정말 나가시겠습니까? \n작성중인 내용이 모두 사라집니다.')) {
+        history.go(-1);
+      } else {
+        history.pushState(null, '', location.href);
       }
     };
-
-    window.addEventListener('beforeunload', handleBeforeUnload);
-
-    return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-    };
-  }, [title]);
+    history.pushState(null, '', location.href);
+    window.addEventListener('popstate', preventGoBack);
+    return () => window.removeEventListener('popstate', preventGoBack);
+  }, []);
 
   useEffect(() => {
     return saveSearchMovieId();
@@ -66,13 +60,9 @@ const DiscussionRegistPage = (props: Props) => {
 
   useEffect(() => {
     const getMovieData = async () => {
-      if (movieId) {
-        const fetchData = await getMovieDetail(movieId as string);
-        setMovieData(fetchData);
-        return;
-      }
-      if (movie_id) {
-        const fetchData = await getMovieDetail(movie_id as string);
+      const movieIdToFetch = movieId || movie_id;
+      if (movieIdToFetch) {
+        const fetchData = await getMovieDetail(movieIdToFetch as string);
         setMovieData(fetchData);
         return;
       }
@@ -82,7 +72,7 @@ const DiscussionRegistPage = (props: Props) => {
     return () => {
       setMovieData(null);
     };
-  }, [movieId]);
+  }, [movieId, movie_id]);
 
   const addOption = () => {
     const newOption = { text: '' };
@@ -118,14 +108,11 @@ const DiscussionRegistPage = (props: Props) => {
       return titleRef.current!.focus();
     }
     if (isOptionOpen) {
-      let optionCheck = 0;
-      for (let i = 0; i < options.length; i++) {
-        if (options[i].text.trim().length) optionCheck++;
-      }
+      const optionCheck = options.filter((option) => option.text.trim().length).length;
       if (optionCheck < 2) {
         messageApi.open({
           type: 'warning',
-          content: '투표 토론일 시 선택지는 2개 이상이어야합니다'
+          content: '투표 토론일 시 선택지는 2개 이상이어야 합니다'
         });
         return;
       }
@@ -138,25 +125,13 @@ const DiscussionRegistPage = (props: Props) => {
         movie_id: movieData?.id,
         movie_title: movieData?.title,
         movie_imgUrl: movieData?.poster_path,
-        movie_genreIds: movieData?.genres.map((genre) => genre.id),
+        movie_genreIds: movieData?.genres.map((genre) => genre.id) as number[],
         vote_count: 0,
         view_count: 0,
         comment_count: 0
       };
-      const { data } = await supabase.from('discussion_post').insert(newPost).select();
 
-      if (isOptionOpen) {
-        for (let i = 0; i < options.length; i++) {
-          if (options[i].text.trim().length) {
-            const newOption = {
-              post_id: data![0].post_id,
-              content: options[i].text
-            };
-
-            await supabase.from('discussion_option').insert(newOption);
-          }
-        }
-      }
+      await addNewDiscussionPost(newPost, isOptionOpen, options);
 
       messageApi.open({
         type: 'success',
@@ -168,19 +143,34 @@ const DiscussionRegistPage = (props: Props) => {
     } catch (error) {}
   };
 
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newTitle = e.target.value;
+    if (newTitle.length <= titleLengthLimit) {
+      setTitle(newTitle);
+    }
+  };
+
+  const handleContentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newContent = e.target.value;
+    if (newContent.length <= contentLengthLimit) {
+      setContent(newContent);
+    }
+  };
+
   return (
     <>
       {contextHolder}
-      <div className="p-5 w-3/5">
+      {confirmationModal}
+      <div className="p-5 w-full sm:w-4/5 lg:w-3/5 mx-auto">
         <h1 className={`text-2xl font-bold mb-[25px]`}>토론 작성</h1>
         {/* S:: 영화 선택 */}
-        <div>
+        <div className="info-box">
           {movieId || movie_id ? (
             <ReviewMovie movieId={movieId ?? movie_id} />
           ) : (
             <div className="w-full h-[15vh] flex justify-center items-center">
               <button
-                className="bg-black text-white rounded-[10px] font-bold py-1.5 px-3"
+                className="bg-black text-white rounded-[10px] text-sm sm:text-base font-bold py-1.5 px-3"
                 onClick={() => {
                   openSearchModal();
                 }}
@@ -203,7 +193,7 @@ const DiscussionRegistPage = (props: Props) => {
               name="topic"
               placeholder="내용을 입력해주세요"
               value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              onChange={handleTitleChange}
             />
             <span className="text-gray-300 text-sm">
               {title.length}/{titleLengthLimit}
@@ -218,7 +208,7 @@ const DiscussionRegistPage = (props: Props) => {
               className="border w-full px-[20px] py-[12px] rounded-[10px] mt-[6px]"
               placeholder="토론 주제를 설명해주세요"
               value={content}
-              onChange={(e) => setContent(e.target.value)}
+              onChange={handleContentChange}
             />
             <span className="text-gray-300 text-sm">
               {content.length}/{contentLengthLimit}
@@ -244,7 +234,7 @@ const DiscussionRegistPage = (props: Props) => {
             {isOptionOpen ? (
               <>
                 <button
-                  className="border px-20 py-3 rounded-[22px]"
+                  className={`${Style.voteBtn}`}
                   onClick={() => {
                     setIsOptionOpen(false);
                   }}
@@ -252,7 +242,7 @@ const DiscussionRegistPage = (props: Props) => {
                   자유 토론
                 </button>
                 <button
-                  className="border px-20 py-3 rounded-[22px] bg-black text-white"
+                  className={`${Style.voteBtn} bg-black text-white`}
                   onClick={() => {
                     setIsOptionOpen(true);
                   }}
@@ -355,3 +345,7 @@ const DiscussionRegistPage = (props: Props) => {
 };
 
 export default DiscussionRegistPage;
+
+const Style = {
+  voteBtn: 'border px-6 sm:px-20 py-3 rounded-[22px]'
+};

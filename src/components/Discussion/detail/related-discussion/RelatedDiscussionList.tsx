@@ -2,6 +2,7 @@ import React from 'react';
 import RelatedDiscussionPost from './RelatedDiscussionPost';
 import { getDiscussionPostDetail, getDiscussionPostOption, getRelatedDiscussionPost } from '@/api/supabase-discussion';
 import Link from 'next/link';
+import { ArrowRight2 } from '@/styles/icons/Icons24';
 
 type Props = {
   discussionId: string;
@@ -12,7 +13,17 @@ const RelatedDiscussionList = async ({ discussionId }: Props) => {
   const relatedData = await getRelatedDiscussionPost({ genreIds: postData.movie_genreIds, movieId: postData.movie_id });
   return (
     <div className="w-full bg-[#EBEBEB] sm:min-h-screen p-10 sm:pr-0 sm:mx-10 rounded-xl sm:rounded-none">
-      <p className="font-bold text-xl h3_suit">관련 토픽</p>
+      <div className="flex justify-between">
+        <p className="text-neutral-800 text-xl lg:text-[32px] font-bold leading-10">관련 토픽</p>
+        <Link
+          href={'discussion/list'}
+          className="flex text-neutral-800 text-base lg:text-xl font-normal leading-normal p-2 lg:p-1"
+        >
+          전체보기
+          <ArrowRight2 />
+        </Link>
+      </div>
+
       {relatedData?.length ? (
         relatedData?.map(async (relatedDiscussionData, idx) => {
           if (idx > 3) return null;

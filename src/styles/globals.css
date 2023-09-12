@@ -157,6 +157,14 @@ select:-webkit-autofill:focus {
   font-weight: 700;
   line-height: 24px; /* 120% */
 }
+.subtitle2_regular {
+  /* font/subtitle2(bold) */
+  font-family: var(--base-font);
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* 120% */
+}
 .subtitle3_suit {
   font-family: var(--base-font);
   font-size: 20px;
@@ -388,7 +396,7 @@ select:-webkit-autofill:focus {
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-gray-500 outline-offset-1 outline-gray-600;
+  @apply bg-gray-500 outline-offset-1 outline-gray-600 rounded-lg;
 }
 
 ::-webkit-scrollbar-thumb:horizontal {

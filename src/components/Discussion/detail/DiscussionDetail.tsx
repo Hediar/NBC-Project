@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { getDiscussionPostDetail } from '@/api/supabase-discussion';
 
 import DiscussionCommentContainer from './comment/DiscussionCommentContainer';
@@ -6,6 +6,9 @@ import ViewCount from './ViewCount';
 import DiscussionContent from './DiscussionContent';
 import DiscussionTopic from './DiscussionTopic';
 import RelatedDiscussionList from './related-discussion/RelatedDiscussionList';
+import DiscussionTopicSuspense from './DiscussionTopicSuspense';
+import DiscussionCommentContainerSuspense from './comment/DiscussionCommentContainerSuspense';
+import RelatedDiscussionListSuspense from './related-discussion/RelatedDiscussionListSuspense';
 
 interface Props {
   discussionId: string;
@@ -20,11 +23,19 @@ const DiscussionDetail = async ({ discussionId }: Props) => {
       <div className="flex">
         <main className="w-full flex flex-col relative">
           <DiscussionContent movieId={postData?.movie_id} />
-          <DiscussionTopic postData={postData} />
-          <DiscussionCommentContainer discussionId={discussionId} />
+
+          <Suspense fallback={<DiscussionTopicSuspense />}>
+            <DiscussionTopic postData={postData} />
+          </Suspense>
+
+          <Suspense fallback={<DiscussionCommentContainerSuspense />}>
+            <DiscussionCommentContainer discussionId={discussionId} />
+          </Suspense>
 
           <section className="w-full sm:absolute sm:w-1/3 sm:left-2/3">
-            <RelatedDiscussionList discussionId={discussionId} />
+            <Suspense fallback={<RelatedDiscussionListSuspense />}>
+              <RelatedDiscussionList discussionId={discussionId} />
+            </Suspense>
           </section>
         </main>
       </div>

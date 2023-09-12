@@ -1,4 +1,5 @@
 'use server';
+
 import supabase from '@/supabase/config';
 import { Metadata, ResolvingMetadata } from 'next';
 
