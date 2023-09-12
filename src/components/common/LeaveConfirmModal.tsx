@@ -1,42 +1,30 @@
 'use client';
-import { Dispatch, SetStateAction } from 'react';
-import { useRouter } from 'next/navigation';
 
 interface Props {
   open?: boolean;
-  onClose?: () => void;
-  onClick?: () => void;
+  onLeave?: () => void;
+  onContinue?: () => void;
 }
 
-const LeaveConfirmModal = ({ open, onClose, onClick }: Props) => {
+const LeaveConfirmModal = ({ open, onLeave, onContinue }: Props) => {
   if (open)
     return (
-      <div
-        id="modal-container"
-        className="fixed top-0 left-0 w-screen h-screen bg-black/30 flex justify-center items-center z-50"
-      >
-        <div
-          id="modal-content"
-          className="bg-white w-96 h-64 px-4 py-2 flex flex-col space-y-8 justify-center items-center rounded-xl relative"
-        >
-          <div className="flex flex-col items-center justify-center space-y-2">
-            <h2 className="text-md font-bold">안내</h2>
-            <div className="flex flex-col items-center justify-center">
-              <h3 className="text-lg font-extrabold">정말 게시글 작성을 그만두시겠어요?</h3>
-              <p className="text-sm text-gray-600">변경사항은 저장되지 않습니다.</p>
-            </div>
+      <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-2 justify-center items-center">
+          <p>작성중인 내용이 있습니다. 정말 나가시겠습니까?</p>
+          <p className="text-gray-300 text-sm">작성중인 모든 내용은 사라집니다.</p>
+        </div>
+
+        <div className="flex space-x-4 w-full justify-center">
+          <div>
+            <button onClick={onLeave} className="bg-gray-100 px-10 py-3 rounded-md">
+              나가기
+            </button>
           </div>
-          <div className="flex space-x-4 w-full justify-center">
-            <div>
-              <button onClick={onClick} className="bg-gray-100 px-10 py-3 rounded-md">
-                나가기
-              </button>
-            </div>
-            <div>
-              <button onClick={onClose} className="bg-mainGreen text-white px-10 py-3 rounded-md">
-                계속 작성하기
-              </button>
-            </div>
+          <div>
+            <button onClick={onContinue} className="bg-white border text-black px-10 py-3 rounded-md">
+              계속 작성하기
+            </button>
           </div>
         </div>
       </div>

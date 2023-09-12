@@ -1,13 +1,13 @@
 import { useCallback, useState } from 'react';
-import useRouteChangeEvents from './useRouteChangeEvents';
+import useRouteChangeEvents from '@/app/RouteChangeEventsProvider';
 import { Modal } from 'antd';
 import LeaveConfirmModal from '@/components/common/LeaveConfirmModal';
 
 const useLeaveConfirmation = (shouldPreventRouteChange: boolean) => {
-  const [showConfirmationDialog, setShowConfirmationDialog] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
   const onBeforeRouteChange = useCallback(() => {
     if (shouldPreventRouteChange) {
-      setShowConfirmationDialog(true);
+      setShowConfirmModal(true);
       return false;
     }
 
@@ -18,13 +18,13 @@ const useLeaveConfirmation = (shouldPreventRouteChange: boolean) => {
 
   return {
     confirmationDialog: (
-      <LeaveConfirmModal
-        open={showConfirmationDialog}
-        onClick={() => {
-          allowRouteChange();
-        }}
-        onClose={() => setShowConfirmationDialog(false)}
-      />
+      <Modal centered open={showConfirmModal} footer={null} onCancel={() => setShowConfirmModal(false)}>
+        <LeaveConfirmModal
+          open={showConfirmModal}
+          onContinue={() => setShowConfirmModal(false)}
+          onLeave={() => allowRouteChange()}
+        />
+      </Modal>
     )
   };
 };

@@ -40,11 +40,12 @@ const DiscussionRegistPage = (props: Props) => {
   const searchParams = useSearchParams();
   const movie_id = searchParams.get('movieId') ?? '';
   const [isBlocked, setIsBlocked] = useState(false);
-  const { confirmationDialog } = useLeaveConfirmation(true);
+  const { confirmationDialog } = useLeaveConfirmation(isBlocked);
 
+  //뒤로가기 방지
   useEffect(() => {
     const preventGoBack = () => {
-      if (confirm('나가시겠습니까?')) {
+      if (confirm('정말 나가시겠습니까? \n작성중인 내용이 모두 사라집니다.')) {
         history.go(-1);
       } else {
         history.pushState(null, '', location.href);
