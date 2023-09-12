@@ -7,7 +7,6 @@ import React from 'react';
 import dayjs from 'dayjs';
 import { getUserProfile } from '@/api/review';
 import ReviewLikes from '@/components/Review/ReviewLikes';
-import { HeartLined, StarLined } from '@/styles/icons/Icons32';
 import WatchLaterButton from '@/components/common/WatchLaterButton';
 import MovieLikes from '@/components/MovieLikes/MovieLikes';
 

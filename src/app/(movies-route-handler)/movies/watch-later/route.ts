@@ -17,11 +17,7 @@ export const POST = async (request: Request): Promise<NextResponseType<{ message
   // 쿠키에서 로그인한 유저 정보를 받아서 user id를 저장
   const { data: userData, error } = await supabase.auth.getUser();
   if (error) {
-    // console.log(error);
-    return new NextResponse(JSON.stringify({ message: '유저를 찾을 수 없음.' }), {
-      status: 404,
-      statusText: 'Not Found'
-    });
+    return NextResponse.json({ message: '유저를 찾을 수 없음.' });
   }
   const userId = userData.user.id;
   //
@@ -44,12 +40,9 @@ export const POST = async (request: Request): Promise<NextResponseType<{ message
       if (newlyInsertedDataError) {
         return NextResponse.json({ message: 'fail to insert new movie list for new user!' });
       }
-      return new NextResponse(JSON.stringify({ message: '추가 성공' }), { status: 200, statusText: 'OK' });
+      return NextResponse.json({ message: '추가 성공' });
     }
-    return new NextResponse(JSON.stringify({ message: '리스트 추가 실패' }), {
-      status: 500,
-      statusText: 'Internal Server Error'
-    });
+    return NextResponse.json({ message: '리스트 추가 실패' });
   }
   const watchLaterList = watchLaterData.movies;
   //
@@ -67,14 +60,9 @@ export const POST = async (request: Request): Promise<NextResponseType<{ message
       .select();
 
     if (supabaseUpdateRequestError) {
-      // console.log(supabaseUpdateRequestError);
-      return new NextResponse(JSON.stringify({ message: '삭제 실패' }), {
-        status: 500,
-        statusText: 'Internal Server Error'
-      });
+      return NextResponse.json({ message: '삭제 실패' });
     }
-
-    return new NextResponse(JSON.stringify({ message: '삭제 성공' }), { status: 200, statusText: 'OK' });
+    return NextResponse.json({ message: '삭제 성공' });
   } else {
     // 클릭한 영화의 id가 유저의 찜하기 목록에 없으면 새로 추가하기
     watchLaterList.push(movieId);
@@ -84,13 +72,8 @@ export const POST = async (request: Request): Promise<NextResponseType<{ message
       .eq('userid', userId);
 
     if (watchLaterAddError) {
-      // console.log(watchLaterAddError);
-      return new NextResponse(JSON.stringify({ message: '추가 실패' }), {
-        status: 500,
-        statusText: 'Internal Server Error'
-      });
+      return NextResponse.json({ message: '추가 실패' });
     }
-
-    return new NextResponse(JSON.stringify({ message: '추가 성공' }), { status: 200, statusText: 'OK' });
+    return NextResponse.json({ message: '추가 성공' });
   }
 };

@@ -29,7 +29,7 @@ const SignUp = () => {
     if (passwordValue.length < 6) {
       setShouldDisable(true);
     }
-    if (emailValue.length > 0 && passwordValue.length > 8 && password2Value.length > 8 && usernameValue.length >= 2) {
+    if (emailValue.length > 0 && passwordValue.length >= 8 && password2Value.length >= 8 && usernameValue.length >= 2) {
       setShouldDisable(false);
     }
   }, [emailValue, passwordValue, password2Value, usernameValue]);

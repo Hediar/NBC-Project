@@ -52,7 +52,6 @@ const ChangePassword = ({ user }: Props) => {
     } = await axios('/auth/profile/reauthenticate-user');
     if (error) {
       alert('error');
-      // console.log(error);
     } else {
       setHasEmailSent(true);
       return messageApi.open({
@@ -74,8 +73,7 @@ const ChangePassword = ({ user }: Props) => {
     } = await axios.post('/auth/profile/change-password', { nonce: nonceValue, password: passwordValue });
 
     if (error) {
-      // console.log(error);
-      if (error.includes('New password should be different from the old password')) {
+      if (error.includes('should be different')) {
         return messageApi.open({
           type: 'error',
           content: `예전 비밀번호와 같습니다. 다른 비밀번호를 사용해주세요.`
@@ -83,7 +81,7 @@ const ChangePassword = ({ user }: Props) => {
       }
       return messageApi.open({
         type: 'error',
-        content: `에러가 발생했습니다. \n에러: ${error}`
+        content: `에러가 발생했습니다. 다시 시도해주세요.`
       });
     } else {
       setDisableInputs(true);
