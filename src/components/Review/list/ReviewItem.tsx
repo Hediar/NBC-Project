@@ -64,7 +64,7 @@ const ReviewItem = ({ review }: Props) => {
         </div>
 
         <div className="flex flex-col justify-end items-center flex-1 pt-10 pb-5 mx-6 ">
-          <div className="flex flex-col justify-center items-center flex-1 w-full body1_regular_suit">
+          <div className="flex flex-col justify-center items-center flex-1 w-full text-center body1_regular_suit">
             <p>{review.review}</p>
             <p>{review.content}</p>
           </div>

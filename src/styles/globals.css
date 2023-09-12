@@ -322,6 +322,28 @@ select:-webkit-autofill:focus {
   @apply absolute top-1/2 right-5 -translate-y-1/2;
 }
 
+.select-search-form {
+  @apply flex pr-5 bg-white rounded-xl border border-zinc-300 transition-colors focus-within:border-neutral-800;
+}
+
+.select-search-form button,
+.select-search-form input,
+.select-search-form input:focus {
+  box-shadow: none !important;
+  transition: none !important;
+  border: 0 !important;
+}
+
+.select-search-form > *:first-child button:after {
+  content: '';
+  @apply inline-block w-px h-6 bg-gray-200;
+}
+
+.select-search-form > *:first-child button:after {
+  content: '';
+  @apply inline-block w-px h-6 bg-gray-200;
+}
+
 .skeleton-ui {
   @apply animate-pulse;
 }

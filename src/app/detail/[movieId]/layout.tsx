@@ -37,7 +37,7 @@ export default async function MovieDetailLayout({
     <section>
       <MovieDetailInfo movieId={movieId} />
 
-      <Suspense>{children}</Suspense>
+      {children}
 
       <Suspense>
         <MovieLayoutDiscussion movieId={movieId} />
