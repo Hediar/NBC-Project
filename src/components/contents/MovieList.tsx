@@ -12,7 +12,7 @@ const MovieList = () => {
   const [sortingOption, setSortingOption] = useState<string>('popularity'); // 정렬 옵션
   const [searchType, setSearchType] = useState('movie'); // 검색 filter 옵션
   const [searchMovieValue, setSearchMovieValue] = useState('');
-  const [filteredData, setFilterefData] = useState<any[]>([]);
+  const [filteredData, setFilterefData] = useState<MovieData[]>([]);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [dataList, setDataList] = useState<MovieFetchResult | PersonFetchResult | null>();
@@ -58,7 +58,7 @@ const MovieList = () => {
     }
   };
 
-  const sortData = (data: TMDBSearchMovie[], sortingOption: string): TMDBSearchMovie[] => {
+  const sortData = (data: MovieData[], sortingOption: string): MovieData[] => {
     switch (sortingOption) {
       case 'popularity':
         return data.slice().sort((a, b) => b.popularity - a.popularity);
