@@ -13,10 +13,7 @@ export const POST = async (req: Request) => {
   const { data: userData, error: noUser } = await supabase.auth.getUser();
 
   if (noUser) {
-    return new NextResponse(JSON.stringify({ isError: true, message: 'no user' }), {
-      status: 404,
-      statusText: 'Not Found'
-    });
+    return NextResponse.json({ isError: true, message: 'no user' });
   }
 
   const userId = userData.user!.id;
@@ -33,21 +30,12 @@ export const POST = async (req: Request) => {
       .insert({ userid: userId, ignored_movies: [movieId.toString()] });
 
     if (insertError) {
-      return new NextResponse(JSON.stringify({ isError: true, message: ignoreMoviesError.message }), {
-        status: 500,
-        statusText: 'Internal Server Error'
-      });
+      return NextResponse.json({ isError: true, message: ignoreMoviesError.message });
     }
-    return new NextResponse(JSON.stringify({ isError: false, message: '추가 성공' }), {
-      status: 200,
-      statusText: 'OK'
-    });
+    return NextResponse.json({ isError: false, message: '추가 성공' });
   } else {
     if (ignoreMovies.ignored_movies.some((el) => el === movieId.toString())) {
-      return new NextResponse(JSON.stringify({ isError: true, message: '이미 무시목록에 추가된 영화입니다.' }), {
-        status: 500,
-        statusText: 'Internal Server Error'
-      });
+      return NextResponse.json({ isError: true, message: '이미 무시목록에 추가된 영화입니다.' });
     }
     const copiedArr = ignoreMovies.ignored_movies;
     copiedArr.push(movieId);
@@ -58,16 +46,10 @@ export const POST = async (req: Request) => {
       .eq('userid', userId);
 
     if (updateError) {
-      return new NextResponse(JSON.stringify({ isError: true, message: updateError.message }), {
-        status: 500,
-        statusText: 'Internal Server Error'
-      });
+      return NextResponse.json({ isError: true, message: updateError.message });
     }
 
     revalidateTag('fetchMovie');
-    return new NextResponse(JSON.stringify({ isError: false, message: '업데이트 성공' }), {
-      status: 200,
-      statusText: 'OK'
-    });
+    return NextResponse.json({ isError: false, message: '업데이트 성공' });
   }
 };
