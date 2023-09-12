@@ -24,5 +24,5 @@ export async function generateMetadata(
 }
 
 export default async function MovieDetailLayout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>;
+  return <div className="wrap shadow1">{children}</div>;
 }

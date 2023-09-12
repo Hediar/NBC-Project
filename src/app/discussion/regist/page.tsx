@@ -3,7 +3,6 @@ import ReviewMovie from '@/components/ReviewForm/ReviewMovie';
 import SearchPopup from '@/components/ReviewForm/SearchPopup';
 import useUserInfoStore from '@/store/saveCurrentUserData';
 import { useReviewMovieStore, useSearchModalStore } from '@/store/useReviewStore';
-import supabase from '@/supabase/config';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
 import { getMovieDetail } from '@/api/tmdb';
@@ -11,7 +10,6 @@ import { optionMark } from '@/static/optionMark';
 import { message } from 'antd';
 import { debounce } from 'lodash';
 import { addNewDiscussionPost } from '@/api/supabase-discussion';
-import useMiddlewareRouter from '@/hooks/useMiddlewareRouter';
 import useLeaveConfirmation from '@/hooks/useLeaveConfiramation';
 
 interface Props {}
@@ -39,8 +37,8 @@ const DiscussionRegistPage = (props: Props) => {
 
   const searchParams = useSearchParams();
   const movie_id = searchParams.get('movieId') ?? '';
-  const [isBlocked, setIsBlocked] = useState(false);
-  const { confirmationDialog } = useLeaveConfirmation(isBlocked);
+
+  const { confirmationModal } = useLeaveConfirmation(true);
 
   //뒤로가기 방지
   useEffect(() => {
@@ -140,7 +138,6 @@ const DiscussionRegistPage = (props: Props) => {
         content: '토론 글이 작성되었습니다'
       });
 
-      setIsBlocked(false);
       router.refresh();
       router.push('/discussion/list');
     } catch (error) {}
@@ -151,7 +148,6 @@ const DiscussionRegistPage = (props: Props) => {
     if (newTitle.length <= titleLengthLimit) {
       setTitle(newTitle);
     }
-    if (newTitle) setIsBlocked(true);
   };
 
   const handleContentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -160,21 +156,21 @@ const DiscussionRegistPage = (props: Props) => {
       setContent(newContent);
     }
   };
-  console.log(isBlocked);
+
   return (
     <>
       {contextHolder}
-      {confirmationDialog}
-      <div className="p-5 w-3/5">
+      {confirmationModal}
+      <div className="p-5 w-full sm:w-4/5 lg:w-3/5 mx-auto">
         <h1 className={`text-2xl font-bold mb-[25px]`}>토론 작성</h1>
         {/* S:: 영화 선택 */}
-        <div>
+        <div className="info-box">
           {movieId || movie_id ? (
             <ReviewMovie movieId={movieId ?? movie_id} />
           ) : (
             <div className="w-full h-[15vh] flex justify-center items-center">
               <button
-                className="bg-black text-white rounded-[10px] font-bold py-1.5 px-3"
+                className="bg-black text-white rounded-[10px] text-sm sm:text-base font-bold py-1.5 px-3"
                 onClick={() => {
                   openSearchModal();
                 }}
@@ -212,7 +208,7 @@ const DiscussionRegistPage = (props: Props) => {
               className="border w-full px-[20px] py-[12px] rounded-[10px] mt-[6px]"
               placeholder="토론 주제를 설명해주세요"
               value={content}
-              onChange={debounce(handleContentChange, 200)}
+              onChange={handleContentChange}
             />
             <span className="text-gray-300 text-sm">
               {content.length}/{contentLengthLimit}
@@ -238,7 +234,7 @@ const DiscussionRegistPage = (props: Props) => {
             {isOptionOpen ? (
               <>
                 <button
-                  className="border px-20 py-3 rounded-[22px]"
+                  className={`${Style.voteBtn}`}
                   onClick={() => {
                     setIsOptionOpen(false);
                   }}
@@ -246,7 +242,7 @@ const DiscussionRegistPage = (props: Props) => {
                   자유 토론
                 </button>
                 <button
-                  className="border px-20 py-3 rounded-[22px] bg-black text-white"
+                  className={`${Style.voteBtn} bg-black text-white`}
                   onClick={() => {
                     setIsOptionOpen(true);
                   }}
@@ -349,3 +345,7 @@ const DiscussionRegistPage = (props: Props) => {
 };
 
 export default DiscussionRegistPage;
+
+const Style = {
+  voteBtn: 'border px-6 sm:px-20 py-3 rounded-[22px]'
+};

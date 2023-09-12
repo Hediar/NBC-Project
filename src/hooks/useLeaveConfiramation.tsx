@@ -17,7 +17,7 @@ const useLeaveConfirmation = (shouldPreventRouteChange: boolean) => {
   const { allowRouteChange } = useRouteChangeEvents({ onBeforeRouteChange });
 
   return {
-    confirmationDialog: (
+    confirmationModal: (
       <Modal centered open={showConfirmModal} footer={null} onCancel={() => setShowConfirmModal(false)}>
         <LeaveConfirmModal
           open={showConfirmModal}

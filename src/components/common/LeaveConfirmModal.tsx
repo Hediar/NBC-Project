@@ -11,7 +11,7 @@ const LeaveConfirmModal = ({ open, onLeave, onContinue }: Props) => {
     return (
       <div className="flex flex-col gap-5">
         <div className="flex flex-col gap-2 justify-center items-center">
-          <p>작성중인 내용이 있습니다. 정말 나가시겠습니까?</p>
+          <p>작성중인 내용이 있을 수 있습니다. 정말 나가시겠습니까?</p>
           <p className="text-gray-300 text-sm">작성중인 모든 내용은 사라집니다.</p>
         </div>
 

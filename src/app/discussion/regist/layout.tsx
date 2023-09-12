@@ -5,5 +5,5 @@ export const metadata: Metadata = {
 };
 
 export default async function DiscussionRegistLayout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>;
+  return <div className="wrap shadow1">{children}</div>;
 }
