@@ -29,6 +29,7 @@ const ReviewForm = ({ movieId, editReview, movieButtonRef }: Props) => {
   const router = useRouter();
   const { userInfo } = useUserInfoStore();
   const { saveSearchMovieId } = useReviewMovieStore();
+  console.log(userInfo);
 
   const [isSearchModalOpen, setIsSearchModalOpen] = React.useState(false);
   const [IsConfirmed, setIsConfirmed] = React.useState(false);
@@ -92,6 +93,7 @@ const ReviewForm = ({ movieId, editReview, movieButtonRef }: Props) => {
           type: 'error',
           content: '리뷰를 등록할 수 없습니다. ' + error.message
         });
+
       await saveWatchList(userInfo.id!, movieId!);
       saveTempReview();
       messageApi.open({

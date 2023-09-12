@@ -1,6 +1,7 @@
 import supabase from '@/supabase/config';
 import { getDetailData } from './tmdb';
 import { getColors } from '@/util/findColors';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
 export const addReview = async (post: ReviewsTable) => {
   const fetchData = await supabase.from('reviews').insert([post]).select();
@@ -132,17 +133,28 @@ export async function fetchReviewData(
 }
 
 // 리뷰 작성 시 최근 본 영화 추가
+type WatchedMoviesList = Database['public']['Tables']['users']['Row']['watched_movies'];
 export const saveWatchList = async (userId: string, movieId: string) => {
-  const { data: watchTable } = await supabase.from('watch_later').select('*').eq('userid', userId);
+  const supa = createClientComponentClient();
+  const { data: watchTable, error } = await supa.from('users').select('watched_movies').eq('id', userId).single();
 
-  if (watchTable?.length !== 0) {
-    const newWatch = watchTable![0].movies.filter((watchId: string) => watchId !== movieId);
-    newWatch.push(String(movieId));
+  const watchedMoviesList: WatchedMoviesList = watchTable?.watched_movies;
+  if (watchedMoviesList.length !== 0) {
+    if (watchedMoviesList.some((db_movieId) => movieId === db_movieId)) {
+      return;
+    } else {
+      const clonedData = structuredClone(watchedMoviesList);
+      clonedData.push(movieId.toString());
 
-    const { error } = await supabase.from('watch_later').update({ movies: newWatch }).eq('userid', userId);
-    if (error) console.error(error);
+      const { data, error } = await supa.from('users').update({ watched_movies: clonedData }).eq('id', userId).select();
+    }
   } else {
-    const { error } = await supabase.from('watch_later').insert([{ userid: userId, movies: [movieId] }]);
+    const a = String(movieId);
+    const arr = [];
+    arr.push(a);
+
+    const { data, error } = await supa.from('users').update({ watched_movies: arr }).eq('id', userId).select().single();
+
     if (error) console.error(error);
   }
 };
