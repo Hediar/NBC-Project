@@ -45,11 +45,7 @@ export const getLatestReviews = async () => {
   const addUserName = getReviews?.map(async (data) => {
     const { data: userData } = await supabase.from('users').select('*').eq('id', data.userid);
     const { data: reviewLikes } = await supabase.from('reviewlikes').select('count').eq('reviewid', data.reviewid);
-    // let likesCount = 0;
-    // if (reviewLikes) {
-    //   console.log(reviewLikes[0].count);
-    //   likesCount = reviewLikes[0].count;
-    // }
+
     const usernameData = userData?.map((data) => data.username);
     const userAvatarURL = userData?.map((data) => data.avatar_url)[0];
     const color = await getColors(userAvatarURL!);
@@ -58,10 +54,8 @@ export const getLatestReviews = async () => {
       ...data,
       username: usernameData!,
       userAvatarURL,
-      // reviewLikesCount: reviewLikes,
       colors: color
     };
-    // console.log(reviewLikes);
     return filterData;
   });
   const allLatestData = await Promise.all(addUserName!);
@@ -75,8 +69,8 @@ export const getUserProfile = async (userid: string) => {
   return data; // 사용자가 없을 경우 또는 데이터가 올바르지 않을 경우
 };
 
-export const countRowsNumber = async (table: string = 'reviews') => {
-  const { count } = await supabase.from(table).select('*', { count: 'exact', head: true });
+export const countRowsNumber = async (table: string = 'reviews', userid: string) => {
+  const { count } = await supabase.from(table).select('*', { count: 'exact', head: true }).eq('userid', userid);
   return count;
 };
 
@@ -103,29 +97,23 @@ export async function fetchReviewData(
   if (q) {
     switch (filter) {
       case 'movie_title':
-        // console.log(filter, ' => movie_title');
         query = query.eq('movie_title', q);
         break;
       case 'review_cont':
-        // console.log(filter, ' => review_cont');
         query = query.eq('content, review', q);
         break;
       default:
-        // console.log(filter, ' => default');
         query = query.eq('movie_title, content, review', q);
     }
   }
   switch (sort) {
     case 'likes':
-      // console.log(sort, ' => likes');
       query = query.order(`reviewlikes(count)`, { ascending: false, nullsFirst: false });
       break;
     case 'rating':
-      // console.log(sort, ' => rating');
       query = query.order('rating', { ascending: false });
       break;
     default:
-      // console.log(sort, ' => new');
       query = query.order('created_at', { ascending: false });
   }
   query.range((pageParam - 1) * limit, pageParam * limit - 1);
@@ -147,19 +135,14 @@ export async function fetchReviewData(
 export const saveWatchList = async (userId: string, movieId: string) => {
   const { data: watchTable } = await supabase.from('watch_later').select('*').eq('userid', userId);
 
-  if (watchTable) {
-    const newWatch = watchTable[0].movies.filter((watchId: string) => watchId !== movieId);
+  if (watchTable?.length !== 0) {
+    const newWatch = watchTable![0].movies.filter((watchId: string) => watchId !== movieId);
     newWatch.push(String(movieId));
 
     const { error } = await supabase.from('watch_later').update({ movies: newWatch }).eq('userid', userId);
     if (error) console.error(error);
   } else {
-    const { error } = await supabase
-      .from('watch_later')
-      .insert([{ userid: userId, movies: [movieId] }])
-      .select();
+    const { error } = await supabase.from('watch_later').insert([{ userid: userId, movies: [movieId] }]);
     if (error) console.error(error);
   }
-
-  // console.log('2. watchTable => ', watchTable);
 };

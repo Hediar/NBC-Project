@@ -1,6 +1,9 @@
 'use client';
 
-import { Select, Space } from 'antd';
+import Select from '@/components/common/Select';
+import { Close } from '@/styles/icons/Icons24';
+import { SearchLined } from '@/styles/icons/Icons32';
+// import { Select, Space } from 'antd';
 import Search from 'antd/es/input/Search';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -12,6 +15,7 @@ const ReviewFilteringBox = () => {
 
   const [sort, setSort] = useState<string>();
   const [filter, setFilter] = useState<string>();
+  const [query, setQuery] = useState<string>('');
 
   const handleSortChange = (value: string) => {
     setSort(value);
@@ -22,15 +26,26 @@ const ReviewFilteringBox = () => {
     setFilter(value);
   };
 
-  const onSearch = (value: string) => {
-    router.push(`${REVIEW_URL}?sort=${sort}&filter=${filter}&q=${value}`);
+  const handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQuery(e.target.value);
+  };
+
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    router.push(`${REVIEW_URL}?sort=${sort}&filter=${filter}&q=${query}`);
+  };
+
+  const handleResetButton = () => {
+    setFilter('');
+    setQuery('');
+    router.push(`${REVIEW_URL}?sort=${sort}`);
   };
 
   return (
-    <div className="flex w-full mb-12">
+    <div className="flex flex-col gap-2 md:flex-row w-full mb-12">
       <Select
         defaultValue="new"
-        className='w-28 mr-auto'
+        className="w-28 mr-auto"
         onChange={handleSortChange}
         options={[
           { value: 'new', label: '최신순' },
@@ -39,10 +54,9 @@ const ReviewFilteringBox = () => {
         ]}
       />
 
-      <Space.Compact>
+      <form className="flex select-search-form" onSubmit={onSubmit}>
         <Select
           defaultValue="all"
-          className='w-28'
           onChange={handleFilterChange}
           options={[
             { value: 'all', label: '전체' },
@@ -50,10 +64,26 @@ const ReviewFilteringBox = () => {
             { value: 'review_cont', label: '리뷰내용' }
           ]}
         />
-        <Search placeholder="input search text" onSearch={onSearch} className='w-52' />
-      </Space.Compact>
+        <input
+          type="text"
+          className="custom_input"
+          placeholder="검색어를 입력하세요"
+          value={query}
+          onChange={handleQueryChange}
+        />
+        <button type="button" className={query?.length > 0 ? 'visible' : 'invisible'} onClick={handleResetButton}>
+          <span className="sr-only">초기화</span>
+          <Close />
+        </button>
+        <button className="ml-2">
+          <span className="sr-only">검색</span>
+          <SearchLined />
+        </button>
+      </form>
 
-      <Link href={'/review/write'} className='button-dark ml-2'>리뷰 작성</Link>
+      <Link href={'/review/write'} className="button-dark md:ml-2 inline-flex items-center justify-center">
+        리뷰 작성
+      </Link>
     </div>
   );
 };

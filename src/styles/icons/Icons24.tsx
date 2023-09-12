@@ -144,3 +144,10 @@ export const More = (props: SVGProps<SVGSVGElement>) => (
     <circle cx="12" cy="18" r="2" fill="#4F4F4F" />
   </svg>
 );
+
+export const Close = (props: SVGProps<SVGSVGElement>) => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M6 6L18 18" stroke="#4F4F4F" strokeWidth="2" strokeLinecap="round" />
+    <path d="M6 18L18 6" stroke="#4F4F4F" strokeWidth="2" strokeLinecap="round" />
+  </svg>
+);
