@@ -2,7 +2,9 @@ import { cookies } from 'next/headers';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import getMovieDataWithMovieIds from '@/api/getMovieDataWithMovieIds';
 import MovieItem from '@/components/common/MovieItem';
-import { Space } from 'antd';
+import { Button, Space } from 'antd';
+import NoContent from '@/styles/svg/NoContent';
+import Link from 'next/link';
 
 interface Props {
   params: {
@@ -31,10 +33,19 @@ const LikesListPage = async ({ params }: Props) => {
 
   if (usersLikedMovies.length === 0)
     return (
-      <div className="flex flex-col items-center w-full mt-10 h-[calc(100%-54px)]">
-        <h2 className="text-center font-bold text-2xl">{username}님이 좋아하신 영화</h2>
-        <div className="w-10/12 flex gap-y-10 justify-center sm:gap-10 md:gap-5 gap-5 items-center h-full">
-          <p className="text-2xl ">아직 {username}님이 좋아요 누른 영화가 없습니다!</p>
+      <div className="px-3 sm:px-10 flex flex-col items-center justify-center w-full mt-10  h-full">
+        <h2 className="text-lg text-center font-bold sm:text-2xl mb-10">{username}님이 좋아하신 영화</h2>
+        <div className="flex flex-col gap-y-10 justify-center gap-10 items-center h-full pb-5">
+          <p className="text-base sm:text-2xl w-full  text-center">{username}님이 좋아요 누른 영화가 없습니다!</p>
+          <NoContent />
+          <Link href="/movielist">
+            <Button
+              type="primary"
+              className="px-5 py-2.5 bg-zinc-600 rounded-lg border border-zinc-600 h-full sm:text-base text-white"
+            >
+              영화페이지로 이동
+            </Button>
+          </Link>
         </div>
       </div>
     );
