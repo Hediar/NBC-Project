@@ -1,6 +1,7 @@
 import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
+import { avatar_url } from '../profile/change-avatar/route';
 
 export const dynamic = 'force-dynamic';
 
@@ -19,7 +20,7 @@ export const POST = async (request: Request) => {
     options: {
       emailRedirectTo: `${requestUrl.origin}/auth/callback`,
       captchaToken: captchaToken,
-      data: { username }
+      data: { username, avatar_url: avatar_url[Math.floor(Math.random() * 5)] }
     }
   });
 

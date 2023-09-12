@@ -2,6 +2,9 @@ import UserPageMostWatchedGenres from '@/components/UserPage/UserInfo/MostWatche
 import RecommendationList from '@/components/UserPage/RecommendationList/_RecommendationList';
 import publicApi from '@/util/supabase/auth/public';
 import authApi from '@/util/supabase/auth/auth';
+import NoContent from '@/styles/svg/NoContent';
+import { Button } from 'antd';
+import Link from 'next/link';
 
 export const dynamic = 'force-dynamic';
 
@@ -42,10 +45,19 @@ const RecommendationPage = async ({ params }: Props) => {
     <>
       <UserPageMostWatchedGenres username={pageUsername} />
       {likedMovies!.length === 0 ? (
-        <div className="flex flex-col items-center w-full mt-10  h-full">
-          <h2 className="text-center font-bold text-2xl">{pageUsername}님을 위한 추천 리스트!</h2>
-          <div className="flex gap-y-10 justify-center sm:gap-10 md:gap-5 gap-5 items-center h-full">
-            <p className="w-full text-2xl text-center">추천을 받기 위해 평점이나 리뷰를 남겨주세요.</p>
+        <div className="px-3 sm:px-10 flex flex-col items-center justify-center w-full mt-10  h-full">
+          <h2 className="text-lg text-center font-bold sm:text-2xl mb-10">{pageUsername}님을 위한 추천 리스트!</h2>
+          <div className="flex flex-col gap-y-10 justify-center gap-10 items-center h-full pb-5">
+            <p className="text-base sm:text-2xl w-full  text-center">추천을 받기 위해 콘텐츠 좋아요를 눌러주세요.</p>
+            <NoContent />
+            <Link href="/movielist">
+              <Button
+                type="primary"
+                className="px-5 py-2.5 bg-zinc-600 rounded-lg border border-zinc-600 h-full sm:text-base text-white"
+              >
+                영화페이지로 이동
+              </Button>
+            </Link>
           </div>
         </div>
       ) : (

@@ -377,3 +377,19 @@ select:-webkit-autofill:focus {
     height: 210px;
   }
 }
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-500 outline-offset-1 outline-gray-600;
+}
+
+::-webkit-scrollbar-thumb:horizontal {
+  @apply bg-gray-500 outline-offset-1 outline-gray-600;
+}

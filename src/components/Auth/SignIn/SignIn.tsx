@@ -39,10 +39,10 @@ const SignIn = () => {
   }, []);
 
   useEffect(() => {
-    if (passwordValue.length < 6) {
+    if (passwordValue.length < 8) {
       setShouldDisable(true);
     }
-    if (emailValue.length > 6 && passwordValue.length > 6) {
+    if (/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(emailValue) && passwordValue.length >= 8) {
       setShouldDisable(false);
     }
   }, [emailValue, passwordValue]);
@@ -105,16 +105,7 @@ const SignIn = () => {
 
   const onSubmitHandler = async () => {
     setIsClicked(true);
-    if (!/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/.test(passwordValue)) {
-      setIsClicked(false);
-      return messageApi.open({
-        type: 'error',
-        content: '비밀번호는 최소 8자 이상이어야 하며, 최소 하나의 대문자, 소문자, 숫자가 포함되어야 합니다.',
-        duration: 5
-      });
-    } else {
-      captchaRef.current.execute();
-    }
+    captchaRef.current.execute();
   };
 
   return (
