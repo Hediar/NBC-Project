@@ -380,6 +380,7 @@ select:-webkit-autofill:focus {
 
 ::-webkit-scrollbar {
   width: 10px;
+  height: 10px;
 }
 
 ::-webkit-scrollbar-track {
@@ -387,7 +388,7 @@ select:-webkit-autofill:focus {
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-gray-500 outline-offset-1 outline-gray-600;
+  @apply bg-gray-500 outline-offset-1 outline-gray-600 rounded-lg;
 }
 
 ::-webkit-scrollbar-thumb:horizontal {
