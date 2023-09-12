@@ -1,4 +1,4 @@
-import MainPageLoading from '@/components/MainPage/MainPageLoading';
+import MainPageLoading from '@/components/MainPage/MainPageSkeleton';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 import React from 'react';
 
