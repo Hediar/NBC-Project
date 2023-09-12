@@ -18,7 +18,7 @@ export const POST = async (request: Request) => {
   const id = String(formData.get('id'));
   const supabase = createRouteHandlerClient({ cookies });
 
-  if (await isUsernameAvailable(username, supabase)) {
+  if (!(await isUsernameAvailable(username, supabase))) {
     return NextResponse.json<Response>({ isError: true, isSuccess: false, error: '이미 등록된 닉네임입니다.' });
   }
   const { error: userRawMetaDataUpdateError } = await supabase.auth.updateUser({
