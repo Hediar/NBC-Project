@@ -3,18 +3,26 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, ArrowRight2, HeartLine } from '@/styles/icons/Icons24';
 import { SVGTalkEndPoint } from '@/styles/icons/IconsETC';
+import { extractMainColors } from '@/util/findColors';
 
 export const revalidate = 0;
 
 const LatestReviews = async () => {
   const latestReviewData = await getLatestReviews();
   const getColors = latestReviewData.map((data) => data.colors[8]);
+
+  const getMainColor = getColors.map((color) => {
+    const rgbCMainColor = `rgb(${color[0]}, ${color[1]}, ${color[2]}, 0.5)`;
+    return { rgbCMainColor };
+  });
   const bgStyles = getColors.map((color) => {
     const rgbColortrans = `rgb(${color[0]}, ${color[1]}, ${color[2]}, 0.5)`;
     const rgbColor = `rgb(${color[0]}, ${color[1]}, ${color[2]})`;
     return { rgbColortrans, rgbColor };
   });
 
+  // console.log(bgStyles);
+  // console.log(getColors);
   return (
     <div className="p-5">
       <div className="flex justify-between items-end">
