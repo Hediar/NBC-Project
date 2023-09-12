@@ -84,7 +84,7 @@ const UtilButtons = ({ postId, userId, className }: Props) => {
               </button>
             </Dropdown>
 
-            <Modal open={isModalOpen} onCancel={handleModalCancel} footer={null} width={400}>
+            <Modal open={isModalOpen} onCancel={handleModalCancel} footer={null} width={400} maskClosable={false}>
               <p className="pt-[50px] pb-[30px] text-center subtitle2_suit">정말 삭제하시겠습니까?</p>
               <div className="flex justify-center gap-3 mb-5">
                 <button className="button-white" onClick={handleModalCancel}>
