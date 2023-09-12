@@ -6,7 +6,7 @@ import TrendMoives from './MainPageMovies/TrendMoives';
 import LatestReviews from './MainContents/LatestReviews';
 import LatestMovies from './MainContents/LatestMovies';
 import HotTopics from './MainContents/HotTopics';
-import MainPageLoading from './MainPageLoading';
+import MainPageLoading from './MainPageSkeleton';
 
 const MainPage = ({ params }: { params: string }) => {
   return (
@@ -21,9 +21,7 @@ const MainPage = ({ params }: { params: string }) => {
         <div className="p-2 mx-5 md:mx-32">
           <KeywordButtons params={params} />
         </div>
-        <Suspense fallback={<p>Loading TrendMovies..</p>}>
-          <TrendMoives genreId={params} />
-        </Suspense>
+        <TrendMoives genreId={params} />
       </section>
       <section className="flex-row lg:flex xl:mt-[360px]">
         <div className="sm:w-1/2 mb-8 md:mb-0 mr-5 lg:mb-[160px] 2xl:ml-[192px]">

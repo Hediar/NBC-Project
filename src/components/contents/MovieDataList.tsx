@@ -3,9 +3,11 @@ import MovieItem from '../common/MovieItem';
 
 const MovieDataList = ({ movieData }: { movieData: MovieData[] }) => {
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+    <div className="flex flex-wrap mx-5 p-3 gap-4 items-start justify-center sm:grid sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-5 2xl:mx-36">
       {movieData.map((movie: MovieData) => (
-        <MovieItem movie={movie} key={movie.id} />
+        <div className="gap-4 mb-2" key={movie.id}>
+          <MovieItem movie={movie} key={movie.id} />
+        </div>
       ))}
     </div>
   );

@@ -67,8 +67,6 @@ const Search = ({
     setSearchMovieValue(searchInput); // 상위에서 사용하기 위해 set하는 값
   };
 
-  const isSearchStart = !!searchResults;
-
   return (
     <div className="w-[570px] h-[52px]">
       <form onSubmit={handleSubmit} className="flex border border-GreyScaleGrey rounded-xl px-2 py-1">
@@ -94,7 +92,7 @@ const Search = ({
           searchInput ? 'white' : 'transparent'
         }  rounded z-10 transition-colors duration-300`}
       >
-        {isSearchStart &&
+        {!!searchResults &&
           searchResults.map((result, i: number) => (
             <li key={`searchResultKey_${i}`}>
               <button type="button" onClick={() => handleClick(result)}>

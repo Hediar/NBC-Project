@@ -64,7 +64,7 @@
 | 이름(역할)       | GITHUB                           | BLOG                            |
 | ---------------- | -------------------------------- | ------------------------------- |
 | 이세령(팀장)     | https://github.com/Hediar        | 주소입력                        |
-| 김환훈(부팀장)   | https://github.com/kimhwanhoon   | 주소입력                        |
+| 김환훈(부팀장)   | https://github.com/kimhwanhoon   | https://velog.io/@kimhwanhoon |
 | 서경모(팀원)     | https://github.com/CTDKSKM       | 주소입력                        |
 | 이지영(팀원)     | https://github.com/lizzieFEstudy | https://console-log.tistory.com |
 | 조아라(디자이너) | [이메일](이메일주소입력)         | 주소입력                        |
