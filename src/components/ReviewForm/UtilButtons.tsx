@@ -52,7 +52,10 @@ const UtilButtons = ({ postId, userId, className }: Props) => {
     router.refresh();
   };
 
-  const handleModalCancel = () => {
+  const handleModalCancel = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    e.stopPropagation();
+
     setIsModalOpen(false);
   };
 
@@ -73,7 +76,7 @@ const UtilButtons = ({ postId, userId, className }: Props) => {
 
   return (
     mounted && (
-      <div className={className}>
+      <div className={className} onClick={(e) => e.stopPropagation()}>
         {contextHolder}
         {userId === userInfo.id ? (
           <div className="h-6">
