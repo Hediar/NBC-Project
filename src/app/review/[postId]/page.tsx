@@ -118,13 +118,13 @@ const ReviewDetailPage = async ({ params }: Props) => {
             ))}
           </ul>
 
-          <div>{review.review}</div>
+          <p className="text-center">{review.review}</p>
 
           <div>
             <StarBox defaultValue={review.rating} readOnly={true} />
           </div>
 
-          <pre>{review.content}</pre>
+          <pre className="text-center">{review.content}</pre>
         </div>
 
         <div className="flex justify-center items-center h-16 px-5 ">
