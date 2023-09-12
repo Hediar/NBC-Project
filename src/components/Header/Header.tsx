@@ -21,7 +21,7 @@ const Header = async () => {
             </Link>
             <Nav />
           </div>
-          <div className="flex-row-reverse sm:flex-row flex items-center">
+          <div className=" flex items-center">
             <HeaderUser />
             <AuthButton />
           </div>

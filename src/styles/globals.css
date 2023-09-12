@@ -355,3 +355,25 @@ select:-webkit-autofill:focus {
 .skeleton-ui .skeleton-text {
   @apply min-w-[6em] max-w-full bg-gray-200 h-[22px] rounded-lg dark:bg-gray-700;
 }
+
+.skeleton-movie-item-poster {
+  width: 240px;
+}
+
+@media (min-width: 640px) {
+  .skeleton-movie-item-poster {
+    width: 240px;
+  }
+}
+
+.skeleton-movie-item-text {
+  width: 120px;
+  height: 70px;
+}
+
+@media (min-width: 640px) {
+  .skeleton-movie-item-text {
+    width: 240px;
+    height: 210px;
+  }
+}

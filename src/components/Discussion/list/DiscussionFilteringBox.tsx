@@ -1,25 +1,17 @@
 'use client';
 
-import useUserInfoStore from '@/store/saveCurrentUserData';
 import { DropdownMenu } from '@/styles/icons/Icons24';
 import { SearchLined } from '@/styles/icons/Icons32';
-import Link from 'next/link';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import React, { useState } from 'react';
-
-interface Props {
-  sortQuery: string;
-}
+import React, { useRef, useState } from 'react';
+import DiscussionRegistBtn from './DiscussionRegistBtn';
 
 interface FilterBy {
   text: string;
   title: string;
 }
 
-const DiscussionFilteringBox = ({ sortQuery = '' }: Props) => {
-  const {
-    userInfo: { id: userId }
-  } = useUserInfoStore();
+const DiscussionFilteringBox = () => {
   const [sortFilterOpen, setSortFilterOpen] = useState<boolean>(false);
   const [searchFilterOpen, setSearchFilterOpen] = useState<boolean>(false);
   const sortByDropdownValues = [
@@ -35,17 +27,21 @@ const DiscussionFilteringBox = ({ sortQuery = '' }: Props) => {
   ];
   const [searchBy, setSearchBy] = useState<FilterBy>(searchByDropdownValues[0]);
   const [searchVal, setSearchVal] = useState('');
-  const [sortBy, setSortBy] = useState<FilterBy>(
-    sortByDropdownValues.filter((obj) => obj.title.includes(sortQuery))[0]
-  );
+  const [sortBy, setSortBy] = useState<FilterBy>(sortByDropdownValues[0]);
   const router = useRouter();
   const discussionUrl = usePathname();
   const searchParams = useSearchParams();
   const search = searchParams.get('search');
   const filter = searchParams.get('filter');
   const sort = searchParams.get('sort');
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
   const handleSearchValSubmit = () => {
+    if (searchInputRef.current) {
+      const isSearchVal = searchInputRef.current.value;
+
+      if (!isSearchVal) searchInputRef.current!.focus();
+    }
     if (sort) {
       router.push(`${discussionUrl}?search=${searchVal}&filter=${searchBy.title}&sort=${sort}`);
     } else {
@@ -74,7 +70,7 @@ const DiscussionFilteringBox = ({ sortQuery = '' }: Props) => {
           <DropdownMenu className="cursor-pointer opacity-70 hover:opacity-100 transform hover:scale-110 hover:ease-out duration-200" />
         </div>
         {sortFilterOpen && (
-          <div className="absolute top-[40px] left-0 w-[5rem]">
+          <div className="absolute top-[40px] left-0 w-[5rem] z-10">
             <ul className="border bg-white">
               {sortByDropdownValues.map((sortByObj) => {
                 return (
@@ -94,16 +90,7 @@ const DiscussionFilteringBox = ({ sortQuery = '' }: Props) => {
             </ul>
           </div>
         )}
-        {userId ? (
-          <Link
-            href={`/discussion/regist`}
-            className="border py-1 px-2 rounded-xl bg-gray-400 text-white hover:bg-gray-500"
-          >
-            글 작성
-          </Link>
-        ) : (
-          <button className="border py-1 px-2 rounded-xl bg-gray-400 text-white hover:bg-gray-500">글 작성</button>
-        )}
+        <DiscussionRegistBtn />
       </div>
 
       <div className="flex items-center gap-2">
@@ -113,7 +100,7 @@ const DiscussionFilteringBox = ({ sortQuery = '' }: Props) => {
             e.preventDefault();
           }}
         >
-          <div className="w-[330px] mx-auto sm:w-[570px] h-[52px] relative bg-white rounded-xl border border-zinc-300">
+          <div className="min-w-[300px] mx-auto sm:w-[570px] h-[52px] relative bg-white rounded-xl border border-zinc-300">
             <div
               className="flex justify-between w-[100px] sm:w-1/5 h-5 left-[20px] top-[16px] absolute text-neutral-800 text-base font-normal leading-snug"
               onClick={() => {
@@ -124,9 +111,10 @@ const DiscussionFilteringBox = ({ sortQuery = '' }: Props) => {
               <DropdownMenu className="cursor-pointer opacity-70 hover:opacity-100 transform hover:scale-110 hover:ease-out duration-200" />
             </div>
             <div className="w-px h-6 left-[120px] sm:left-[148px] top-[14px] absolute bg-gray-200" />
-            <div className="w-[200px] pr-5 sm:w-[343px] h-5 left-[140px] top-[16px] absolute text-zinc-300 text-base font-normal leading-snug pr-10">
+            <div className="w-[200px] sm:w-[343px] h-5 left-[140px] top-[16px] absolute text-zinc-300 text-base font-normal leading-snug pr-10">
               <input
-                className="w-4/5 sm:w-full text-black focus:outline-none placeholder:text-sm"
+                ref={searchInputRef}
+                className="w-[70%] sm:w-full text-black focus:outline-none placeholder:text-xs sm:placeholder:text-base"
                 name="discussion-searchbar"
                 type="text"
                 placeholder="검색어를 입력하세요"
@@ -142,7 +130,7 @@ const DiscussionFilteringBox = ({ sortQuery = '' }: Props) => {
           </div>
 
           {searchFilterOpen && (
-            <div className="absolute top-[40px] left-5">
+            <div className="absolute top-[40px] left-5 z-10">
               <ul className="border bg-white">
                 {searchByDropdownValues.map((searchByObj) => {
                   return (

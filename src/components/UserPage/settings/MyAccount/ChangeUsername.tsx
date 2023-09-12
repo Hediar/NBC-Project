@@ -2,7 +2,7 @@ import useUserInfoStore from '@/store/saveCurrentUserData';
 import { Button, Input, Popconfirm, message } from 'antd';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 
 interface Props {
   userData: Database['public']['Tables']['users']['Row'];
@@ -11,81 +11,92 @@ interface Props {
 const ChangeUsername = ({ userData }: Props) => {
   const username = userData.username!;
   const userId = userData.id!;
-
-  const [usernameInputValue, setUsernameInputValue] = useState<string>('');
-
+  const [usernameValue, setusernameValue] = useState<string>('');
   const { userInfo, saveUserInfo } = useUserInfoStore();
   const [messageApi, contextHolder] = message.useMessage();
-
   const router = useRouter();
 
-  const inputOnChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const newUsername = e.target.value;
-    // 특수문자와 스페이스바를 제외한다
-    const sanitizedValue = newUsername.replace(/[^\w\dㄱ-ㅎㅏ-ㅣ가-힣\s]/g, '');
-    setUsernameInputValue(sanitizedValue);
-  };
+  const onConfirmHandler = async () => {
+    if (usernameValue.length < 2 || usernameValue.length > 15) {
+      return messageApi.open({
+        type: 'error',
+        content: '닉네임의 길이는 최소 2글자, 최대 15글자 입니다.'
+      });
+    } else if (!/^[a-zA-Z가-힣\s0-9]+$/.test(usernameValue)) {
+      return messageApi.open({
+        type: 'error',
+        content: '닉네임은 한글과 알파벳, 숫자 그리고 띄어쓰기가 가능합니다. 특수문자는 허용되지 않습니다.',
+        duration: 2
+      });
+    } else {
+      const formData = new FormData();
+      formData.append('username', usernameValue);
+      formData.append('id', userId);
 
-  const usernameChangeHandler = async () => {
-    const formData = new FormData();
-    formData.append('username', usernameInputValue);
-    formData.append('id', userId);
+      const {
+        data: { isError, isSuccess, error, newUsername: usernameData }
+      } = await axios.post('/auth/profile/username', formData);
 
-    const {
-      data: { isError, isSuccess, error, newUsername: usernameData }
-    } = await axios.post('/auth/profile/username', formData);
-
-    if (isError) {
-      if (error.includes('이미 등록된')) {
+      if (isError) {
+        if (error.includes('이미 등록된')) {
+          messageApi.open({
+            type: 'error',
+            content: '이미 등록된 닉네임입니다. 다른 닉네임을 사용해주세요.'
+          });
+          return;
+        }
         messageApi.open({
           type: 'error',
-          content: '이미 등록된 닉네임입니다. 다른 닉네임을 사용해주세요.'
+          content: '에러가 발생했습니다. 다시 시도해주세요.'
         });
         return;
       }
+
+      saveUserInfo({ ...userInfo, username: usernameValue });
+      router.refresh();
+
       messageApi.open({
-        type: 'error',
-        content: '에러가 발생했습니다. 다시 시도해주세요.'
+        type: 'success',
+        content: '성공적으로 변경되었습니다.'
       });
-      return;
+      router.replace(`${process.env.NEXT_PUBLIC_BASE_URL}/user-page/${usernameValue}/settings?my-account=true`);
     }
-
-    saveUserInfo({ ...userInfo, username: usernameInputValue });
-    router.refresh();
-
-    messageApi.open({
-      type: 'success',
-      content: '성공적으로 변경되었습니다.'
-    });
-    router.replace(`${process.env.NEXT_PUBLIC_BASE_URL}/user-page/${usernameInputValue}/settings?my-account=true`);
   };
+
   return (
-    <div className=" w-[90%] flex flex-col sm:flex-row gap-2 sm:gap-4">
-      <p className="text-center sm:text-start text-neutral-800 text-xl font-bold leading-normal">{username}</p>
-      <Popconfirm
-        title="수정할 닉네임을 적어주세요."
-        description={
-          <Input
-            placeholder="새로운 닉네임"
-            value={usernameInputValue}
-            onChange={(e) => inputOnChange(e)}
-            pattern="/[^\w\dㄱ-ㅎㅏ-ㅣ가-힣\s]/"
-            maxLength={15}
-          />
-        }
-        onConfirm={usernameChangeHandler}
-        okText="확인"
-        okType="default"
-        cancelText="취소"
-      >
-        <Button
-          type="primary"
-          className=" h-[30px] px-3 py-1 bg-zinc-600 rounded-lg border border-zinc-600 gap-1.5 cursor-pointer text-white text-[14px] "
+    <>
+      {contextHolder}
+      <div className=" w-[90%] flex flex-col sm:flex-row gap-2 sm:gap-4">
+        <p className="text-center sm:text-start text-neutral-800 text-xl font-bold leading-normal">{username}</p>
+        <Popconfirm
+          title="수정할 닉네임을 적어주세요."
+          description={
+            <>
+              <p className="text-center mb-1">
+                2글자 이상 15글자 이하인 닉네임이 가능하며,
+                <br /> 특수문자는 허용되지 않습니다.
+              </p>
+              <Input
+                placeholder="새로운 닉네임"
+                value={usernameValue}
+                onChange={(e) => setusernameValue(e.target.value)}
+              />
+            </>
+          }
+          onConfirm={onConfirmHandler}
+          okText="확인"
+          okType="default"
+          cancelText="취소"
         >
-          수정
-        </Button>
-      </Popconfirm>
-    </div>
+          <Button
+            type="primary"
+            className=" h-[30px] px-3 py-1 bg-zinc-600 rounded-lg border border-zinc-600 gap-1.5 cursor-pointer text-white text-[14px] "
+          >
+            수정
+          </Button>
+        </Popconfirm>
+      </div>
+    </>
   );
 };
 

@@ -11,10 +11,10 @@ interface Props {
 const navP = 'text-xs py-4 sm:sm:text-[20px] sm:leading-[24px] z-10';
 
 const MovieDetailBottomBar = ({ movieId }: Props) => {
-  const pathName = usePathname().split('/')[3] ?? 'main';
+  const pathName = usePathname().split('/')[3] ?? '';
 
   const tags = [
-    { name: '주요정보', url: 'main' },
+    { name: '주요정보', url: '' },
     { name: '출연/제작', url: 'crew' },
     { name: '영상/포토', url: 'trailer' },
     { name: '토론', url: 'discussion' }

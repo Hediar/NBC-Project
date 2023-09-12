@@ -11,7 +11,7 @@ const RelatedDiscussionList = async ({ discussionId }: Props) => {
   const postData = await getDiscussionPostDetail(+discussionId);
   const relatedData = await getRelatedDiscussionPost({ genreIds: postData.movie_genreIds, movieId: postData.movie_id });
   return (
-    <div className="w-full bg-[#EBEBEB] h-screen p-10 pr-0 sm:mx-10">
+    <div className="w-full bg-[#EBEBEB] sm:min-h-screen p-10 sm:pr-0 sm:mx-10 rounded-xl sm:rounded-none">
       <p className="font-bold text-xl h3_suit">관련 토픽</p>
       {relatedData?.length ? (
         relatedData?.map(async (relatedDiscussionData, idx) => {
@@ -28,7 +28,7 @@ const RelatedDiscussionList = async ({ discussionId }: Props) => {
           );
         })
       ) : (
-        <div className="mt-5 p-10 text-center border-2 border-gray-300 rounded-lg">
+        <div className="mt-5 p-2 sm:p-10 text-center border-2 border-gray-300 rounded-lg">
           <p className="mb-5">관련된 토론글이 없습니다.</p>
           <Link
             href={`/discussion/regist`}

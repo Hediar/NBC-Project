@@ -18,13 +18,15 @@ const LatestReviews = async () => {
   return (
     <div className="p-5">
       <div className="flex justify-between items-end">
-        <h1 className="h3_suit md:text-6xl leading-[72px]">🧐최신 리뷰</h1>
+        <h1 className="h3_suit xl:text-6xl leading-[72px]">🧐최신 리뷰</h1>
         <Link href={'/review'} className="flex">
           더보기 <ArrowRight2 />
         </Link>
       </div>
       <div className="p-5">
         {latestReviewData?.map((review, index) => {
+          const likesCount = (review.reviewLikesCount && review.reviewLikesCount.length) || 0;
+          // console.log(index, review);
           return (
             <Link
               key={review.reviewid}
@@ -32,7 +34,7 @@ const LatestReviews = async () => {
               className="w-full mb-16 m-4 shadow-neutral-400"
             >
               <div
-                className={`p-4 border border-opacity-20 rounded-[20px] shadow h-36`}
+                className={`p-5 px-7 border border-opacity-20 rounded-[20px] shadow h-36`}
                 style={{
                   backgroundColor: `${bgStyles[index].rgbColortrans}`,
                   borderColor: `${bgStyles[index].rgbColor}`
@@ -52,11 +54,11 @@ const LatestReviews = async () => {
                   <SVGTalkEndPoint className="opacity-20" />
                 </div>
 
-                <div className="truncate w-[680px]">{review.content}</div>
-                <div className="flex justify-between">
+                <div className="truncate w-full py-[10px]">{review.review}</div>
+                <div className="flex justify-between ">
                   <span className="flex">
                     <HeartLine />
-                    {/* {review.reviewLikesCount.length ? review.reviewLikesCount : 0} */}
+                    {likesCount}
                   </span>
                   <ArrowRight />
                 </div>

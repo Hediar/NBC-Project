@@ -31,26 +31,26 @@ export const SmallWhiteStar = (props: SVGProps<SVGSVGElement>) => (
 
 export const SmallPrevButton = (props: SVGProps<SVGSVGElement>) => (
   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
-    <path d="M10 5L7 8L10 11" stroke="#4F4F4F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M10 5L7 8L10 11" stroke="#4F4F4F" stroke-width="2" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
 export const SmallNextButton = (props: SVGProps<SVGSVGElement>) => (
   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
-    <path d="M7 5L10 8L7 11" stroke="#4F4F4F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M7 5L10 8L7 11" stroke="#4F4F4F" stroke-width="2" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
 export const SmallDoublePrevButton = (props: SVGProps<SVGSVGElement>) => (
   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
-    <path d="M7 5L4 8L7 11" stroke="#4F4F4F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-    <path d="M12 5L9 8L12 11" stroke="#4F4F4F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M7 5L4 8L7 11" stroke="#4F4F4F" stroke-width="2" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M12 5L9 8L12 11" stroke="#4F4F4F" stroke-width="2" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 export const SmallDoubleNextButton = (props: SVGProps<SVGSVGElement>) => (
   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
-    <path d="M4 5L7 8L4 11" stroke="#4F4F4F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-    <path d="M9 5L12 8L9 11" stroke="#4F4F4F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M4 5L7 8L4 11" stroke="#4F4F4F" stroke-width="2" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M9 5L12 8L9 11" stroke="#4F4F4F" stroke-width="2" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
@@ -60,14 +60,14 @@ export const SmallUpdateButton = (props: SVGProps<SVGSVGElement>) => (
       d="M6.78105 3H4.66667C3.40959 3 2.78105 3 2.39052 3.39052C2 3.78105 2 4.40959 2 5.66667L2 11.3332C2 12.5903 2 13.2189 2.39052 13.6094C2.78105 13.9999 3.40959 13.9999 4.66667 13.9999H10C11.2571 13.9999 11.8856 13.9999 12.2761 13.6094C12.6667 13.2189 12.6667 12.5903 12.6667 11.3332V9.9999"
       stroke="#4F4F4F"
       stroke-width="2"
-      stroke-linecap="round"
+      strokeLinecap="round"
     />
     <path
       d="M6.19526 9.80505C6 9.60978 6 9.29551 6 8.66698V7.33364L12 1.3335L14.6667 4.00016L8.66667 10.0003H7.33333C6.7048 10.0003 6.39052 10.0003 6.19526 9.80505Z"
       stroke="#4F4F4F"
       stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
     <path d="M10.667 2.6665L13.3337 5.33317" stroke="#4F4F4F" stroke-width="2" />
   </svg>

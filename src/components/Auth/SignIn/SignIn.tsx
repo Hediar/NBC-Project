@@ -8,6 +8,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import ForgotPasswordModal from '../ForgotPassword/ForgotPasswordModal';
 import useToggleForgotPassword from '@/store/forgotPasswordToggle';
 import SocialButtons from '../SocialButtons';
+import useToggleSignInModal from '@/store/toggleSignInModal';
 
 interface Data {
   error: boolean;
@@ -15,6 +16,7 @@ interface Data {
 }
 
 const SignIn = () => {
+  const { setIsSignInModalOpen } = useToggleSignInModal();
   const router = useRouter();
 
   const [emailValue, setEmailValue] = useState<string>('');
@@ -89,6 +91,7 @@ const SignIn = () => {
         });
         setTimeout(() => {
           setIsClicked(false);
+          setIsSignInModalOpen(false);
           setTimeout(() => {
             router.refresh();
           }, 200);
@@ -103,6 +106,7 @@ const SignIn = () => {
   const onSubmitHandler = async () => {
     setIsClicked(true);
     if (!/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/.test(passwordValue)) {
+      setIsClicked(false);
       return messageApi.open({
         type: 'error',
         content: '비밀번호는 최소 8자 이상이어야 하며, 최소 하나의 대문자, 소문자, 숫자가 포함되어야 합니다.',
@@ -125,6 +129,7 @@ const SignIn = () => {
             onVerify={(token) => setCaptchaToken(token)}
             onError={() => captchaRef.current.reset()}
             onExpire={() => captchaRef.current.reset()}
+            onClose={() => setIsClicked(false)}
           />
         )}
         <Logo className="mb-6 lg:hidden" />
@@ -188,7 +193,7 @@ const SignIn = () => {
         </div>
 
         <Button
-          className="w-[80%] max-w-[350px] h-full p-2.5 bg-gray-600 mb-5 hover:bg-gray-800"
+          className="w-[80%] max-w-[350px] h-full p-2.5 bg-gray-600 mb-5  disabled:hover:bg-slate-50"
           type="primary"
           disabled={shouldDisable}
           loading={isClicked}
