@@ -30,6 +30,8 @@ const MyMovies = () => {
         .select('movies')
         .eq('userid', userInfo.id);
 
+      if (watchLaterMovies?.length == 0) return;
+
       const movieList: [string] = watchLaterMovies![0].movies;
       const movieDetails = await getMovieDataWithMovieIds(movieList);
       setWatchLaterList([...movieDetails]);
@@ -43,9 +45,9 @@ const MyMovies = () => {
 
   return (
     <div className="p-10 pb-5 bg-neutral-50 rounded-2xl border border-gray-200">
-      <strong className='subtitle2_suit'>나의 영화 리스트</strong>
+      <strong className="subtitle2_suit">나의 영화 리스트</strong>
       <ul className="overflow-hidden relative mt-4 h-[338px]">
-        <li className='inline-block'>
+        <li className="inline-block">
           <input
             className="peer sr-only"
             type="radio"
@@ -68,7 +70,7 @@ const MyMovies = () => {
           />
         </li>
 
-        <li className='inline-block'>
+        <li className="inline-block">
           <input className="peer sr-only" type="radio" value="myList-watchLater" name="myList" id="myList-watchLater" />
           <label
             className="inline-block mr-3 px-4 py-2 bg-white rounded-3xl border border-zinc-300 text-neutral-800 text-base font-normal leading-snug cursor-pointer peer-checked:bg-neutral-800 peer-checked:text-white transition-all duration-500 ease-in-out"

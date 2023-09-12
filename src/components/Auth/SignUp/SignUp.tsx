@@ -1,9 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
+import isUsernameAvailable from '@/api/generateUsername/isUsernameAvailable';
 import useToggleSignUpModal from '@/store/toggleSignUpModal';
 import Logo from '@/styles/svg/Logo';
 import HCaptcha from '@hcaptcha/react-hcaptcha';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Button, Input, message } from 'antd';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
@@ -30,7 +32,7 @@ const SignUp = () => {
     if (emailValue.length > 0 && passwordValue.length > 8 && password2Value.length > 8 && usernameValue.length >= 2) {
       setShouldDisable(false);
     }
-  }, [emailValue, passwordValue]);
+  }, [emailValue, passwordValue, password2Value, usernameValue]);
 
   useEffect(() => {
     const signupHandler = async () => {
@@ -81,6 +83,7 @@ const SignUp = () => {
   }, [captchaToken]);
 
   const onSubmitHandler = async () => {
+    const supabase = createClientComponentClient();
     if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(emailValue)) {
       setIsClicked(false);
       return messageApi.open({
@@ -95,19 +98,18 @@ const SignUp = () => {
         content: '비밀번호가 일치하지 않습니다.',
         duration: 3
       });
-    } else if (!/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/.test(passwordValue)) {
-      setIsClicked(false);
-      return messageApi.open({
-        type: 'error',
-        content: '비밀번호는 최소 8자 이상이어야 하며, 최소 하나의 대문자, 소문자, 숫자가 포함되어야 합니다.',
-        duration: 5
-      });
     } else if (!/^[a-zA-Z가-힣\s0-9]+$/.test(usernameValue)) {
       setIsClicked(false);
       return messageApi.open({
         type: 'error',
         content: '닉네임은 한글과 알파벳, 숫자 그리고 띄어쓰기가 가능합니다. 특수문자는 허용되지 않습니다.',
         duration: 5
+      });
+    } else if (!(await isUsernameAvailable(usernameValue, supabase))) {
+      setIsClicked(false);
+      return messageApi.open({
+        type: 'warning',
+        content: '이미 등록된 닉네임입니다.'
       });
     } else {
       setIsClicked(true);
@@ -152,7 +154,7 @@ const SignUp = () => {
 
             <div className="w-[80%] max-w-[350px] flex flex-col gap-2">
               <label htmlFor="password" className="text-neutral-800 font-semibold">
-                비밀번호
+                비밀번호 <span className="text-sm font-normal text-gray-500">(8자리 이상)</span>
               </label>
               <Input.Password
                 className="py-2 sm:py-2.5"

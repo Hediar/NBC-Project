@@ -6,12 +6,8 @@ import { getMoreOrganizedMovieDetails } from './getOrganizedMovieDetails';
 // 장르별 영화 시간
 export const getLikesByGenres = async (userId: string, supabase: SupabaseClient): Promise<[string[], number[]]> => {
   const watchedList = await getWatchedMoviesList(userId, supabase);
-
   const movieDetails = await getMovieDataWithMovieIds(watchedList);
-
   const organizedDetails = getMoreOrganizedMovieDetails(movieDetails);
-
-  // typeof runTimeByGenres = {'애니메이션': 140}[]
   const runTimeByGenres = organizedDetails.map((detail): Record<string, number> => {
     return {
       [detail.genres as string]: detail.runtime
@@ -33,7 +29,6 @@ export const getLikesByGenres = async (userId: string, supabase: SupabaseClient)
   }));
 
   const titles = resultArray.map((el) => Object.keys(el)).flat();
-  const runtimesMinutes = resultArray.map((el) => Object.values(el)).flat();
   const runtimesHours = resultArray
     .map((el) => Object.values(el))
     .flat()

@@ -28,7 +28,7 @@ const MyReviewPage = ({ isUserMatch }: { isUserMatch: boolean }) => {
   useEffect(() => {
     const fetchMore = async (page: number) => {
       if (totalRowsNumber === null) {
-        const fetchRowNumberData = await countRowsNumber('reviews');
+        const fetchRowNumberData = await countRowsNumber('reviews', userInfo.id!);
         setTotalRowsNumber(fetchRowNumberData!);
         return;
       }
@@ -37,12 +37,9 @@ const MyReviewPage = ({ isUserMatch }: { isUserMatch: boolean }) => {
       setReviews([...reviews, ...(data as ReviewsTable[])]);
       setIsLoading(false);
 
-      totalRowsNumber !== null && totalRowsNumber! > reviews.length + REVIEWS_LIMIT * 3 + 1
-        ? setHasNextPage(true)
-        : setHasNextPage(false);
+      totalRowsNumber! >= reviews.length + REVIEWS_LIMIT + 1 ? setHasNextPage(true) : setHasNextPage(false);
     };
 
-    // setIsLoading(true);
     if (userInfo.id) fetchMore(currentPage);
   }, [userInfo, totalRowsNumber, currentPage]);
 
@@ -73,7 +70,7 @@ const MyReviewPage = ({ isUserMatch }: { isUserMatch: boolean }) => {
         {hasNextPage && (
           <button onClick={debounce(handleClick, 300)} type="button" className="full_button w-full items-center mt-20">
             <div className="inline-flex items-center justify-center gap-1 px-5 py-2">
-              더 보기{`(${currentPage}/${Math.ceil(totalRowsNumber! / (REVIEWS_LIMIT + 1) - 1)})`}
+              더 보기{`(${currentPage}/${Math.ceil(totalRowsNumber! / (REVIEWS_LIMIT + 1))})`}
             </div>
           </button>
         )}
