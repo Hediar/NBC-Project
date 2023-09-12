@@ -93,7 +93,7 @@ const Search = ({
           <SearchLined />
         </button>
       </form>
-      <ul
+      {/* <ul
         className={`overflow-auto h-44 absolute w-full bg-${
           searchInput ? 'white' : 'transparent'
         }  rounded z-10 transition-colors duration-300`}
@@ -106,7 +106,7 @@ const Search = ({
               </button>
             </li>
           ))}
-      </ul>
+      </ul> */}
     </div>
   );
 };
