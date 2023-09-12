@@ -36,7 +36,7 @@ const DiscussionPost = ({ post }: Props) => {
   return (
     <Link
       href={`/discussion/detail/${post.post_id}`}
-      className="h-[174px] sm:min-h-[150px] overflow-auto flex p-2 pb-6 sm:pb-2 items-center border rounded-xl shadow1 relative"
+      className="h-[174px] sm:min-h-[160px] overflow-auto flex p-2 pb-6 sm:pb-2 items-center border rounded-xl shadow1 relative"
     >
       <div className="flex justify-center items-center p-3">
         <div className="h-[90px] mx-auto flex justify-center">
