@@ -6,6 +6,7 @@ import Sort from '@/components/contents/Sort';
 import { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import MovieDataList from './MovieDataList';
+import MovieListSkeleton from './MovieListSkeleton';
 
 const MovieList = () => {
   const [sortingOption, setSortingOption] = useState<string>('popularity'); // 정렬 옵션
@@ -105,8 +106,14 @@ const MovieList = () => {
 
   if (dataList?.results) {
     contents = <MovieDataList movieData={filteredData} />; // 검색x, 영화 검색
-  } else {
+  } else if (Array.isArray(dataList?.results) && dataList.results.length === 0) {
     contents = <>검색 결과가 없습니다.</>;
+  } else {
+    contents = (
+      <>
+        <MovieListSkeleton />
+      </>
+    );
   }
 
   return (
