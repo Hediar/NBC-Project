@@ -18,13 +18,13 @@ const MainPageSkeleton = ({ params }: { params: string }) => {
           <KeywordButtons params={params} />
         </div>
 
-        <div className="bg-GreyScaleGrey flex justify-center w-full rounded-md my-3 h-[195px] sm:h-[230px] xl:h-[460px]"></div>
+        <div className="animate-pulse bg-GreyScaleGrey flex justify-center w-full rounded-md my-3 h-[195px] sm:h-[230px] xl:h-[460px]"></div>
         <div className="flex flex-wrap justify-center items-center mx-11 sm:grid sm:grid-cols-2 gap-6 lg:grid-cols-3 xl:grid-cols-4 2xl:flex">
           {listData.map((data, idx: number) => (
             <div key={idx} className="w-auto md:w-[240px]">
               <div className="w-[140px] sm:w-[240px] flex flex-col gap-3">
                 <div className="relative">
-                  <div className="bg-GreyScaleGrey w-[140px] h-[210px] sm:w-[240px] sm:h-[360px] rounded-xl" />
+                  <div className="animate-pulse bg-GreyScaleGrey w-[140px] h-[210px] sm:w-[240px] sm:h-[360px] rounded-xl" />
                 </div>
               </div>
             </div>
@@ -45,7 +45,7 @@ const MainPageSkeleton = ({ params }: { params: string }) => {
                 return (
                   <div key={index} className="w-full mb-16 m-4 shadow-neutral-400">
                     <div
-                      className={`p-5 px-7 border border-opacity-20 bg-GreyScaleGrey rounded-[20px] shadow h-36`}
+                      className={`animate-pulse p-5 px-7 border border-opacity-20 bg-GreyScaleGrey rounded-[20px] shadow h-36`}
                     ></div>
                   </div>
                 );
@@ -58,7 +58,7 @@ const MainPageSkeleton = ({ params }: { params: string }) => {
             <h1 className="h3_suit mx-auto xl:text-6xl leading-[72px]">🍿최근 개봉 영화</h1>
             <div className="flex justify-center items-center w-full">
               <div className="hidden xl:block w-full p-5 h-full md:h-[608px] font-thin text-xl my-3 mr-5">
-                <div className="relative w-full h-full sm:w-auto md:h-[608px] shadow border rounded-[20px] border-gray-200 bg-GreyScaleGrey overflow-hidden"></div>
+                <div className="animate-pulse relative w-full h-full sm:w-auto md:h-[608px] shadow border rounded-[20px] border-gray-200 bg-GreyScaleGrey overflow-hidden"></div>
               </div>
             </div>
           </div>
@@ -74,7 +74,10 @@ const MainPageSkeleton = ({ params }: { params: string }) => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-5">
             {listData!.map((post, idx) => (
-              <div key={idx} className="bg-GreyScaleWhite p-4 rounded-md relative flex flex-col justify-between">
+              <div
+                key={idx}
+                className="animate-pulse bg-GreyScaleWhite p-4 rounded-md relative flex flex-col justify-between"
+              >
                 <div className="mb-8">
                   <div className="text-lg font-semibold"></div>
                   <div className="text-xl font-bold mb-2"></div>
