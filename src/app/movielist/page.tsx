@@ -1,10 +1,12 @@
+import MainPageLoading from '@/components/MainPage/MainPageLoading';
 import MovieList from '@/components/contents/MovieList';
+import { Suspense } from 'react';
 
 const MovieListPage = () => {
   return (
-    <div>
+    <Suspense fallback={<MainPageLoading />}>
       <MovieList />
-    </div>
+    </Suspense>
   );
 };
 
