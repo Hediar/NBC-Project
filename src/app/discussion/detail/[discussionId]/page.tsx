@@ -1,5 +1,6 @@
 import DiscussionDetail from '@/components/Discussion/detail/DiscussionDetail';
-import React from 'react';
+import DiscussionDetailSuspense from '@/components/Discussion/detail/DiscussionDetailSuspense';
+import React, { Suspense } from 'react';
 
 interface Props {
   params: {
@@ -14,7 +15,9 @@ const DiscussionDetailPage = async ({ params }: Props) => {
 
   return (
     <div>
-      <DiscussionDetail discussionId={discussionId} />
+      <Suspense fallback={<DiscussionDetailSuspense />}>
+        <DiscussionDetail discussionId={discussionId} />
+      </Suspense>
     </div>
   );
 };

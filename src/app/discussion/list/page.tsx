@@ -1,20 +1,16 @@
 import DiscussionList from '@/components/Discussion/list/DiscussionList';
-import React from 'react';
-import { Metadata } from 'next';
+import React, { Suspense } from 'react';
 import DiscussionFilteringBox from '@/components/Discussion/list/DiscussionFilteringBox';
-
-// export const revalidate = 0;
-
-export const metadata: Metadata = {
-  title: '토론 - 무비바바'
-};
+import DiscussionListSuspense from '@/components/Discussion/list/DiscussionListSuspense';
 
 const DiscussionListPage = () => {
   return (
     <div className="wrap">
       <DiscussionFilteringBox />
 
-      <DiscussionList />
+      <Suspense fallback={<DiscussionListSuspense />}>
+        <DiscussionList />
+      </Suspense>
     </div>
   );
 };
