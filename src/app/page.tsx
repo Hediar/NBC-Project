@@ -1,13 +1,15 @@
 import MainPage from '@/components/MainPage/MainPage';
-import NewLoading from '@/components/common/NewLoading';
+import MainPageSkeleton from '@/components/MainPage/MainPageSkeleton';
 import { Suspense } from 'react';
 
 export const revalidate = 0;
 
 export default async function Home() {
   return (
-    <Suspense fallback={<NewLoading />}>
-      <MainPage params="all" />
-    </Suspense>
+    <>
+      <Suspense fallback={<MainPageSkeleton params="all" />}>
+        <MainPage params="all" />
+      </Suspense>
+    </>
   );
 }

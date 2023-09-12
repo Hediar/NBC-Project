@@ -110,8 +110,8 @@ const MovieList = () => {
   }
 
   return (
-    <div className="p-16">
-      <div className="flex justify-between h-20">
+    <div className="p-5 sm:p-16 flex-wrap">
+      <div className="flex flex-wrap justify-between items-center h-20">
         <Sort sortingOption={sortingOption} setSortingOption={setSortingOption} />
         <Search
           searchMovieValue={searchMovieValue}
