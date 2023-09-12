@@ -6,10 +6,8 @@ export const revalidate = 0;
 
 export default async function Home() {
   return (
-    <>
-      <Suspense fallback={<MainPageSkeleton params="all" />}>
-        <MainPage params="all" />
-      </Suspense>
-    </>
+    <Suspense fallback={<MainPageSkeleton params="all" />}>
+      <MainPage params="all" />
+    </Suspense>
   );
 }
