@@ -69,9 +69,7 @@ const MyMovies = () => {
           ) : (
             <MyMoviesSwiper
               dataList={likesList}
-              spaceBetween={20}
-              slidesPerView={6}
-              className="absolute left-0 w-full mt-3 mx-auto transition-all duration-500 ease-in-out translate-x-40 opacity-0 invisible peer-checked:opacity-100 peer-checked:visible peer-checked:translate-x-1"
+              className="absolute left-0 w-full mt-3 mx-auto transition-all duration-500 ease-in-out translate-x-40 opacity-0 invisible peer-checked:opacity-100 peer-checked:visible peer-checked:translate-x-1 pb-5"
             />
           )}
         </li>
@@ -85,14 +83,12 @@ const MyMovies = () => {
             찜한 영화
           </label>
           {likesList.length === 0 ? (
-            <p className="h3_suit py-10 text-center absolute left-0 w-full mt-3 mx-auto transition-all duration-500 ease-in-out translate-x-40 opacity-0 invisible peer-checked:opacity-100 peer-checked:visible peer-checked:translate-x-1">
+            <p className="h3_suit py-10 text-center absolute left-0 w-full mt-3 mx-auto transition-all duration-500 ease-in-out translate-x-40 opacity-0 invisible peer-checked:opacity-100 peer-checked:visible peer-checked:translate-x-1 pb-5">
               찜한 영화가 없습니다.
             </p>
           ) : (
             <MyMoviesSwiper
               dataList={watchLaterList}
-              spaceBetween={20}
-              slidesPerView={6}
               className="absolute left-0 w-full mt-3 mx-auto transition-all duration-500 ease-in-out translate-x-40 opacity-0 invisible peer-checked:opacity-100 peer-checked:visible peer-checked:translate-x-1"
             />
           )}
