@@ -2,13 +2,15 @@
 /* eslint-disable @next/next/no-img-element */
 
 import { StarFill } from '@/styles/icons/Icons24';
-import WatchLaterButton from './WatchLaterButton';
-import MovieLikes from '../MovieLikes/MovieLikes';
+import WatchLaterButton from './Buttons/WatchLaterButton';
+import MovieLikes from './Buttons/MovieLikes';
 import { Card } from 'antd';
 import Meta from 'antd/es/card/Meta';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import Link from 'next/link';
+import AddIgnoreMovieButton from './AddIgnoreMovieButton';
+import MovieButtons from './Buttons/MovieButtons';
 
 const MovieItem = ({ movie }: { movie: MovieData }) => {
   const router = useRouter();
@@ -38,6 +40,10 @@ const MovieItem = ({ movie }: { movie: MovieData }) => {
         />
       }
     >
+      <div className="bg-gray-800 flex flex-wrap absolute top-0 left-0 mx-2 h-[210px] sm:h-[360px] sm:mx-0 w-max-[140px] sm:w-max-[210px] w-[140px] sm:w-[240px]">
+        <AddIgnoreMovieButton movieid={movie.id} />
+        <MovieButtons movieId={movie.id} title={movie.title} />
+      </div>
       <div className="bg-gray-800 bg-opacity-30 rounded-xl py-1 px-1 absolute top-1 right-1 sm:top-2 sm:right-2 flex flex-col gap-[6px] items-center">
         <WatchLaterButton movieId={movie.id} />
         <MovieLikes movieid={movie.id} />

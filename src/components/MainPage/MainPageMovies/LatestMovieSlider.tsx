@@ -27,7 +27,7 @@ const LatestMovieSlider = async ({ photoData }: Props) => {
       return ott;
     })
   );
-  console.log(getOTT);
+  // console.log(getOTT);
 
   const firstMainColor = getStyles.map((colors) => rgbToString([colors[8], 0.5]));
 

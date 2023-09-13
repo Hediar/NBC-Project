@@ -45,10 +45,10 @@ const AddIgnoreMovieButton = (props: { movieid: number }) => {
         className="relative"
       >
         <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className="bg-white opacity-30 hover:opacity-100 font-bold py-2 px-4 rounded-xl"
           onClick={ignoreButtonHandler}
         >
-          <Prohibit />
+          추천 무시하기 😕
         </button>
         {/* {isBtnNameShow && <p className="absolute top-0 -left-5">무시하기</p>} */}
       </div>
