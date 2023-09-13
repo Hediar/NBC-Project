@@ -2,8 +2,6 @@
 // import { NextResponse } from 'next/server';
 // import type { NextRequest } from 'next/server';
 
-// export const dynamic = 'force-dynamic';
-
 // export async function supabaseMiddleware(req: NextRequest) {
 //   const res = NextResponse.next();
 //   const supabase = createMiddlewareClient({ req, res });
