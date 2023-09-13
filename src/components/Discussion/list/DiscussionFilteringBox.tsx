@@ -6,22 +6,24 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import React, { useRef, useState } from 'react';
 import DiscussionRegistBtn from './DiscussionRegistBtn';
 import { message } from 'antd';
+import Select from '@/components/common/Select';
+import { FormItemLabelProps } from 'antd/es/form/FormItemLabel';
 
 interface FilterBy {
-  text: string;
-  title: string;
+  label: string;
+  value: string;
 }
 
 const sortByDropdownValues = [
-  { text: '최신순', title: 'new' },
-  { text: '조회순', title: 'view' },
-  { text: '투표순', title: 'vote' }
+  { label: '최신순', value: 'new' },
+  { label: '조회순', value: 'view' },
+  { label: '투표순', value: 'vote' }
 ];
 const searchByDropdownValues = [
-  { text: '전체', title: 'all' },
-  { text: '영화 제목', title: 'movie_title' },
-  { text: '토론 제목', title: 'discussion_title' },
-  { text: '내용', title: 'discussion_content' }
+  { label: '전체', value: 'all' },
+  { label: '영화 제목', value: 'movie_title' },
+  { label: '토론 제목', value: 'discussion_title' },
+  { label: '내용', value: 'discussion_content' }
 ];
 
 const DiscussionFilteringBox = () => {
@@ -51,7 +53,7 @@ const DiscussionFilteringBox = () => {
 
     const params = {
       search: searchVal,
-      filter: searchBy.title,
+      filter: searchBy.value,
       sort: sort || ''
     };
 
@@ -62,7 +64,7 @@ const DiscussionFilteringBox = () => {
     const params = {
       search: search || '',
       filter: filter || '',
-      sort: obj.title
+      sort: obj.value
     };
 
     router.push(`${discussionUrl}?${new URLSearchParams(params).toString()}`);
@@ -74,12 +76,12 @@ const DiscussionFilteringBox = () => {
       <div className="flex flex-wrap gap-5 justify-between p-2 mb-4 relative">
         <div className="w-full sm:w-1/3 flex gap-5 items-center relative">
           <div
-            className="w-[104px] h-11 pl-5 pr-2.5 py-2.5 bg-white rounded-xl border border-zinc-300 justify-start items-center gap-2 inline-flex"
+            className="w-[104px] h-11 pl-5 pr-2.5 py-2.5 bg-white rounded-xl border border-zinc-300 justify-start items-center gap-2 inline-flex hover:border-neutral-800"
             onClick={() => {
               setSortFilterOpen(!sortFilterOpen);
             }}
           >
-            <div className="w-full text-neutral-800 text-base font-normal leading-snug">{sortBy.text}</div>
+            <div className="w-full text-neutral-800 text-base font-normal leading-snug">{sortBy.label}</div>
             <DropdownMenu className="cursor-pointer opacity-70 hover:opacity-100 transform hover:scale-110 hover:ease-out duration-200" />
           </div>
           {sortFilterOpen && (
@@ -89,14 +91,14 @@ const DiscussionFilteringBox = () => {
                   return (
                     <li
                       className="px-3 hover:bg-gray-200 cursor-pointer"
-                      key={sortByObj.title}
+                      key={sortByObj.value}
                       onClick={() => {
                         setSortBy(sortByObj);
                         setSortFilterOpen(false);
                         handleSortBySubmit(sortByObj);
                       }}
                     >
-                      {sortByObj.text}
+                      {sortByObj.label}
                     </li>
                   );
                 })}
@@ -113,14 +115,14 @@ const DiscussionFilteringBox = () => {
               e.preventDefault();
             }}
           >
-            <div className="min-w-[300px] mx-auto sm:w-[570px] h-[52px] relative bg-white rounded-xl border border-zinc-300">
+            <div className="min-w-[300px] mx-auto sm:w-[570px] h-[52px] relative bg-white rounded-xl border border-zinc-300 hover:border-neutral-800">
               <div
                 className="flex justify-between w-[100px] sm:w-1/5 h-5 left-[20px] top-[16px] absolute text-neutral-800 text-base font-normal leading-snug"
                 onClick={() => {
                   setSearchFilterOpen(!searchFilterOpen);
                 }}
               >
-                <span>{searchBy.text}</span>
+                <span>{searchBy.label}</span>
                 <DropdownMenu className="cursor-pointer opacity-70 hover:opacity-100 transform hover:scale-110 hover:ease-out duration-200" />
               </div>
               <div className="w-px h-6 left-[120px] sm:left-[148px] top-[14px] absolute bg-gray-200" />
@@ -149,13 +151,13 @@ const DiscussionFilteringBox = () => {
                     return (
                       <li
                         className="px-3 hover:bg-gray-200 cursor-pointer"
-                        key={searchByObj.title}
+                        key={searchByObj.value}
                         onClick={() => {
                           setSearchBy(searchByObj);
                           setSearchFilterOpen(false);
                         }}
                       >
-                        {searchByObj.text}
+                        {searchByObj.label}
                       </li>
                     );
                   })}
