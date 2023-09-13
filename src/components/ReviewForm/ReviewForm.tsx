@@ -29,7 +29,6 @@ const ReviewForm = ({ movieId, editReview, movieButtonRef }: Props) => {
   const router = useRouter();
   const { userInfo } = useUserInfoStore();
   const { saveSearchMovieId } = useReviewMovieStore();
-  console.log(userInfo);
 
   const [isSearchModalOpen, setIsSearchModalOpen] = React.useState(false);
   const [IsConfirmed, setIsConfirmed] = React.useState(false);

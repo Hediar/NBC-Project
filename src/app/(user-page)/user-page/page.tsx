@@ -1,32 +1,19 @@
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
+import authApi from '@/util/supabase/auth/auth';
+import publicApi from '@/util/supabase/auth/public';
 import { redirect } from 'next/navigation';
 
 export const dynamic = 'force-dynamic';
 
 const RedirectToUserPageOrHome = async () => {
-  const supabase = createServerComponentClient<Database>({ cookies });
-  const { data: signedInUser, error } = await supabase.auth.getUser();
+  const { session } = await authApi.get('session');
 
-  // 로그인하지 않은 유저가 접근하면 홈으로 보내기
-  if (error) {
+  if (!session) {
     return redirect('/');
   }
 
-  const signedInUserId = signedInUser.user.id;
-  const { data: signedInUsernameData, error: err } = await supabase
-    .from('users')
-    .select('username')
-    .eq('id', signedInUserId)
-    .single();
+  const signedInUserId = session.user.id;
+  const { username: signedInUsername } = await publicApi.get('id to username', { id: signedInUserId });
 
-  if (err) {
-    // console.log(err);
-  }
-
-  const signedInUsername = signedInUsernameData!.username;
-
-  // 로그인한 유저가 접근하면 해당 유저의 마이페이지의 info로 보내기
   return redirect(`${process.env.NEXT_PUBLIC_BASE_URL}/user-page/${signedInUsername}/info`);
 };
 

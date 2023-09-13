@@ -1,28 +1,26 @@
 'use client';
 
-import { getMovieListDataSearch, getMovieListNotSearch, getTest, getTestNotSearch } from '@/api/tmdb';
+import { getMovieListDataSearch, getMovieListNotSearch } from '@/api/tmdb';
 import Search from '@/components/common/Search';
 import Sort from '@/components/contents/Sort';
 import { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import MovieDataList from './MovieDataList';
+import MovieListSkeleton from './MovieListSkeleton';
 
 const MovieList = () => {
   const [sortingOption, setSortingOption] = useState<string>('popularity'); // 정렬 옵션
   const [searchType, setSearchType] = useState('movie'); // 검색 filter 옵션
   const [searchMovieValue, setSearchMovieValue] = useState('');
-  const [filteredData, setFilterefData] = useState<any[]>([]);
+  const [filteredData, setFilterefData] = useState<MovieData[]>([]);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [dataList, setDataList] = useState<any>();
+  const [dataList, setDataList] = useState<MovieFetchResult | PersonFetchResult | null>();
 
   const today = dayjs();
   const formattedCurrentDate = today.format('YYYY-MM-DD');
 
   const fetchMovieData = async (page: number) => {
-    // const testData = await getTest('인어', 'movie', 3);
-    // const testData2 = await getTestNotSearch('popularity', formattedCurrentDate, 11);
-    // console.log(testData2);
     if (searchMovieValue) {
       // 검색 했을 때
       const data = await getMovieListDataSearch(searchMovieValue, searchType, page);
@@ -37,14 +35,15 @@ const MovieList = () => {
             setFilterefData([...filteredData, ...results]);
           }
         } else {
-          const results = data.results[0]?.known_for || [];
-          // console.log(results);
+          const filteredResults = (data.results[0]?.known_for || []).filter((item: TMDBSearchPersonMovie) => {
+            return item.media_type !== 'tv';
+          });
+          console.log(filteredResults);
           if (page === 1) {
-            setFilterefData([...results]);
+            setFilterefData([...filteredResults]);
           } else {
-            setFilterefData([...filteredData, ...results]);
+            setFilterefData([...filteredData, ...filteredResults]);
           }
-          // console.log('영화데이터', results);
         }
       }
     } else {
@@ -60,7 +59,7 @@ const MovieList = () => {
     }
   };
 
-  const sortData = (data: TMDBSearchMovie[], sortingOption: string): TMDBSearchMovie[] => {
+  const sortData = (data: MovieData[], sortingOption: string): MovieData[] => {
     switch (sortingOption) {
       case 'popularity':
         return data.slice().sort((a, b) => b.popularity - a.popularity);
@@ -85,14 +84,14 @@ const MovieList = () => {
       setFilterefData(sortedMovies);
     } else {
       // 초기화
-      setDataList([]);
+      setDataList(null);
       setCurrentPage(1);
       fetchMovieData(1);
     }
   }, [sortingOption]);
 
   useEffect(() => {
-    setDataList([]);
+    setDataList(null);
     setCurrentPage(1);
     fetchMovieData(1);
   }, [searchMovieValue]);
@@ -102,11 +101,15 @@ const MovieList = () => {
   }, [currentPage]);
 
   let contents;
-
+  // console.log(dataList);
   if (dataList?.results) {
     contents = <MovieDataList movieData={filteredData} />; // 검색x, 영화 검색
   } else {
-    contents = <>검색 결과가 없습니다.</>;
+    contents = (
+      <>
+        <MovieListSkeleton />
+      </>
+    );
   }
 
   return (
@@ -121,11 +124,12 @@ const MovieList = () => {
         />
       </div>
       <div className="p-8">{contents}</div>
-      {currentPage < dataList?.total_pages && ( // 다음 페이지가 있는 경우에만 더보기 버튼 표시
-        <div onClick={fetchMore} className="full_button">
-          <div className="inline-flex items-center justify-center gap-1 px-5 py-2">더보기</div>
-        </div>
-      )}
+      {dataList &&
+        currentPage < dataList.total_pages && ( // 다음 페이지가 있는 경우에만 더보기 버튼 표시
+          <div onClick={fetchMore} className="full_button">
+            <div className="inline-flex items-center justify-center gap-1 px-5 py-2">더보기</div>
+          </div>
+        )}
     </div>
   );
 };

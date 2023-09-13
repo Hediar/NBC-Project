@@ -2,11 +2,11 @@
 
 import Image from 'next/image';
 import HeaderMenuButton from './HeaderMenuButton';
-import useUserInfoStore from '@/store/saveCurrentUserData';
 import { Dropdown, MenuProps, Modal } from 'antd';
 import { useRouter } from 'next/navigation';
 import ChooseProfile from '../UserPage/settings/MyAccount/ChooseProfile';
 import useToggleChangeAvatar from '@/store/toggleChangeAvatarModal';
+import useSaveSignedInUserData from '@/hooks/saveSignedInUserData';
 
 const items: MenuProps['items'] = [
   {
@@ -28,20 +28,20 @@ const items: MenuProps['items'] = [
 ];
 
 const HeaderUser = () => {
-  const { userInfo: userData } = useUserInfoStore();
+  const userInfo = useSaveSignedInUserData();
   const router = useRouter();
   const { isChangeAvatarModalOpen, setIsChangeAvatarModalOpen } = useToggleChangeAvatar();
 
-  if (!userData.id) {
-    return <HeaderMenuButton userData={userData} />;
+  if (!userInfo.id) {
+    return <HeaderMenuButton userData={userInfo} />;
   } else {
     const onClick: MenuProps['onClick'] = ({ key }) => {
       if (key === '내 계정') {
-        return router.push(`/user-page/${userData.username}/settings?my-account=true`);
+        return router.push(`/user-page/${userInfo.username}/settings?my-account=true`);
       } else if (key === '정보 변경') {
-        return router.push(`/user-page/${userData.username}/settings?change-info=true`);
+        return router.push(`/user-page/${userInfo.username}/settings?change-info=true`);
       } else if (key === '나의 메뉴') {
-        return router.push(`/user-page/${userData.username}/settings?my-menu=true`);
+        return router.push(`/user-page/${userInfo.username}/settings?my-menu=true`);
       } else if (key === '아바타 변경') {
         return setIsChangeAvatarModalOpen(true);
       }
@@ -50,12 +50,12 @@ const HeaderUser = () => {
     return (
       <>
         <div className="sm:flex-row-reverse flex gap-2 sm:gap-5 items-center mr-4">
-          <HeaderMenuButton userData={userData} />
-          <Dropdown menu={{ items, onClick }} trigger={['click']}>
+          <HeaderMenuButton userData={userInfo} />
+          <Dropdown overlayStyle={{ textAlign: 'center' }} menu={{ items, onClick }} trigger={['click']}>
             <div className="rounded-full overflow-hidden shadow-sm shadow-gray-400 cursor-pointer">
               <Image
                 className="w-9 h-9"
-                src={userData.avatar_url!}
+                src={userInfo.avatar_url!}
                 alt="user profile"
                 width={32}
                 height={32}
@@ -64,7 +64,7 @@ const HeaderUser = () => {
               />
             </div>
           </Dropdown>
-          <h3 className="hidden lg:block body1_regular_suit">{userData.username}</h3>
+          <h3 className="hidden lg:block body1_regular_suit">{userInfo.username}</h3>
         </div>
         <Modal
           footer={false}

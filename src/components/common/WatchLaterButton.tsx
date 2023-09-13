@@ -3,7 +3,7 @@
 import POSTWatchLater from '@/api/POSTWatchLater';
 import getMovieNameWIthMovieId from '@/api/getMovieNameWIthMovieId';
 import useUserInfoStore from '@/store/saveCurrentUserData';
-import { BookmarkLinedWhite } from '@/styles/icons/Icons24';
+import { BookmarkLinedGreen, BookmarkLinedWhite } from '@/styles/icons/Icons24';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { message } from 'antd';
 import { useRouter } from 'next/navigation';
@@ -17,28 +17,17 @@ const WatchLaterButton = ({ movieId }: { movieId: string | number }) => {
   const [isOnHover, setIsOnHover] = useState<boolean>(false);
 
   const watchLaterClickHandler = async (movieId: number) => {
+    if (isAlreadyAdded) {
+      setIsAlreadyAdded(false);
+    } else {
+      setIsAlreadyAdded(true);
+    }
+
     if (!userInfo.id) {
       router.replace('?sign-in=true');
       return;
     }
-    const message = await POSTWatchLater(movieId);
-    const movieTitle = await getMovieNameWIthMovieId([movieId.toString()]);
-
-    if (message!.includes('제외했습니다')) {
-      messageApi.open({
-        type: 'success',
-        content: movieTitle[0] + message
-      });
-      setIsAlreadyAdded(false);
-    }
-
-    if (message!.includes('추가했습니다')) {
-      messageApi.open({
-        type: 'success',
-        content: movieTitle[0] + message
-      });
-      setIsAlreadyAdded(true);
-    }
+    await POSTWatchLater(movieId);
 
     router.refresh();
     return;
@@ -73,16 +62,16 @@ const WatchLaterButton = ({ movieId }: { movieId: string | number }) => {
     <>
       {contextHolder}
       {isAlreadyAdded ? (
-        <BookmarkLinedWhite
-          fill={isOnHover ? 'transparent' : 'white'}
-          className="watch-later cursor-pointer animate-200 hover:scale-110"
+        <BookmarkLinedGreen
+          fill={isOnHover ? 'transparent' : '#0dca20'}
+          className="w-7 h-7 sm:w-8 sm:h-8 watch-later cursor-pointer animate-200 hover:scale-110"
           onMouseOver={() => setIsOnHover(true)}
           onMouseLeave={() => setIsOnHover(false)}
           onClick={() => watchLaterClickHandler(Number(movieId))}
         />
       ) : (
         <BookmarkLinedWhite
-          className="watch-later cursor-pointer animate-200 hover:scale-110"
+          className="w-7 h-7 sm:w-8 sm:h-8 watch-later cursor-pointer animate-200 hover:scale-110"
           fill={isOnHover ? 'white' : 'transparent'}
           onMouseOver={() => setIsOnHover(true)}
           onMouseLeave={() => setIsOnHover(false)}
