@@ -106,9 +106,16 @@ declare global {
     video: boolean;
     vote_average: number;
     vote_count: number;
-    trailerKeys: string[];
-    watchProviders: { link: string; buy: MovieProvider[]; rent: MovieProvider[] };
-    backdropImages: MovieBackdropImage[];
+    trailerKeys?: string[];
+    watchProviders?: { link: string; buy: MovieProvider[]; rent: MovieProvider[] };
+    backdropImages?: MovieBackdropImage[];
+    appearences?: TMDBCreditCast[];
+    productions?: TMDBCreditCrew[];
+  }
+
+  interface MovieCreditData {
+    cast: TMDBCreditCast[];
+    crew: TMDBCreditCrew[];
     appearences: TMDBCreditCast[];
     productions: TMDBCreditCrew[];
   }
@@ -286,5 +293,13 @@ declare global {
     options: { text: string }[];
     postId: string;
     startNum: number;
+  }
+
+  interface DiscussionTable {
+    title: string;
+    content: string;
+    movieId: string | number | null;
+    options?: { text: string }[];
+    userId: string;
   }
 }

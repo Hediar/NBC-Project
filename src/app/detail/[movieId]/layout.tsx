@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import MovieDetailInfo from '@/components/MovieDetail/MovieDetailInfo';
 import { Metadata, ResolvingMetadata } from 'next';
-import { getMovieDetail } from '@/api/tmdb';
+import { getDetailData } from '@/api/tmdb';
 import MovieLayoutDiscussion from '@/components/MovieDetail/MovieLayoutDiscussion';
 
 export async function generateMetadata(
@@ -15,7 +15,7 @@ export async function generateMetadata(
   parent: ResolvingMetadata
 ): Promise<Metadata> {
   const { movieId } = params;
-  const movieData = await getMovieDetail(movieId);
+  const movieData = await getDetailData(movieId);
 
   return {
     title: `${movieData?.title ?? 'null'} - 영화상세 - 무비바바`

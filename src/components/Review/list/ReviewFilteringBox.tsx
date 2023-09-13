@@ -3,7 +3,6 @@
 import Select from '@/components/common/Select';
 import { Close } from '@/styles/icons/Icons24';
 import { SearchLined } from '@/styles/icons/Icons32';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import WriteButton from './WriteButton';
