@@ -16,7 +16,7 @@ interface Props {
 }
 
 const DisplayInfiniteMovies = ({ movieData, discoverMoviesWithGenreId, genreIdArray, ignoredList }: Props) => {
-  const [dataToProject, setDataToProject] = useState<MovieData[]>([]);
+  const [dataToProject, setDataToProject] = useState<MovieDetailData[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [isDataLoaded, setIsDataLoaded] = useState<boolean>(false);
   const [content, setContent] = useState<JSX.Element[]>([]);

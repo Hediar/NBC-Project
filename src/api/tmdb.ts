@@ -111,17 +111,16 @@ export const getImageData = async (id: string) => {
   } catch (error) {}
 };
 
-export const getCreditsData = async (
-  id: string
-): Promise<Pick<MovieData, 'appearences' | 'productions'> | undefined> => {
+export const getCreditsData = async (id: string) => {
   try {
     const creditsRes = await fetch(
       `${process.env.NEXT_PUBLIC_TMDB_BASE_DETAIL_URL}${id}/credits?language=ko-KR`,
       options
     );
-    const creditsData = await creditsRes.json();
+    const creditData = await creditsRes.json();
+    const { cast: appearences, crew: productions } = creditData;
 
-    return { appearences: creditsData.cast, productions: creditsData.crew };
+    return { appearences, productions };
   } catch (error) {}
 };
 

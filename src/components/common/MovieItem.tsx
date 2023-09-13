@@ -10,7 +10,7 @@ import Meta from 'antd/es/card/Meta';
 import { useRouter } from 'next/navigation';
 import React, { MouseEvent } from 'react';
 
-const MovieItem = ({ movie }: { movie: MovieData }) => {
+const MovieItem = ({ movie }: { movie: MovieDetailData }) => {
   const router = useRouter();
   if (!movie.id) return <></>;
   const onClickHandler = (e: any) => {

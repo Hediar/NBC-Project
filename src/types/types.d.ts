@@ -115,6 +115,13 @@ declare global {
     productions: TMDBCreditCrew[];
   }
 
+  interface MovieCreditData {
+    cast: TMDBCreditCast[];
+    crew: TMDBCreditCrew[];
+    appearences: TMDBCreditCast[];
+    productions: TMDBCreditCrew[];
+  }
+
   interface MovieLikesTable {
     movieid: string | number;
     user_id: string[];
@@ -190,7 +197,7 @@ declare global {
   }
   interface MovieFetchResult {
     page: number;
-    results: MovieData[];
+    results: MovieDetailData[];
     total_pages: number;
     total_results: number;
   }

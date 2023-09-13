@@ -8,13 +8,14 @@ interface Props {
 }
 
 const AppearanceProduction = async ({ movieId }: Props) => {
-  const { appearences, productions } = await getCreditsData(movieId);
+  const { appearences, productions } = (await getCreditsData(movieId)) as MovieCreditData;
 
+  if (!appearences || !productions) return <div>컨텐츠가 없습니다</div>;
   return (
     <div className="flex w-4/5 mx-auto justify-between">
       <div className={`${Style.infoDiv}`}>
         <p>출연</p>
-        {appearences.map((cast, idx) => {
+        {appearences.map((cast: TMDBCreditCast, idx: number) => {
           return (
             <div key={idx} className="flex">
               <div className={`${Style.profileImgDiv}`}>
@@ -43,7 +44,7 @@ const AppearanceProduction = async ({ movieId }: Props) => {
       </div>
       <div className={`${Style.infoDiv}`}>
         <p>제작</p>
-        {productions.map((crew, idx) => {
+        {productions.map((crew: TMDBCreditCrew, idx: number) => {
           return (
             <div key={idx} className="flex">
               <div className={`${Style.profileImgDiv}`}>
