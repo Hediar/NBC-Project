@@ -92,11 +92,30 @@ export const getHotDiscussionPost = async () => {
   return allContentData;
 };
 
-interface AddUserData {
-  user_id: string;
-  option_id: number;
-  post_id: number;
-}
+//add 요청
+type NewDiscussionPost = Omit<DiscussionPost, 'post_id' | 'created_at'>;
+export const addNewDiscussionPost = async (
+  newPost: NewDiscussionPost,
+  isOptionOpen: boolean,
+  options: { text: string }[]
+) => {
+  try {
+    const { data } = await supabase.from('discussion_post').insert(newPost).select();
+
+    if (isOptionOpen) {
+      for (let i = 0; i < options.length; i++) {
+        if (options[i].text.trim().length) {
+          const newOption = {
+            post_id: data![0].post_id,
+            content: options[i].text
+          };
+
+          await supabase.from('discussion_option').insert(newOption);
+        }
+      }
+    }
+  } catch (error) {}
+};
 
 export const addDiscussionOptionVote = async (userData: AddUserData) => {
   try {
@@ -123,14 +142,6 @@ export const revoteDiscussionOption = async ({
 };
 //update요청
 
-interface UpdateDiscussionPost {
-  userId: string;
-  title: string | undefined;
-  content: string | undefined;
-  options: { text: string }[];
-  postId: string;
-  startNum: number;
-}
 export const updateDiscussionPost = async ({
   userId,
   title,

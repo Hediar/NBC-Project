@@ -18,7 +18,7 @@ const MovieProviders = ({ data }: Props) => {
               width={60}
               height={60}
               quality={100}
-              className="rounded-full"
+              className="rounded-xl"
             />
           </div>
         );

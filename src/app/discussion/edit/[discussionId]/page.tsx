@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
 import { message } from 'antd';
 import { debounce } from 'lodash';
+import useLeaveConfirmation from '@/hooks/useLeaveConfiramation';
 
 interface Props {
   params: {
@@ -40,6 +41,23 @@ const DiscussionEditPage = ({ params }: Props) => {
   const [isManualOpen, setIsManualOpen] = useState<boolean>(false);
 
   const router = useRouter();
+  //url 변경 감지
+  const { confirmationModal } = useLeaveConfirmation(true);
+
+  //뒤로가기 방지
+  useEffect(() => {
+    const preventGoBack = () => {
+      if (confirm('정말 나가시겠습니까? \n작성중인 내용이 모두 사라집니다.')) {
+        history.go(-1);
+      } else {
+        history.pushState(null, '', location.href);
+      }
+    };
+    history.pushState(null, '', location.href);
+    window.addEventListener('popstate', preventGoBack);
+    return () => window.removeEventListener('popstate', preventGoBack);
+  }, []);
+
   useEffect(() => {
     const getInitData = async () => {
       const initPostData = await getDiscussionPostDetail(+discussionId);
@@ -111,11 +129,15 @@ const DiscussionEditPage = ({ params }: Props) => {
       } catch (error) {}
     }
   };
+
   return (
     <>
       {contextHolder}
-      <div className="p-5 w-3/5">
+      {confirmationModal}
+      <div className="p-5 w-full sm:w-4/5 lg:w-3/5 mx-auto">
+        <h1 className={`text-2xl font-bold mb-[25px]`}>토론 작성</h1>
         {/* S:: 영화 선택 */}
+
         {movieId && (
           <div
             onClick={() => {
@@ -124,6 +146,7 @@ const DiscussionEditPage = ({ params }: Props) => {
                 content: '변경하실 수 없습니다'
               });
             }}
+            className="info-box"
           >
             <ReviewMovie movieId={movieId} />
           </div>
@@ -175,13 +198,13 @@ const DiscussionEditPage = ({ params }: Props) => {
           <div className="flex gap-3 mt-3 pointer-events-none">
             {initOptionLengthRef.current ? (
               <>
-                <div className="border px-20 py-3 rounded-[22px]">자유 토론</div>
-                <div className="border px-20 py-3 rounded-[22px] bg-black text-white">투표 토론</div>
+                <div className={`${Style.voteBtn}`}>자유 토론</div>
+                <div className={`${Style.voteBtn} bg-black text-white`}>투표 토론</div>
               </>
             ) : (
               <>
-                <div className="border px-20 py-3 rounded-[22px] bg-black text-white">자유 토론</div>
-                <div className="border px-20 py-3 rounded-[22px]">투표 토론</div>
+                <div className={`${Style.voteBtn} bg-black text-white`}>자유 토론</div>
+                <div className={`${Style.voteBtn}`}>투표 토론</div>
               </>
             )}
           </div>
@@ -257,3 +280,7 @@ const DiscussionEditPage = ({ params }: Props) => {
 };
 
 export default DiscussionEditPage;
+
+const Style = {
+  voteBtn: 'border px-6 sm:px-20 py-3 rounded-[22px]'
+};

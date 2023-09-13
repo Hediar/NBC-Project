@@ -3,11 +3,10 @@
 import Select from '@/components/common/Select';
 import { Close } from '@/styles/icons/Icons24';
 import { SearchLined } from '@/styles/icons/Icons32';
-// import { Select, Space } from 'antd';
-import Search from 'antd/es/input/Search';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
+import WriteButton from './WriteButton';
 
 const ReviewFilteringBox = () => {
   const router = useRouter();
@@ -81,9 +80,7 @@ const ReviewFilteringBox = () => {
         </button>
       </form>
 
-      <Link href={'/review/write'} className="button-dark md:ml-2 inline-flex items-center justify-center">
-        리뷰 작성
-      </Link>
+      <WriteButton />
     </div>
   );
 };

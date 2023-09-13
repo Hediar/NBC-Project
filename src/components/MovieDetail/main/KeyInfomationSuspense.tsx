@@ -50,7 +50,7 @@ const KeyInfomationSuspense = () => {
         <div className="relative bg-slate-200">
           <div
             className="w-full h-full absolute right-0"
-            style={{ boxShadow: '-39px 0px 29px -14px rgba(240,240,240,0.85) inset' }}
+            style={{ boxShadow: '-39px 0px 29px -14px rgba(222,222,222,0.95) inset' }}
           ></div>
           <div className="flex items-center p-10 gap-2 sm:gap-0 overflow-auto relative mb-10">
             {lists.map((_, idx) => {
@@ -73,7 +73,7 @@ const KeyInfomationSuspense = () => {
         <div className="relative bg-slate-200">
           <div
             className="w-full h-full absolute right-0"
-            style={{ boxShadow: '-39px 0px 29px -14px rgba(240,240,240,0.85) inset' }}
+            style={{ boxShadow: '-39px 0px 29px -14px rgba(222,222,222,0.95) inset' }}
           ></div>
           <div className="flex items-center p-10 gap-2 sm:gap-0 overflow-auto relative">
             {lists.map((_, idx) => {

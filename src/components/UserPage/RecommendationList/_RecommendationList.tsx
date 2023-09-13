@@ -49,10 +49,10 @@ const RecommendationList = async ({ username, likedMovies }: Props) => {
   let [movieData1, movieData2, movieData3] = threeRecommendationPages.map((page) => page);
 
   return (
-    <div className="w-11/12 sm:w-10/12 mx-auto">
+    <div className="w-11/12 sm:w-10/12 mx-auto ">
       <h1 className="text-2xl text-center py-12 mb-12"> {username}님이 좋아하신 영화중에 비슷한 장르를 찾아봤어요.</h1>
 
-      <section className="w-full">
+      <section className="w-full ">
         <div className="mb-16">
           <div className="mb-10">
             <h2 className="inline-block text-[28px] sm:text-[32px] font-bold bg-[#ffede5] px-4 py-2 sm:py-3 rounded-xl">

@@ -1,4 +1,6 @@
 import { getMovieDetail } from '@/api/tmdb';
+import MovieLikes from '@/components/MovieLikes/MovieLikes';
+import WatchLaterButton from '@/components/common/WatchLaterButton';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
@@ -25,6 +27,10 @@ const DiscussionContent = async ({ movieId }: Props) => {
               className="rounded-lg"
             />
           </Link>
+          <div className="bg-gray-800 bg-opacity-30 rounded-lg py-1 px-1 absolute top-[10px] right-[10px] flex flex-col gap-[6px] items-center">
+            <WatchLaterButton movieId={movieId} />
+            <MovieLikes movieid={+movieId} />
+          </div>
         </div>
         <div className="flex flex-col gap-3 ml-3">
           <Link href={`/detail/${movieId}`}>

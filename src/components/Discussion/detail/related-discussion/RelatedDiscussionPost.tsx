@@ -10,7 +10,7 @@ interface Props {
 const RelatedDiscussionPost = ({ relatedDiscussionData, relatedOption }: Props) => {
   return (
     <div className="w-full mt-5 border border-[#EBEBEB] rounded-[20px] bg-white shadow1 pointer-events-none flex flex-col">
-      <div className="flex flex-col p-5">
+      <div className="flex flex-col gap-2 p-5">
         <p className="body1_regular_suit">{relatedDiscussionData.movie_title}</p>
         <p className="subtitle2_suit">{relatedDiscussionData.title}</p>
       </div>
