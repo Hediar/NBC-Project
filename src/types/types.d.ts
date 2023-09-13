@@ -72,7 +72,8 @@ declare global {
     department: string;
     job: string;
   }
-  interface MovieDetailData {
+
+  interface MovieData {
     adult: boolean;
     backdrop_path: string;
     belongs_to_collection: {
@@ -105,14 +106,11 @@ declare global {
     video: boolean;
     vote_average: number;
     vote_count: number;
-  }
-  interface MovieData {
-    detailData: MovieDetailData;
-    trailerKeys: string[];
-    watchProviders: { link: string; buy: MovieProvider[]; rent: MovieProvider[] };
-    backdropImages: MovieBackdropImage[];
-    appearences: TMDBCreditCast[];
-    productions: TMDBCreditCrew[];
+    trailerKeys?: string[];
+    watchProviders?: { link: string; buy: MovieProvider[]; rent: MovieProvider[] };
+    backdropImages?: MovieBackdropImage[];
+    appearences?: TMDBCreditCast[];
+    productions?: TMDBCreditCrew[];
   }
 
   interface MovieCreditData {
