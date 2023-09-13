@@ -8,6 +8,7 @@ import { Card } from 'antd';
 import Meta from 'antd/es/card/Meta';
 import { useRouter } from 'next/navigation';
 import React from 'react';
+import Link from 'next/link';
 
 const MovieItem = ({ movie }: { movie: MovieData }) => {
   const router = useRouter();
@@ -52,6 +53,7 @@ const MovieItem = ({ movie }: { movie: MovieData }) => {
               <StarFill />
               <span>{(movie.vote_average / 2).toFixed(1)}</span>
             </div>
+            <Link className="hidden" href={`https://image.tmdb.org/t/p/w780${movie.poster_path}`}></Link>
           </div>
         }
       />
