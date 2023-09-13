@@ -4,8 +4,6 @@ import { Metadata, ResolvingMetadata } from 'next';
 import { getMovieDetail } from '@/api/tmdb';
 import MovieLayoutDiscussion from '@/components/MovieDetail/MovieLayoutDiscussion';
 
-export const dynamic = 'force-dynamic';
-
 export async function generateMetadata(
   {
     params

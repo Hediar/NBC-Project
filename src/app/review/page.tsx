@@ -3,8 +3,6 @@ import ReviewFetchMoreSuspense from '@/components/Review/list/ReviewFetchMoreSus
 import ReviewFilteringBox from '@/components/Review/list/ReviewFilteringBox';
 import { Suspense } from 'react';
 
-export const dynamic = 'force-dynamic';
-
 interface Props {
   searchParams: {
     [key: string]: string | string[] | undefined;

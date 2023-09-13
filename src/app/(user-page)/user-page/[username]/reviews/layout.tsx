@@ -2,7 +2,6 @@ import doesUsersMatch from '@/api/doesUserMatch';
 import getUserIsPublicData from '@/api/supabase/getUserIsPublicData';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
-import { Suspense } from 'react';
 
 interface Params {
   params: {
@@ -51,9 +50,5 @@ export default async function Layout({
       </div>
     );
   }
-  return (
-    <div className="w-full max-w-[1280px] p-5">
-      <Suspense fallback={'서스펜스 되냐?'}>{children}</Suspense>
-    </div>
-  );
+  return <div className="w-full max-w-[1280px] p-5">{children}</div>;
 }
