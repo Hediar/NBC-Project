@@ -2,9 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import UserPageTabs from '@/components/UserPage/UserPageTabs';
 import HiddenUserPageTabs from '@/components/UserPage/HiddenUserPageTabs';
-import userMatch from '@/util/supabase/userPage/userMatch';
-
-export const dynamic = 'force-dynamic';
+import doesUserExist from '@/util/supabase/userPage/doesUserExist';
 
 interface Params {
   params: {
@@ -14,7 +12,7 @@ interface Params {
 
 export const generateMetadata = async ({ params: { username } }: Params): Promise<Metadata> => {
   const pageUsername = decodeURIComponent(username);
-  const { userExist } = await userMatch(pageUsername);
+  const { userExist } = await doesUserExist(pageUsername);
 
   if (!userExist) {
     return { title: '존재하지 않는 유저입니다.', description: '존재하지 않는 유저의 페이지입니다.' };
@@ -34,7 +32,7 @@ export default async function Layout({
   params: { username: string };
 }) {
   const pageUsername = decodeURIComponent(params.username);
-  const { userExist } = await userMatch(pageUsername);
+  const { userExist } = await doesUserExist(pageUsername);
 
   if (!userExist) notFound();
 

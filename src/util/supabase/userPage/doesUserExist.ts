@@ -1,12 +1,11 @@
-import { cookies } from 'next/headers';
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
 type ReturnType = {
   userExist: boolean;
 };
 
-const userMatch = async (pageUsername: string): Promise<ReturnType> => {
-  const supabase = createRouteHandlerClient<Database>({ cookies });
+const doesUserExist = async (pageUsername: string): Promise<ReturnType> => {
+  const supabase = createClientComponentClient<Database>();
 
   try {
     const { data: username } = await supabase.from('users').select('username').eq('username', pageUsername).single();
@@ -20,4 +19,4 @@ const userMatch = async (pageUsername: string): Promise<ReturnType> => {
   }
 };
 
-export default userMatch;
+export default doesUserExist;

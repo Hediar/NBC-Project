@@ -1,18 +1,15 @@
 import React, { Suspense } from 'react';
-import { cookies } from 'next/headers';
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { getMovieTimeByGenres } from '@/api/movieStatistics/getRuntimesByGenres';
 import RecordsContainerBig from '../_Containers/RecordsContainerBig';
 import MovieRuntimeGraph from './Graphs/MovieRuntimeGraph';
-
-export const dynamic = 'force-dynamic';
 
 type Props = {
   userId: string;
 };
 
 const RuntimeByGenres = async ({ userId }: Props) => {
-  const supabase = createServerComponentClient({ cookies });
+  const supabase = createClientComponentClient();
 
   const [titles, runtimesHours] = await getMovieTimeByGenres(userId, supabase);
   return (

@@ -786,3 +786,29 @@ select:-webkit-autofill:focus {
 }
 
 /*  */
+/* semi header animation */
+@keyframes color {
+  0% {
+    background: #fbfbfb;
+  }
+  20% {
+    background: #fde7de;
+  }
+  40% {
+    background: #eebca7;
+  }
+  60% {
+    background: #edc4b3;
+  }
+  80% {
+    background: #ecd0c3;
+  }
+  100% {
+    background: #faebe4;
+  }
+}
+.semi-header-loading {
+  background: #edc4b3;
+  animation: color 2s infinite linear;
+}
+/*  */
