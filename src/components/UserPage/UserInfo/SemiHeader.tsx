@@ -25,6 +25,7 @@ const UserPageSemiHeader = ({ params: username }: Props) => {
               src={userInfo.avatar_url}
               alt="user profile"
             />
+            <span className="sr-only">Avatar Photo</span>
             <span className="text-lg sm:text-2xl xl:text-xl text-white font-bold text-center">{username}</span>
           </div>
         </div>

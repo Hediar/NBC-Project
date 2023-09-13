@@ -16,8 +16,11 @@ const UserPagePersonalRecordsGraph = async ({ params: username }: Props) => {
     <div className="w-full mt-5 flex justify-center items-center">
       <section className="pb-12 xl:pb-0 w-full flex flex-col gap-4  xl:flex-row ">
         <LikesOnGenres username={username} />
+        <span className="sr-only">Related Graph</span>
         <NumberOfGenresWatched userId={userId} />
+        <span className="sr-only">Related Graph</span>
         <RuntimeByGenres userId={userId} />
+        <span className="sr-only">Related Graph</span>
       </section>
     </div>
   );
