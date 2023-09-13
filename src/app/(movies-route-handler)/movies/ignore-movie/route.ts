@@ -3,10 +3,7 @@ import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { NextResponse } from 'next/server';
 import { revalidateTag } from 'next/cache';
 
-export const dynamic = 'force-dynamic';
-
 export const POST = async (req: Request) => {
-  const url = new URL(req.url);
   const { movieId, path } = await req.json();
   const supabase = createServerComponentClient<Database>({ cookies });
 

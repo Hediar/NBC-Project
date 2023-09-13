@@ -1,5 +1,4 @@
-import { cookies } from 'next/headers';
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import getMovieDataWithMovieIds from '@/api/getMovieDataWithMovieIds';
 import MovieItem from '@/components/common/MovieItem';
 import { Button, Space } from 'antd';
@@ -16,11 +15,11 @@ export const dynamic = 'force-dynamic';
 
 const LikesListPage = async ({ params }: Props) => {
   const username = decodeURIComponent(params.username);
-  const supabase = createServerComponentClient<Database>({ cookies });
+
+  const supabase = createClientComponentClient<Database>();
 
   const { data: userIdData } = await supabase.from('users').select('id').eq('username', username);
 
-  // layout에서 검증하므로 ! 사용
   const userId = userIdData![0].id;
 
   const { data: userLikedMoviesGroup } = await supabase
@@ -28,7 +27,6 @@ const LikesListPage = async ({ params }: Props) => {
     .select('movieid')
     .contains('user_id', [userId]);
 
-  // layout에서 검증하므로 ! 사용
   const usersLikedMovies = userLikedMoviesGroup!.map((el) => el.movieid);
 
   if (usersLikedMovies.length === 0)

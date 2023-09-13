@@ -3,8 +3,6 @@ import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { avatar_url } from '../profile/change-avatar/route';
 
-export const dynamic = 'force-dynamic';
-
 export const POST = async (request: Request) => {
   const requestUrl = new URL(request.url);
   const formData = await request.formData();

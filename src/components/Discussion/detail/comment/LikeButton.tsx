@@ -71,13 +71,13 @@ const LikeButton = ({ comment, addOptimisticComments }: Props) => {
     <>
       {isHover ? (
         <HeartFilledColor
-          className="cursor-pointer"
+          className="w-7 h-7 sm:w-10 sm:h-10 cursor-pointer"
           onMouseEnter={() => setIsHover(true)}
           onMouseLeave={() => setIsHover(false)}
           onClick={handleLikes}
         />
       ) : (
-        <HeartLine onMouseEnter={() => setIsHover(true)} onClick={handleLikes} />
+        <HeartLine className="w-7 h-7 sm:w-8 sm:h-8" onMouseEnter={() => setIsHover(true)} onClick={handleLikes} />
       )}
     </>
   );

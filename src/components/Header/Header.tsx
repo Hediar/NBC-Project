@@ -1,7 +1,6 @@
 import AuthButton from './_auth/AuthButtons';
 import HeaderUser from './HeaderUser';
 import Link from 'next/link';
-import HiddenServerFunctions from './_auth/HiddenServerFunctions';
 import ModalControlCentre from './_auth/ModalControlCentre';
 import Logo from '@/styles/svg/Logo';
 import Nav from './Nav';
@@ -27,7 +26,6 @@ const Header = async () => {
           </div>
         </div>
       </header>
-      <HiddenServerFunctions />
       <ModalControlCentre userId={userId ?? ''} />
     </>
   );

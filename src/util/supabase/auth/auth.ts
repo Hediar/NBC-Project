@@ -1,6 +1,5 @@
 import 'server-only';
 
-import { cache } from 'react';
 import { cookies } from 'next/headers';
 import { type Session, createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
 
@@ -15,7 +14,7 @@ interface TypeOfReturn {
 }
 
 const authApi = {
-  get: cache(async (target: ParamType): Promise<TypeOfReturn> => {
+  get: async (target: ParamType): Promise<TypeOfReturn> => {
     const supabase = createRouteHandlerClient<Database>({ cookies });
 
     const getSession = async (): Promise<Pick<TypeOfReturn, 'session'>> => {
@@ -64,7 +63,7 @@ const authApi = {
     if (target === 'userId') return (await getUserId()) as TypeOfReturn;
 
     return { session: null } as TypeOfReturn;
-  })
+  }
 };
 
 export default authApi;

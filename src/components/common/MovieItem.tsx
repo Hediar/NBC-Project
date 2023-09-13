@@ -3,12 +3,12 @@
 
 import { StarFill } from '@/styles/icons/Icons24';
 import WatchLaterButton from './WatchLaterButton';
-import Link from 'next/link';
 import MovieLikes from '../MovieLikes/MovieLikes';
 import { Card } from 'antd';
 import Meta from 'antd/es/card/Meta';
 import { useRouter } from 'next/navigation';
-import React, { MouseEvent } from 'react';
+import React from 'react';
+import Link from 'next/link';
 
 const MovieItem = ({ movie }: { movie: MovieData }) => {
   const router = useRouter();
@@ -38,7 +38,7 @@ const MovieItem = ({ movie }: { movie: MovieData }) => {
         />
       }
     >
-      <div className="bg-gray-800 bg-opacity-30 rounded-xl py-1 px-1 absolute top-4 right-4 flex flex-col gap-[6px] items-center">
+      <div className="bg-gray-800 bg-opacity-30 rounded-xl py-1 px-1 absolute top-1 right-1 sm:top-2 sm:right-2 flex flex-col gap-[6px] items-center">
         <WatchLaterButton movieId={movie.id} />
         <MovieLikes movieid={movie.id} />
       </div>
@@ -49,10 +49,11 @@ const MovieItem = ({ movie }: { movie: MovieData }) => {
             <div className="flex gap-1 items-center">
               <span className="text-[14px]">{movie.release_date}</span>
             </div>
-            <div className="flex gap-[6px] items-center">
+            <div className="flex gap-[3px] sm:gap-[6px] items-center">
               <StarFill />
               <span>{(movie.vote_average / 2).toFixed(1)}</span>
             </div>
+            <Link className="hidden" href={`https://image.tmdb.org/t/p/w780${movie.poster_path}`}></Link>
           </div>
         }
       />
