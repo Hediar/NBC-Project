@@ -63,7 +63,7 @@ const MovieDetailInfo = async ({ movieId }: Props) => {
               <div>상영시간: {movieData.runtime}분</div>
             </div>
           </div>
-          {watchProviders ? (
+          {watchProviders && (
             <div
               id="providers-cont"
               className="absolute top-32 sm:top-auto sm:bottom-10 right-[10%] flex gap-3 pb-2 caption_suit text-white"
@@ -81,8 +81,6 @@ const MovieDetailInfo = async ({ movieId }: Props) => {
                 </div>
               )}
             </div>
-          ) : (
-            <div>{movieData.title} 제공 사가 없습니다.</div>
           )}
         </div>
       </div>
