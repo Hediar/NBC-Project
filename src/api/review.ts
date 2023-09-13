@@ -91,20 +91,17 @@ export async function fetchReviewData(
   // useInfiniteQuery에서 사용될 때는 pageParam 에서 page 추출
   const pageToFetch = page ?? pageParam;
 
-  const { count } = await supabase.from('reviews').select('*', { count: 'exact', head: true });
-  const total_pages = Math.ceil(count! / limit);
-
-  let query = supabase.from('reviews').select(`*, reviewlikes(count)`);
+  let query = supabase.from('reviews').select(`*, reviewlikes(count)`, { count: 'exact', head: false });
   if (q) {
     switch (filter) {
       case 'movie_title':
-        query = query.eq('movie_title', q);
+        query = query.like('movie_title', `%${q}%`);
         break;
       case 'review_cont':
-        query = query.eq('content, review', q);
+        query = query.like('content, review', `%${q}%`);
         break;
       default:
-        query = query.eq('movie_title, content, review', q);
+        query = query.like('movie_title, content, review', `%${q}%`);
     }
   }
   switch (sort) {
@@ -117,10 +114,12 @@ export async function fetchReviewData(
     default:
       query = query.order('created_at', { ascending: false });
   }
-  query.range((pageParam - 1) * limit, pageParam * limit - 1);
 
+  const { count } = await query;
+  const total_pages = Math.ceil(count! / limit);
+
+  query.range((pageParam - 1) * limit, pageParam * limit - 1);
   const { data: reviews, error } = await query;
-  // console.log('reviews => ', reviews);
 
   const promises = reviews?.map(async (review) => {
     const movieDetail = await getDetailData(review.movieid);
@@ -129,7 +128,7 @@ export async function fetchReviewData(
   });
   const results = await Promise.all(promises!);
 
-  return { results, page: pageToFetch, total_pages };
+  return { results, page: pageToFetch, total_pages, count };
 }
 
 // 리뷰 작성 시 최근 본 영화 추가

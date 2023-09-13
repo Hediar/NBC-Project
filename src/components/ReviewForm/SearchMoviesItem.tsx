@@ -1,6 +1,7 @@
 'use client';
 
 import { getDetailData } from '@/api/tmdb';
+import { Skeleton } from 'antd';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 
@@ -26,14 +27,18 @@ const SearchMoviesItem = ({ movie, handleClick }: Props) => {
     <li>
       <button type="button" onClick={() => handleClick(movie.id)} className="flex items-center">
         <div className="h-full relative">
-          <Image
-            src={`${baseImgUrl}w300_and_h450_bestv2${movie.backdrop_path}`}
-            alt="포스터 이미지"
-            width={60}
-            height={90}
-            quality={70}
-            className="rounded-lg"
-          />
+          {movie.backdrop_path ? (
+            <Image
+              src={`${baseImgUrl}w300_and_h450_bestv2${movie.backdrop_path}`}
+              alt="포스터 이미지"
+              width={60}
+              height={90}
+              quality={70}
+              className="rounded-lg"
+            />
+          ) : (
+            <Skeleton.Image active={!!movie.backdrop_path} />
+          )}
         </div>
 
         <div className="flex flex-col gap-3 ml-2 text-left ">
@@ -54,21 +59,17 @@ const SearchMoviesItem = ({ movie, handleClick }: Props) => {
 
             <div className="flex">
               {detailData?.production_countries?.length && detailData.production_countries[0]['iso_3166_1']}
-
               <div className="flex items-center justify-center p-1">
                 <svg width="2" height="2" viewBox="0 0 2 2" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <circle cx="1" cy="1" r="1" fill="#888888" />
                 </svg>
               </div>
-
               {detailData?.runtime}분
-
               <div className="flex items-center justify-center p-1">
                 <svg width="2" height="2" viewBox="0 0 2 2" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <circle cx="1" cy="1" r="1" fill="#888888" />
                 </svg>
               </div>
-
               {movie.adult ? '청소년관람불가' : '전체관람가'}
             </div>
           </div>
