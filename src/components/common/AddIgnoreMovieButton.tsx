@@ -29,7 +29,8 @@ const AddIgnoreMovieButton = (props: { movieid: number }) => {
     });
   };
 
-  const ignoreButtonHandler = async () => {
+  const ignoreButtonHandler = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.stopPropagation();
     if (userInfo.id) {
       await addIgnoreMovie();
     } else {

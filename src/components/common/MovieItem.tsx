@@ -56,14 +56,14 @@ const MovieItem = ({ movie }: { movie: MovieData }) => {
         />
       }
     >
-      <div className="hidden sm:block sm:invisible sm:group-hover:visible bg-gray-600 bg-opacity-50 flex-col absolute rounded-xl items-center justify-center top-0 sm:left-0 mx-2 h-[210px] sm:h-[360px] sm:mx-0 sm:w-max-[210px] w-[140px] sm:w-[240px]">
+      <div className="hidden z-auto sm:block sm:invisible sm:group-hover:visible bg-gray-600 bg-opacity-50 flex-col absolute rounded-xl items-center justify-center top-0 sm:left-0 mx-2 h-[210px] sm:h-[360px] sm:mx-0 sm:w-max-[210px] w-[140px] sm:w-[240px]">
         <div className="w-full px-[30px] items-center absolute sm:bottom-10 justify-center gap-[10px]">
           <AddIgnoreMovieButton movieid={movie.id} />
           <AlreadyWatchedButton movieId={movie.id} title={movie.title} />
         </div>
       </div>
 
-      <Dropdown menu={{ items }} placement="bottomRight" className="sm:hidden absolute bottom-2 right-2">
+      <Dropdown menu={{ items }} placement="bottomRight" className="sm:hidden h-6 absolute bottom-2 right-2 ">
         <button onClick={handleMenuClick}>
           <span className="sr-only">메뉴</span>
           <More />

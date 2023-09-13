@@ -1,7 +1,9 @@
 'use client';
 
 const AlreadyWatchedButton = ({ movieId, title }: { movieId: number; title: string }) => {
-  const WatchedButtonHandler = async () => {};
+  const WatchedButtonHandler = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.stopPropagation();
+  };
   return (
     <>
       <button
