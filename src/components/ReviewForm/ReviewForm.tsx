@@ -69,7 +69,7 @@ const ReviewForm = ({ movieId, editReview, movieButtonRef }: Props) => {
       return movieButtonRef.current.focus();
     }
 
-    const { title } = await getDetailData(movieId!);
+    const { title } = (await getDetailData(movieId!)) as MovieData;
 
     const newReview = {
       movieid: movieId,

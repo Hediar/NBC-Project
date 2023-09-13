@@ -69,7 +69,7 @@ export const fetchTrendMoviesByGenre = async (genreId: number | string) => {
   }
 };
 
-export const getDetailData = async (id: string): Promise<MovieDetailData | undefined> => {
+export const getDetailData = async (id: string): Promise<MovieData | undefined> => {
   try {
     const detailRes = await fetch(`${process.env.NEXT_PUBLIC_TMDB_BASE_DETAIL_URL}${id}?language=ko-KR`, options);
     const detailData = await detailRes.json();

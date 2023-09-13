@@ -7,10 +7,12 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
 import { getDetailData } from '@/api/tmdb';
 import { optionMark } from '@/static/optionMark';
-import { message } from 'antd';
+import { message, Modal } from 'antd';
 import { debounce } from 'lodash';
 import { addNewDiscussionPost } from '@/api/supabase-discussion';
 import useLeaveConfirmation from '@/hooks/useLeaveConfiramation';
+import LeaveCheck from '@/components/common/LeaveCheck';
+import { useDiscussionStore } from '@/store/useDiscussionStore';
 
 interface Props {}
 
@@ -22,7 +24,8 @@ const DiscussionRegistPage = (props: Props) => {
   const [messageApi, contextHolder] = message.useMessage();
   const { isSearchModalOpen, openSearchModal } = useSearchModalStore();
   const { searchMovieId: movieId, saveSearchMovieId } = useReviewMovieStore();
-  const [movieData, setMovieData] = useState<MovieDetailData | null>();
+  const { tempDiscussionPost, saveTempDiscussionPost } = useDiscussionStore();
+  const [movieData, setMovieData] = useState<MovieData | null>();
   const {
     userInfo: { id: userId }
   } = useUserInfoStore();
@@ -30,6 +33,8 @@ const DiscussionRegistPage = (props: Props) => {
   const [content, setContent] = useState<string>('');
   const [options, setOptions] = useState<{ text: string }[]>([{ text: '' }, { text: '' }]);
   const [isOptionOpen, setIsOptionOpen] = useState<boolean>(true);
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState<boolean>(false);
+  const [isBlocked, setIsBlocked] = useState<boolean>(true);
 
   const router = useRouter();
   const titleRef = useRef<HTMLInputElement>(null);
@@ -38,20 +43,10 @@ const DiscussionRegistPage = (props: Props) => {
   const searchParams = useSearchParams();
   const movie_id = searchParams.get('movieId') ?? '';
 
-  const { confirmationModal } = useLeaveConfirmation(true);
+  const { confirmationModal } = useLeaveConfirmation(isBlocked);
 
-  //뒤로가기 방지
   useEffect(() => {
-    const preventGoBack = () => {
-      if (confirm('정말 나가시겠습니까? \n작성중인 내용이 모두 사라집니다.')) {
-        history.go(-1);
-      } else {
-        history.pushState(null, '', location.href);
-      }
-    };
-    history.pushState(null, '', location.href);
-    window.addEventListener('popstate', preventGoBack);
-    return () => window.removeEventListener('popstate', preventGoBack);
+    if (tempDiscussionPost && userId === tempDiscussionPost.userId) setIsConfirmModalOpen(true);
   }, []);
 
   useEffect(() => {
@@ -140,6 +135,7 @@ const DiscussionRegistPage = (props: Props) => {
         content: '토론 글이 작성되었습니다'
       });
 
+      saveTempDiscussionPost();
       router.refresh();
       router.push('/discussion/list');
     } catch (error) {}
@@ -159,8 +155,43 @@ const DiscussionRegistPage = (props: Props) => {
     }
   };
 
+  const handleTempSave = () => {
+    if (!isOptionOpen) {
+      const newTempPost = {
+        title,
+        content,
+        movieId,
+        userId
+      };
+      saveTempDiscussionPost(newTempPost);
+    }
+    const newTempPost = {
+      title,
+      content,
+      movieId,
+      options,
+      userId
+    };
+    saveTempDiscussionPost(newTempPost);
+    setIsBlocked(false);
+  };
+
+  const handleModalCancel = () => {
+    setIsConfirmModalOpen(false);
+  };
+
+  const handleModalOk = () => {
+    setIsConfirmModalOpen(false);
+    const { title, content, movieId, options } = tempDiscussionPost!;
+    setTitle(title);
+    setContent(content);
+    saveSearchMovieId(movieId);
+    if (options) setOptions([...options]);
+  };
+
   return (
     <>
+      <LeaveCheck />
       {contextHolder}
       {confirmationModal}
       <div className="p-5 w-full sm:w-4/5 lg:w-3/5 mx-auto">
@@ -331,9 +362,12 @@ const DiscussionRegistPage = (props: Props) => {
           >
             돌아가기
           </button>
-          {/* <button className="border px-2 py-1 bg-gray-300 text-white font-bold hover:bg-gray-200 hover:text-gray-700 rounded-[10px]">
+          <button
+            className="border px-2 py-1 bg-gray-300 text-white font-bold hover:bg-gray-200 hover:text-gray-700 rounded-[10px]"
+            onClick={handleTempSave}
+          >
             임시저장
-          </button> */}
+          </button>
           <button
             className="border px-2 py-1 bg-black text-white font-bold hover:bg-gray-200 hover:text-gray-700 rounded-[10px]"
             onClick={debounce(handleSubmit, 300)}
@@ -342,6 +376,22 @@ const DiscussionRegistPage = (props: Props) => {
           </button>
         </div>
       </div>
+
+      <Modal open={isConfirmModalOpen} onCancel={handleModalCancel} footer={null} width={400}>
+        <p className="pt-[50px] pb-[30px] text-center text-neutral-800 text-xl font-normal leading-normal">
+          작성 중이던 내용이 있습니다
+          <br />
+          이어서 작성하시겠습니까?
+        </p>
+        <div className="flex justify-center gap-3 mb-5">
+          <button className="button-white" onClick={handleModalCancel}>
+            취소
+          </button>
+          <button className="button-dark" onClick={handleModalOk}>
+            확인
+          </button>
+        </div>
+      </Modal>
     </>
   );
 };

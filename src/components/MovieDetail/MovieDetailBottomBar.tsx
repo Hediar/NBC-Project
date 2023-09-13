@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 
 interface Props {
   movieId: string;
-  movieData: MovieDetailData;
+  movieData: MovieData;
 }
 
 const navP = 'text-xs py-4 sm:sm:text-[20px] sm:leading-[24px] z-10';

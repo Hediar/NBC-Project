@@ -16,7 +16,7 @@ const Search = ({
   searchType: string;
   setSearchType: React.Dispatch<React.SetStateAction<string>>;
 }) => {
-  const [searchResults, setSearchResults] = React.useState<MovieDetailData[]>();
+  const [searchResults, setSearchResults] = React.useState<MovieData[]>();
   const [searchInput, setSearchInput] = useState('');
 
   const debouncedHandleChange = debounce(async (value: string) => {
@@ -53,7 +53,7 @@ const Search = ({
     setSearchInput('');
   };
 
-  const handleClick = (item: MovieDetailData) => {
+  const handleClick = (item: MovieData) => {
     if (searchType === 'movie') {
       setSearchInput(item.title);
     } else if (searchType === 'person') {

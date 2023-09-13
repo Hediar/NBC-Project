@@ -201,7 +201,7 @@ declare global {
   }
   interface MovieFetchResult {
     page: number;
-    results: MovieDetailData[];
+    results: MovieData[];
     total_pages: number;
     total_results: number;
   }

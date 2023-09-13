@@ -10,7 +10,7 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 import Link from 'next/link';
 
-const MovieItem = ({ movie }: { movie: MovieDetailData }) => {
+const MovieItem = ({ movie }: { movie: MovieData }) => {
   const router = useRouter();
   if (!movie.id) return <></>;
   const onClickHandler = (e: any) => {

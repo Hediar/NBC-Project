@@ -4,18 +4,25 @@ import { persist } from 'zustand/middleware';
 interface DiscussionTable {
   title: string | null;
   content: string | null;
-  movieId: string | null;
-  options: string[] | null;
+  movieId: string | number | null;
+  options?: { text: string }[];
+  userId: string;
+}
+
+interface ReturnTypes {
+  tempDiscussionPost: DiscussionTable | null;
+  saveTempDiscussionPost: (newTempReview?: DiscussionTable) => void;
 }
 
 export const useDiscussionStore = create(
-  persist(
+  persist<ReturnTypes>(
     (set) => ({
-      bears: 0,
-      saveTempDiscussion: (newTempDiscussion?: DiscussionTable) => set(() => ({ tempDiscussion: newTempDiscussion }))
+      tempDiscussionPost: null,
+      saveTempDiscussionPost: (newTempDiscussionPost?: DiscussionTable) =>
+        set(() => ({ tempDiscussionPost: newTempDiscussionPost }))
     }),
     {
-      name: 'discussion-storage'
+      name: `discussion-storage`
     }
   )
 );

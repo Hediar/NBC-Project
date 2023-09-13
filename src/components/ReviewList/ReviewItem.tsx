@@ -16,7 +16,7 @@ interface Props {
 
 const ReviewItem = ({ review }: Props) => {
   const [isLoading, setIsLoading] = useState(true);
-  const [movieData, setMovieData] = useState<MovieDetailData>();
+  const [movieData, setMovieData] = useState<MovieData>();
 
   useEffect(() => {
     const getMovieData = async () => {

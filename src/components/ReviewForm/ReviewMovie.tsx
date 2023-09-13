@@ -12,7 +12,7 @@ type Props = {
 const baseImgUrl = process.env.NEXT_PUBLIC_TMDB_BASE_IMAGE_URL;
 
 const ReviewMovie = ({ movieId }: Props) => {
-  const [movieData, setMovieData] = useState<MovieDetailData>();
+  const [movieData, setMovieData] = useState<MovieData>();
 
   const { openSearchModal } = useSearchModalStore();
 
