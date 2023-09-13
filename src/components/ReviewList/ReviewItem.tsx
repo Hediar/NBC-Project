@@ -1,6 +1,6 @@
 'use client';
 
-import { getMovieDetail } from '@/api/tmdb';
+import { getDetailData } from '@/api/tmdb';
 import { StarFill } from '@/styles/icons/Icons24';
 import dayjs from 'dayjs';
 import Image from 'next/image';
@@ -16,11 +16,11 @@ interface Props {
 
 const ReviewItem = ({ review }: Props) => {
   const [isLoading, setIsLoading] = useState(true);
-  const [movieData, setMovieData] = useState<MovieData>();
+  const [movieData, setMovieData] = useState<MovieDetailData>();
 
   useEffect(() => {
     const getMovieData = async () => {
-      const fetchData = await getMovieDetail(review.movieid);
+      const fetchData = await getDetailData(review.movieid);
       setMovieData(fetchData);
       setIsLoading(false);
     };

@@ -5,7 +5,7 @@ import useUserInfoStore from '@/store/saveCurrentUserData';
 import { useReviewMovieStore, useSearchModalStore } from '@/store/useReviewStore';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
-import { getMovieDetail } from '@/api/tmdb';
+import { getDetailData } from '@/api/tmdb';
 import { optionMark } from '@/static/optionMark';
 import { message } from 'antd';
 import { debounce } from 'lodash';
@@ -22,7 +22,7 @@ const DiscussionRegistPage = (props: Props) => {
   const [messageApi, contextHolder] = message.useMessage();
   const { isSearchModalOpen, openSearchModal } = useSearchModalStore();
   const { searchMovieId: movieId, saveSearchMovieId } = useReviewMovieStore();
-  const [movieData, setMovieData] = useState<MovieData | null>();
+  const [movieData, setMovieData] = useState<MovieDetailData | null>();
   const {
     userInfo: { id: userId }
   } = useUserInfoStore();
@@ -62,9 +62,11 @@ const DiscussionRegistPage = (props: Props) => {
     const getMovieData = async () => {
       const movieIdToFetch = movieId || movie_id;
       if (movieIdToFetch) {
-        const fetchData = await getMovieDetail(movieIdToFetch as string);
-        setMovieData(fetchData);
-        return;
+        const fetchData = await getDetailData(movieIdToFetch as string);
+        if (fetchData) {
+          setMovieData(fetchData);
+          return;
+        }
       }
     };
     getMovieData();
