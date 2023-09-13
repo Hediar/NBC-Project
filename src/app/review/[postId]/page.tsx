@@ -18,7 +18,6 @@ type Props = {
   params: Params;
 };
 
-export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 const ReviewDetailPage = async ({ params }: Props) => {

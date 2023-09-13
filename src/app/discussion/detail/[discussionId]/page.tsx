@@ -8,8 +8,6 @@ interface Props {
   };
 }
 
-export const dynamic = 'force-dynamic';
-
 const DiscussionDetailPage = async ({ params }: Props) => {
   const { discussionId } = params;
 
