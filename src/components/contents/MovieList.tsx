@@ -38,7 +38,7 @@ const MovieList = () => {
           const filteredResults = (data.results[0]?.known_for || []).filter((item: TMDBSearchPersonMovie) => {
             return item.media_type !== 'tv';
           });
-          console.log(filteredResults);
+          // console.log(filteredResults);
           if (page === 1) {
             setFilterefData([...filteredResults]);
           } else {

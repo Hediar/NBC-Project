@@ -1,12 +1,9 @@
-import { cookies } from 'next/headers';
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import getMovieDataWithMovieIds from '@/api/getMovieDataWithMovieIds';
 import MovieItem from '@/components/common/MovieItem';
 import { Button, Space } from 'antd';
 import NoContent from '@/styles/svg/NoContent';
 import Link from 'next/link';
-
-export const dynamic = 'force-dynamic';
 
 interface Props {
   params: {
@@ -16,7 +13,7 @@ interface Props {
 
 const ToWatchListPage = async ({ params }: Props) => {
   const username = decodeURIComponent(params.username);
-  const supabase = createServerComponentClient<Database>({ cookies });
+  const supabase = createClientComponentClient<Database>();
 
   const { data: userId, error: err } = await supabase.from('users').select('id').eq('username', username);
 

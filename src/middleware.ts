@@ -2,6 +2,7 @@ import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs';
 import { NextResponse, type NextRequest } from 'next/server';
 import getUserIsPublicData from './api/supabase/getUserIsPublicData';
 import publicApi from './util/supabase/auth/public';
+import authApi from './util/supabase/auth/auth';
 
 export async function middleware(req: NextRequest) {
   // '/user-page/[username]/recommendation' 진입 시 '/user-page/[username]/recommendations'로 리디렉트
@@ -52,8 +53,37 @@ export async function middleware(req: NextRequest) {
     const baseUrl = new URL(req.url).origin;
     return NextResponse.redirect(baseUrl + req.nextUrl.pathname + '/info');
   }
+
+  if (req.nextUrl.pathname.endsWith('/settings')) {
+    const baseUrl = new URL(req.url).origin;
+    const res = NextResponse.next();
+    const newUrl = req.nextUrl.pathname.replace('settings', 'info');
+    const supabase = createMiddlewareClient<Database>({ req, res });
+
+    const { data, error } = await supabase.auth.getSession();
+
+    if (error) {
+      return NextResponse.redirect(baseUrl + newUrl);
+    }
+
+    const signedInUserId = data.session!.user.id;
+    const { data: usernameData } = await supabase.from('users').select('username').eq('id', signedInUserId).single();
+
+    const signedInUsername = usernameData!.username;
+    const pageUsername = decodeURIComponent(req.nextUrl.pathname.split('/')[2]);
+
+    if (signedInUsername !== pageUsername) {
+      return NextResponse.redirect(baseUrl + newUrl);
+    }
+  }
 }
 
 export const config = {
-  matcher: ['/user-page/:path/recommendation', '/user-page/:path/like', '/user-page/:path/likes', '/user-page/:path/']
+  matcher: [
+    '/user-page/:path/recommendation',
+    '/user-page/:path/like',
+    '/user-page/:path/likes',
+    '/user-page/:path/',
+    '/user-page/:path/settings'
+  ]
 };

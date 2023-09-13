@@ -1,9 +1,5 @@
-import 'server-only';
-
 import { cookies } from 'next/headers';
 import { type Session, createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
-
-export const dynamic = 'force-dynamic';
 
 type ParamType = 'session' | 'userData' | 'userId';
 

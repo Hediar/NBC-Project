@@ -4,8 +4,6 @@ import ToggleIsPublic from './ToggleIsPublic';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import getUserIsPublicData from '@/api/supabase/getUserIsPublicData';
 
-export const dynamic = 'force-dynamic';
-
 const MyMenu = async () => {
   const supabase = createServerComponentClient<Database>({ cookies });
   const {
