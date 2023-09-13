@@ -182,11 +182,13 @@ const DiscussionRegistPage = (props: Props) => {
 
   const handleModalOk = () => {
     setIsConfirmModalOpen(false);
-    const { title, content, movieId, options } = tempDiscussionPost!;
-    setTitle(title);
-    setContent(content);
-    saveSearchMovieId(movieId);
-    if (options) setOptions([...options]);
+    if (tempDiscussionPost) {
+      const { title, content, movieId, options } = tempDiscussionPost;
+      setTitle(title as string);
+      setContent(content as string);
+      saveSearchMovieId(movieId);
+      if (options) setOptions([...options]);
+    }
   };
 
   return (

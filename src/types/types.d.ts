@@ -294,4 +294,12 @@ declare global {
     postId: string;
     startNum: number;
   }
+
+  interface DiscussionTable {
+    title: string;
+    content: string;
+    movieId: string | number | null;
+    options?: { text: string }[];
+    userId: string;
+  }
 }

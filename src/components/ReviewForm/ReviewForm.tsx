@@ -178,7 +178,6 @@ const ReviewForm = ({ movieId, editReview, movieButtonRef }: Props) => {
       setValue('content', content);
       setValue('rating', rating || 0);
 
-      console.log('폼 채우기 movieid => ', movieid);
       saveSearchMovieId(movieid);
     }
   }, [userInfo, IsConfirmed]);

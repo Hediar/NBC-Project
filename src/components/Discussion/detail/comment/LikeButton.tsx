@@ -42,7 +42,6 @@ const LikeButton = ({ comment, addOptimisticComments }: Props) => {
 
   const handleLike = async () => {
     const supabase = createClientComponentClient<Database>();
-    console.log('확인=>', comment.user_has_liked_comment);
     const {
       data: { user }
     } = await supabase.auth.getUser();
