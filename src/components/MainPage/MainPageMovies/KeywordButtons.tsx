@@ -13,7 +13,7 @@ const KeywordButtons = ({ params }: { params: string }) => {
               <Link
                 key={genre.name}
                 href={`/${genre.id}`}
-                className={`rounded-3xl flex border border-zinc-300 bg-white px-5 py-2.5 items-center ${
+                className={`rounded-3xl flex border border-zinc-300 bg-white hover:bg-[#F2F5FD] px-5 py-2.5 items-center ${
                   (!params && genre.name === '전체') ||
                   (params === 'all' && genre.name === '전체') ||
                   (params && Number(params) === genre.id)

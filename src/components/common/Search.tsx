@@ -41,6 +41,7 @@ const Search = ({
     debouncedHandleChange(value);
 
     if (!value) {
+      setSearchInput('');
       setSearchResults([]);
     }
   };
@@ -70,7 +71,11 @@ const Search = ({
   return (
     <div className="w-[570px] h-[52px]">
       <form onSubmit={handleSubmit} className="flex border border-GreyScaleGrey rounded-xl px-2 py-1">
-        <select value={searchType} onChange={handleSelectChange} className="">
+        <select
+          value={searchType}
+          onChange={handleSelectChange}
+          className="border-none rounded-none outline-transparent"
+        >
           <option value="movie">영화</option>
           <option value="person">인물</option>
         </select>
@@ -83,11 +88,12 @@ const Search = ({
           value={searchInput}
           onChange={handleChange}
         />
+
         <button type="submit" className=" font-bold py-2 px-4 rounded ml-2">
           <SearchLined />
         </button>
       </form>
-      <ul
+      {/* <ul
         className={`overflow-auto h-44 absolute w-full bg-${
           searchInput ? 'white' : 'transparent'
         }  rounded z-10 transition-colors duration-300`}
@@ -100,7 +106,7 @@ const Search = ({
               </button>
             </li>
           ))}
-      </ul>
+      </ul> */}
     </div>
   );
 };
