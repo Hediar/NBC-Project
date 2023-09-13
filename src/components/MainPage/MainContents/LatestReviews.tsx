@@ -11,10 +11,10 @@ const LatestReviews = async () => {
   const latestReviewData = await getLatestReviews();
   const getColors = latestReviewData.map((data) => data.colors[8]);
 
-  const getMainColor = getColors.map((color) => {
-    const rgbCMainColor = `rgb(${color[0]}, ${color[1]}, ${color[2]}, 0.5)`;
-    return { rgbCMainColor };
-  });
+  // const getMainColor = getColors.map((color) => {
+  //   const rgbCMainColor = `rgb(${color[0]}, ${color[1]}, ${color[2]}, 0.5)`;
+  //   return { rgbCMainColor };
+  // });
   const bgStyles = getColors.map((color) => {
     const rgbColortrans = `rgb(${color[0]}, ${color[1]}, ${color[2]}, 0.5)`;
     const rgbColor = `rgb(${color[0]}, ${color[1]}, ${color[2]})`;

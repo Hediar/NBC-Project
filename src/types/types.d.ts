@@ -112,6 +112,12 @@ declare global {
     appearences: TMDBCreditCast[];
     productions: TMDBCreditCrew[];
   }
+  interface watchProviders {
+    link: string;
+    flatrate: MovieProvider[];
+    buy: MovieProvider[];
+    rent: MovieProvider[];
+  }
 
   interface MovieLikesTable {
     movieid: string | number;
