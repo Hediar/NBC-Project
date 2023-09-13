@@ -13,8 +13,8 @@ type Props = {
 
 const DiscussionTopic = async ({ postData }: Props) => {
   const [prevPostData, nextPostData, optionData, { data: userData }] = await Promise.all([
-    getPrevDiscussionPost({ postId: postData.post_id, movieId: postData.movie_id }),
-    getNextDiscussionPost({ postId: postData.post_id, movieId: postData.movie_id }),
+    getPrevDiscussionPost({ postId: postData.post_id, movieId: postData.movie_id.toString() }),
+    getNextDiscussionPost({ postId: postData.post_id, movieId: postData.movie_id.toString() }),
     getDiscussionPostOption(postData.post_id),
     supabase.from('users').select('*').eq('id', postData.user_id).single()
   ]);

@@ -45,15 +45,14 @@ export default async function Layout({
   const userMatch = await doesUsersMatch(supabase, decodedUsername);
 
   return (
-    <main className="bg-white flex-col sm:flex-row flex justify-center  pb-5 sm:pb-0 h-full">
-      <aside className="sm:w-1/6 md:w-3/12 lg:w-2/12 border-r border-[#ebebeb] bg-[#fffdf9] sm:h-[calc(100vh-370px)]">
+    <main className="bg-white flex-col sm:flex-row flex justify-center  pb-5 sm:pb-0 sm:min-h-[calc(100vh-370px)]">
+      <aside className="sm:w-1/6 md:w-3/12 lg:w-2/12 border-r border-[#ebebeb] bg-[#fffdf9] ">
         <UserPageTabs username={decodedUsername} userMatch={userMatch} />
         <HiddenUserPageTabs username={decodedUsername} userMatch={userMatch} />
       </aside>
-      <section className="overflow-scroll h-full w-full change sm:w-5/6 md:w-9/12 lg:w-10/12 flex flex-col items-center">
+      <div className="overflow-scroll h-full w-full change sm:w-5/6 md:w-9/12 lg:w-10/12 flex flex-col items-center">
         {children}
-      </section>
+      </div>
     </main>
   );
 }
-// xl:h-[calc(100vh-370px)]

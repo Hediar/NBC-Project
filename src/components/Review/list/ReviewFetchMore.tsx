@@ -29,9 +29,6 @@ const ReviewFetchMore = ({ searchParams }: Props) => {
         return lastPage.page + 1;
       }
     },
-    select: (data: any) => {
-      return data.pages.map((pageData: any) => pageData.results).flat();
-    },
     suspense: true,
     refetchOnMount: true,
     retry: 0
@@ -53,10 +50,16 @@ const ReviewFetchMore = ({ searchParams }: Props) => {
 
   return (
     <div>
+      {searchParams.q ? (
+        <p className="h3_suit !font-normal text-center my-20">
+          <strong className="!font-bold">“ {searchParams.q} "</strong>와 관련된 {reviews.pages[0].count}개의 리뷰입니다
+        </p>
+      ) : null}
+
       <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-5">
-        {reviews.map((review: any, i: number) => (
-          <ReviewItem key={i} review={review} />
-        ))}
+        {reviews.pages?.map((page: any) =>
+          page.results.map((review: any, i: number) => <ReviewItem key={i} review={review} />)
+        )}
       </ul>
       {hasNextPage && (
         <button

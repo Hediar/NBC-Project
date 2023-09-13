@@ -24,7 +24,7 @@ const HeaderMenuButton = ({ userData }: { userData: UserData }) => {
       <Link className="text-center hover:opacity-80" href={'/discussion/list'}>
         토론
       </Link>
-      {userData && (
+      {userData?.id && (
         <>
           <Link className="text-center hover:opacity-80" href={`/user-page/${username}/info`}>
             유저 페이지

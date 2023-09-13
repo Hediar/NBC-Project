@@ -9,6 +9,7 @@ import { getCreditsData, getDetailData } from '@/api/tmdb';
 interface Props {
   movieId: string;
 }
+
 const baseImgUrl = process.env.NEXT_PUBLIC_TMDB_BASE_IMAGE_URL;
 
 const KeyInfomation = async ({ movieId }: Props) => {
@@ -74,7 +75,7 @@ const KeyInfomation = async ({ movieId }: Props) => {
           </section>
         </div>
       </main>
-      <PreviewAppearance movieId={movieId} appearences={appearences} productions={productions} />
+      <PreviewAppearance appearences={appearences} productions={productions} />
       <div className="border-b"></div>
     </div>
   );

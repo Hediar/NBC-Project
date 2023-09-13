@@ -62,12 +62,16 @@ const MyMovies = () => {
           >
             좋아요 누른 영화
           </label>
-          <MyMoviesSwiper
-            dataList={likesList}
-            spaceBetween={20}
-            slidesPerView={6}
-            className="absolute left-0 w-full mt-3 mx-auto transition-all duration-500 ease-in-out translate-x-40 opacity-0 invisible peer-checked:opacity-100 peer-checked:visible peer-checked:translate-x-1"
-          />
+          {likesList.length === 0 ? (
+            <p className="h3_suit py-10 text-center absolute left-0 w-full mt-3 mx-auto transition-all duration-500 ease-in-out translate-x-40 opacity-0 invisible peer-checked:opacity-100 peer-checked:visible peer-checked:translate-x-1">
+              좋아요 누른 영화가 없습니다.
+            </p>
+          ) : (
+            <MyMoviesSwiper
+              dataList={likesList}
+              className="absolute left-0 w-full mt-3 mx-auto transition-all duration-500 ease-in-out translate-x-40 opacity-0 invisible peer-checked:opacity-100 peer-checked:visible peer-checked:translate-x-1 pb-5"
+            />
+          )}
         </li>
 
         <li className="inline-block">
@@ -78,12 +82,16 @@ const MyMovies = () => {
           >
             찜한 영화
           </label>
-          <MyMoviesSwiper
-            dataList={watchLaterList}
-            spaceBetween={20}
-            slidesPerView={6}
-            className="absolute left-0 w-full mt-3 mx-auto transition-all duration-500 ease-in-out translate-x-40 opacity-0 invisible peer-checked:opacity-100 peer-checked:visible peer-checked:translate-x-1"
-          />
+          {likesList.length === 0 ? (
+            <p className="h3_suit py-10 text-center absolute left-0 w-full mt-3 mx-auto transition-all duration-500 ease-in-out translate-x-40 opacity-0 invisible peer-checked:opacity-100 peer-checked:visible peer-checked:translate-x-1 pb-5">
+              찜한 영화가 없습니다.
+            </p>
+          ) : (
+            <MyMoviesSwiper
+              dataList={watchLaterList}
+              className="absolute left-0 w-full mt-3 mx-auto transition-all duration-500 ease-in-out translate-x-40 opacity-0 invisible peer-checked:opacity-100 peer-checked:visible peer-checked:translate-x-1"
+            />
+          )}
         </li>
       </ul>
     </div>

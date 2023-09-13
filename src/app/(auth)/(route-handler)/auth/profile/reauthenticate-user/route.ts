@@ -9,14 +9,8 @@ export const GET = async (req: Request) => {
   const { data, error } = await supabase.auth.reauthenticate();
 
   if (error) {
-    return new NextResponse(JSON.stringify({ error: error.message, data: null }), {
-      status: 500,
-      statusText: 'Internal Server Error'
-    });
+    return NextResponse.json({ error: error.message, data: null });
   } else {
-    return new NextResponse(JSON.stringify({ error: null, data }), {
-      status: 200,
-      statusText: 'OK'
-    });
+    return NextResponse.json({ error: null, data });
   }
 };

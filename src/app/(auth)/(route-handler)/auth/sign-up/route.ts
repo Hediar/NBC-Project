@@ -12,7 +12,7 @@ export const POST = async (request: Request) => {
   const password = String(formData.get('password'));
   const username = String(formData.get('username'));
   const captchaToken = String(formData.get('captchaToken'));
-  const supabase = createRouteHandlerClient<Database>({ cookies });
+  const supabase = createRouteHandlerClient<Database>({ cookies }, { supabaseKey: process.env.SUPABASE_SECRET_KEY });
 
   const { error } = await supabase.auth.signUp({
     email,

@@ -8,9 +8,24 @@ import Logo from '@/styles/svg/Logo';
 import { Button, Divider, Modal } from 'antd';
 import React, { useState } from 'react';
 import SignUp from './SignUp';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { useRouter } from 'next/navigation';
 
 const NewSignUp = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const router = useRouter();
+
+  const handleOAuthSignIn = async (provider: 'google' | 'kakao', queryParams = {}) => {
+    const supabase = createClientComponentClient<Database>();
+    await supabase.auth.signInWithOAuth({
+      provider,
+      options: {
+        redirectTo: `${process.env.NEXT_PUBLIC_BASE_URL}/oauth/callback`,
+        queryParams
+      }
+    });
+    router.refresh();
+  };
 
   return (
     <>
@@ -40,11 +55,17 @@ const NewSignUp = () => {
             <div className="w-[30%] h-px bg-gray-200"></div>
           </div>
           <div className="flex flex-col w-[80%] gap-3">
-            <Button className="text-sm sm:text-base bg-[#f9e000] h-full py-2 flex justify-center items-center gap-4 border-0 animate-300 hover:scale-[1.02]">
+            <Button
+              className="text-sm sm:text-base bg-[#f9e000] h-full py-2 flex justify-center items-center gap-4 border-0 animate-300 hover:scale-[1.02]"
+              onClick={() => handleOAuthSignIn('kakao')}
+            >
               <SVG_Kakao />
               <span>카카오로 가입하기</span>
             </Button>
-            <Button className="text-sm sm:text-base border-0 ring-1 ring-[#dddddd] h-full py-2 flex justify-center items-center gap-4 animate-300 hover:scale-[1.02]">
+            <Button
+              className="text-sm sm:text-base border-0 ring-1 ring-[#dddddd] h-full py-2 flex justify-center items-center gap-4 animate-300 hover:scale-[1.02]"
+              onClick={() => handleOAuthSignIn('google', { access_type: 'offline', prompt: 'consent' })}
+            >
               <SVG_Google />
               <span>구글로 가입하기</span>
             </Button>
