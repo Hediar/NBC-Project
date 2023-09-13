@@ -7,7 +7,7 @@
 
 [🎬무비바바 방문하기](https://moviebaba.vercel.app/)
 
-![original size](https://github.com/Hediar/NBC-Project/assets/117324859/b2fbd1db-72c2-4721-8358-f820448d05d4)
+![2차 original size](https://github.com/Hediar/NBC-Project/assets/72387948/24144831-b4ef-4b3f-92a3-6c2f3a84a858)
 
 ## 🔍주요 기능
 
