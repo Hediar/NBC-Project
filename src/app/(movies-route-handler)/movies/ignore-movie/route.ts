@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server';
 import { revalidateTag } from 'next/cache';
 
 export const POST = async (req: Request) => {
-  const { movieId, path } = await req.json();
+  const { movieId } = await req.json();
   const supabase = createServerComponentClient<Database>({ cookies });
 
   const { data: userData, error: noUser } = await supabase.auth.getUser();
