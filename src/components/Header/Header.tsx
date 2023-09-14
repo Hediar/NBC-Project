@@ -17,6 +17,7 @@ const Header = async () => {
             <Link href={'/'} className="text-white text-xl font-bold tracking-wider">
               <Logo className="hidden sm:block" />
               <Logo className="sm:hidden" width={120} />
+              <span className="sr-only">Logo</span>
             </Link>
             <Nav />
           </div>
