@@ -41,7 +41,7 @@ const MovieDetailInfo = async ({ movieId }: Props) => {
             <div id="detail-cont" className="absolute w-[80%] left-[10%] -bottom-12 mb-20 sm:bottom-0">
               <h1 className="h3_suit mb-2">{movieData.title}</h1>
               <div className="text-xl font-bold leading-normal">
-                <div className="flex items-center">
+                <div className="flex flex-wrap items-center">
                   <span>{movieData.release_date.slice(0, 4)}</span>
                   <span style={{ fontSize: '0.5px' }}>●</span>
                   <span>
