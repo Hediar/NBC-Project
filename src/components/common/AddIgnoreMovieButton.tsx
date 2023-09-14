@@ -12,6 +12,10 @@ const AddIgnoreMovieButton = (props: { movieid: number }) => {
   const [messageApi, contextHolder] = message.useMessage();
   const { userInfo } = useUserInfoStore();
   const [isBtnNameShow, setIsBtnNameShow] = useState<boolean>(false);
+
+  /**
+   * 중복 방지 필요
+   */
   const addIgnoreMovie = async () => {
     const { data: ignoreTable, error } = await supabase.from('ignored_movies').select('*').eq('userid', userInfo.id);
 
