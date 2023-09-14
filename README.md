@@ -16,7 +16,8 @@
 <details>
 <summary>ERD</summary>
 <div markdown="1">
-![Untitled](https://github.com/Hediar/NBC-Project/assets/72387948/56d509b3-2dbd-49c9-8a58-90bd059a40dd)
+<img src="https://github.com/Hediar/NBC-Project/assets/72387948/56d509b3-2dbd-49c9-8a58-90bd059a40dd" width="700"/>
+
 </div>
 </details>
 
