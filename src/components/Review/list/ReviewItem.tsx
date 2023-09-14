@@ -22,7 +22,7 @@ const ReviewItem = ({ review }: Props) => {
     <li className="shadow1 rounded-[20px] min-h-[390px]">
       <Link href={`/review/${review.reviewid}`} className="flex flex-col w-full h-full">
         <div className="flex items-center px-5 py-3">
-          <div className="w-10 h-10 bg-white rounded-full border border-gray-200 overflow-hidden">
+          <div className="w-10 h-10 bg-white rounded-full border border-gray-200 overflow-hidden flex content-center justify-center">
             <Image
               className="object-cover w-full"
               src={`${review.userDetail.avatar_url}`}

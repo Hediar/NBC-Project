@@ -75,7 +75,7 @@ const ReviewDetailPage = async ({ params }: Props) => {
         {/* 컨텐츠 S */}
         <div className="overflow-hidden mb-4 rounded-[20px] border border-zinc-500">
           <div className="flex items-center h-[60px] px-5 py-2 ">
-            <div className="w-10 h-10 bg-white rounded-full border border-gray-200 overflow-hidden">
+            <div className="w-10 h-10 bg-white rounded-full border border-gray-200 overflow-hidden flex content-center justify-center">
               <Image
                 className="w-full"
                 src={`${user!.avatar_url}`}
