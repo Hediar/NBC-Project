@@ -15,16 +15,12 @@ const authApi = {
     const supabase = createRouteHandlerClient<Database>({ cookies });
 
     const getSession = async (): Promise<Pick<TypeOfReturn, 'session'>> => {
-      try {
-        const { data, error } = await supabase.auth.getSession();
+      const { data, error } = await supabase.auth.getSession();
 
-        if (error) {
-          return { session: null };
-        } else {
-          return { session: data.session };
-        }
-      } catch (error) {
+      if (error) {
         return { session: null };
+      } else {
+        return { session: data.session };
       }
     };
 

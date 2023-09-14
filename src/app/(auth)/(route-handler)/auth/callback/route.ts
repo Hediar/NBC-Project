@@ -2,7 +2,7 @@ import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 
-export const GET = async (request: Request) => {
+export const POST = async (request: Request) => {
   const requestUrl = new URL(request.url);
   const code = requestUrl.searchParams.get('code');
 
@@ -11,5 +11,5 @@ export const GET = async (request: Request) => {
     await supabase.auth.exchangeCodeForSession(code);
   }
 
-  return NextResponse.redirect(requestUrl.origin);
+  return NextResponse.redirect(requestUrl.origin, { status: 301 });
 };
