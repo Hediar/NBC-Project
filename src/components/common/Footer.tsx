@@ -1,5 +1,6 @@
 import GithubFooter from '@/styles/svg/GitHubFooter';
 import LogoWhite from '@/styles/svg/LogoWhite';
+import Link from 'next/link';
 
 const Footer = () => {
   return (
@@ -32,8 +33,10 @@ const Footer = () => {
           Copyright 2023. A조 챌린지팀 all rights reserved.
         </p>
       </div>
-      <GithubFooter className="lg:hidden" />
-      <GithubFooter className="hidden lg:block" width={300} height={30} />
+      <Link href="https://github.com/Hediar/NBC-Project" className="cursor-pointer">
+        <GithubFooter className="lg:hidden" />
+        <GithubFooter className="hidden lg:block" width={300} height={30} />
+      </Link>
     </div>
   );
 };

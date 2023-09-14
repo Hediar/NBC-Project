@@ -1,3 +1,6 @@
+import NewLoading from '@/components/common/NewLoading';
+import { Suspense } from 'react';
+
 interface Params {
   params: {
     username: string;
@@ -14,5 +17,9 @@ export const generateMetadata = ({ params: { username } }: Params) => {
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  return <div className="w-full bg-white">{children}</div>;
+  return (
+    <div className="w-full bg-white">
+      <Suspense fallback={<NewLoading />}>{children}</Suspense>
+    </div>
+  );
 }

@@ -38,7 +38,7 @@ const MovieList = () => {
           const filteredResults = (data.results[0]?.known_for || []).filter((item: TMDBSearchPersonMovie) => {
             return item.media_type !== 'tv';
           });
-          // console.log(filteredResults);
+
           if (page === 1) {
             setFilterefData([...filteredResults]);
           } else {
@@ -101,7 +101,7 @@ const MovieList = () => {
   }, [currentPage]);
 
   let contents;
-  // console.log(dataList);
+
   if (dataList?.results) {
     contents = <MovieDataList movieData={filteredData} />; // 검색x, 영화 검색
   } else {

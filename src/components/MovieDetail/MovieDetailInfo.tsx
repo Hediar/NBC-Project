@@ -4,7 +4,6 @@ import MovieDetailBottomBar from './MovieDetailBottomBar';
 import { MOVIE_COUNTRIES } from '@/static/movieCountries';
 import WatchLaterButton from '../common/Buttons/WatchLaterButton';
 import MovieLikes from '../common/Buttons/MovieLikes';
-import AddIgnoreMovieButton from '../common/AddIgnoreMovieButton';
 import MovieProviders from './MovieProviders';
 import Image from 'next/image';
 
@@ -24,7 +23,6 @@ const MovieDetailInfo = async ({ movieId }: Props) => {
           <div className="bg-gray-800 bg-opacity-30 rounded-xl py-1 px-1 absolute top-5 sm:top-10 right-[11%] flex flex-col gap-[6px] items-center">
             <WatchLaterButton movieId={movieData.id} />
             <MovieLikes movieid={movieData.id} />
-            <AddIgnoreMovieButton movieid={movieData.id} />
           </div>
           <div className="absolute w-full h-[400px] -z-50 left-0 overflow-hidden ">
             <div className="relative">
@@ -41,7 +39,7 @@ const MovieDetailInfo = async ({ movieId }: Props) => {
             <div id="detail-cont" className="absolute w-[80%] left-[10%] -bottom-12 mb-20 sm:bottom-0">
               <h1 className="h3_suit mb-2">{movieData.title}</h1>
               <div className="text-xl font-bold leading-normal">
-                <div className="flex items-center">
+                <div className="flex flex-wrap items-center">
                   <span>{movieData.release_date.slice(0, 4)}</span>
                   <span style={{ fontSize: '0.5px' }}>●</span>
                   <span>

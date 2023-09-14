@@ -30,7 +30,7 @@ const KeyInfomation = async ({ movieId }: Props) => {
         }}
       >
         <div className="flex w-full sm:w-4/5 mx-auto relative">
-          <section className="w-1/3 absolute top-24 sm:top-auto sm:relative">
+          <section className="w-1/3 absolute top-24 sm:top-auto lg:relative">
             <Image
               src={`${baseImgUrl}w300_and_h450_bestv2${poster_path}`}
               alt="Image"
@@ -44,14 +44,14 @@ const KeyInfomation = async ({ movieId }: Props) => {
           </section>
           <section
             id="detail-cont"
-            className="w-2/3 absolute right-0 sm:relative sm:w-[1267px] mx-auto flex flex-col gap-10 px-4 py-2 opacity-70 "
+            className="w-2/3 absolute right-0 lg:relative sm:w-2/3 lg:w-[95%] mx-auto flex flex-col gap-10 px-4 py-2 opacity-70 "
           >
             <div className="text-sm h-[300px] flex relative">
               <div
-                className="w-[47px] h-[30px] self-end bg-white"
+                className="w-[4%] h-[30px] self-end bg-white"
                 style={{ clipPath: 'polygon(100% 0, 0% 100%, 100% 100%)' }}
               ></div>
-              <div className="w-[1220px] flex justify-center items-center bg-white rounded-tl-[60px] rounded-tr-[60px] rounded-br-[60px] border-none custom_mobile_suit sm:text-[24px] sm:leading-[30px] px-5 py-20 ">
+              <div className="w-full sm:w-[96%] flex justify-center items-center bg-white rounded-tl-[60px] rounded-tr-[60px] rounded-br-[60px] border-none custom_mobile_suit sm:text-[24px] sm:leading-[30px] px-5 py-20 ">
                 <div className="h-full flex flex-col gap-1 items-center overflow-auto">
                   {tagline && <p>"{tagline}"</p>}
                   <p>{overview}</p>

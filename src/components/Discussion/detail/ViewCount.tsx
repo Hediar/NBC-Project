@@ -10,6 +10,7 @@ type Props = {
 
 const ViewCount = ({ postId, viewCount }: Props) => {
   const router = useRouter();
+
   useEffect(() => {
     if (!postId) return;
 
@@ -29,8 +30,10 @@ const ViewCount = ({ postId, viewCount }: Props) => {
         .update({ view_count: viewCount + 1 })
         .eq('post_id', postId)
         .select();
+
       router.refresh();
     };
+
     checkSeenPosts();
   }, []);
 
