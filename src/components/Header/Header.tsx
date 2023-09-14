@@ -7,17 +7,22 @@ import Nav from './Nav';
 import authApi from '@/util/supabase/auth/auth';
 import publicApi from '@/util/supabase/auth/public';
 import generateUniqueRandomUsername from '@/api/generateUsername/generateUniqueRandomUsername';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
+import { cookies } from 'next/headers';
 const Header = async () => {
   const { userId } = await authApi.get('userId');
 
   if (userId) {
     const { username } = await publicApi.get('id to username', { id: userId });
     if (!username) {
-      const supabase = createClientComponentClient();
+      const supabase = createServerComponentClient({ cookies });
       const newUsername = await generateUniqueRandomUsername(supabase);
-      const { error } = await supabase.from('users').update({ username: newUsername }).eq('id', userId);
+
+      const { data, error } = await supabase
+        .from('users')
+        .update({ username: newUsername })
+        .match({ id: userId })
+        .select();
       if (error) {
         console.log(error);
       }
