@@ -16,23 +16,23 @@
 <details>
 <summary>폴더 구조</summary>
 <div markdown="1">
-📦src
- ┣ 📂api
- ┃ ┣ 📂generateUsername
- ┃ ┃ ┣ 📜generateRandomUsername.ts
- ┃ ┃ ┣ 📜generateUniqueRandomUsername.ts
- ┃ ┃ ┗ 📜isUsernameAvailable.ts
- ┃ ┣ 📂movieStatistics
- ┃ ┃ ┣ 📜countMovieGenres.ts
- ┃ ┃ ┣ 📜getGenresUserLikes.ts
- ┃ ┃ ┣ 📜getLikesByGenres.ts
- ┃ ┃ ┣ 📜getNumbersOfGenresWatched.ts
- ┃ ┃ ┣ 📜getOrganizedMovieDetails.ts
- ┃ ┃ ┣ 📜getRuntimesByGenres.ts
- ┃ ┃ ┗ 📜getWatchedMoviesList.ts
- ┃ ┣ 📂supabase
- ┃ ┃ ┣ 📜getUserIsPublicData.ts
- ┃ ┃ ┣ 📜saveUserProviderWithEmail.ts
+📦src<br>
+ ┣ 📂api<br>
+ ┃ ┣ 📂generateUsername<br>
+ ┃ ┃ ┣ 📜generateRandomUsername.ts<br>
+ ┃ ┃ ┣ 📜generateUniqueRandomUsername.ts<br>
+ ┃ ┃ ┗ 📜isUsernameAvailable.ts<br>
+ ┃ ┣ 📂movieStatistics<br>
+ ┃ ┃ ┣ 📜countMovieGenres.ts<br>
+ ┃ ┃ ┣ 📜getGenresUserLikes.ts<br>
+ ┃ ┃ ┣ 📜getLikesByGenres.ts<br>
+ ┃ ┃ ┣ 📜getNumbersOfGenresWatched.ts<br>
+ ┃ ┃ ┣ 📜getOrganizedMovieDetails.ts<br>
+ ┃ ┃ ┣ 📜getRuntimesByGenres.ts<br>
+ ┃ ┃ ┗ 📜getWatchedMoviesList.ts<br>
+ ┃ ┣ 📂supabase<br>
+ ┃ ┃ ┣ 📜getUserIsPublicData.ts<br>
+ ┃ ┃ ┣ 📜saveUserProviderWithEmail.ts<br>
  ┃ ┃ ┗ 📜toggleIsPublicData.ts
  ┃ ┣ 📜discoverMoviesWithGenreId.ts
  ┃ ┣ 📜doesUserMatch.ts
