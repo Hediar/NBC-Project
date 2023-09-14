@@ -1,7 +1,7 @@
 import DiscussionList from '@/components/Discussion/list/DiscussionList';
 import React, { Suspense } from 'react';
-import DiscussionFilteringBox from '@/components/Discussion/list/DiscussionFilteringBox';
 import DiscussionListSuspense from '@/components/Discussion/list/DiscussionListSuspense';
+import DiscussionFilteringBox from '@/components/Discussion/list/DiscussionFilteringBox';
 
 const DiscussionListPage = () => {
   return (

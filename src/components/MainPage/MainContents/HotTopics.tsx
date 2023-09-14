@@ -21,7 +21,7 @@ const HotTopics = async () => {
             <Link
               href={`/discussion/detail/${post.post_id}`}
               key={post.id}
-              className="bg-GreyScaleWhite p-4 rounded-md relative flex flex-col justify-between"
+              className="drop-shadow-lg bg-GreyScaleWhite border-GreyScaleSilverGrey p-4 rounded-md relative flex flex-col justify-between"
             >
               <div className="mb-8">
                 <div className="text-lg font-semibold">{post.movie_title}</div>

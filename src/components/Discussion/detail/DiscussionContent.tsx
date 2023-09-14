@@ -20,7 +20,7 @@ const DiscussionContent = async ({ movieId }: Props) => {
   return (
     <>
       <p className="mt-10 h3_suit">토론 상세</p>
-      <div className="flex items-center w-full mt-5 px-5 lg:px-10 py-5 rounded-[20px] shadow1 border sm:w-2/3 ">
+      <div className="flex items-center w-full mt-5 px-5 lg:px-10 py-5 rounded-[20px] shadow1 border">
         <div className="h-full relative">
           <Link href={`/detail/${movieId}`}>
             <Image
