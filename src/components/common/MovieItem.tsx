@@ -18,7 +18,9 @@ const MovieItem = ({ movie }: { movie: MovieData }) => {
   const onClickHandler = (e: any) => {
     if (
       e.target.viewportElement?.classList?.contains('watch-later') ||
-      e.target.viewportElement?.classList?.contains('movie-like')
+      e.target.viewportElement?.classList?.contains('movie-like') ||
+      e.target.classList?.contains('ignore-movies-button') ||
+      e.target.classList?.contains('already-watched-button')
     ) {
       return;
     } else {

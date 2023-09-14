@@ -41,34 +41,34 @@ const AddIgnoreMovieButton = (props: { movieid: number }) => {
     }
   };
 
-  //   const ignoreMovie = async () => {
-  //     const data = await fetch('/movies/ignore-movie', { method: 'POST', body: JSON.stringify({ movieId, path }) });
-  //     const { isError, message } = await data.json();
+  const ignoreMovie = async () => {
+    const data = await fetch('/movies/ignore-movie', {
+      method: 'POST',
+      body: JSON.stringify({ movieId: props.movieid })
+    });
+    const { isError, message } = await data.json();
 
-  //     if (isError && message.includes('no user')) {
-  //       return router.replace(`?sign-in=true&scrollTo=${movieId}`);
-  //     } else if (isError && message.includes('이미')) {
-  //       messageApi.open({
-  //         type: 'error',
-  //         content: message
-  //       });
-  //       return;
-  //     } else if (isError) {
-  //       messageApi.open({
-  //         type: 'error',
-  //         content: '오류가 발생했습니다. 다시 시도해주세요.'
-  //       });
-  //       return;
-  //     }
-  //     messageApi.open({
-  //       type: 'success',
-  //       content: '무시 목록에 추가됐습니다. 추천 목록에서 제외됩니다.'
-  //     });
-  //     // router.refresh();
-  //   };
-  //   ignoreMovie();
-  //   //
-  // };
+    if (isError && message.includes('no user')) {
+      return router.replace(`?sign-in=true&scrollTo=${props.movieid}`);
+    } else if (isError && message.includes('이미')) {
+      messageApi.open({
+        type: 'warning',
+        content: message
+      });
+      return;
+    } else if (isError) {
+      messageApi.open({
+        type: 'error',
+        content: '오류가 발생했습니다. 다시 시도해주세요.'
+      });
+      return;
+    }
+    messageApi.open({
+      type: 'success',
+      content: '무시 목록에 추가됐습니다. 추천 목록에서 제외됩니다.'
+    });
+    // router.refresh();
+  };
 
   return (
     <>
@@ -81,8 +81,8 @@ const AddIgnoreMovieButton = (props: { movieid: number }) => {
         className="relative"
       >
         <button
-          className="w-full mb-[10px] bg-transparent sm:bg-white sm:opacity-30 hover:opacity-100 font-bold py-2 px-4 rounded-xl"
-          onClick={ignoreButtonHandler}
+          className="ignore-movies-button w-full mb-[10px] bg-transparent sm:bg-white sm:opacity-30 hover:opacity-100 font-bold py-2 px-4 rounded-xl"
+          onClick={ignoreMovie}
         >
           추천 무시하기 😕
         </button>
