@@ -5,8 +5,6 @@ import { ArrowRight, ArrowRight2 } from '@/styles/icons/Icons24';
 import { SVGTalkEndPoint } from '@/styles/icons/IconsETC';
 import ReviewLikes from '@/components/Review/ReviewLikes';
 
-export const revalidate = 0;
-
 const LatestReviews = async () => {
   const latestReviewData = await getLatestReviews();
   const getColors = latestReviewData.map((data) => data.colors[8]);

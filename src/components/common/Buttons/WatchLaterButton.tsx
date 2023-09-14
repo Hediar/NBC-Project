@@ -5,18 +5,17 @@ import useUserInfoStore from '@/store/saveCurrentUserData';
 import supabase from '@/supabase/config';
 import { BookmarkLinedGreen, BookmarkLinedWhite } from '@/styles/icons/Icons24';
 import { throttle } from 'lodash';
-import { message } from 'antd';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
 const WatchLaterButton = ({ movieId }: { movieId: string | number }) => {
-  const [messageApi, contextHolder] = message.useMessage();
   const { userInfo } = useUserInfoStore();
   const router = useRouter();
   const [isAlreadyAdded, setIsAlreadyAdded] = useState<boolean>(false);
   const [isOnHover, setIsOnHover] = useState<boolean>(false);
 
   const checkWatchLater = async (movieId: number | string) => {
+    if (!userInfo.id) return;
     const { data: WatchLaterTable } = await supabase.from('watch_later').select('movies').eq('userid', userInfo.id);
 
     if (WatchLaterTable?.length) {
@@ -54,7 +53,6 @@ const WatchLaterButton = ({ movieId }: { movieId: string | number }) => {
 
   return (
     <>
-      {contextHolder}
       {isAlreadyAdded ? (
         <BookmarkLinedGreen
           fill={isOnHover ? 'transparent' : '#0dca20'}

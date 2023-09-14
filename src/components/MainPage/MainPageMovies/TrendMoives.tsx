@@ -2,8 +2,6 @@ import { fetchTrendMoviesByGenre, getTrendingMovies } from '@/api/tmdb';
 import TrendMovieSlider from './TrendMovieSlider';
 import MovieItem from '@/components/common/MovieItem';
 
-export const revalidate = 60;
-
 const TrendMoives = async ({ genreId }: { genreId: string }) => {
   let trendMovies;
 
