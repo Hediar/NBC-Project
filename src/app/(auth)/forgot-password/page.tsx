@@ -6,6 +6,8 @@ interface Props {
   searchParams: { code: string };
 }
 
+export const dynamic = 'force-dynamic';
+
 const ResetPasswordPage = ({ searchParams }: Props) => {
   const code = searchParams.code;
 
