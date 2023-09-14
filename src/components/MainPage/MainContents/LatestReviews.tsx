@@ -3,9 +3,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, ArrowRight2, HeartLine } from '@/styles/icons/Icons24';
 import { SVGTalkEndPoint } from '@/styles/icons/IconsETC';
-import { extractMainColors } from '@/util/findColors';
-
-export const revalidate = 0;
 
 const LatestReviews = async () => {
   const latestReviewData = await getLatestReviews();
