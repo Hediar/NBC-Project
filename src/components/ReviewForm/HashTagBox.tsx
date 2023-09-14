@@ -24,7 +24,7 @@ const HashTagBox = ({ fieldArray, defaultValue }: Props) => {
 
   const submitTagItem = () => {
     const newTagItem = tagItem.trim().replaceAll(',', '');
-    append({ value: newTagItem });
+    newTagItem && append({ value: newTagItem });
 
     setTagItem('');
   };
