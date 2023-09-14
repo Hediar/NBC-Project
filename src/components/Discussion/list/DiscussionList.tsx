@@ -16,11 +16,11 @@ const DiscussionList = () => {
   const [filteredData, setFilteredData] = useState<DiscussionPost[]>([]);
   const searchParams = useSearchParams();
 
-  const query = {
+  const params = {
     rangeNum: pageNum,
     sort: searchParams.get('sort') ?? '',
     filter: searchParams.get('filter') ?? '',
-    search: searchParams.get('search') ?? ''
+    query: searchParams.get('query') ?? ''
   };
 
   useEffect(() => {
@@ -32,7 +32,8 @@ const DiscussionList = () => {
   }, []);
 
   useEffect(() => {
-    const { rangeNum, sort, filter, search } = query;
+    console.log('이펙트실행');
+    const { rangeNum, sort, filter, query } = params;
     const showNum = 5;
     if (postData.length) {
       const getPostDataBySortQuery = (): DiscussionPost[] => {
@@ -52,15 +53,14 @@ const DiscussionList = () => {
         switch (filter) {
           case 'all':
             return data.filter(
-              (post) =>
-                post.movie_title?.includes(search) || post.title.includes(search) || post.content.includes(search)
+              (post) => post.movie_title?.includes(query) || post.title.includes(query) || post.content.includes(query)
             );
           case 'movie_title':
-            return data.filter((post) => post.movie_title?.includes(search));
+            return data.filter((post) => post.movie_title?.includes(query));
           case 'discussion_title':
-            return data.filter((post) => post.title.includes(search));
+            return data.filter((post) => post.title.includes(query));
           case 'discussion_content':
-            return data.filter((post) => post.content.includes(search));
+            return data.filter((post) => post.content.includes(query));
           default:
             return data;
         }
@@ -77,9 +77,9 @@ const DiscussionList = () => {
 
   return (
     <div className="">
-      {query.search && (
+      {params.query && (
         <p className={`${searchP}`}>
-          "{query.search}"와 관련된 {filteredData.length}개의 토론입니다
+          "{params.query}"와 관련된 {filteredData.length}개의 토론입니다
         </p>
       )}
       <div className="flex flex-col gap-5 mt-4">
