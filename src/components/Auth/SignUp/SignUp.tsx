@@ -2,8 +2,11 @@
 'use client';
 
 import isUsernameAvailable from '@/api/generateUsername/isUsernameAvailable';
+import useUserInfoStore from '@/store/saveCurrentUserData';
 import useToggleSignUpModal from '@/store/toggleSignUpModal';
+import useToggleSignUpWIthEmailModal from '@/store/toggleSignUpWIthEmailModal';
 import Logo from '@/styles/svg/Logo';
+import authApi from '@/util/supabase/auth/auth';
 import HCaptcha from '@hcaptcha/react-hcaptcha';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Button, Input, message } from 'antd';
@@ -24,6 +27,9 @@ const SignUp = () => {
   const [shouldDisable, setShouldDisable] = useState<boolean>(true);
   const [isClicked, setIsClicked] = useState<boolean>(false);
   const { isModalOpen, setIsModalOpen } = useToggleSignUpModal();
+  const { setIsSignUpWIthEmailModalOpen } = useToggleSignUpWIthEmailModal();
+
+  const { saveUserInfo } = useUserInfoStore();
 
   useEffect(() => {
     if (passwordValue.length < 6) {
@@ -67,13 +73,13 @@ const SignUp = () => {
           type: 'success',
           content: '회원가입 완료!'
         });
+        const { userData } = await (await fetch('/auth/get-userdata')).json();
+
         setTimeout(() => {
+          saveUserInfo(userData);
           setIsClicked(false);
           setIsModalOpen(false);
-
-          setTimeout(() => {
-            router.refresh();
-          }, 200);
+          setIsSignUpWIthEmailModalOpen(false);
         }, 1000);
       }
     };

@@ -1,5 +1,5 @@
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
+'use client';
+
 import Link from 'next/link';
 import {
   BookFilled,
@@ -15,15 +15,15 @@ import {
   UserFilled,
   UserLined
 } from '@/styles/icons/Icons32';
+import { use } from 'react';
 
 interface Props {
   username: string;
-  isUserMatch: boolean;
+  isUserMatchPromise: Promise<boolean>;
 }
 
-const UserPageTabs = async ({ username, isUserMatch }: Props) => {
-  const supabase = createServerComponentClient({ cookies });
-
+const UserPageTabs = ({ username, isUserMatchPromise }: Props) => {
+  const isUserMatch = use(isUserMatchPromise);
   return (
     <div className="hidden sm:flex border-t border-[#f0f0f0] py-3 px-4  change sm:border-t-0 sm:py-0 sm:px-0 flex-row sm:flex-col items-center gap-3 sm:gap-5 sm:mt-[80px]">
       <Link

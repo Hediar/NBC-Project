@@ -33,31 +33,6 @@ const WatchLaterButton = ({ movieId }: { movieId: string | number }) => {
     return;
   };
 
-  useEffect(() => {
-    checkWatchLater(Number(movieId));
-  }, []);
-
-  const supabase = createClientComponentClient<Database>();
-
-  const checkWatchLater = async (movieId: number) => {
-    if (!userInfo.id) {
-      return;
-    }
-    const { data: watchLaterMovies, error } = await supabase
-      .from('watch_later')
-      .select('movies')
-      .eq('userid', userInfo.id)
-      .single();
-
-    if (error) {
-      return;
-    }
-
-    if (watchLaterMovies.movies.some((movie) => movie === movieId.toString())) {
-      setIsAlreadyAdded(true);
-    }
-  };
-
   return (
     <>
       {contextHolder}
