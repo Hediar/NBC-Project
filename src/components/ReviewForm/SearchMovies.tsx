@@ -2,13 +2,18 @@
 
 import { searchReviewMovies } from '@/api/tmdb';
 import { useReviewMovieStore, useSearchModalStore } from '@/store/useReviewStore';
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import Paging from '../common/Paging';
 import SearchMoviesItem from './SearchMoviesItem';
 import { debounce } from 'lodash';
 import { SearchLined } from '@/styles/icons/Icons32';
 
-const SearchMovies = () => {
+type Props = {
+  isSearchStart: boolean;
+  setIsSearchStart: Dispatch<SetStateAction<boolean>>;
+};
+
+const SearchMovies = ({ isSearchStart, setIsSearchStart }: Props) => {
   const [currentPage, setCurrentPage] = React.useState(1);
   const [totalPages, setTotalPages] = React.useState(1);
   const dataPerPage: number = 4;
@@ -24,6 +29,7 @@ const SearchMovies = () => {
     const fetchData = async () => {
       const { results } = await searchReviewMovies(value);
       setSearchMovies(results);
+      !isSearchStart && setIsSearchStart(true);
 
       const total_pages = Math.ceil(results.length / dataPerPage);
       setTotalPages(total_pages);
@@ -41,9 +47,6 @@ const SearchMovies = () => {
     e.preventDefault();
   };
 
-  const isSearchStart = !!searchMovies;
-  const isSearchNull = isSearchStart && !searchMovies.length;
-
   return (
     <div className="flex flex-col items-center mt-[26px] mb-[60px]">
       <form className="search-form" onSubmit={handleSubmit}>
@@ -56,22 +59,21 @@ const SearchMovies = () => {
       <ul
         className={`overflow-auto grid grid-cols-1 gap-5 w-full min-h-[6rem] mt-[30px] sm:grid-cols-2 lg:grid-cols-4`}
       >
-        {!isSearchStart && (
+        {!isSearchStart ? (
           <li className="col-span-4 display-[inherit] grid items-center text-center text-neutral-800 text-3xl font-bold leading-10">
             리뷰 남기실 콘텐츠를 검색해 주세요
           </li>
-        )}
-        {isSearchNull && (
+        ) : searchMovies?.length == 0 ? (
           <li className="col-span-4 display-[inherit] grid items-center text-center text-neutral-800 text-3xl font-bold leading-10">
             검색결과가 없습니다
           </li>
-        )}
-        {isSearchStart &&
-          searchMovies
+        ) : (
+          searchMovies!
             .slice(currentPage * dataPerPage - dataPerPage, currentPage * dataPerPage)
             .map((movie, i: number) => (
               <SearchMoviesItem key={'searchMovieKey' + i} movie={movie} handleClick={handleClick} />
-            ))}
+            ))
+        )}
       </ul>
 
       <Paging currentPage={currentPage} setCurrentPage={setCurrentPage} totalPages={totalPages} />

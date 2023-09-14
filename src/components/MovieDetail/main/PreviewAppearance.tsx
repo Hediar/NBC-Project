@@ -26,7 +26,6 @@ const PreviewAppearance = ({ appearences, productions }: Props) => {
         출연<span style={{ fontSize: '0.5px' }}>●</span>제작
       </p>
 
-      {/* <div className='flex'> */}
       <div className="relative">
         <div
           className="w-full h-full absolute right-0"

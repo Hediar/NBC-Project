@@ -3,13 +3,13 @@ import UserPagePersonalRecordsGraph from '@/components/UserPage/UserInfo/Persona
 import UserPageSemiHeader from '@/components/UserPage/UserInfo/SemiHeader';
 
 const UserInfoPage = async ({ params }: { params: { username: string } }) => {
-  const username = decodeURIComponent(params.username);
+  const pageUsername = decodeURIComponent(params.username);
 
   return (
     <div className="w-[96%] sm:w-10/12 h-full pb-20">
-      <UserPageSemiHeader params={username} />
-      <UserPagePersonalRecords params={username} />
-      <UserPagePersonalRecordsGraph params={username} />
+      <UserPageSemiHeader params={pageUsername} />
+      <UserPagePersonalRecords params={pageUsername} />
+      <UserPagePersonalRecordsGraph params={pageUsername} />
     </div>
   );
 };

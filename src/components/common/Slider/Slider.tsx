@@ -20,7 +20,7 @@ const Slider = ({ photoData }: Props) => {
               key={idx}
               layout="fill"
               src={`${baseImgUrl}w533_and_h300_bestv2${imageData.file_path}`}
-              className="object-cover rounded-md"
+              className="object-cover rounded-3xl px-2"
               alt="Image"
               style={{ aspectRatio: `${imageData.aspect_ratio}` }}
             ></Image>

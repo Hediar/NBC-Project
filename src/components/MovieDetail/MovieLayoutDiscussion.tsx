@@ -1,9 +1,12 @@
 import supabase from '@/supabase/config';
 import Link from 'next/link';
-import React from 'react';
 import DiscussionTopic from '../Discussion/detail/DiscussionTopic';
 import DiscussionCommentContainer from '../Discussion/detail/comment/DiscussionCommentContainer';
 import RelatedDiscussionList from '../Discussion/detail/related-discussion/RelatedDiscussionList';
+import { Suspense } from 'react';
+import DiscussionTopicSuspense from '../Discussion/detail/DiscussionTopicSuspense';
+import DiscussionCommentContainerSuspense from '../Discussion/detail/comment/DiscussionCommentContainerSuspense';
+import RelatedDiscussionListSuspense from '../Discussion/detail/related-discussion/RelatedDiscussionListSuspense';
 
 interface Props {
   movieId: string;
@@ -22,11 +25,18 @@ const MovieLayoutDiscussion = async ({ movieId }: Props) => {
       {discussionPostData?.length ? (
         <div className="flex">
           <main className="w-full flex flex-col relative">
-            <DiscussionTopic postData={discussionPostData} />
-            <DiscussionCommentContainer discussionId={discussionPostData.post_id} />
+            <Suspense fallback={<DiscussionTopicSuspense />}>
+              <DiscussionTopic postData={discussionPostData} />
+            </Suspense>
+
+            <Suspense fallback={<DiscussionCommentContainerSuspense />}>
+              <DiscussionCommentContainer discussionId={discussionPostData.post_id} />
+            </Suspense>
 
             <section className="w-full sm:absolute sm:w-1/3 sm:left-2/3">
-              <RelatedDiscussionList discussionId={discussionPostData.post_id} />
+              <Suspense fallback={<RelatedDiscussionListSuspense />}>
+                <RelatedDiscussionList discussionId={discussionPostData.post_id} />
+              </Suspense>
             </section>
           </main>
         </div>

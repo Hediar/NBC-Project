@@ -6,8 +6,6 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import React, { useRef, useState } from 'react';
 import DiscussionRegistBtn from './DiscussionRegistBtn';
 import { message } from 'antd';
-import Select from '@/components/common/Select';
-import { FormItemLabelProps } from 'antd/es/form/FormItemLabel';
 
 interface FilterBy {
   label: string;
