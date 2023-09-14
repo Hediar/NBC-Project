@@ -4,8 +4,6 @@ import ToggleIsPublic from './ToggleIsPublic';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import getUserIsPublicData from '@/api/supabase/getUserIsPublicData';
 
-export const dynamic = 'force-dynamic';
-
 const MyMenu = async () => {
   const supabase = createServerComponentClient<Database>({ cookies });
   const {
@@ -29,6 +27,7 @@ const MyMenu = async () => {
             isPublic={watch_later}
             userId={userId}
           />
+          <span className="sr-only">찜 목록 토글 스위치</span>
           <ToggleIsPublic
             key="movielikes"
             title="좋아요 목록"
@@ -36,14 +35,9 @@ const MyMenu = async () => {
             isPublic={movielikes}
             userId={userId}
           />
+          <span className="sr-only">좋아요 목록 토글 스위치</span>
           <ToggleIsPublic key="reviews" title="나의 리뷰" columnName="reviews" isPublic={reviews} userId={userId} />
-          {/* <ToggleIsPublic
-            key="discussion_post"
-            title="나의 토론"
-            columnName="discussion_post"
-            isPublic={discussion_post}
-            userId={userId}
-          /> */}
+          <span className="sr-only">나의 리뷰 토글 스위치</span>
         </div>
       </div>
     </div>

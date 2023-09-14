@@ -1,7 +1,6 @@
 import AuthButton from './_auth/AuthButtons';
 import HeaderUser from './HeaderUser';
 import Link from 'next/link';
-import HiddenServerFunctions from './_auth/HiddenServerFunctions';
 import ModalControlCentre from './_auth/ModalControlCentre';
 import Logo from '@/styles/svg/Logo';
 import Nav from './Nav';
@@ -18,6 +17,7 @@ const Header = async () => {
             <Link href={'/'} className="text-white text-xl font-bold tracking-wider">
               <Logo className="hidden sm:block" />
               <Logo className="sm:hidden" width={120} />
+              <span className="sr-only">Logo</span>
             </Link>
             <Nav />
           </div>
@@ -27,7 +27,6 @@ const Header = async () => {
           </div>
         </div>
       </header>
-      <HiddenServerFunctions />
       <ModalControlCentre userId={userId ?? ''} />
     </>
   );

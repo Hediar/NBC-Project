@@ -20,6 +20,16 @@ export const BookmarkLinedWhite = (props: SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
+export const BookmarkLinedGreen = (props: SVGProps<SVGSVGElement>) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" {...props}>
+    <path
+      d="M6 9.91409C6 7.71541 6 6.61608 6.65901 5.93304C7.31802 5.25 8.37868 5.25 10.5 5.25H13.5C15.6213 5.25 16.682 5.25 17.341 5.93304C18 6.61608 18 7.71541 18 9.91409V15.2215C18 17.3074 18 18.3503 17.3668 18.6693C16.7336 18.9883 15.9423 18.3439 14.3599 17.0552L13.8535 16.6428C12.9637 15.9182 12.5188 15.5559 12 15.5559C11.4812 15.5559 11.0363 15.9182 10.1465 16.6428L9.6401 17.0552C8.05766 18.3439 7.26644 18.9883 6.63322 18.6693C6 18.3503 6 17.3074 6 15.2215V9.91409Z"
+      stroke="#0dca20"
+      strokeWidth="2"
+    />
+  </svg>
+);
+
 export const DropUpMenu = (props: SVGProps<SVGSVGElement>) => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
     <path

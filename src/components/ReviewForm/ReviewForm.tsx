@@ -29,7 +29,6 @@ const ReviewForm = ({ movieId, editReview, movieButtonRef }: Props) => {
   const router = useRouter();
   const { userInfo } = useUserInfoStore();
   const { saveSearchMovieId } = useReviewMovieStore();
-  console.log(userInfo);
 
   const [isSearchModalOpen, setIsSearchModalOpen] = React.useState(false);
   const [IsConfirmed, setIsConfirmed] = React.useState(false);
@@ -70,7 +69,7 @@ const ReviewForm = ({ movieId, editReview, movieButtonRef }: Props) => {
       return movieButtonRef.current.focus();
     }
 
-    const { title } = await getDetailData(movieId!);
+    const { title } = (await getDetailData(movieId!)) as MovieData;
 
     const newReview = {
       movieid: movieId,
@@ -179,7 +178,6 @@ const ReviewForm = ({ movieId, editReview, movieButtonRef }: Props) => {
       setValue('content', content);
       setValue('rating', rating || 0);
 
-      console.log('폼 채우기 movieid => ', movieid);
       saveSearchMovieId(movieid);
     }
   }, [userInfo, IsConfirmed]);

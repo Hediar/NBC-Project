@@ -4,8 +4,6 @@ import NumberOfGenresGraph from './Graphs/NumberOfGenresGraph';
 import publicApi from '@/util/supabase/auth/public';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
-export const dynamic = 'force-dynamic';
-
 const LikesOnGenres = async ({ username }: { username: string }) => {
   const { id: userId } = await publicApi.get('username to id', { username });
 

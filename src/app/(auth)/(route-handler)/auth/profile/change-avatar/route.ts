@@ -4,11 +4,11 @@ import { cookies } from 'next/headers';
 import authApi from '@/util/supabase/auth/auth';
 
 export const avatar_url = [
-  'https://aiwjpebjrijveiqokhsn.supabase.co/storage/v1/object/public/users/avatar/default/avatar-1.png',
-  'https://aiwjpebjrijveiqokhsn.supabase.co/storage/v1/object/public/users/avatar/default/avatar-2.png?t=2023-09-11T06%3A40%3A10.903Z',
-  'https://aiwjpebjrijveiqokhsn.supabase.co/storage/v1/object/public/users/avatar/default/avatar-3.png',
-  'https://aiwjpebjrijveiqokhsn.supabase.co/storage/v1/object/public/users/avatar/default/avatar-4.png?t=2023-09-11T06%3A40%3A25.813Z',
-  'https://aiwjpebjrijveiqokhsn.supabase.co/storage/v1/object/public/users/avatar/default/avatar-5.png?t=2023-09-11T06%3A40%3A33.998Z'
+  'https://aiwjpebjrijveiqokhsn.supabase.co/storage/v1/object/public/users/avatar/default/Avatar1.png',
+  'https://aiwjpebjrijveiqokhsn.supabase.co/storage/v1/object/public/users/avatar/default/Avatar2.png',
+  'https://aiwjpebjrijveiqokhsn.supabase.co/storage/v1/object/public/users/avatar/default/Avatar3.png',
+  'https://aiwjpebjrijveiqokhsn.supabase.co/storage/v1/object/public/users/avatar/default/Avatar4.png',
+  'https://aiwjpebjrijveiqokhsn.supabase.co/storage/v1/object/public/users/avatar/default/Avatar5.png'
 ];
 
 export const POST = async (req: Request) => {

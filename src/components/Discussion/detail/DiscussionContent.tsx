@@ -1,6 +1,7 @@
-import { getMovieDetail } from '@/api/tmdb';
-import MovieLikes from '@/components/MovieLikes/MovieLikes';
-import WatchLaterButton from '@/components/common/WatchLaterButton';
+import { getDetailData } from '@/api/tmdb';
+import MovieLikes from '@/components/common/Buttons/MovieLikes';
+import WatchLaterButton from '@/components/common/Buttons/WatchLaterButton';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
@@ -10,7 +11,9 @@ interface Props {
 }
 const baseImgUrl = process.env.NEXT_PUBLIC_TMDB_BASE_IMAGE_URL;
 const DiscussionContent = async ({ movieId }: Props) => {
-  const movieData = await getMovieDetail(movieId);
+  const movieData = await getDetailData(movieId);
+
+  if (!movieData) return <div>컨텐츠가 없습니다</div>;
 
   return (
     <>
