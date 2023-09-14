@@ -13,450 +13,456 @@
 
 <img src="https://github.com/Hediar/NBC-Project/assets/117324859/661467cb-235f-4c09-9d20-a0a76f0a7361" width="700"/>
 
-> 📦src
-> ┣ 📂api
-> ┃ ┣ 📂generateUsername
-> ┃ ┃ ┣ 📜generateRandomUsername.ts
-> ┃ ┃ ┣ 📜generateUniqueRandomUsername.ts
-> ┃ ┃ ┗ 📜isUsernameAvailable.ts
-> ┃ ┣ 📂movieStatistics
-> ┃ ┃ ┣ 📜countMovieGenres.ts
-> ┃ ┃ ┣ 📜getGenresUserLikes.ts
-> ┃ ┃ ┣ 📜getLikesByGenres.ts
-> ┃ ┃ ┣ 📜getNumbersOfGenresWatched.ts
-> ┃ ┃ ┣ 📜getOrganizedMovieDetails.ts
-> ┃ ┃ ┣ 📜getRuntimesByGenres.ts
-> ┃ ┃ ┗ 📜getWatchedMoviesList.ts
-> ┃ ┣ 📂supabase
-> ┃ ┃ ┣ 📜getUserIsPublicData.ts
-> ┃ ┃ ┣ 📜saveUserProviderWithEmail.ts
-> ┃ ┃ ┗ 📜toggleIsPublicData.ts
-> ┃ ┣ 📜discoverMoviesWithGenreId.ts
-> ┃ ┣ 📜doesUserMatch.ts
-> ┃ ┣ 📜formatTime.ts
-> ┃ ┣ 📜getMovieDataWithMovieIds.ts
-> ┃ ┣ 📜getMovieGenres.ts
-> ┃ ┣ 📜getMovieNameWIthMovieId.ts
-> ┃ ┣ 📜POSTWatchLater.ts
-> ┃ ┣ 📜review.ts
-> ┃ ┣ 📜supabase-discussion.ts
-> ┃ ┗ 📜tmdb.ts
-> ┣ 📂app
-> ┃ ┣ 📂(auth)
-> ┃ ┃ ┣ 📂(route-handler)
-> ┃ ┃ ┃ ┣ 📂auth
-> ┃ ┃ ┃ ┃ ┣ 📂callback
-> ┃ ┃ ┃ ┃ ┃ ┗ 📜route.ts
-> ┃ ┃ ┃ ┃ ┣ 📂delete-account
-> ┃ ┃ ┃ ┃ ┃ ┗ 📜route.ts
-> ┃ ┃ ┃ ┃ ┣ 📂get-userdata
-> ┃ ┃ ┃ ┃ ┃ ┗ 📜route.ts
-> ┃ ┃ ┃ ┃ ┣ 📂profile
-> ┃ ┃ ┃ ┃ ┃ ┣ 📂change-avatar
-> ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜route.ts
-> ┃ ┃ ┃ ┃ ┃ ┣ 📂change-password
-> ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜route.ts
-> ┃ ┃ ┃ ┃ ┃ ┣ 📂forgot-password
-> ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜route.ts
-> ┃ ┃ ┃ ┃ ┃ ┣ 📂name
-> ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜route.ts
-> ┃ ┃ ┃ ┃ ┃ ┣ 📂password
-> ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜route.ts
-> ┃ ┃ ┃ ┃ ┃ ┣ 📂reauthenticate-user
-> ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜route.ts
-> ┃ ┃ ┃ ┃ ┃ ┣ 📂username
-> ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜route.ts
-> ┃ ┃ ┃ ┃ ┃ ┗ 📜route.ts
-> ┃ ┃ ┃ ┃ ┣ 📂sign-in
-> ┃ ┃ ┃ ┃ ┃ ┗ 📜route.ts
-> ┃ ┃ ┃ ┃ ┣ 📂sign-out
-> ┃ ┃ ┃ ┃ ┃ ┗ 📜route.ts
-> ┃ ┃ ┃ ┃ ┗ 📂sign-up
-> ┃ ┃ ┃ ┃ ┃ ┗ 📜route.ts
-> ┃ ┃ ┃ ┣ 📂oauth
-> ┃ ┃ ┃ ┃ ┗ 📂(social-sign-in)
-> ┃ ┃ ┃ ┃ ┃ ┣ 📂callback
-> ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜route.ts
-> ┃ ┃ ┃ ┃ ┃ ┗ 📂google-sign-in
-> ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜route.ts
-> ┃ ┃ ┃ ┗ 📂search-username
-> ┃ ┃ ┃ ┃ ┗ 📜route.ts
-> ┃ ┃ ┗ 📂forgot-password
-> ┃ ┃ ┃ ┣ 📜form.tsx
-> ┃ ┃ ┃ ┣ 📜page.tsx
-> ┃ ┃ ┃ ┗ 📜resetPassword.tsx
-> ┃ ┣ 📂(color-extract)
-> ┃ ┃ ┗ 📂api
-> ┃ ┃ ┃ ┗ 📂imagecolorpicker
-> ┃ ┃ ┃ ┃ ┗ 📜route.ts
-> ┃ ┣ 📂(discussion-view-route-handler)
-> ┃ ┃ ┗ 📂api
-> ┃ ┃ ┃ ┗ 📂discussion
-> ┃ ┃ ┃ ┃ ┗ 📂view
-> ┃ ┃ ┃ ┃ ┃ ┗ 📜route.ts
-> ┃ ┣ 📂(movies-route-handler)
-> ┃ ┃ ┗ 📂movies
-> ┃ ┃ ┃ ┣ 📂ignore-movie
-> ┃ ┃ ┃ ┃ ┗ 📜route.ts
-> ┃ ┃ ┃ ┣ 📂rate-movie
-> ┃ ┃ ┃ ┃ ┗ 📜route.ts
-> ┃ ┃ ┃ ┗ 📂watch-later
-> ┃ ┃ ┃ ┃ ┗ 📜route.ts
-> ┃ ┣ 📂(user-page)
-> ┃ ┃ ┗ 📂user-page
-> ┃ ┃ ┃ ┣ 📂[username]
-> ┃ ┃ ┃ ┃ ┣ 📂info
-> ┃ ┃ ┃ ┃ ┃ ┣ 📜not-found.tsx
-> ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
-> ┃ ┃ ┃ ┃ ┣ 📂likes
-> ┃ ┃ ┃ ┃ ┃ ┣ 📂private
-> ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
-> ┃ ┃ ┃ ┃ ┃ ┣ 📜layout.tsx
-> ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
-> ┃ ┃ ┃ ┃ ┣ 📂recommendations
-> ┃ ┃ ┃ ┃ ┃ ┣ 📜layout.tsx
-> ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
-> ┃ ┃ ┃ ┃ ┣ 📂reviews
-> ┃ ┃ ┃ ┃ ┃ ┣ 📜client.tsx
-> ┃ ┃ ┃ ┃ ┃ ┣ 📜layout.tsx
-> ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
-> ┃ ┃ ┃ ┃ ┣ 📂settings
-> ┃ ┃ ┃ ┃ ┃ ┣ 📜layout.tsx
-> ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
-> ┃ ┃ ┃ ┃ ┣ 📂watch-later
-> ┃ ┃ ┃ ┃ ┃ ┣ 📜layout.tsx
-> ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
-> ┃ ┃ ┃ ┃ ┣ 📜layout.tsx
-> ┃ ┃ ┃ ┃ ┗ 📜not-found.tsx
-> ┃ ┃ ┃ ┗ 📜not-found.tsx
-> ┃ ┣ 📂chat
-> ┃ ┃ ┗ 📂[genreid]
-> ┃ ┃ ┃ ┗ 📜page.tsx
-> ┃ ┣ 📂detail
-> ┃ ┃ ┗ 📂[movieId]
-> ┃ ┃ ┃ ┣ 📂crew
-> ┃ ┃ ┃ ┃ ┗ 📜page.tsx
-> ┃ ┃ ┃ ┣ 📂discussion
-> ┃ ┃ ┃ ┃ ┗ 📜page.tsx
-> ┃ ┃ ┃ ┣ 📂trailer
-> ┃ ┃ ┃ ┃ ┗ 📜page.tsx
-> ┃ ┃ ┃ ┣ 📜layout.tsx
-> ┃ ┃ ┃ ┗ 📜page.tsx
-> ┃ ┣ 📂discussion
-> ┃ ┃ ┣ 📂detail
-> ┃ ┃ ┃ ┗ 📂[discussionId]
-> ┃ ┃ ┃ ┃ ┣ 📜layout.tsx
-> ┃ ┃ ┃ ┃ ┗ 📜page.tsx
-> ┃ ┃ ┣ 📂edit
-> ┃ ┃ ┃ ┗ 📂[discussionId]
-> ┃ ┃ ┃ ┃ ┣ 📜layout.tsx
-> ┃ ┃ ┃ ┃ ┗ 📜page.tsx
-> ┃ ┃ ┣ 📂list
-> ┃ ┃ ┃ ┣ 📜layout.tsx
-> ┃ ┃ ┃ ┗ 📜page.tsx
-> ┃ ┃ ┗ 📂regist
-> ┃ ┃ ┃ ┣ 📜layout.tsx
-> ┃ ┃ ┃ ┗ 📜page.tsx
-> ┃ ┣ 📂movielist
-> ┃ ┃ ┗ 📜page.tsx
-> ┃ ┣ 📂review
-> ┃ ┃ ┣ 📂edit
-> ┃ ┃ ┃ ┗ 📂[postId]
-> ┃ ┃ ┃ ┃ ┗ 📜page.tsx
-> ┃ ┃ ┣ 📂write
-> ┃ ┃ ┃ ┣ 📂[movieId]
-> ┃ ┃ ┃ ┃ ┗ 📜page.tsx
-> ┃ ┃ ┃ ┗ 📜page.tsx
-> ┃ ┃ ┣ 📂[postId]
-> ┃ ┃ ┃ ┣ 📜loading.tsx
-> ┃ ┃ ┃ ┗ 📜page.tsx
-> ┃ ┃ ┣ 📜layout.tsx
-> ┃ ┃ ┗ 📜page.tsx
-> ┃ ┣ 📂[genreId]
-> ┃ ┃ ┗ 📜page.tsx
-> ┃ ┣ 📜icon.tsx
-> ┃ ┣ 📜layout.tsx
-> ┃ ┣ 📜loading.tsx
-> ┃ ┣ 📜not-found.tsx
-> ┃ ┣ 📜page.tsx
-> ┃ ┣ 📜ReactQueryProvider.tsx
-> ┃ ┗ 📜RouteChangeEventsProvider.tsx
-> ┣ 📂components
-> ┃ ┣ 📂Auth
-> ┃ ┃ ┣ 📂ForgotPassword
-> ┃ ┃ ┃ ┗ 📜ForgotPasswordModal.tsx
-> ┃ ┃ ┣ 📂SignIn
-> ┃ ┃ ┃ ┗ 📜SignIn.tsx
-> ┃ ┃ ┣ 📂SignUp
-> ┃ ┃ ┃ ┣ 📜NewSignUp.tsx
-> ┃ ┃ ┃ ┗ 📜SignUp.tsx
-> ┃ ┃ ┣ 📜Message.tsx
-> ┃ ┃ ┣ 📜SocialButtons.backup.tsx
-> ┃ ┃ ┗ 📜SocialButtons.tsx
-> ┃ ┣ 📂common
-> ┃ ┃ ┣ 📂Buttons
-> ┃ ┃ ┃ ┣ 📜AlreadyWatchedButton.tsx
-> ┃ ┃ ┃ ┣ 📜MovieButtons.tsx
-> ┃ ┃ ┃ ┣ 📜MovieLikes.tsx
-> ┃ ┃ ┃ ┗ 📜WatchLaterButton.tsx
-> ┃ ┃ ┣ 📂skeleton
-> ┃ ┃ ┃ ┗ 📜MovieItem.tsx
-> ┃ ┃ ┣ 📂Slider
-> ┃ ┃ ┃ ┣ 📜ArrowsDotsButtons.tsx
-> ┃ ┃ ┃ ┣ 📜EmblaCarousel.tsx
-> ┃ ┃ ┃ ┗ 📜Slider.tsx
-> ┃ ┃ ┣ 📜AddIgnoreMovieButton.tsx
-> ┃ ┃ ┣ 📜DisplayMovies.tsx
-> ┃ ┃ ┣ 📜DisplayMoviesInfiniteScroll.tsx
-> ┃ ┃ ┣ 📜DragDrop.tsx
-> ┃ ┃ ┣ 📜Footer.tsx
-> ┃ ┃ ┣ 📜LeaveCheck.tsx
-> ┃ ┃ ┣ 📜LeaveConfirmModal.tsx
-> ┃ ┃ ┣ 📜LoadingSpinner.tsx
-> ┃ ┃ ┣ 📜Modal.tsx
-> ┃ ┃ ┣ 📜MovieItem.tsx
-> ┃ ┃ ┣ 📜NewLoading.tsx
-> ┃ ┃ ┣ 📜OverlaidModal.tsx
-> ┃ ┃ ┣ 📜Paging.tsx
-> ┃ ┃ ┣ 📜RateMovie.tsx
-> ┃ ┃ ┣ 📜ScrollToTopButton.tsx
-> ┃ ┃ ┣ 📜Search.tsx
-> ┃ ┃ ┣ 📜Select.tsx
-> ┃ ┃ ┗ 📜Sorting.tsx
-> ┃ ┣ 📂contents
-> ┃ ┃ ┣ 📜MovieDataList.tsx
-> ┃ ┃ ┣ 📜MovieList.tsx
-> ┃ ┃ ┣ 📜MovieListSkeleton.tsx
-> ┃ ┃ ┗ 📜Sort.tsx
-> ┃ ┣ 📂Discussion
-> ┃ ┃ ┣ 📂detail
-> ┃ ┃ ┃ ┣ 📂comment
-> ┃ ┃ ┃ ┃ ┣ 📜CommentInput.tsx
-> ┃ ┃ ┃ ┃ ┣ 📜DeleteComment.tsx
-> ┃ ┃ ┃ ┃ ┣ 📜DiscussionCommentContainer.tsx
-> ┃ ┃ ┃ ┃ ┣ 📜DiscussionCommentContainerSuspense.tsx
-> ┃ ┃ ┃ ┃ ┣ 📜DisplayComments.tsx
-> ┃ ┃ ┃ ┃ ┣ 📜EditComment.tsx
-> ┃ ┃ ┃ ┃ ┣ 📜EditCommentInput.tsx
-> ┃ ┃ ┃ ┃ ┗ 📜LikeButton.tsx
-> ┃ ┃ ┃ ┣ 📂related-discussion
-> ┃ ┃ ┃ ┃ ┣ 📜RelatedDiscussionList.tsx
-> ┃ ┃ ┃ ┃ ┣ 📜RelatedDiscussionListSuspense.tsx
-> ┃ ┃ ┃ ┃ ┗ 📜RelatedDiscussionPost.tsx
-> ┃ ┃ ┃ ┣ 📜DiscussionContent.tsx
-> ┃ ┃ ┃ ┣ 📜DiscussionDetail.tsx
-> ┃ ┃ ┃ ┣ 📜DiscussionDetailSuspense.tsx
-> ┃ ┃ ┃ ┣ 📜DiscussionTopic.tsx
-> ┃ ┃ ┃ ┣ 📜DiscussionTopicSuspense.tsx
-> ┃ ┃ ┃ ┣ 📜EditDeleteBox.tsx
-> ┃ ┃ ┃ ┣ 📜Option.tsx
-> ┃ ┃ ┃ ┣ 📜OptionVote.tsx
-> ┃ ┃ ┃ ┗ 📜ViewCount.tsx
-> ┃ ┃ ┗ 📂list
-> ┃ ┃ ┃ ┣ 📜DiscussionFilteringBox.tsx
-> ┃ ┃ ┃ ┣ 📜DiscussionList.tsx
-> ┃ ┃ ┃ ┣ 📜DiscussionListSuspense.tsx
-> ┃ ┃ ┃ ┣ 📜DiscussionPost.tsx
-> ┃ ┃ ┃ ┗ 📜DiscussionRegistBtn.tsx
-> ┃ ┣ 📂Header
-> ┃ ┃ ┣ 📂_auth
-> ┃ ┃ ┃ ┣ 📜AuthButtons.tsx
-> ┃ ┃ ┃ ┣ 📜ModalControlCentre.tsx
-> ┃ ┃ ┃ ┣ 📜SaveUserInfoToStore.tsx
-> ┃ ┃ ┃ ┣ 📜SignInButton.tsx
-> ┃ ┃ ┃ ┣ 📜SignOutButton.tsx
-> ┃ ┃ ┃ ┗ 📜SignUpButton.tsx
-> ┃ ┃ ┣ 📜Header.tsx
-> ┃ ┃ ┣ 📜HeaderMenuButton.tsx
-> ┃ ┃ ┣ 📜HeaderUser.tsx
-> ┃ ┃ ┗ 📜Nav.tsx
-> ┃ ┣ 📂MainPage
-> ┃ ┃ ┣ 📂MainContents
-> ┃ ┃ ┃ ┣ 📜HotTopics.tsx
-> ┃ ┃ ┃ ┣ 📜LatestMovies.tsx
-> ┃ ┃ ┃ ┣ 📜LatestReviews.tsx
-> ┃ ┃ ┃ ┗ 📜MainSkeleton.tsx
-> ┃ ┃ ┣ 📂MainPageMovies
-> ┃ ┃ ┃ ┣ 📜KeywordButtons.tsx
-> ┃ ┃ ┃ ┣ 📜LatestMovieSlider.tsx
-> ┃ ┃ ┃ ┣ 📜TrendMoives.tsx
-> ┃ ┃ ┃ ┗ 📜TrendMovieSlider.tsx
-> ┃ ┃ ┣ 📜MainPage.tsx
-> ┃ ┃ ┗ 📜MainPageSkeleton.tsx
-> ┃ ┣ 📂MovieDetail
-> ┃ ┃ ┣ 📂appearance-production
-> ┃ ┃ ┃ ┗ 📜AppearanceProduction.tsx
-> ┃ ┃ ┣ 📂discussion
-> ┃ ┃ ┃ ┗ 📜Discussion.tsx
-> ┃ ┃ ┣ 📂main
-> ┃ ┃ ┃ ┣ 📜KeyInfomation.tsx
-> ┃ ┃ ┃ ┣ 📜KeyInfomationSuspense.tsx
-> ┃ ┃ ┃ ┗ 📜PreviewAppearance.tsx
-> ┃ ┃ ┣ 📂trailer-photo
-> ┃ ┃ ┃ ┣ 📜MovieDetailTrailer.tsx
-> ┃ ┃ ┃ ┣ 📜MovieDetailTrailerSuspense.tsx
-> ┃ ┃ ┃ ┣ 📜TrailerPlay.tsx
-> ┃ ┃ ┃ ┗ 📜TrailerSlider.tsx
-> ┃ ┃ ┣ 📜MovieDetailBottomBar.tsx
-> ┃ ┃ ┣ 📜MovieDetailInfo.tsx
-> ┃ ┃ ┣ 📜MovieLayoutDiscussion.tsx
-> ┃ ┃ ┗ 📜MovieProviders.tsx
-> ┃ ┣ 📂Review
-> ┃ ┃ ┣ 📂list
-> ┃ ┃ ┃ ┣ 📜PosterBaseColor.tsx
-> ┃ ┃ ┃ ┣ 📜ReviewFetchMore.tsx
-> ┃ ┃ ┃ ┣ 📜ReviewFetchMoreSuspense.tsx
-> ┃ ┃ ┃ ┣ 📜ReviewFilteringBox.tsx
-> ┃ ┃ ┃ ┣ 📜ReviewItem.tsx
-> ┃ ┃ ┃ ┗ 📜WriteButton.tsx
-> ┃ ┃ ┗ 📜ReviewLikes.tsx
-> ┃ ┣ 📂ReviewForm
-> ┃ ┃ ┣ 📜CategoryBox.tsx
-> ┃ ┃ ┣ 📜HashTagBox.tsx
-> ┃ ┃ ┣ 📜MyMovies.tsx
-> ┃ ┃ ┣ 📜MyMoviesSwiper.tsx
-> ┃ ┃ ┣ 📜ReviewForm.tsx
-> ┃ ┃ ┣ 📜ReviewMovie.tsx
-> ┃ ┃ ┣ 📜ReviewWriteTemplate.tsx
-> ┃ ┃ ┣ 📜SearchMovies.tsx
-> ┃ ┃ ┣ 📜SearchMoviesItem.tsx
-> ┃ ┃ ┣ 📜SearchPopup.tsx
-> ┃ ┃ ┣ 📜StarBox.tsx
-> ┃ ┃ ┗ 📜UtilButtons.tsx
-> ┃ ┣ 📂ReviewList
-> ┃ ┃ ┣ 📜MyReviewListLoading.tsx
-> ┃ ┃ ┣ 📜ReviewItem.tsx
-> ┃ ┃ ┗ 📜ReviewListEmpty.tsx
-> ┃ ┗ 📂UserPage
-> ┃ ┃ ┣ 📂RecommendationList
-> ┃ ┃ ┃ ┗ 📜_RecommendationList.tsx
-> ┃ ┃ ┣ 📂settings
-> ┃ ┃ ┃ ┣ 📂ChangeInfo
-> ┃ ┃ ┃ ┃ ┣ 📜ChangeEmail.tsx
-> ┃ ┃ ┃ ┃ ┣ 📜ChangeInfo.tsx
-> ┃ ┃ ┃ ┃ ┗ 📜ChangePassword.tsx
-> ┃ ┃ ┃ ┣ 📂MyAccount
-> ┃ ┃ ┃ ┃ ┣ 📜ChangeAvatarPhoto.tsx
-> ┃ ┃ ┃ ┃ ┣ 📜ChangeUsername.tsx
-> ┃ ┃ ┃ ┃ ┣ 📜ChooseProfile.tsx
-> ┃ ┃ ┃ ┃ ┣ 📜IconContainer.tsx
-> ┃ ┃ ┃ ┃ ┗ 📜MyAccount.tsx
-> ┃ ┃ ┃ ┣ 📂MyMenu
-> ┃ ┃ ┃ ┃ ┣ 📜MyMenu.tsx
-> ┃ ┃ ┃ ┃ ┗ 📜ToggleIsPublic.tsx
-> ┃ ┃ ┃ ┣ 📂Profile
-> ┃ ┃ ┃ ┃ ┣ 📜AvatarPhoto.tsx
-> ┃ ┃ ┃ ┃ ┣ 📜DeleteUser.tsx
-> ┃ ┃ ┃ ┃ ┣ 📜Miscellaneous.tsx
-> ┃ ┃ ┃ ┃ ┣ 📜MyAccount.tsx
-> ┃ ┃ ┃ ┃ ┣ 📜UpdateEmail.tsx
-> ┃ ┃ ┃ ┃ ┣ 📜UpdateName.tsx
-> ┃ ┃ ┃ ┃ ┣ 📜UpdatePassword.tsx
-> ┃ ┃ ┃ ┃ ┗ 📜UpdateUsername.tsx
-> ┃ ┃ ┃ ┣ 📜UserSettingsProfile.tsx
-> ┃ ┃ ┃ ┗ 📜UserSettingsTabs.tsx
-> ┃ ┃ ┣ 📂UserInfo
-> ┃ ┃ ┃ ┣ 📂PersonalRecords
-> ┃ ┃ ┃ ┃ ┣ 📂BigElements(Graphs)
-> ┃ ┃ ┃ ┃ ┃ ┣ 📂Graphs
-> ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜MovieRuntimeGraph.tsx
-> ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜NumberOfGenresGraph.tsx
-> ┃ ┃ ┃ ┃ ┃ ┣ 📜LikesOnGenres.tsx
-> ┃ ┃ ┃ ┃ ┃ ┣ 📜NumberOfGenresWatched.tsx
-> ┃ ┃ ┃ ┃ ┃ ┗ 📜RuntimeByGenres.tsx
-> ┃ ┃ ┃ ┃ ┣ 📂SmallElements
-> ┃ ┃ ┃ ┃ ┃ ┣ 📜NumberOfMoviesWatched.tsx
-> ┃ ┃ ┃ ┃ ┃ ┣ 📜NumberOfReviews.tsx
-> ┃ ┃ ┃ ┃ ┃ ┗ 📜TotalWatchingTime.tsx
-> ┃ ┃ ┃ ┃ ┣ 📂_Containers
-> ┃ ┃ ┃ ┃ ┃ ┣ 📜RecordsContainerBig.tsx
-> ┃ ┃ ┃ ┃ ┃ ┗ 📜RecordsContainerSmall.tsx
-> ┃ ┃ ┃ ┃ ┣ 📜PersonalRecords.tsx
-> ┃ ┃ ┃ ┃ ┗ 📜PersonalRecordsGraph.tsx
-> ┃ ┃ ┃ ┣ 📜MostWatchedGenres.tsx
-> ┃ ┃ ┃ ┗ 📜SemiHeader.tsx
-> ┃ ┃ ┣ 📜HiddenUserPageTabs.tsx
-> ┃ ┃ ┗ 📜UserPageTabs.tsx
-> ┣ 📂hooks
-> ┃ ┣ 📜filterIgnoreMovies.ts
-> ┃ ┣ 📜saveCurrentURL.ts
-> ┃ ┣ 📜saveSignedInUserData.ts
-> ┃ ┣ 📜useCheckbox.ts
-> ┃ ┣ 📜useDiscussionOptionQuery.ts
-> ┃ ┣ 📜useDiscussionPostQuery.ts
-> ┃ ┣ 📜useLeaveConfiramation.tsx
-> ┃ ┣ 📜useMiddlewareRouter.ts
-> ┃ ┣ 📜useMovieLikesMutation.ts
-> ┃ ┗ 📜useReviewLikesMutation.ts
-> ┣ 📂static
-> ┃ ┣ 📜baseImgUrl.ts
-> ┃ ┣ 📜movieCountries.ts
-> ┃ ┣ 📜movieGenres.ts
-> ┃ ┣ 📜optionMark.ts
-> ┃ ┣ 📜quickReviews.ts
-> ┃ ┗ 📜review.ts
-> ┣ 📂store
-> ┃ ┣ 📜forgotPasswordToggle.ts
-> ┃ ┣ 📜isProfileSelected.ts
-> ┃ ┣ 📜originPathnameStore.ts
-> ┃ ┣ 📜saveCurrentUserData.ts
-> ┃ ┣ 📜toggleChangeAvatarModal.ts
-> ┃ ┣ 📜toggleDiscussionCommentEditModal.ts
-> ┃ ┣ 📜toggleSignInModal.ts
-> ┃ ┣ 📜toggleSignUpModal.ts
-> ┃ ┣ 📜useDiscussionStore.ts
-> ┃ ┗ 📜useReviewStore.ts
-> ┣ 📂styles
-> ┃ ┣ 📂icons
-> ┃ ┃ ┣ 📜Icons16.tsx
-> ┃ ┃ ┣ 📜Icons24.tsx
-> ┃ ┃ ┣ 📜Icons32.tsx
-> ┃ ┃ ┗ 📜IconsETC.tsx
-> ┃ ┣ 📂svg
-> ┃ ┃ ┣ 📂avatar
-> ┃ ┃ ┃ ┣ 📜Icon1.tsx
-> ┃ ┃ ┃ ┣ 📜Icon2.tsx
-> ┃ ┃ ┃ ┣ 📜Icon3.tsx
-> ┃ ┃ ┃ ┣ 📜Icon4.tsx
-> ┃ ┃ ┃ ┗ 📜Icon5.tsx
-> ┃ ┃ ┣ 📜CheckMark.tsx
-> ┃ ┃ ┣ 📜Dot.tsx
-> ┃ ┃ ┣ 📜Edit.tsx
-> ┃ ┃ ┣ 📜Ellipse.tsx
-> ┃ ┃ ┣ 📜GitHubFooter.tsx
-> ┃ ┃ ┣ 📜Google.tsx
-> ┃ ┃ ┣ 📜Google_SVG.tsx
-> ┃ ┃ ┣ 📜Kakao.tsx
-> ┃ ┃ ┣ 📜Kakao_SVG.tsx
-> ┃ ┃ ┣ 📜LoadingFriends.tsx
-> ┃ ┃ ┣ 📜Logo.tsx
-> ┃ ┃ ┣ 📜LogoIcon.tsx
-> ┃ ┃ ┣ 📜LogoWhite.tsx
-> ┃ ┃ ┣ 📜NoContent.tsx
-> ┃ ┃ ┣ 📜Prohibit.tsx
-> ┃ ┃ ┣ 📜settings.tsx
-> ┃ ┃ ┣ 📜SignOut.tsx
-> ┃ ┃ ┣ 📜SVG_HidePassword.tsx
-> ┃ ┃ ┗ 📜SVG_ShowPassword.tsx
-> ┃ ┣ 📜globals.css
-> ┃ ┗ 📜paging.css
-> ┣ 📂supabase
-> ┃ ┗ 📜config.ts
-> ┣ 📂types
-> ┃ ┣ 📜supabase.ts
-> ┃ ┗ 📜types.d.ts
-> ┣ 📂util
-> ┃ ┣ 📂supabase
-> ┃ ┃ ┣ 📂auth
-> ┃ ┃ ┃ ┣ 📜auth.ts
-> ┃ ┃ ┃ ┗ 📜public.ts
-> ┃ ┃ ┗ 📂userPage
-> ┃ ┃ ┃ ┗ 📜doesUserExist.ts
-> ┃ ┣ 📜findColors.ts
-> ┃ ┣ 📜isServer.ts
-> ┃ ┣ 📜movie.tsx
-> ┃ ┗ 📜tripArrayToLength.ts
-> ┗ 📜middleware.ts
+<details>
+<summary>폴더 구조</summary>
+<div markdown="1">
+📦src
+ ┣ 📂api
+ ┃ ┣ 📂generateUsername
+ ┃ ┃ ┣ 📜generateRandomUsername.ts
+ ┃ ┃ ┣ 📜generateUniqueRandomUsername.ts
+ ┃ ┃ ┗ 📜isUsernameAvailable.ts
+ ┃ ┣ 📂movieStatistics
+ ┃ ┃ ┣ 📜countMovieGenres.ts
+ ┃ ┃ ┣ 📜getGenresUserLikes.ts
+ ┃ ┃ ┣ 📜getLikesByGenres.ts
+ ┃ ┃ ┣ 📜getNumbersOfGenresWatched.ts
+ ┃ ┃ ┣ 📜getOrganizedMovieDetails.ts
+ ┃ ┃ ┣ 📜getRuntimesByGenres.ts
+ ┃ ┃ ┗ 📜getWatchedMoviesList.ts
+ ┃ ┣ 📂supabase
+ ┃ ┃ ┣ 📜getUserIsPublicData.ts
+ ┃ ┃ ┣ 📜saveUserProviderWithEmail.ts
+ ┃ ┃ ┗ 📜toggleIsPublicData.ts
+ ┃ ┣ 📜discoverMoviesWithGenreId.ts
+ ┃ ┣ 📜doesUserMatch.ts
+ ┃ ┣ 📜formatTime.ts
+ ┃ ┣ 📜getMovieDataWithMovieIds.ts
+ ┃ ┣ 📜getMovieGenres.ts
+ ┃ ┣ 📜getMovieNameWIthMovieId.ts
+ ┃ ┣ 📜POSTWatchLater.ts
+ ┃ ┣ 📜review.ts
+ ┃ ┣ 📜supabase-discussion.ts
+ ┃ ┗ 📜tmdb.ts
+ ┣ 📂app
+ ┃ ┣ 📂(auth)
+ ┃ ┃ ┣ 📂(route-handler)
+ ┃ ┃ ┃ ┣ 📂auth
+ ┃ ┃ ┃ ┃ ┣ 📂callback
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜route.ts
+ ┃ ┃ ┃ ┃ ┣ 📂delete-account
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜route.ts
+ ┃ ┃ ┃ ┃ ┣ 📂get-userdata
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜route.ts
+ ┃ ┃ ┃ ┃ ┣ 📂profile
+ ┃ ┃ ┃ ┃ ┃ ┣ 📂change-avatar
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜route.ts
+ ┃ ┃ ┃ ┃ ┃ ┣ 📂change-password
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜route.ts
+ ┃ ┃ ┃ ┃ ┃ ┣ 📂forgot-password
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜route.ts
+ ┃ ┃ ┃ ┃ ┃ ┣ 📂name
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜route.ts
+ ┃ ┃ ┃ ┃ ┃ ┣ 📂password
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜route.ts
+ ┃ ┃ ┃ ┃ ┃ ┣ 📂reauthenticate-user
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜route.ts
+ ┃ ┃ ┃ ┃ ┃ ┣ 📂username
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜route.ts
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜route.ts
+ ┃ ┃ ┃ ┃ ┣ 📂sign-in
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜route.ts
+ ┃ ┃ ┃ ┃ ┣ 📂sign-out
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜route.ts
+ ┃ ┃ ┃ ┃ ┗ 📂sign-up
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜route.ts
+ ┃ ┃ ┃ ┣ 📂oauth
+ ┃ ┃ ┃ ┃ ┗ 📂(social-sign-in)
+ ┃ ┃ ┃ ┃ ┃ ┣ 📂callback
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜route.ts
+ ┃ ┃ ┃ ┃ ┃ ┗ 📂google-sign-in
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜route.ts
+ ┃ ┃ ┃ ┗ 📂search-username
+ ┃ ┃ ┃ ┃ ┗ 📜route.ts
+ ┃ ┃ ┗ 📂forgot-password
+ ┃ ┃ ┃ ┣ 📜form.tsx
+ ┃ ┃ ┃ ┣ 📜page.tsx
+ ┃ ┃ ┃ ┗ 📜resetPassword.tsx
+ ┃ ┣ 📂(color-extract)
+ ┃ ┃ ┗ 📂api
+ ┃ ┃ ┃ ┗ 📂imagecolorpicker
+ ┃ ┃ ┃ ┃ ┗ 📜route.ts
+ ┃ ┣ 📂(discussion-view-route-handler)
+ ┃ ┃ ┗ 📂api
+ ┃ ┃ ┃ ┗ 📂discussion
+ ┃ ┃ ┃ ┃ ┗ 📂view
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜route.ts
+ ┃ ┣ 📂(movies-route-handler)
+ ┃ ┃ ┗ 📂movies
+ ┃ ┃ ┃ ┣ 📂ignore-movie
+ ┃ ┃ ┃ ┃ ┗ 📜route.ts
+ ┃ ┃ ┃ ┣ 📂rate-movie
+ ┃ ┃ ┃ ┃ ┗ 📜route.ts
+ ┃ ┃ ┃ ┗ 📂watch-later
+ ┃ ┃ ┃ ┃ ┗ 📜route.ts
+ ┃ ┣ 📂(user-page)
+ ┃ ┃ ┗ 📂user-page
+ ┃ ┃ ┃ ┣ 📂[username]
+ ┃ ┃ ┃ ┃ ┣ 📂info
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜not-found.tsx
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┃ ┃ ┣ 📂likes
+ ┃ ┃ ┃ ┃ ┃ ┣ 📂private
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜layout.tsx
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┃ ┃ ┣ 📂recommendations
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜layout.tsx
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┃ ┃ ┣ 📂reviews
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜client.tsx
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜layout.tsx
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┃ ┃ ┣ 📂settings
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜layout.tsx
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┃ ┃ ┣ 📂watch-later
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜layout.tsx
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┃ ┃ ┣ 📜layout.tsx
+ ┃ ┃ ┃ ┃ ┗ 📜not-found.tsx
+ ┃ ┃ ┃ ┗ 📜not-found.tsx
+ ┃ ┣ 📂chat
+ ┃ ┃ ┗ 📂[genreid]
+ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┣ 📂detail
+ ┃ ┃ ┗ 📂[movieId]
+ ┃ ┃ ┃ ┣ 📂crew
+ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┃ ┣ 📂discussion
+ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┃ ┣ 📂trailer
+ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┃ ┣ 📜layout.tsx
+ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┣ 📂discussion
+ ┃ ┃ ┣ 📂detail
+ ┃ ┃ ┃ ┗ 📂[discussionId]
+ ┃ ┃ ┃ ┃ ┣ 📜layout.tsx
+ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┣ 📂edit
+ ┃ ┃ ┃ ┗ 📂[discussionId]
+ ┃ ┃ ┃ ┃ ┣ 📜layout.tsx
+ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┣ 📂list
+ ┃ ┃ ┃ ┣ 📜layout.tsx
+ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┗ 📂regist
+ ┃ ┃ ┃ ┣ 📜layout.tsx
+ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┣ 📂movielist
+ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┣ 📂review
+ ┃ ┃ ┣ 📂edit
+ ┃ ┃ ┃ ┗ 📂[postId]
+ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┣ 📂write
+ ┃ ┃ ┃ ┣ 📂[movieId]
+ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┣ 📂[postId]
+ ┃ ┃ ┃ ┣ 📜loading.tsx
+ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┣ 📜layout.tsx
+ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┣ 📂[genreId]
+ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┣ 📜icon.tsx
+ ┃ ┣ 📜layout.tsx
+ ┃ ┣ 📜loading.tsx
+ ┃ ┣ 📜not-found.tsx
+ ┃ ┣ 📜page.tsx
+ ┃ ┣ 📜ReactQueryProvider.tsx
+ ┃ ┗ 📜RouteChangeEventsProvider.tsx
+ ┣ 📂components
+ ┃ ┣ 📂Auth
+ ┃ ┃ ┣ 📂ForgotPassword
+ ┃ ┃ ┃ ┗ 📜ForgotPasswordModal.tsx
+ ┃ ┃ ┣ 📂SignIn
+ ┃ ┃ ┃ ┗ 📜SignIn.tsx
+ ┃ ┃ ┣ 📂SignUp
+ ┃ ┃ ┃ ┣ 📜NewSignUp.tsx
+ ┃ ┃ ┃ ┗ 📜SignUp.tsx
+ ┃ ┃ ┣ 📜Message.tsx
+ ┃ ┃ ┣ 📜SocialButtons.backup.tsx
+ ┃ ┃ ┗ 📜SocialButtons.tsx
+ ┃ ┣ 📂common
+ ┃ ┃ ┣ 📂Buttons
+ ┃ ┃ ┃ ┣ 📜AlreadyWatchedButton.tsx
+ ┃ ┃ ┃ ┣ 📜MovieButtons.tsx
+ ┃ ┃ ┃ ┣ 📜MovieLikes.tsx
+ ┃ ┃ ┃ ┗ 📜WatchLaterButton.tsx
+ ┃ ┃ ┣ 📂skeleton
+ ┃ ┃ ┃ ┗ 📜MovieItem.tsx
+ ┃ ┃ ┣ 📂Slider
+ ┃ ┃ ┃ ┣ 📜ArrowsDotsButtons.tsx
+ ┃ ┃ ┃ ┣ 📜EmblaCarousel.tsx
+ ┃ ┃ ┃ ┗ 📜Slider.tsx
+ ┃ ┃ ┣ 📜AddIgnoreMovieButton.tsx
+ ┃ ┃ ┣ 📜DisplayMovies.tsx
+ ┃ ┃ ┣ 📜DisplayMoviesInfiniteScroll.tsx
+ ┃ ┃ ┣ 📜DragDrop.tsx
+ ┃ ┃ ┣ 📜Footer.tsx
+ ┃ ┃ ┣ 📜LeaveCheck.tsx
+ ┃ ┃ ┣ 📜LeaveConfirmModal.tsx
+ ┃ ┃ ┣ 📜LoadingSpinner.tsx
+ ┃ ┃ ┣ 📜Modal.tsx
+ ┃ ┃ ┣ 📜MovieItem.tsx
+ ┃ ┃ ┣ 📜NewLoading.tsx
+ ┃ ┃ ┣ 📜OverlaidModal.tsx
+ ┃ ┃ ┣ 📜Paging.tsx
+ ┃ ┃ ┣ 📜RateMovie.tsx
+ ┃ ┃ ┣ 📜ScrollToTopButton.tsx
+ ┃ ┃ ┣ 📜Search.tsx
+ ┃ ┃ ┣ 📜Select.tsx
+ ┃ ┃ ┗ 📜Sorting.tsx
+ ┃ ┣ 📂contents
+ ┃ ┃ ┣ 📜MovieDataList.tsx
+ ┃ ┃ ┣ 📜MovieList.tsx
+ ┃ ┃ ┣ 📜MovieListSkeleton.tsx
+ ┃ ┃ ┗ 📜Sort.tsx
+ ┃ ┣ 📂Discussion
+ ┃ ┃ ┣ 📂detail
+ ┃ ┃ ┃ ┣ 📂comment
+ ┃ ┃ ┃ ┃ ┣ 📜CommentInput.tsx
+ ┃ ┃ ┃ ┃ ┣ 📜DeleteComment.tsx
+ ┃ ┃ ┃ ┃ ┣ 📜DiscussionCommentContainer.tsx
+ ┃ ┃ ┃ ┃ ┣ 📜DiscussionCommentContainerSuspense.tsx
+ ┃ ┃ ┃ ┃ ┣ 📜DisplayComments.tsx
+ ┃ ┃ ┃ ┃ ┣ 📜EditComment.tsx
+ ┃ ┃ ┃ ┃ ┣ 📜EditCommentInput.tsx
+ ┃ ┃ ┃ ┃ ┗ 📜LikeButton.tsx
+ ┃ ┃ ┃ ┣ 📂related-discussion
+ ┃ ┃ ┃ ┃ ┣ 📜RelatedDiscussionList.tsx
+ ┃ ┃ ┃ ┃ ┣ 📜RelatedDiscussionListSuspense.tsx
+ ┃ ┃ ┃ ┃ ┗ 📜RelatedDiscussionPost.tsx
+ ┃ ┃ ┃ ┣ 📜DiscussionContent.tsx
+ ┃ ┃ ┃ ┣ 📜DiscussionDetail.tsx
+ ┃ ┃ ┃ ┣ 📜DiscussionDetailSuspense.tsx
+ ┃ ┃ ┃ ┣ 📜DiscussionTopic.tsx
+ ┃ ┃ ┃ ┣ 📜DiscussionTopicSuspense.tsx
+ ┃ ┃ ┃ ┣ 📜EditDeleteBox.tsx
+ ┃ ┃ ┃ ┣ 📜Option.tsx
+ ┃ ┃ ┃ ┣ 📜OptionVote.tsx
+ ┃ ┃ ┃ ┗ 📜ViewCount.tsx
+ ┃ ┃ ┗ 📂list
+ ┃ ┃ ┃ ┣ 📜DiscussionFilteringBox.tsx
+ ┃ ┃ ┃ ┣ 📜DiscussionList.tsx
+ ┃ ┃ ┃ ┣ 📜DiscussionListSuspense.tsx
+ ┃ ┃ ┃ ┣ 📜DiscussionPost.tsx
+ ┃ ┃ ┃ ┗ 📜DiscussionRegistBtn.tsx
+ ┃ ┣ 📂Header
+ ┃ ┃ ┣ 📂_auth
+ ┃ ┃ ┃ ┣ 📜AuthButtons.tsx
+ ┃ ┃ ┃ ┣ 📜ModalControlCentre.tsx
+ ┃ ┃ ┃ ┣ 📜SaveUserInfoToStore.tsx
+ ┃ ┃ ┃ ┣ 📜SignInButton.tsx
+ ┃ ┃ ┃ ┣ 📜SignOutButton.tsx
+ ┃ ┃ ┃ ┗ 📜SignUpButton.tsx
+ ┃ ┃ ┣ 📜Header.tsx
+ ┃ ┃ ┣ 📜HeaderMenuButton.tsx
+ ┃ ┃ ┣ 📜HeaderUser.tsx
+ ┃ ┃ ┗ 📜Nav.tsx
+ ┃ ┣ 📂MainPage
+ ┃ ┃ ┣ 📂MainContents
+ ┃ ┃ ┃ ┣ 📜HotTopics.tsx
+ ┃ ┃ ┃ ┣ 📜LatestMovies.tsx
+ ┃ ┃ ┃ ┣ 📜LatestReviews.tsx
+ ┃ ┃ ┃ ┗ 📜MainSkeleton.tsx
+ ┃ ┃ ┣ 📂MainPageMovies
+ ┃ ┃ ┃ ┣ 📜KeywordButtons.tsx
+ ┃ ┃ ┃ ┣ 📜LatestMovieSlider.tsx
+ ┃ ┃ ┃ ┣ 📜TrendMoives.tsx
+ ┃ ┃ ┃ ┗ 📜TrendMovieSlider.tsx
+ ┃ ┃ ┣ 📜MainPage.tsx
+ ┃ ┃ ┗ 📜MainPageSkeleton.tsx
+ ┃ ┣ 📂MovieDetail
+ ┃ ┃ ┣ 📂appearance-production
+ ┃ ┃ ┃ ┗ 📜AppearanceProduction.tsx
+ ┃ ┃ ┣ 📂discussion
+ ┃ ┃ ┃ ┗ 📜Discussion.tsx
+ ┃ ┃ ┣ 📂main
+ ┃ ┃ ┃ ┣ 📜KeyInfomation.tsx
+ ┃ ┃ ┃ ┣ 📜KeyInfomationSuspense.tsx
+ ┃ ┃ ┃ ┗ 📜PreviewAppearance.tsx
+ ┃ ┃ ┣ 📂trailer-photo
+ ┃ ┃ ┃ ┣ 📜MovieDetailTrailer.tsx
+ ┃ ┃ ┃ ┣ 📜MovieDetailTrailerSuspense.tsx
+ ┃ ┃ ┃ ┣ 📜TrailerPlay.tsx
+ ┃ ┃ ┃ ┗ 📜TrailerSlider.tsx
+ ┃ ┃ ┣ 📜MovieDetailBottomBar.tsx
+ ┃ ┃ ┣ 📜MovieDetailInfo.tsx
+ ┃ ┃ ┣ 📜MovieLayoutDiscussion.tsx
+ ┃ ┃ ┗ 📜MovieProviders.tsx
+ ┃ ┣ 📂Review
+ ┃ ┃ ┣ 📂list
+ ┃ ┃ ┃ ┣ 📜PosterBaseColor.tsx
+ ┃ ┃ ┃ ┣ 📜ReviewFetchMore.tsx
+ ┃ ┃ ┃ ┣ 📜ReviewFetchMoreSuspense.tsx
+ ┃ ┃ ┃ ┣ 📜ReviewFilteringBox.tsx
+ ┃ ┃ ┃ ┣ 📜ReviewItem.tsx
+ ┃ ┃ ┃ ┗ 📜WriteButton.tsx
+ ┃ ┃ ┗ 📜ReviewLikes.tsx
+ ┃ ┣ 📂ReviewForm
+ ┃ ┃ ┣ 📜CategoryBox.tsx
+ ┃ ┃ ┣ 📜HashTagBox.tsx
+ ┃ ┃ ┣ 📜MyMovies.tsx
+ ┃ ┃ ┣ 📜MyMoviesSwiper.tsx
+ ┃ ┃ ┣ 📜ReviewForm.tsx
+ ┃ ┃ ┣ 📜ReviewMovie.tsx
+ ┃ ┃ ┣ 📜ReviewWriteTemplate.tsx
+ ┃ ┃ ┣ 📜SearchMovies.tsx
+ ┃ ┃ ┣ 📜SearchMoviesItem.tsx
+ ┃ ┃ ┣ 📜SearchPopup.tsx
+ ┃ ┃ ┣ 📜StarBox.tsx
+ ┃ ┃ ┗ 📜UtilButtons.tsx
+ ┃ ┣ 📂ReviewList
+ ┃ ┃ ┣ 📜MyReviewListLoading.tsx
+ ┃ ┃ ┣ 📜ReviewItem.tsx
+ ┃ ┃ ┗ 📜ReviewListEmpty.tsx
+ ┃ ┗ 📂UserPage
+ ┃ ┃ ┣ 📂RecommendationList
+ ┃ ┃ ┃ ┗ 📜_RecommendationList.tsx
+ ┃ ┃ ┣ 📂settings
+ ┃ ┃ ┃ ┣ 📂ChangeInfo
+ ┃ ┃ ┃ ┃ ┣ 📜ChangeEmail.tsx
+ ┃ ┃ ┃ ┃ ┣ 📜ChangeInfo.tsx
+ ┃ ┃ ┃ ┃ ┗ 📜ChangePassword.tsx
+ ┃ ┃ ┃ ┣ 📂MyAccount
+ ┃ ┃ ┃ ┃ ┣ 📜ChangeAvatarPhoto.tsx
+ ┃ ┃ ┃ ┃ ┣ 📜ChangeUsername.tsx
+ ┃ ┃ ┃ ┃ ┣ 📜ChooseProfile.tsx
+ ┃ ┃ ┃ ┃ ┣ 📜IconContainer.tsx
+ ┃ ┃ ┃ ┃ ┗ 📜MyAccount.tsx
+ ┃ ┃ ┃ ┣ 📂MyMenu
+ ┃ ┃ ┃ ┃ ┣ 📜MyMenu.tsx
+ ┃ ┃ ┃ ┃ ┗ 📜ToggleIsPublic.tsx
+ ┃ ┃ ┃ ┣ 📂Profile
+ ┃ ┃ ┃ ┃ ┣ 📜AvatarPhoto.tsx
+ ┃ ┃ ┃ ┃ ┣ 📜DeleteUser.tsx
+ ┃ ┃ ┃ ┃ ┣ 📜Miscellaneous.tsx
+ ┃ ┃ ┃ ┃ ┣ 📜MyAccount.tsx
+ ┃ ┃ ┃ ┃ ┣ 📜UpdateEmail.tsx
+ ┃ ┃ ┃ ┃ ┣ 📜UpdateName.tsx
+ ┃ ┃ ┃ ┃ ┣ 📜UpdatePassword.tsx
+ ┃ ┃ ┃ ┃ ┗ 📜UpdateUsername.tsx
+ ┃ ┃ ┃ ┣ 📜UserSettingsProfile.tsx
+ ┃ ┃ ┃ ┗ 📜UserSettingsTabs.tsx
+ ┃ ┃ ┣ 📂UserInfo
+ ┃ ┃ ┃ ┣ 📂PersonalRecords
+ ┃ ┃ ┃ ┃ ┣ 📂BigElements(Graphs)
+ ┃ ┃ ┃ ┃ ┃ ┣ 📂Graphs
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜MovieRuntimeGraph.tsx
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜NumberOfGenresGraph.tsx
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜LikesOnGenres.tsx
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜NumberOfGenresWatched.tsx
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜RuntimeByGenres.tsx
+ ┃ ┃ ┃ ┃ ┣ 📂SmallElements
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜NumberOfMoviesWatched.tsx
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜NumberOfReviews.tsx
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜TotalWatchingTime.tsx
+ ┃ ┃ ┃ ┃ ┣ 📂_Containers
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜RecordsContainerBig.tsx
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜RecordsContainerSmall.tsx
+ ┃ ┃ ┃ ┃ ┣ 📜PersonalRecords.tsx
+ ┃ ┃ ┃ ┃ ┗ 📜PersonalRecordsGraph.tsx
+ ┃ ┃ ┃ ┣ 📜MostWatchedGenres.tsx
+ ┃ ┃ ┃ ┗ 📜SemiHeader.tsx
+ ┃ ┃ ┣ 📜HiddenUserPageTabs.tsx
+ ┃ ┃ ┗ 📜UserPageTabs.tsx
+ ┣ 📂hooks
+ ┃ ┣ 📜filterIgnoreMovies.ts
+ ┃ ┣ 📜saveCurrentURL.ts
+ ┃ ┣ 📜saveSignedInUserData.ts
+ ┃ ┣ 📜useCheckbox.ts
+ ┃ ┣ 📜useDiscussionOptionQuery.ts
+ ┃ ┣ 📜useDiscussionPostQuery.ts
+ ┃ ┣ 📜useLeaveConfiramation.tsx
+ ┃ ┣ 📜useMiddlewareRouter.ts
+ ┃ ┣ 📜useMovieLikesMutation.ts
+ ┃ ┗ 📜useReviewLikesMutation.ts
+ ┣ 📂static
+ ┃ ┣ 📜baseImgUrl.ts
+ ┃ ┣ 📜movieCountries.ts
+ ┃ ┣ 📜movieGenres.ts
+ ┃ ┣ 📜optionMark.ts
+ ┃ ┣ 📜quickReviews.ts
+ ┃ ┗ 📜review.ts
+ ┣ 📂store
+ ┃ ┣ 📜forgotPasswordToggle.ts
+ ┃ ┣ 📜isProfileSelected.ts
+ ┃ ┣ 📜originPathnameStore.ts
+ ┃ ┣ 📜saveCurrentUserData.ts
+ ┃ ┣ 📜toggleChangeAvatarModal.ts
+ ┃ ┣ 📜toggleDiscussionCommentEditModal.ts
+ ┃ ┣ 📜toggleSignInModal.ts
+ ┃ ┣ 📜toggleSignUpModal.ts
+ ┃ ┣ 📜useDiscussionStore.ts
+ ┃ ┗ 📜useReviewStore.ts
+ ┣ 📂styles
+ ┃ ┣ 📂icons
+ ┃ ┃ ┣ 📜Icons16.tsx
+ ┃ ┃ ┣ 📜Icons24.tsx
+ ┃ ┃ ┣ 📜Icons32.tsx
+ ┃ ┃ ┗ 📜IconsETC.tsx
+ ┃ ┣ 📂svg
+ ┃ ┃ ┣ 📂avatar
+ ┃ ┃ ┃ ┣ 📜Icon1.tsx
+ ┃ ┃ ┃ ┣ 📜Icon2.tsx
+ ┃ ┃ ┃ ┣ 📜Icon3.tsx
+ ┃ ┃ ┃ ┣ 📜Icon4.tsx
+ ┃ ┃ ┃ ┗ 📜Icon5.tsx
+ ┃ ┃ ┣ 📜CheckMark.tsx
+ ┃ ┃ ┣ 📜Dot.tsx
+ ┃ ┃ ┣ 📜Edit.tsx
+ ┃ ┃ ┣ 📜Ellipse.tsx
+ ┃ ┃ ┣ 📜GitHubFooter.tsx
+ ┃ ┃ ┣ 📜Google.tsx
+ ┃ ┃ ┣ 📜Google_SVG.tsx
+ ┃ ┃ ┣ 📜Kakao.tsx
+ ┃ ┃ ┣ 📜Kakao_SVG.tsx
+ ┃ ┃ ┣ 📜LoadingFriends.tsx
+ ┃ ┃ ┣ 📜Logo.tsx
+ ┃ ┃ ┣ 📜LogoIcon.tsx
+ ┃ ┃ ┣ 📜LogoWhite.tsx
+ ┃ ┃ ┣ 📜NoContent.tsx
+ ┃ ┃ ┣ 📜Prohibit.tsx
+ ┃ ┃ ┣ 📜settings.tsx
+ ┃ ┃ ┣ 📜SignOut.tsx
+ ┃ ┃ ┣ 📜SVG_HidePassword.tsx
+ ┃ ┃ ┗ 📜SVG_ShowPassword.tsx
+ ┃ ┣ 📜globals.css
+ ┃ ┗ 📜paging.css
+ ┣ 📂supabase
+ ┃ ┗ 📜config.ts
+ ┣ 📂types
+ ┃ ┣ 📜supabase.ts
+ ┃ ┗ 📜types.d.ts
+ ┣ 📂util
+ ┃ ┣ 📂supabase
+ ┃ ┃ ┣ 📂auth
+ ┃ ┃ ┃ ┣ 📜auth.ts
+ ┃ ┃ ┃ ┗ 📜public.ts
+ ┃ ┃ ┗ 📂userPage
+ ┃ ┃ ┃ ┗ 📜doesUserExist.ts
+ ┃ ┣ 📜findColors.ts
+ ┃ ┣ 📜isServer.ts
+ ┃ ┣ 📜movie.tsx
+ ┃ ┗ 📜tripArrayToLength.ts
+ ┗ 📜middleware.ts
+
+</div>
+</details>
 
 ---
 
