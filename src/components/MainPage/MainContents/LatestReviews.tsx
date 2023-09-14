@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { ArrowRight, ArrowRight2, HeartLine } from '@/styles/icons/Icons24';
 import { SVGTalkEndPoint } from '@/styles/icons/IconsETC';
 import { extractMainColors } from '@/util/findColors';
+import ReviewLikes from '@/components/Review/ReviewLikes';
 
 export const revalidate = 0;
 
@@ -58,8 +59,7 @@ const LatestReviews = async () => {
                 <div className="truncate w-full py-[10px]">{review.review}</div>
                 <div className="flex justify-between ">
                   <span className="flex">
-                    <HeartLine />
-                    {likesCount}
+                    <ReviewLikes reviewid={review.reviewid} />
                   </span>
                   <ArrowRight />
                 </div>
