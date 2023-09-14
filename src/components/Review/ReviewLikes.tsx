@@ -58,8 +58,8 @@ const ReviewLikes = ({ reviewid, size = '24' }: { reviewid: string; size?: strin
   };
 
   useEffect(() => {
-    checkLikes(reviewid);
-  }, []);
+    userInfo && checkLikes(reviewid);
+  }, [userInfo]);
 
   const LIKE_ICON = {
     default: {

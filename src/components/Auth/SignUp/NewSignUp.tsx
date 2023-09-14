@@ -6,13 +6,13 @@ import SVG_Google from '@/styles/svg/Google_SVG';
 import SVG_Kakao from '@/styles/svg/Kakao_SVG';
 import Logo from '@/styles/svg/Logo';
 import { Button, Divider, Modal } from 'antd';
-import React, { useState } from 'react';
 import SignUp from './SignUp';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useRouter } from 'next/navigation';
+import useToggleSignUpWIthEmailModal from '@/store/toggleSignUpWIthEmailModal';
 
 const NewSignUp = () => {
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const { isSignUpWIthEmailModalOpen, setIsSignUpWIthEmailModalOpen } = useToggleSignUpWIthEmailModal();
   const router = useRouter();
 
   const handleOAuthSignIn = async (provider: 'google' | 'kakao', queryParams = {}) => {
@@ -42,7 +42,7 @@ const NewSignUp = () => {
             <Button
               type="primary"
               className="text-base sm:text-lg bg-GreyScaleBlack w-full h-full py-2.5"
-              onClick={() => setIsModalOpen(true)}
+              onClick={() => setIsSignUpWIthEmailModalOpen(true)}
             >
               이메일로 가입하기
             </Button>
@@ -72,7 +72,12 @@ const NewSignUp = () => {
           </div>
         </div>
       </div>
-      <Modal centered open={isModalOpen} footer={null} onCancel={() => setIsModalOpen(false)}>
+      <Modal
+        centered
+        open={isSignUpWIthEmailModalOpen}
+        footer={null}
+        onCancel={() => setIsSignUpWIthEmailModalOpen(false)}
+      >
         <SignUp />
       </Modal>
     </>
