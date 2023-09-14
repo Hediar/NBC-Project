@@ -1,6 +1,7 @@
 import { getDetailData } from '@/api/tmdb';
-import MovieLikes from '@/components/MovieLikes/MovieLikes';
-import WatchLaterButton from '@/components/common/WatchLaterButton';
+import MovieLikes from '@/components/common/Buttons/MovieLikes';
+import WatchLaterButton from '@/components/common/Buttons/WatchLaterButton';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
