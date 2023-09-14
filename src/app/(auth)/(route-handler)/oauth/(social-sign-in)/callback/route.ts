@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server';
 
 import type { NextRequest } from 'next/server';
 
-export const POST = async (request: NextRequest) => {
+export const GET = async (request: NextRequest) => {
   const requestUrl = new URL(request.url);
   const code = requestUrl.searchParams.get('code');
 
@@ -13,5 +13,5 @@ export const POST = async (request: NextRequest) => {
     await supabase.auth.exchangeCodeForSession(code);
   }
 
-  return NextResponse.redirect(requestUrl.origin);
+  return NextResponse.redirect(requestUrl.origin, { status: 301 });
 };
