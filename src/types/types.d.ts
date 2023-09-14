@@ -106,11 +106,24 @@ declare global {
     video: boolean;
     vote_average: number;
     vote_count: number;
-    trailerKeys: string[];
-    watchProviders: { link: string; buy: MovieProvider[]; rent: MovieProvider[] };
-    backdropImages: MovieBackdropImage[];
+    trailerKeys?: string[];
+    watchProviders?: { link: string; buy: MovieProvider[]; rent: MovieProvider[] };
+    backdropImages?: MovieBackdropImage[];
+    appearences?: TMDBCreditCast[];
+    productions?: TMDBCreditCrew[];
+  }
+
+  interface MovieCreditData {
+    cast: TMDBCreditCast[];
+    crew: TMDBCreditCrew[];
     appearences: TMDBCreditCast[];
     productions: TMDBCreditCrew[];
+  }
+  interface watchProviders {
+    link: string;
+    flatrate: MovieProvider[];
+    buy: MovieProvider[];
+    rent: MovieProvider[];
   }
 
   interface MovieLikesTable {
@@ -198,48 +211,6 @@ declare global {
     total_pages: number;
     total_results: number;
   }
-  // interface ReviewsTable {
-  //   category: Json | null;
-  //   content: string;
-  //   date: Date | string | null;
-  //   keyword: string[] | [] | undefined;
-  //   movieid: string;
-  //   review: string;
-  //   reviewid?: string;
-  //   review_title?: string;
-  //   userid: string;
-  // }
-
-  // interface TMDBSearchMovie {
-  //   adult: boolean;
-  //   backdrop_path: string;
-  //   genre_ids: number[];
-  //   id: number;
-  //   original_language: string;
-  //   original_title: string;
-  //   overview: string;
-  //   popularity: number;
-  //   poster_path: string;
-  //   release_date: string;
-  //   title: string;
-  //   video: boolean;
-  //   vote_average: number;
-  //   vote_count: number;
-  // }
-
-  // interface DiscussionPost {
-  //   post_id: number;
-  //   created_at: string;
-  //   user_id: string;
-  //   title: string;
-  //   content: string;
-  // }
-  // interface DiscussionOption {
-  //   option_id: number;
-  //   post_id: number;
-  //   content: string;
-  //   count: number;
-  // }
 
   interface SortingProps {
     options: { value: string; label: string }[];
@@ -322,5 +293,13 @@ declare global {
     options: { text: string }[];
     postId: string;
     startNum: number;
+  }
+
+  interface DiscussionTable {
+    title: string;
+    content: string;
+    movieId: string | number | null;
+    options?: { text: string }[];
+    userId: string;
   }
 }

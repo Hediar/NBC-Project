@@ -9,6 +9,7 @@ import ForgotPasswordModal from '../ForgotPassword/ForgotPasswordModal';
 import useToggleForgotPassword from '@/store/forgotPasswordToggle';
 import SocialButtons from '../SocialButtons';
 import useToggleSignInModal from '@/store/toggleSignInModal';
+import useUserInfoStore from '@/store/saveCurrentUserData';
 
 interface Data {
   error: boolean;
@@ -29,6 +30,7 @@ const SignIn = () => {
   const [isClicked, setIsClicked] = useState<boolean>(false);
   const { isForgotPasswordOpen, setIsForgotPasswordOpen } = useToggleForgotPassword();
   const [checkboxValue, setCheckboxValue] = useState<boolean>(false);
+  const { statusChanged, toggleStatus } = useUserInfoStore();
 
   useEffect(() => {
     const savedEmail = localStorage.getItem('saved_email');
@@ -85,17 +87,14 @@ const SignIn = () => {
         if (checkboxValue) {
           localStorage.setItem('saved_email', emailValue);
         }
+        toggleStatus(statusChanged);
         messageApi.open({
           type: 'success',
           content: '로그인 완료!'
         });
-        setTimeout(() => {
-          setIsClicked(false);
-          setIsSignInModalOpen(false);
-          setTimeout(() => {
-            router.refresh();
-          }, 200);
-        }, 1000);
+        setIsClicked(false);
+        setIsSignInModalOpen(false);
+        router.refresh();
       }
     };
     if (captchaToken) {

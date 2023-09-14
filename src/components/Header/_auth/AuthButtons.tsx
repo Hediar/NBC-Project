@@ -3,8 +3,6 @@ import authApi from '@/util/supabase/auth/auth';
 import SignInButton from './SignInButton';
 import SignUpButton from './SignUpButton';
 
-export const dynamic = 'force-dynamic';
-
 const AuthButton = async () => {
   const { session } = await authApi.get('session');
 

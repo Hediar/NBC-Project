@@ -10,8 +10,6 @@ interface Response {
   newUsername?: undefined | { username: string };
 }
 
-export const dynamic = 'force-dynamic';
-
 export const POST = async (request: Request) => {
   const formData = await request.formData();
   const username = String(formData.get('username'));

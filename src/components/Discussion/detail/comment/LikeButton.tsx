@@ -33,13 +33,15 @@ type Props = {
 const LikeButton = ({ comment, addOptimisticComments }: Props) => {
   const router = useRouter();
   const [isHover, setIsHover] = useState<boolean>(false);
+  const [isLiked, setIsLiked] = useState<boolean>(comment.user_has_liked_comment);
+
   const handleLikes = throttle(async () => {
     await handleLike();
+    setIsLiked((prevState) => !prevState);
   }, 1000);
 
   const handleLike = async () => {
     const supabase = createClientComponentClient<Database>();
-
     const {
       data: { user }
     } = await supabase.auth.getUser();
@@ -69,15 +71,15 @@ const LikeButton = ({ comment, addOptimisticComments }: Props) => {
 
   return (
     <>
-      {isHover ? (
+      {isHover || isLiked ? (
         <HeartFilledColor
-          className="cursor-pointer"
+          className="w-7 h-7 sm:w-8 sm:h-8 cursor-pointer"
           onMouseEnter={() => setIsHover(true)}
           onMouseLeave={() => setIsHover(false)}
           onClick={handleLikes}
         />
       ) : (
-        <HeartLine onMouseEnter={() => setIsHover(true)} onClick={handleLikes} />
+        <HeartLine className="w-7 h-7 sm:w-8 sm:h-8" onMouseEnter={() => setIsHover(true)} onClick={handleLikes} />
       )}
     </>
   );

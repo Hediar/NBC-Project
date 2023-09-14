@@ -1,17 +1,14 @@
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
+import { createClientComponentClient, createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import NumberOfReviews from './SmallElements/NumberOfReviews';
 import NumberOfMoviesWatched from './SmallElements/NumberOfMoviesWatched';
 import TotalWatchingTime from './SmallElements/TotalWatchingTime';
-
-export const dynamic = 'force-dynamic';
 
 interface Props {
   params: string;
 }
 
 const UserPagePersonalRecords = async ({ params: username }: Props) => {
-  const supabase = createServerComponentClient<Database>({ cookies });
+  const supabase = createClientComponentClient<Database>();
   const { data: userInfo } = await supabase.from('users').select().eq('username', username);
   const { id: userId, watched_movies } = userInfo![0];
 
