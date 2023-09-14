@@ -17,7 +17,7 @@ const TrendMovieSlider = ({ photoData }: Props) => {
             <Link href={`/detail/${imageData.id}`} key={idx}>
               <Image
                 src={`${baseImgUrl}w1280${imageData.backdrop_path}`}
-                className="rounded-lg"
+                className="rounded-2xl px-1"
                 alt="Image"
                 width={760}
                 height={460}
