@@ -4,7 +4,6 @@ import Icon3 from '@/styles/svg/avatar/Icon3';
 import Icon4 from '@/styles/svg/avatar/Icon4';
 import Icon5 from '@/styles/svg/avatar/Icon5';
 import { Button } from 'antd';
-import React, { useState } from 'react';
 import IconContainer from './IconContainer';
 import useIsProfileSelected from '@/store/isProfileSelected';
 import axios from 'axios';
@@ -42,18 +41,23 @@ const ChooseProfile = () => {
         <div className="w-[90%] flex gap-2 items-center justify-center">
           <IconContainer targetId={0}>
             <Icon1 />
+            <span className="sr-only">Default Avatar 1</span>
           </IconContainer>
           <IconContainer targetId={1}>
             <Icon2 />
+            <span className="sr-only">Default Avatar 2</span>
           </IconContainer>
           <IconContainer targetId={2}>
             <Icon3 />
+            <span className="sr-only">Default Avatar 3</span>
           </IconContainer>
           <IconContainer targetId={3}>
             <Icon4 />
+            <span className="sr-only">Default Avatar 4</span>
           </IconContainer>
           <IconContainer targetId={4}>
             <Icon5 />
+            <span className="sr-only">Default Avatar 5</span>
           </IconContainer>
         </div>
         <Button

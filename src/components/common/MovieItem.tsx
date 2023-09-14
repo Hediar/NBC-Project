@@ -49,11 +49,14 @@ const MovieItem = ({ movie }: { movie: MovieData }) => {
       size="small"
       onClick={(e) => onClickHandler(e)}
       cover={
-        <img
-          className="h-[210px] sm:h-[360px]"
-          alt="example"
-          src={`https://image.tmdb.org/t/p/w780${movie.poster_path}`}
-        />
+        <>
+          <img
+            className="h-[210px] sm:h-[360px]"
+            alt="example"
+            src={`https://image.tmdb.org/t/p/w780${movie.poster_path}`}
+          />
+          <span className="sr-only">Movie Poster</span>
+        </>
       }
     >
       <div className="hidden z-auto sm:block sm:invisible sm:group-hover:visible bg-gray-600 bg-opacity-50 flex-col absolute rounded-xl items-center justify-center top-0 sm:left-0 mx-2 h-[210px] sm:h-[360px] sm:mx-0 sm:w-max-[210px] w-[140px] sm:w-[240px]">

@@ -14,8 +14,8 @@ const baseImgUrl = process.env.NEXT_PUBLIC_TMDB_BASE_IMAGE_URL;
 
 const KeyInfomation = async ({ movieId }: Props) => {
   const [{ poster_path, overview, tagline, vote_average }, { appearences, productions }] = await Promise.all([
-    await getDetailData(movieId),
-    await getCreditsData(movieId)
+    (await getDetailData(movieId)) as MovieData,
+    (await getCreditsData(movieId)) as MovieCreditData
   ]);
   const rgb = await getColors(`${baseImgUrl}w300_and_h450_bestv2${poster_path}`);
   const [rgba1] = extractMainColors(rgb, 1);

@@ -1,18 +1,15 @@
 import React, { Suspense } from 'react';
 import RecordsContainerBig from '../_Containers/RecordsContainerBig';
-import { cookies } from 'next/headers';
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { getNumbersOfGenresWatched } from '@/api/movieStatistics/getNumbersOfGenresWatched';
 import NumberOfGenresGraph from './Graphs/NumberOfGenresGraph';
-
-export const dynamic = 'force-dynamic';
 
 type Props = {
   userId: string;
 };
 
 const NumberOfGenresWatched = async ({ userId }: Props) => {
-  const supabase = createServerComponentClient<Database>({ cookies });
+  const supabase = createClientComponentClient<Database>();
 
   const [genresResult, genresQuantitiesResult] = await getNumbersOfGenresWatched(userId, supabase);
 

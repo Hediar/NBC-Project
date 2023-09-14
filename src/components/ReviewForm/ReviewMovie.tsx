@@ -1,6 +1,6 @@
 'use client';
 
-import { getMovieDetail } from '@/api/tmdb';
+import { getDetailData } from '@/api/tmdb';
 import { useSearchModalStore } from '@/store/useReviewStore';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
@@ -18,7 +18,7 @@ const ReviewMovie = ({ movieId }: Props) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      setMovieData(await getMovieDetail(movieId as string));
+      setMovieData(await getDetailData(movieId as string));
     };
     fetchData();
   }, [movieId]);
@@ -28,15 +28,15 @@ const ReviewMovie = ({ movieId }: Props) => {
   return (
     <>
       <div className="h-full relative">
-          <Image
-            src={`${baseImgUrl}w300_and_h450_bestv2${movieData.backdrop_path}`}
-            alt="포스터 이미지"
-            width={100}
-            height={150}
-            quality={100}
-            className="rounded-lg"
-          />
-          <button
+        <Image
+          src={`${baseImgUrl}w300_and_h450_bestv2${movieData.backdrop_path}`}
+          alt="포스터 이미지"
+          width={100}
+          height={150}
+          quality={100}
+          className="rounded-lg"
+        />
+        <button
           onClick={() => {
             openSearchModal();
           }}
@@ -44,27 +44,27 @@ const ReviewMovie = ({ movieId }: Props) => {
         >
           변경
         </button>
-        </div>
-        <div className="flex flex-col gap-3 ml-6">
-          <strong className="h4_suit">{movieData.title}</strong>
-          <div className=" body1_regular_suit text-[#888888]">
-            <div className="flex">
-              {movieData.release_date.slice(0, 4)}
-              <div className="flex items-center justify-center p-1">
-                <svg width="2" height="2" viewBox="0 0 2 2" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="1" cy="1" r="1" fill="#888888" />
-                </svg>
-              </div>
-
-              {movieData.genres.map((genre: MovieGenre, idx: number) =>
-                idx === movieData.genres.length - 1 ? `${genre.name}` : `${genre.name}/`
-              )}
+      </div>
+      <div className="flex flex-col gap-3 ml-6">
+        <strong className="h4_suit">{movieData.title}</strong>
+        <div className=" body1_regular_suit text-[#888888]">
+          <div className="flex">
+            {movieData.release_date.slice(0, 4)}
+            <div className="flex items-center justify-center p-1">
+              <svg width="2" height="2" viewBox="0 0 2 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="1" cy="1" r="1" fill="#888888" />
+              </svg>
             </div>
-            <div>{movieData.production_countries?.length && movieData.production_countries[0]['iso_3166_1']}</div>
-            <div>{movieData.runtime}분</div>
-            <div>{movieData.adult ? '청소년관람불가' : '전체관람가'}</div>
+
+            {movieData.genres.map((genre: MovieGenre, idx: number) =>
+              idx === movieData.genres.length - 1 ? `${genre.name}` : `${genre.name}/`
+            )}
           </div>
+          <div>{movieData.production_countries?.length && movieData.production_countries[0]['iso_3166_1']}</div>
+          <div>{movieData.runtime}분</div>
+          <div>{movieData.adult ? '청소년관람불가' : '전체관람가'}</div>
         </div>
+      </div>
     </>
   );
 };

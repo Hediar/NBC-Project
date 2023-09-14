@@ -51,6 +51,7 @@ const HeaderUser = () => {
       <>
         <div className="sm:flex-row-reverse flex gap-2 sm:gap-5 items-center mr-4">
           <HeaderMenuButton userData={userInfo} />
+          <span className="sr-only">Dropdown menu</span>
           <Dropdown overlayStyle={{ textAlign: 'center' }} menu={{ items, onClick }} trigger={['click']}>
             <div className="rounded-full overflow-hidden shadow-sm shadow-gray-400 cursor-pointer">
               <Image
@@ -62,6 +63,7 @@ const HeaderUser = () => {
                 objectFit="cover"
                 objectPosition="center"
               />
+              <span className="sr-only">Avatar photo</span>
             </div>
           </Dropdown>
           <h3 className="hidden lg:block body1_regular_suit">{userInfo.username}</h3>

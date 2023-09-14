@@ -39,7 +39,7 @@ const Paging = ({ currentPage, setCurrentPage, totalPages, pageRangeDisplayed = 
   }
 
   return (
-    <div className='flex gap-1 justify-center mt-10'>
+    <div className="flex gap-1 justify-center mt-10">
       {currentPage - pageRangeHalf > 1 && currentPage > pageRangeDisplayed && (
         <>
           <button
@@ -60,7 +60,9 @@ const Paging = ({ currentPage, setCurrentPage, totalPages, pageRangeDisplayed = 
           onClick={() => {
             setCurrentPage(page);
           }}
-          className={`w-8 h-8 p-2.5 rounded-lg border border-gray-200 flex-col justify-center items-center gap-2.5 inline-flex text-sm font-normal leading-none ${page === currentPage ? 'bg-neutral-800 text-white' : 'bg-white text-neutral-800'}`}
+          className={`w-8 h-8 p-2.5 rounded-lg border border-gray-200 flex-col justify-center items-center gap-2.5 inline-flex text-sm font-normal leading-none ${
+            page === currentPage ? 'bg-neutral-800 text-white' : 'bg-white text-neutral-800'
+          }`}
         >
           {page}
         </button>

@@ -21,6 +21,7 @@ const HiddenUserPageTabs = ({ username, userMatch }: { username: string; userMat
           icon={
             <Tooltip placement="right" title="내 정보">
               <UserOutlined />
+              <span className="sr-only">내 정보</span>
             </Tooltip>
           }
         />
@@ -29,6 +30,7 @@ const HiddenUserPageTabs = ({ username, userMatch }: { username: string; userMat
           icon={
             <Tooltip placement="right" title="추천 목록">
               <StarOutlined />
+              <span className="sr-only">추천 목록</span>
             </Tooltip>
           }
         />
@@ -37,6 +39,7 @@ const HiddenUserPageTabs = ({ username, userMatch }: { username: string; userMat
           icon={
             <Tooltip placement="right" title="찜 목록">
               <BookOutlined />
+              <span className="sr-only">찜 목록</span>
             </Tooltip>
           }
         />
@@ -45,6 +48,7 @@ const HiddenUserPageTabs = ({ username, userMatch }: { username: string; userMat
           icon={
             <Tooltip placement="right" title="좋아요 목록">
               <HeartOutlined />
+              <span className="sr-only">좋아요 목록</span>
             </Tooltip>
           }
         />
@@ -53,6 +57,7 @@ const HiddenUserPageTabs = ({ username, userMatch }: { username: string; userMat
           icon={
             <Tooltip placement="right" title="나의 리뷰">
               <FileTextOutlined />
+              <span className="sr-only">나의 리뷰</span>
             </Tooltip>
           }
         />
@@ -62,6 +67,7 @@ const HiddenUserPageTabs = ({ username, userMatch }: { username: string; userMat
             icon={
               <Tooltip placement="right" title="설정">
                 <SettingOutlined />
+                <span className="sr-only">설정</span>
               </Tooltip>
             }
           />
