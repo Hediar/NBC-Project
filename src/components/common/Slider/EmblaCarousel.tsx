@@ -58,7 +58,7 @@ export const EmblaCarousel = (props: PropType) => {
       <div className="overflow-hidden relative rounded-md" ref={emblaRef}>
         <div className={`flex flex-col flex-wrap ${slideHeight} flex-none`}>
           {slides.map((slide, index) => (
-            <div className={`${slideWidth} h-full relative mx-1`} key={index}>
+            <div className={`${slideWidth} h-full relative`} key={index}>
               {slide}
             </div>
           ))}
