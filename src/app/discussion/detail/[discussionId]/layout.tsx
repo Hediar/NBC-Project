@@ -26,5 +26,5 @@ export async function generateMetadata(
 }
 
 export default async function DiscussionDetailLayout({ children }: { children: React.ReactNode }) {
-  return <section style={{ width: '80%', margin: '0 auto' }}>{children}</section>;
+  return <div className="w-screen">{children}</div>;
 }
