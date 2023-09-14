@@ -1,9 +1,11 @@
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
+import { cookies } from 'next/headers';
+import Link from 'next/link';
 import {
   BookFilled,
   BookLined,
   BookMarkLined,
   BookmarkFiiled,
-  DiamondLined,
   HeartFilled,
   HeartLined,
   SettingFiiled,
@@ -14,10 +16,14 @@ import {
   UserLined
 } from '@/styles/icons/Icons32';
 
-import Link from 'next/link';
-import React from 'react';
+interface Props {
+  username: string;
+  isUserMatch: boolean;
+}
 
-const UserPageTabs = async ({ username, userMatch }: { username: string; userMatch: boolean }) => {
+const UserPageTabs = async ({ username, isUserMatch }: Props) => {
+  const supabase = createServerComponentClient({ cookies });
+
   return (
     <div className="hidden sm:flex border-t border-[#f0f0f0] py-3 px-4  change sm:border-t-0 sm:py-0 sm:px-0 flex-row sm:flex-col items-center gap-3 sm:gap-5 sm:mt-[80px]">
       <Link
@@ -27,7 +33,7 @@ const UserPageTabs = async ({ username, userMatch }: { username: string; userMat
         <UserLined className="group-hover:hidden" />
         <UserFilled className="hidden group-hover:block" />
         <span className="animate-300 hidden md:block body1_bold_suit text-[#888] group-hover:text-[#222]">
-          {userMatch ? '내 정보' : '유저 정보'}
+          {isUserMatch ? '내 정보' : '유저 정보'}
         </span>
       </Link>
       <Link
@@ -65,14 +71,10 @@ const UserPageTabs = async ({ username, userMatch }: { username: string; userMat
         <BookLined className="group-hover:hidden" />
         <BookFilled className="hidden group-hover:block" />
         <span className="animate-300 hidden md:block body1_bold_suit text-[#888] group-hover:text-[#222]">
-          {userMatch ? '나의 리뷰' : '유저 리뷰'}
+          {isUserMatch ? '나의 리뷰' : '유저 리뷰'}
         </span>
       </Link>
-      {/* <Link className="group flex gap-2 items-center w-[140px]">
-        <DiamondLined />
-        <span className="animate-300 hidden md:block body1_bold_suit text-[#888] group-hover:text-[#222]">{userMatch ? '나의 토론' : '유저 토론'}</span>
-      </Link> */}
-      {userMatch && (
+      {isUserMatch && (
         <Link
           href={`/user-page/${username}/settings?my-account=true`}
           className="justify-center md:justify-normal  group flex gap-2 items-center w-[140px] hover_scale5"
