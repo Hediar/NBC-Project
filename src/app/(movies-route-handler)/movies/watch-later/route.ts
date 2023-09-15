@@ -3,7 +3,7 @@ import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 import type { NextResponse as NextResponseType } from 'next/server';
 
-export const runtime = 'edge';
+// export const runtime = 'edge';
 
 type WatchLater = Database['public']['Tables']['watch_later']['Row'];
 

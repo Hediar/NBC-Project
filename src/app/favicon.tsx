@@ -2,7 +2,7 @@ import LogoIcon from '@/styles/svg/LogoIcon';
 import { ImageResponse } from 'next/server';
 
 // Route segment config
-export const runtime = 'edge';
+// export const runtime = 'edge';
 
 // Image metadata
 export const size = {
