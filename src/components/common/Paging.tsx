@@ -40,11 +40,13 @@ const Paging = ({ currentPage, setCurrentPage, totalPages, pageRangeDisplayed = 
 
   return (
     <div className="flex gap-1 justify-center mt-10">
-      {currentPage - pageRangeHalf > 1 && currentPage > pageRangeDisplayed && (
+      {currentPage - pageRangeHalf > 1 && (
         <>
           <button
             onClick={() => {
-              setCurrentPage(currentPage - pageRangeDisplayed);
+              let newCurrentPage = currentPage - pageRangeDisplayed;
+              if (newCurrentPage < 1) newCurrentPage = 1;
+              setCurrentPage(newCurrentPage);
             }}
             title="이전"
             className={`w-8 h-8 p-2.5 rounded-lg border border-gray-200 flex-col justify-center items-center gap-2.5 inline-flex text-sm font-normal leading-none bg-white text-neutral-800`}
@@ -68,11 +70,13 @@ const Paging = ({ currentPage, setCurrentPage, totalPages, pageRangeDisplayed = 
         </button>
       ))}
 
-      {currentPage + pageRangeHalf < totalPages && currentPage > pageRangeDisplayed && (
+      {currentPage + pageRangeHalf < totalPages && (
         <>
           <button
             onClick={() => {
-              setCurrentPage(currentPage + pageRangeDisplayed);
+              let newCurrentPage = currentPage + pageRangeDisplayed;
+              if (newCurrentPage > totalPages) newCurrentPage = totalPages;
+              setCurrentPage(newCurrentPage);
             }}
             title="다음"
             className={`w-8 h-8 p-2.5 rounded-lg border border-gray-200 flex-col justify-center items-center gap-2.5 inline-flex text-sm font-normal leading-none bg-white text-neutral-800`}
