@@ -11,7 +11,7 @@
 
 ## 👨‍🔧 서비스 아키텍쳐
 
-<img src="[https://github.com/Hediar/NBC-Project/assets/117324859/661467cb-235f-4c09-9d20-a0a76f0a7361](https://github.com/Hediar/NBC-Project/assets/72387948/94a343ca-7152-46c0-93ba-67ed726a2aa7)" width="700"/>
+<img src="https://github.com/Hediar/NBC-Project/assets/72387948/94a343ca-7152-46c0-93ba-67ed726a2aa7" width="700"/>
 
 <details>
 <summary>ERD</summary>
