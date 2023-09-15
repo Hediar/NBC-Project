@@ -8,6 +8,19 @@ import React, { useRef, useState } from 'react';
 import DiscussionRegistBtn from './DiscussionRegistBtn';
 import { message } from 'antd';
 
+const SORT_OPTIONS = [
+  { label: '최신순', value: 'new' },
+  { label: '조회순', value: 'view' },
+  { label: '투표순', value: 'vote' }
+];
+
+const FILTER_OPTIONS = [
+  { label: '전체', value: 'all' },
+  { label: '영화 제목', value: 'movie_title' },
+  { label: '토론 제목', value: 'discussion_title' },
+  { label: '내용', value: 'discussion_content' }
+];
+
 const DiscussionFilteringBox = () => {
   const [messageApi, contextHolder] = message.useMessage();
   const router = useRouter();
@@ -15,20 +28,21 @@ const DiscussionFilteringBox = () => {
   const searchParams = useSearchParams();
   const searchedQuery = searchParams.get('query');
   const searchedFilter = searchParams.get('filter');
+  const searchedsort = searchParams.get('sort');
 
-  const [sort, setSort] = useState<string>('');
-  const [filter, setFilter] = useState<string>('');
-  const [query, setQuery] = useState<string>('');
+  const [sort, setSort] = useState<string>(searchedsort || SORT_OPTIONS[0].value);
+  const [filter, setFilter] = useState<string>(searchedFilter || FILTER_OPTIONS[0].value);
+  const [query, setQuery] = useState<string>(searchedQuery || '');
   const searchInputRef = useRef<HTMLInputElement>(null);
+
+  const updateUrl = (params: { [key: string]: string }) => {
+    const newParams = { query, filter, sort, ...params };
+    router.push(`${DISCUSSION_URL}?${new URLSearchParams(newParams).toString()}`);
+  };
 
   const handleSortChange = (value: string) => {
     setSort(value);
-    const params = {
-      query: searchedQuery ?? '',
-      filter: searchedFilter ?? 'all',
-      sort: value
-    };
-    router.push(`${DISCUSSION_URL}?${new URLSearchParams(params).toString()}`);
+    updateUrl({ sort: value });
   };
 
   const handleFilterChange = (value: string) => {
@@ -46,46 +60,22 @@ const DiscussionFilteringBox = () => {
       return searchInputRef.current!.focus();
     }
 
-    const params = {
-      query: query,
-      filter: filter ? filter : 'all',
-      sort: sort ?? 'new'
-    };
-    router.push(`${DISCUSSION_URL}?${new URLSearchParams(params).toString()}`);
+    updateUrl({ query });
   };
 
   const handleResetButton = () => {
-    setFilter('');
     setQuery('');
-    router.push(`${DISCUSSION_URL}?sort=${sort}`);
+    updateUrl({ query: '' });
   };
 
   return (
     <>
       {contextHolder}
       <div className="flex flex-col gap-2 md:flex-row w-full mb-12">
-        <Select
-          defaultValue="new"
-          className="w-28 mr-auto"
-          onChange={handleSortChange}
-          options={[
-            { label: '최신순', value: 'new' },
-            { label: '조회순', value: 'view' },
-            { label: '투표순', value: 'vote' }
-          ]}
-        />
+        <Select defaultValue="new" className="w-28 mr-auto" onChange={handleSortChange} options={SORT_OPTIONS} />
 
         <form className="flex select-search-form" onSubmit={onSubmit}>
-          <Select
-            defaultValue="all"
-            onChange={handleFilterChange}
-            options={[
-              { label: '전체', value: 'all' },
-              { label: '영화 제목', value: 'movie_title' },
-              { label: '토론 제목', value: 'discussion_title' },
-              { label: '내용', value: 'discussion_content' }
-            ]}
-          />
+          <Select defaultValue="all" onChange={handleFilterChange} options={FILTER_OPTIONS} />
           <input
             ref={searchInputRef}
             type="text"
