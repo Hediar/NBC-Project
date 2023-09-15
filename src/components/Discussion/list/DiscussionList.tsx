@@ -32,7 +32,6 @@ const DiscussionList = () => {
   }, []);
 
   useEffect(() => {
-    console.log('이펙트실행');
     const { rangeNum, sort, filter, query } = params;
     const showNum = 5;
     if (postData.length) {
