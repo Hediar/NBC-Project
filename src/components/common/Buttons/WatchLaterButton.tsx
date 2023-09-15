@@ -42,6 +42,7 @@ const WatchLaterButton = ({ movieId }: { movieId: string | number }) => {
       }
 
       if (!userInfo.id) {
+        setIsAlreadyAdded(false);
         router.replace('?sign-in=true');
         return;
       }
