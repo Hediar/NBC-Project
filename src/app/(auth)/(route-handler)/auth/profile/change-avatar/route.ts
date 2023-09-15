@@ -4,7 +4,7 @@ import { cookies } from 'next/headers';
 import authApi from '@/util/supabase/auth/auth';
 import avatar_url from '@/static/avatar_url';
 
-export const runtime = 'edge';
+// export const runtime = 'edge';
 
 export const POST = async (req: Request) => {
   const { target } = await req.json();

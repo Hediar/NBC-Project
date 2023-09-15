@@ -3,7 +3,7 @@ import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 import { type NextRequest } from 'next/server';
 
-export const runtime = 'edge';
+// export const runtime = 'edge';
 
 export const GET = async (request: NextRequest) => {
   const requestUrl = new URL(request.url);

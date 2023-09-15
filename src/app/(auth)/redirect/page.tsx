@@ -12,7 +12,7 @@ interface Props {
   searchParams: { 'sign-up-success': 'true' };
 }
 
-export const runtime = 'edge';
+// export const runtime = 'edge';
 
 const RedirectPage = async ({ searchParams }: Props) => {
   if (searchParams['sign-up-success'] === 'true') {
