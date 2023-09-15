@@ -65,7 +65,7 @@ const WatchLaterButton = ({ movieId }: { movieId: string | number }) => {
       {isAlreadyAdded ? (
         <BookmarkLinedGreen
           fill={isOnHover ? 'transparent' : '#0dca20'}
-          className="w-7 h-7 sm:w-8 sm:h-8 watch-later cursor-pointer animate-200 hover:scale-110"
+          className=" w-7 h-7 sm:w-8 sm:h-8 watch-later cursor-pointer animate-200 hover:scale-110"
           onMouseOver={() => setIsOnHover(true)}
           onMouseLeave={() => setIsOnHover(false)}
           onClick={() => watchLaterClickHandler(Number(movieId))}

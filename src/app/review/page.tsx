@@ -9,6 +9,9 @@ interface Props {
   };
 }
 
+export const dynamic = 'force-static';
+export const revalidate = 1;
+
 const ReviewListPage = ({ searchParams }: Props) => {
   return (
     <div>
