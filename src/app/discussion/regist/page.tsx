@@ -1,4 +1,5 @@
 'use client';
+
 import ReviewMovie from '@/components/ReviewForm/ReviewMovie';
 import SearchPopup from '@/components/ReviewForm/SearchPopup';
 import useUserInfoStore from '@/store/saveCurrentUserData';
