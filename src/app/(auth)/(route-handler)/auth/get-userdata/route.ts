@@ -4,6 +4,8 @@ import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 
+export const runtime = 'edge';
+
 export const GET = async () => {
   const supabase = createRouteHandlerClient({ cookies });
   const { session } = await authApi.get('session');

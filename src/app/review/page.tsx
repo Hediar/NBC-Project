@@ -9,8 +9,7 @@ interface Props {
   };
 }
 
-export const dynamic = 'force-static';
-export const revalidate = 1;
+export const revalidate = 0;
 
 const ReviewListPage = ({ searchParams }: Props) => {
   return (
