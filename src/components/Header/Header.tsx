@@ -4,31 +4,10 @@ import Link from 'next/link';
 import ModalControlCentre from './_auth/ModalControlCentre';
 import Logo from '@/styles/svg/Logo';
 import Nav from './Nav';
-import authApi from '@/util/supabase/auth/auth';
-import publicApi from '@/util/supabase/auth/public';
-import generateUniqueRandomUsername from '@/api/generateUsername/generateUniqueRandomUsername';
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
-const Header = async () => {
-  const { userId } = await authApi.get('userId');
+import { Suspense } from 'react';
+import LoadingSpinner from '../common/LoadingSpinner';
 
-  if (userId) {
-    const { username } = await publicApi.get('id to username', { id: userId });
-    if (!username) {
-      const supabase = createServerComponentClient({ cookies });
-      const newUsername = await generateUniqueRandomUsername(supabase);
-
-      const { data, error } = await supabase
-        .from('users')
-        .update({ username: newUsername })
-        .match({ id: userId })
-        .select();
-      if (error) {
-        console.log(error);
-      }
-    }
-  }
-
+const Header = () => {
   return (
     <>
       <header className="flex justify-center h-[70px] border-b border-[#ebebeb] bg-white select-none">
@@ -47,7 +26,9 @@ const Header = async () => {
           </div>
         </div>
       </header>
-      <ModalControlCentre userId={userId ?? ''} />
+      <Suspense fallback={<LoadingSpinner />}>
+        <ModalControlCentre />
+      </Suspense>
     </>
   );
 };

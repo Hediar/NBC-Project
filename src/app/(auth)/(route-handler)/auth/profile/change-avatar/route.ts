@@ -2,14 +2,9 @@ import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import authApi from '@/util/supabase/auth/auth';
+import avatar_url from '@/static/avatar_url';
 
-export const avatar_url = [
-  'https://aiwjpebjrijveiqokhsn.supabase.co/storage/v1/object/public/users/avatar/default/Avatar1.png',
-  'https://aiwjpebjrijveiqokhsn.supabase.co/storage/v1/object/public/users/avatar/default/Avatar2.png',
-  'https://aiwjpebjrijveiqokhsn.supabase.co/storage/v1/object/public/users/avatar/default/Avatar3.png',
-  'https://aiwjpebjrijveiqokhsn.supabase.co/storage/v1/object/public/users/avatar/default/Avatar4.png',
-  'https://aiwjpebjrijveiqokhsn.supabase.co/storage/v1/object/public/users/avatar/default/Avatar5.png'
-];
+export const runtime = 'edge';
 
 export const POST = async (req: Request) => {
   const { target } = await req.json();

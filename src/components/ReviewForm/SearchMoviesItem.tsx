@@ -25,8 +25,8 @@ const SearchMoviesItem = ({ movie, handleClick }: Props) => {
 
   return (
     <li>
-      <button type="button" onClick={() => handleClick(movie.id)} className="flex items-center">
-        <div className="h-full relative">
+      <button type="button" onClick={() => handleClick(movie.id)} className="flex items-center" title={movie.title}>
+        <div className="overflow-hidden flex justify-center items-center flex-none max-w-[60px] max-h-[90px] h-full relative rounded-lg bg-[#f0f0f0] ant-bg-none">
           {movie.backdrop_path ? (
             <Image
               src={`${baseImgUrl}w300_and_h450_bestv2${movie.backdrop_path}`}
@@ -34,15 +34,16 @@ const SearchMoviesItem = ({ movie, handleClick }: Props) => {
               width={60}
               height={90}
               quality={70}
-              className="rounded-lg"
             />
           ) : (
-            <Skeleton.Image active={!!movie.backdrop_path} />
+            <Skeleton.Image active={!!movie.backdrop_path} className="scale-75" />
           )}
         </div>
 
         <div className="flex flex-col gap-3 ml-2 text-left ">
-          <strong className="text-neutral-800 text-base font-normal leading-snug">{movie.title}</strong>
+          <strong className="overflow-hidden max-h-[2.75rem] text-neutral-800 text-base font-normal leading-snug">
+            {movie.title}
+          </strong>
           <div className="text-zinc-500 text-xs font-normal leading-5">
             <div className="flex">
               {movie.release_date.slice(0, 4)}

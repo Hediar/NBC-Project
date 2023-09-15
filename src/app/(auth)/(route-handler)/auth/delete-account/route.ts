@@ -2,6 +2,8 @@ import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 
+export const runtime = 'edge';
+
 export const POST = async () => {
   const supabase = createRouteHandlerClient(
     { cookies },
@@ -18,7 +20,6 @@ export const POST = async () => {
   const { data: deleteUserData, error: deleteUserError } = await supabase.auth.admin.deleteUser(userId);
 
   if (deleteUserError) {
-    // console.log(deleteUserError);
     return NextResponse.json({ data: null, error: deleteUserError.message });
   }
 

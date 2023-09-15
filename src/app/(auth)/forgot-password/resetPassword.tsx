@@ -1,8 +1,9 @@
 'use client';
+
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import React, { useEffect, useState } from 'react';
 import ChangePasswordFromMail from './form';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 
 const ResetPassword = () => {
   const searchParams = useSearchParams();
