@@ -2,7 +2,7 @@
 
 import { searchReviewMovies } from '@/api/tmdb';
 import { useReviewMovieStore, useSearchModalStore } from '@/store/useReviewStore';
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import Paging from '../common/Paging';
 import SearchMoviesItem from './SearchMoviesItem';
 import { debounce } from 'lodash';
@@ -16,59 +16,26 @@ type Props = {
 const SearchMovies = ({ isSearchStart, setIsSearchStart }: Props) => {
   const [currentPage, setCurrentPage] = React.useState(1);
   const [totalPages, setTotalPages] = React.useState(1);
-  const [query, setQuery] = React.useState('');
-  const [searchMovies, setSearchMovies] = React.useState<TMDBSearchMovie[]>();
+  const dataPerPage: number = 4;
 
+  const [searchMovies, setSearchMovies] = React.useState<TMDBSearchMovie[]>();
   const { saveSearchMovieId } = useReviewMovieStore();
   const { closeSearchModal } = useSearchModalStore();
 
-  const DATA_PER_PAGE: number = 12;
-  const TMDB_PER_PAGE: number = 20;
-
-  useEffect(() => {
-    fetchData(query, currentPage);
-  }, [currentPage]);
-
   const handleChange = debounce((e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setQuery(value);
 
     if (!value) return;
-    fetchData(value);
-  }, 300);
+    const fetchData = async () => {
+      const { results } = await searchReviewMovies(value);
+      setSearchMovies(results);
+      !isSearchStart && setIsSearchStart(true);
 
-  const fetchData = async (value: string, currentPage: number = 1) => {
-    const searchStartNumber = (currentPage - 1) * DATA_PER_PAGE + 1;
-    const searchEndNumber = currentPage * DATA_PER_PAGE;
-
-    const searchStartPage = Math.ceil(searchStartNumber / TMDB_PER_PAGE);
-    const searchEndPage = Math.ceil(searchEndNumber / TMDB_PER_PAGE);
-
-    const sliceStartNum = (searchStartNumber % TMDB_PER_PAGE) - 1;
-    let sliceEndNum = searchEndNumber % TMDB_PER_PAGE;
-    if (sliceStartNum + DATA_PER_PAGE > sliceEndNum) sliceEndNum += 20;
-
-    const getPageResults = async () => {
-      if (searchStartPage == searchEndPage) {
-        const { results, total_results } = await searchReviewMovies(value, searchStartPage);
-        currentPage == 1 && setTotalPages(Math.ceil(total_results / DATA_PER_PAGE));
-        return results;
-      } else {
-        const [startPromise, endPromise] = await Promise.all([
-          searchReviewMovies(value, searchStartPage),
-          searchReviewMovies(value, searchEndPage)
-        ]);
-        const results = [...startPromise.results, ...endPromise.results];
-        return results;
-      }
+      const total_pages = Math.ceil(results.length / dataPerPage);
+      setTotalPages(total_pages);
     };
-
-    const results = await getPageResults();
-    const slicedResults = results.slice(sliceStartNum, sliceEndNum);
-    setSearchMovies(slicedResults);
-
-    !isSearchStart && setIsSearchStart(true);
-  };
+    fetchData();
+  }, 300);
 
   const handleClick = (movieId: number) => {
     saveSearchMovieId(movieId);
@@ -76,14 +43,13 @@ const SearchMovies = ({ isSearchStart, setIsSearchStart }: Props) => {
     closeSearchModal();
   };
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  };
+
   return (
     <div className="flex flex-col items-center mt-[26px] mb-[60px]">
-      <form
-        className="search-form"
-        onSubmit={(e) => {
-          e.preventDefault();
-        }}
-      >
+      <form className="search-form" onSubmit={handleSubmit}>
         <input className="custom_input" type="text" placeholder="검색" onChange={handleChange} />
         <button>
           <SearchLined />
@@ -102,18 +68,15 @@ const SearchMovies = ({ isSearchStart, setIsSearchStart }: Props) => {
             검색결과가 없습니다
           </li>
         ) : (
-          searchMovies!.map((movie, i: number) => (
-            <SearchMoviesItem key={'searchMovieKey' + i} movie={movie} handleClick={handleClick} />
-          ))
+          searchMovies!
+            .slice(currentPage * dataPerPage - dataPerPage, currentPage * dataPerPage)
+            .map((movie, i: number) => (
+              <SearchMoviesItem key={'searchMovieKey' + i} movie={movie} handleClick={handleClick} />
+            ))
         )}
       </ul>
 
-      <Paging
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-        totalPages={totalPages}
-        pageRangeDisplayed={10}
-      />
+      <Paging currentPage={currentPage} setCurrentPage={setCurrentPage} totalPages={totalPages} />
     </div>
   );
 };
