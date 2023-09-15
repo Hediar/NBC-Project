@@ -15,6 +15,7 @@ const DiscussionList = () => {
   const [hasNextPage, setHasNextPage] = useState<boolean>(true);
   const [postData, setPostData] = useState<DiscussionPost[]>([]);
   const [filteredData, setFilteredData] = useState<DiscussionPost[]>([]);
+  const [slicedData, setSlicedData] = useState<DiscussionPost[]>([]);
   const searchParams = useSearchParams();
 
   const params = {
@@ -69,7 +70,8 @@ const DiscussionList = () => {
       const filteredData = getFilteredData(sortedData);
       const hasNextPage = !!filteredData.slice(rangeNum * showNum).length;
 
-      setFilteredData(filteredData.slice(0, rangeNum * showNum));
+      setFilteredData(filteredData);
+      setSlicedData(filteredData.slice(0, rangeNum * showNum));
       setHasNextPage(hasNextPage);
     }
   }, [searchParams, pageNum, postData]);
@@ -86,12 +88,12 @@ const DiscussionList = () => {
         </p>
       )}
       <div className="flex flex-col gap-5 mt-4">
-        {!!filteredData?.length &&
-          filteredData?.map((post) => {
+        {!!slicedData?.length &&
+          slicedData?.map((post) => {
             return <DiscussionPost key={post.post_id} post={post} />;
           })}
       </div>
-      {hasNextPage && !!filteredData?.length && (
+      {hasNextPage && !!slicedData?.length && (
         <button className="full_button my-16" onClick={loadMore}>
           더보기
           <ArrowDown />
