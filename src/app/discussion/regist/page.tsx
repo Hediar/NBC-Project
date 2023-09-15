@@ -1,26 +1,26 @@
 'use client';
-
-import React, { useEffect, useRef, useState } from 'react';
-import useUserInfoStore from '@/store/saveCurrentUserData';
-import { useReviewMovieStore, useSearchModalStore } from '@/store/useReviewStore';
-import { useDiscussionStore } from '@/store/useDiscussionStore';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { optionMark } from '@/static/optionMark';
-import { message } from 'antd';
-import { debounce } from 'lodash';
-import { getDetailData } from '@/api/tmdb';
-import { addNewDiscussionPost } from '@/api/supabase-discussion';
-import useLeaveConfirmation from '@/hooks/useLeaveConfiramation';
 import ReviewMovie from '@/components/ReviewForm/ReviewMovie';
 import SearchPopup from '@/components/ReviewForm/SearchPopup';
+import useUserInfoStore from '@/store/saveCurrentUserData';
+import { useReviewMovieStore, useSearchModalStore } from '@/store/useReviewStore';
+import { useRouter, useSearchParams } from 'next/navigation';
+import React, { useEffect, useRef, useState } from 'react';
+import { getDetailData } from '@/api/tmdb';
+import { optionMark } from '@/static/optionMark';
+import { message, Modal } from 'antd';
+import { debounce } from 'lodash';
+import { addNewDiscussionPost } from '@/api/supabase-discussion';
+import useLeaveConfirmation from '@/hooks/useLeaveConfiramation';
 import LeaveCheck from '@/components/common/LeaveCheck';
-import ContinueConfirmationModal from '@/components/common/ContinueConfirmationModal';
+import { useDiscussionStore } from '@/store/useDiscussionStore';
+
+interface Props {}
 
 const marginYGap = '25px';
 const titleLengthLimit = 50;
 const contentLengthLimit = 200;
 
-const DiscussionRegistPage = () => {
+const DiscussionRegistPage = (props: Props) => {
   const [messageApi, contextHolder] = message.useMessage();
   const { isSearchModalOpen, openSearchModal } = useSearchModalStore();
   const { searchMovieId: movieId, saveSearchMovieId } = useReviewMovieStore();
@@ -194,7 +194,6 @@ const DiscussionRegistPage = () => {
   return (
     <>
       <LeaveCheck />
-      <ContinueConfirmationModal open={isConfirmModalOpen} onCancel={handleModalCancel} onOk={handleModalOk} />
       {contextHolder}
       {confirmationModal}
       <div className="sm:p-5 w-full sm:w-4/5 lg:w-3/5 mx-auto">
@@ -289,7 +288,7 @@ const DiscussionRegistPage = () => {
             ) : (
               <>
                 <button
-                  className={`${Style.voteBtn} bg-black text-white`}
+                  className="border px-20 py-3 rounded-[22px] bg-black text-white"
                   onClick={() => {
                     setIsOptionOpen(false);
                   }}
@@ -297,7 +296,7 @@ const DiscussionRegistPage = () => {
                   자유 토론
                 </button>
                 <button
-                  className={`${Style.voteBtn}`}
+                  className="border px-20 py-3 rounded-[22px]"
                   onClick={() => {
                     setIsOptionOpen(true);
                   }}
@@ -370,6 +369,22 @@ const DiscussionRegistPage = () => {
           </button>
         </div>
       </div>
+
+      <Modal open={isConfirmModalOpen} onCancel={handleModalCancel} footer={null} width={400}>
+        <p className="pt-[50px] pb-[30px] text-center text-neutral-800 text-xl font-normal leading-normal">
+          작성 중이던 내용이 있습니다
+          <br />
+          이어서 작성하시겠습니까?
+        </p>
+        <div className="flex justify-center gap-3 mb-5">
+          <button className="button-white" onClick={handleModalCancel}>
+            취소
+          </button>
+          <button className="button-dark" onClick={handleModalOk}>
+            확인
+          </button>
+        </div>
+      </Modal>
     </>
   );
 };

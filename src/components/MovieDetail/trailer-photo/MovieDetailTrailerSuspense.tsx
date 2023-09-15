@@ -1,5 +1,5 @@
 import React from 'react';
-import Slider from './GallerySlider';
+import Slider from '../../common/Slider/Slider';
 import TrailerSlider from './TrailerSlider';
 
 const MovieDetailTrailerSuspense = async () => {

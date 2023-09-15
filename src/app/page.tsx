@@ -2,7 +2,7 @@ import MainPage from '@/components/MainPage/MainPage';
 import MainPageSkeleton from '@/components/MainPage/MainPageSkeleton';
 import { Suspense } from 'react';
 
-export const revalidate = 1;
+export const revalidate = 0;
 
 export default async function Home() {
   return (
