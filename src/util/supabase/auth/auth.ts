@@ -1,5 +1,6 @@
 import { cookies } from 'next/headers';
 import { type Session, createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
+import { cache } from 'react';
 
 type ParamType = 'session' | 'userData' | 'userId';
 
@@ -10,20 +11,16 @@ interface TypeOfReturn {
 }
 
 const authApi = {
-  get: async (target: ParamType): Promise<TypeOfReturn> => {
+  get: cache(async (target: ParamType): Promise<TypeOfReturn> => {
     const supabase = createRouteHandlerClient<Database>({ cookies });
 
     const getSession = async (): Promise<Pick<TypeOfReturn, 'session'>> => {
-      try {
-        const { data, error } = await supabase.auth.getSession();
+      const { data, error } = await supabase.auth.getSession();
 
-        if (error) {
-          return { session: null };
-        } else {
-          return { session: data.session };
-        }
-      } catch (error) {
+      if (error) {
         return { session: null };
+      } else {
+        return { session: data.session };
       }
     };
 
@@ -59,7 +56,7 @@ const authApi = {
     if (target === 'userId') return (await getUserId()) as TypeOfReturn;
 
     return { session: null } as TypeOfReturn;
-  }
+  })
 };
 
 export default authApi;

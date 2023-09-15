@@ -1,28 +1,20 @@
 import { getLatestReviews } from '@/api/review';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowRight, ArrowRight2, HeartLine } from '@/styles/icons/Icons24';
+import { ArrowRight, ArrowRight2 } from '@/styles/icons/Icons24';
 import { SVGTalkEndPoint } from '@/styles/icons/IconsETC';
-import { extractMainColors } from '@/util/findColors';
-
-export const revalidate = 0;
+import ReviewLikes from '@/components/Review/ReviewLikes';
 
 const LatestReviews = async () => {
   const latestReviewData = await getLatestReviews();
   const getColors = latestReviewData.map((data) => data.colors[8]);
 
-  // const getMainColor = getColors.map((color) => {
-  //   const rgbCMainColor = `rgb(${color[0]}, ${color[1]}, ${color[2]}, 0.5)`;
-  //   return { rgbCMainColor };
-  // });
   const bgStyles = getColors.map((color) => {
     const rgbColortrans = `rgb(${color[0]}, ${color[1]}, ${color[2]}, 0.5)`;
     const rgbColor = `rgb(${color[0]}, ${color[1]}, ${color[2]})`;
     return { rgbColortrans, rgbColor };
   });
 
-  // console.log(bgStyles);
-  // console.log(getColors);
   return (
     <div className="p-5">
       <div className="flex justify-between items-end">
@@ -33,8 +25,6 @@ const LatestReviews = async () => {
       </div>
       <div className="p-5">
         {latestReviewData?.map((review, index) => {
-          const likesCount = (review.reviewLikesCount && review.reviewLikesCount.length) || 0;
-          // console.log(index, review);
           return (
             <Link
               key={review.reviewid}
@@ -65,8 +55,7 @@ const LatestReviews = async () => {
                 <div className="truncate w-full py-[10px]">{review.review}</div>
                 <div className="flex justify-between ">
                   <span className="flex">
-                    <HeartLine />
-                    {likesCount}
+                    <ReviewLikes reviewid={review.reviewid} />
                   </span>
                   <ArrowRight />
                 </div>

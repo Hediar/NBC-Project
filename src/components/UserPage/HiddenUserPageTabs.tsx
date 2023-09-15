@@ -10,9 +10,15 @@ import {
   UserOutlined
 } from '@ant-design/icons';
 import { FloatButton, Tooltip } from 'antd';
-import React from 'react';
+import { use } from 'react';
 
-const HiddenUserPageTabs = ({ username, userMatch }: { username: string; userMatch: boolean }) => {
+interface Props {
+  username: string;
+  isUserMatchPromise: Promise<boolean>;
+}
+
+const HiddenUserPageTabs = ({ username, isUserMatchPromise }: Props) => {
+  const isUserMatch = use(isUserMatchPromise);
   return (
     <div className="sm:hidden ">
       <FloatButton.Group trigger="click" type="default" style={{ left: 24 }} icon={<MenuOutlined />}>
@@ -61,7 +67,7 @@ const HiddenUserPageTabs = ({ username, userMatch }: { username: string; userMat
             </Tooltip>
           }
         />
-        {userMatch && (
+        {isUserMatch && (
           <FloatButton
             href={`/user-page/${username}/settings?my-account=true`}
             icon={

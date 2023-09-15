@@ -4,19 +4,20 @@ import { getDiscussionPostDetail, getDiscussionPostOption, getRelatedDiscussionP
 import Link from 'next/link';
 import { ArrowRight2 } from '@/styles/icons/Icons24';
 
-type Props = {
+interface Props {
   discussionId: string;
-};
+}
 
 const RelatedDiscussionList = async ({ discussionId }: Props) => {
   const postData = await getDiscussionPostDetail(+discussionId);
   const relatedData = await getRelatedDiscussionPost({ genreIds: postData.movie_genreIds, movieId: postData.movie_id });
+
   return (
-    <div className="w-full bg-[#EBEBEB] sm:min-h-screen p-10 sm:pr-0 sm:mx-10 rounded-xl sm:rounded-none">
-      <div className="flex justify-between">
+    <div className="mt-10 w-full sm:min-h-screen rounded-xl sm:rounded-none sm:relative sm:pl-[2%]">
+      <div className="w-full flex justify-between">
         <p className="text-neutral-800 text-xl lg:text-[32px] font-bold leading-10">관련 토픽</p>
         <Link
-          href={'discussion/list'}
+          href={'/discussion/list'}
           className="flex text-neutral-800 text-base lg:text-xl font-normal leading-normal p-2 lg:p-1"
         >
           전체보기
@@ -39,7 +40,7 @@ const RelatedDiscussionList = async ({ discussionId }: Props) => {
           );
         })
       ) : (
-        <div className="mt-5 p-2 sm:p-10 text-center border-2 border-gray-300 rounded-lg">
+        <div className="mt-5 p-2 lg:p-10 text-center border-2 border-gray-300 rounded-lg">
           <p className="mb-5">관련된 토론글이 없습니다.</p>
           <Link
             href={`/discussion/regist`}

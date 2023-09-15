@@ -38,7 +38,7 @@ const TrailerSlider = ({ trailerKeys }: Props) => {
               <Image
                 layout="fill"
                 src={`${process.env.NEXT_PUBLIC_TMDB_TRAILER_THUMBNAIL_URL}${KEY}/hqdefault.jpg`}
-                className="relative object-cover rounded-md cursor-pointer"
+                className="relative object-cover cursor-pointer rounded-3xl px-2"
                 alt="Image"
                 onClick={() => showTrailer(KEY)}
               ></Image>

@@ -1,26 +1,26 @@
 'use client';
-import ReviewMovie from '@/components/ReviewForm/ReviewMovie';
-import SearchPopup from '@/components/ReviewForm/SearchPopup';
+
+import React, { useEffect, useRef, useState } from 'react';
 import useUserInfoStore from '@/store/saveCurrentUserData';
 import { useReviewMovieStore, useSearchModalStore } from '@/store/useReviewStore';
+import { useDiscussionStore } from '@/store/useDiscussionStore';
 import { useRouter, useSearchParams } from 'next/navigation';
-import React, { useEffect, useRef, useState } from 'react';
-import { getDetailData } from '@/api/tmdb';
 import { optionMark } from '@/static/optionMark';
-import { message, Modal } from 'antd';
+import { message } from 'antd';
 import { debounce } from 'lodash';
+import { getDetailData } from '@/api/tmdb';
 import { addNewDiscussionPost } from '@/api/supabase-discussion';
 import useLeaveConfirmation from '@/hooks/useLeaveConfiramation';
+import ReviewMovie from '@/components/ReviewForm/ReviewMovie';
+import SearchPopup from '@/components/ReviewForm/SearchPopup';
 import LeaveCheck from '@/components/common/LeaveCheck';
-import { useDiscussionStore } from '@/store/useDiscussionStore';
-
-interface Props {}
+import ContinueConfirmationModal from '@/components/common/ContinueConfirmationModal';
 
 const marginYGap = '25px';
 const titleLengthLimit = 50;
 const contentLengthLimit = 200;
 
-const DiscussionRegistPage = (props: Props) => {
+const DiscussionRegistPage = () => {
   const [messageApi, contextHolder] = message.useMessage();
   const { isSearchModalOpen, openSearchModal } = useSearchModalStore();
   const { searchMovieId: movieId, saveSearchMovieId } = useReviewMovieStore();
@@ -194,9 +194,10 @@ const DiscussionRegistPage = (props: Props) => {
   return (
     <>
       <LeaveCheck />
+      <ContinueConfirmationModal open={isConfirmModalOpen} onCancel={handleModalCancel} onOk={handleModalOk} />
       {contextHolder}
       {confirmationModal}
-      <div className="p-5 w-full sm:w-4/5 lg:w-3/5 mx-auto">
+      <div className="sm:p-5 w-full sm:w-4/5 lg:w-3/5 mx-auto">
         <h1 className={`text-2xl font-bold mb-[25px]`}>토론 작성</h1>
         {/* S:: 영화 선택 */}
         <div className="info-box">
@@ -288,7 +289,7 @@ const DiscussionRegistPage = (props: Props) => {
             ) : (
               <>
                 <button
-                  className="border px-20 py-3 rounded-[22px] bg-black text-white"
+                  className={`${Style.voteBtn} bg-black text-white`}
                   onClick={() => {
                     setIsOptionOpen(false);
                   }}
@@ -296,7 +297,7 @@ const DiscussionRegistPage = (props: Props) => {
                   자유 토론
                 </button>
                 <button
-                  className="border px-20 py-3 rounded-[22px]"
+                  className={`${Style.voteBtn}`}
                   onClick={() => {
                     setIsOptionOpen(true);
                   }}
@@ -358,42 +359,17 @@ const DiscussionRegistPage = (props: Props) => {
         </div>
 
         <div className="flex justify-center gap-3">
-          <button
-            className="border px-2 py-1 bg-gray-300 text-white font-bold hover:bg-gray-200 hover:text-gray-700 rounded-[10px]"
-            onClick={handleCancel}
-          >
+          <button className="button-white" onClick={handleCancel}>
             돌아가기
           </button>
-          <button
-            className="border px-2 py-1 bg-gray-300 text-white font-bold hover:bg-gray-200 hover:text-gray-700 rounded-[10px]"
-            onClick={handleTempSave}
-          >
+          <button className="button-white" onClick={handleTempSave}>
             임시저장
           </button>
-          <button
-            className="border px-2 py-1 bg-black text-white font-bold hover:bg-gray-200 hover:text-gray-700 rounded-[10px]"
-            onClick={debounce(handleSubmit, 300)}
-          >
+          <button className="button-dark" onClick={debounce(handleSubmit, 300)}>
             토론 게시하기
           </button>
         </div>
       </div>
-
-      <Modal open={isConfirmModalOpen} onCancel={handleModalCancel} footer={null} width={400}>
-        <p className="pt-[50px] pb-[30px] text-center text-neutral-800 text-xl font-normal leading-normal">
-          작성 중이던 내용이 있습니다
-          <br />
-          이어서 작성하시겠습니까?
-        </p>
-        <div className="flex justify-center gap-3 mb-5">
-          <button className="button-white" onClick={handleModalCancel}>
-            취소
-          </button>
-          <button className="button-dark" onClick={handleModalOk}>
-            확인
-          </button>
-        </div>
-      </Modal>
     </>
   );
 };

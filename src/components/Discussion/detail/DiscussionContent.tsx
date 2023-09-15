@@ -1,6 +1,9 @@
 import { getDetailData } from '@/api/tmdb';
-import MovieLikes from '@/components/MovieLikes/MovieLikes';
-import WatchLaterButton from '@/components/common/WatchLaterButton';
+import MovieLikes from '@/components/common/Buttons/MovieLikes';
+import WatchLaterButton from '@/components/common/Buttons/WatchLaterButton';
+import { baseImgUrl } from '@/static/baseImgUrl';
+import { MOVIE_COUNTRIES } from '@/static/movieCountries';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
@@ -8,7 +11,7 @@ import React from 'react';
 interface Props {
   movieId: string;
 }
-const baseImgUrl = process.env.NEXT_PUBLIC_TMDB_BASE_IMAGE_URL;
+
 const DiscussionContent = async ({ movieId }: Props) => {
   const movieData = await getDetailData(movieId);
 
@@ -17,7 +20,7 @@ const DiscussionContent = async ({ movieId }: Props) => {
   return (
     <>
       <p className="mt-10 h3_suit">토론 상세</p>
-      <div className="flex items-center w-full mt-5 px-5 lg:px-10 py-5 rounded-[20px] shadow1 border sm:w-2/3 ">
+      <div className="flex items-center w-full mt-5 px-5 lg:px-10 py-5 rounded-[20px] shadow1 border">
         <div className="h-full relative">
           <Link href={`/detail/${movieId}`}>
             <Image
@@ -52,9 +55,16 @@ const DiscussionContent = async ({ movieId }: Props) => {
                 idx === movieData.genres.length - 1 ? `${genre.name}` : `${genre.name}/`
               )}
             </div>
-            <div>{movieData.production_countries?.length && movieData.production_countries[0]['iso_3166_1']}</div>
-            <div>{movieData.runtime}분</div>
-            <div>{movieData.adult ? '청소년관람불가' : '전체관람가'}</div>
+            <div className="flex gap-2 sm:gap-0 sm:flex-col">
+              <div>
+                {movieData.production_countries?.length &&
+                  MOVIE_COUNTRIES.filter(
+                    (country) => country.iso_3166_1 === movieData.production_countries[0]['iso_3166_1']
+                  )[0].native_name}
+              </div>
+              <div>{movieData.runtime}분</div>
+              <div>{movieData.adult ? '청소년관람불가' : '전체관람가'}</div>
+            </div>
           </div>
         </div>
       </div>

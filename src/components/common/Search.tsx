@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import debounce from 'lodash/debounce';
 import { searchTMDB } from '@/api/tmdb';
 import { SearchLined } from '@/styles/icons/Icons32';
+import Select from './Select';
 
 const Search = ({
   searchMovieValue,
@@ -18,6 +19,7 @@ const Search = ({
 }) => {
   const [searchResults, setSearchResults] = React.useState<MovieData[]>();
   const [searchInput, setSearchInput] = useState('');
+  const [offsearchState, setOffSearchState] = useState(false);
 
   const debouncedHandleChange = debounce(async (value: string) => {
     if (!value) {
@@ -39,21 +41,21 @@ const Search = ({
     const value = e.target.value;
     setSearchInput(value);
     debouncedHandleChange(value);
-
+    setOffSearchState(false);
     if (!value) {
       setSearchInput('');
       setSearchResults([]);
     }
   };
 
-  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedType = e.target.value;
-    setSearchType(selectedType);
+  const handleSelectChange = (value: string) => {
+    setSearchType(value);
     setSearchResults([]);
     setSearchInput('');
   };
 
   const handleClick = (item: MovieData) => {
+    setOffSearchState(true);
     if (searchType === 'movie') {
       setSearchInput(item.title);
     } else if (searchType === 'person') {
@@ -66,37 +68,38 @@ const Search = ({
     e.preventDefault();
     debouncedHandleChange(searchInput);
     setSearchMovieValue(searchInput); // 상위에서 사용하기 위해 set하는 값
+    setOffSearchState(true);
   };
 
   return (
-    <div className="w-[570px] h-[52px]">
-      <form onSubmit={handleSubmit} className="flex border border-GreyScaleGrey rounded-xl px-2 py-1">
-        <select
-          value={searchType}
+    <div className="pt-2 sm:pt-0">
+      <form onSubmit={handleSubmit} className="flex select-search-form">
+        <Select
+          defaultValue="movie"
           onChange={handleSelectChange}
-          className="border-none rounded-none outline-transparent"
-        >
-          <option value="movie">영화</option>
-          <option value="person">인물</option>
-        </select>
+          options={[
+            { value: 'movie', label: '영화' },
+            { value: 'person', label: '인물' }
+          ]}
+        />
         <input
-          className="appearance-none border-transparent rounded w-full py-2 px-3 "
+          className="custom_input"
           id="search"
           name="search"
           type="text"
-          placeholder="검색"
+          placeholder="검색어를 입력하세요"
           value={searchInput}
           onChange={handleChange}
         />
 
-        <button type="submit" className=" font-bold py-2 px-4 rounded ml-2">
+        <button type="submit" className=" font-bold pl-4 rounded ml-2">
           <SearchLined />
         </button>
       </form>
-      {/* <ul
-        className={`overflow-auto h-44 absolute w-full bg-${
-          searchInput ? 'white' : 'transparent'
-        }  rounded z-10 transition-colors duration-300`}
+      <ul
+        className={`overflow-auto h-44 absolute w-full ${
+          searchInput ? 'bg-white' : 'bg-transparent hidden'
+        }  rounded z-10 transition-colors duration-300 ${offsearchState ? 'bg-transparent hidden' : ''}`}
       >
         {!!searchResults &&
           searchResults.map((result, i: number) => (
@@ -106,7 +109,7 @@ const Search = ({
               </button>
             </li>
           ))}
-      </ul> */}
+      </ul>
     </div>
   );
 };

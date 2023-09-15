@@ -2,9 +2,8 @@ import Image from 'next/image';
 import { baseImgUrl } from '@/static/baseImgUrl';
 import Link from 'next/link';
 import { StarFill } from '@/styles/icons/Icons24';
-import { extractMainColors, findBrightestTwoColors, getColors, lightenColor } from '@/util/findColors';
+import { findBrightestTwoColors, getColors, lightenColor } from '@/util/findColors';
 import EmblaCarousel from '@/components/common/Slider/EmblaCarousel';
-import { getProviderData } from '@/api/tmdb';
 
 type Props = {
   photoData: MovieData[];
@@ -19,15 +18,6 @@ const LatestMovieSlider = async ({ photoData }: Props) => {
     })
   );
   const rgbToString = (rgb: number[]) => `rgb(${rgb.join(', ')})`;
-
-  const getOTT = await Promise.all(
-    photoData.map(async (data: MovieData) => {
-      const stringId = data.id.toString();
-      const ott = await getProviderData(stringId);
-      return ott;
-    })
-  );
-  // console.log(getOTT);
 
   const firstMainColor = getStyles.map((colors) => rgbToString([colors[8], 0.5]));
 
@@ -79,7 +69,7 @@ const LatestMovieSlider = async ({ photoData }: Props) => {
                   </div>
                 </div>
                 <div
-                  className="absolute body1_regular_suit p-[30px] bottom-0 left-0 right-0 h-32 justify-center items-center rounded-bl-[20px] rounded-br-[20px] border border-gray-200 "
+                  className="absolute body1_regular_suit pb-5 p-[30px] bottom-0 left-0 right-0 h-32 justify-center items-center rounded-bl-[20px] rounded-br-[20px] border border-gray-200 "
                   style={{
                     background: `linear-gradient(90deg, ${bottomColor[idx]} 0%, #FBFBFB 100%)`
                   }}

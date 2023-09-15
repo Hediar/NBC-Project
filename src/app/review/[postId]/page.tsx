@@ -7,8 +7,8 @@ import React from 'react';
 import dayjs from 'dayjs';
 import { getUserProfile } from '@/api/review';
 import ReviewLikes from '@/components/Review/ReviewLikes';
-import WatchLaterButton from '@/components/common/WatchLaterButton';
-import MovieLikes from '@/components/MovieLikes/MovieLikes';
+import WatchLaterButton from '@/components/common/Buttons/WatchLaterButton';
+import MovieLikes from '@/components/common/Buttons/MovieLikes';
 
 interface Params {
   postId: string;
@@ -45,7 +45,7 @@ const ReviewDetailPage = async ({ params }: Props) => {
               quality={100}
               className="rounded-lg"
             />
-            <div className="bg-gray-800 bg-opacity-30 rounded-lg py-1 px-1 absolute top-[10px] right-[10px] flex flex-col gap-[6px] items-center">
+            <div className=" bg-gray-800 bg-opacity-30 rounded-lg py-1 px-1 absolute top-[2px] right-[2px] flex flex-col gap-[3px] items-center">
               <WatchLaterButton movieId={review.movieid} />
               <MovieLikes movieid={review.movieid} />
             </div>

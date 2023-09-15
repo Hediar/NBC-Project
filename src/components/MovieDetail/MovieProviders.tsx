@@ -1,6 +1,5 @@
 import { baseImgUrl } from '@/static/baseImgUrl';
 import Image from 'next/image';
-import React from 'react';
 
 interface Props {
   data: MovieProvider[];

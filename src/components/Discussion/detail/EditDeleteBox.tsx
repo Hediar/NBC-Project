@@ -27,9 +27,7 @@ const EditDeleteBox = ({ postId, authorId }: Props) => {
 
       messageApi.open({ type: 'success', content: '삭제되었습니다' });
       router.push('/discussion/list');
-    } catch (error) {
-      //   console.log('에러==>>', error);
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -42,9 +40,12 @@ const EditDeleteBox = ({ postId, authorId }: Props) => {
         {contextHolder}
         <div>
           {authorId === userId && (
-            <div className="flex justify-end mr-5 gap-3">
-              <Link href={`/discussion/edit/${postId}`}>게시글 수정</Link>
+            <div className="flex justify-end gap-3 mt-5">
+              <Link href={`/discussion/edit/${postId}`} className="button-white">
+                게시글 수정
+              </Link>
               <button
+                className="button-white"
                 onClick={() => {
                   const check = confirm('삭제된 글은 복구할 수 없습니다.\n \n삭제하시겠습니까?');
                   deletePost(check);

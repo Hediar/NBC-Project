@@ -21,10 +21,10 @@ const DiscussionRegistBtn = () => {
       {contextHolder}
       <Link
         href={userId ? `/discussion/regist` : `${pathname}?sign-in=true`}
-        className="border py-1 px-2 rounded-xl bg-gray-400 text-white hover:bg-gray-500"
+        className="button-dark md:ml-2 inline-flex items-center justify-center"
         onClick={handleRegistBtn}
       >
-        글 작성
+        토론 작성
       </Link>
     </>
   );

@@ -1,11 +1,10 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import Link from 'next/link';
 import Image from 'next/image';
 import ReviewLikes from '../ReviewLikes';
-import { Edit, StarFill } from '@/styles/icons/Icons24';
+import { StarFill } from '@/styles/icons/Icons24';
 import UtilButtons from '@/components/ReviewForm/UtilButtons';
 import PosterBaseColor from './PosterBaseColor';
 

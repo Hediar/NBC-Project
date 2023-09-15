@@ -3,8 +3,10 @@ import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { NextResponse } from 'next/server';
 import { revalidateTag } from 'next/cache';
 
+export const runtime = 'edge';
+
 export const POST = async (req: Request) => {
-  const { movieId, path } = await req.json();
+  const { movieId } = await req.json();
   const supabase = createServerComponentClient<Database>({ cookies });
 
   const { data: userData, error: noUser } = await supabase.auth.getUser();

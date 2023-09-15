@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import ResetPassword from './resetPassword';
 import { redirect } from 'next/navigation';
+import LoadingSpinner from '@/components/common/LoadingSpinner';
 
 interface Props {
   searchParams: { code: string };
 }
+
+export const dynamic = 'force-dynamic';
 
 const ResetPasswordPage = ({ searchParams }: Props) => {
   const code = searchParams.code;
@@ -14,9 +17,9 @@ const ResetPasswordPage = ({ searchParams }: Props) => {
   }
 
   return (
-    <>
+    <Suspense fallback={<LoadingSpinner />}>
       <ResetPassword />
-    </>
+    </Suspense>
   );
 };
 

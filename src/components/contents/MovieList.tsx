@@ -38,7 +38,7 @@ const MovieList = () => {
           const filteredResults = (data.results[0]?.known_for || []).filter((item: TMDBSearchPersonMovie) => {
             return item.media_type !== 'tv';
           });
-          // console.log(filteredResults);
+
           if (page === 1) {
             setFilterefData([...filteredResults]);
           } else {
@@ -101,7 +101,7 @@ const MovieList = () => {
   }, [currentPage]);
 
   let contents;
-  // console.log(dataList);
+
   if (dataList?.results) {
     contents = <MovieDataList movieData={filteredData} />; // 검색x, 영화 검색
   } else {
@@ -114,7 +114,7 @@ const MovieList = () => {
 
   return (
     <div className="p-5 sm:p-16 flex-wrap">
-      <div className="flex flex-wrap justify-between items-center h-20">
+      <div className="flex flex-wrap justify-between items-center">
         <Sort sortingOption={sortingOption} setSortingOption={setSortingOption} />
         <Search
           searchMovieValue={searchMovieValue}
