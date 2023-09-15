@@ -87,12 +87,12 @@ const Search = ({
           id="search"
           name="search"
           type="text"
-          placeholder="검색"
+          placeholder="검색어를 입력하세요"
           value={searchInput}
           onChange={handleChange}
         />
 
-        <button type="submit" className=" font-bold py-2 px-4 rounded ml-2">
+        <button type="submit" className=" font-bold pl-4 rounded ml-2">
           <SearchLined />
         </button>
       </form>
