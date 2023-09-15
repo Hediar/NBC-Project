@@ -1,14 +1,14 @@
 'use client';
 import Image from 'next/image';
 import React from 'react';
-import EmblaCarousel from './EmblaCarousel';
+import EmblaCarousel from '../../common/Slider/EmblaCarousel';
 import { baseImgUrl } from '@/static/baseImgUrl';
 
 type Props = {
   photoData: MovieBackdropImage[];
 };
 
-const Slider = ({ photoData }: Props) => {
+const GallerySlider = ({ photoData }: Props) => {
   return (
     <div className="flex justify-center items-center w-full rounded-md font-thin text-xl my-3">
       <EmblaCarousel
@@ -42,4 +42,4 @@ const Slider = ({ photoData }: Props) => {
   );
 };
 
-export default Slider;
+export default GallerySlider;

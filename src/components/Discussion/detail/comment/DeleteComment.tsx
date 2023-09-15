@@ -1,6 +1,7 @@
 'use client';
 
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { message } from 'antd';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
@@ -9,21 +10,26 @@ interface Props {
 }
 
 const DeleteCommentButton = ({ postId }: Props) => {
+  const [messageApi, context] = message.useMessage();
   const router = useRouter();
   const deleteHandler = async () => {
     if (confirm('삭제하시겠습니까?')) {
       const supabase = createClientComponentClient();
       const { error } = await supabase.from('discussion_comments').delete().eq('id', postId);
       if (error) {
-        // console.log(error);
-        alert('에러가 발생했습니다. 다시 시도해주세요.');
+        return messageApi.open({ type: 'error', content: '에러가 발생했습니다. 다시 시도해주세요.' });
       } else {
-        alert('삭제 완료');
-        router.refresh();
+        messageApi.open({ type: 'success', content: '삭제 완료' });
+        return router.refresh();
       }
     }
   };
-  return <button onClick={deleteHandler}>삭제</button>;
+  return (
+    <>
+      {context}
+      <button onClick={deleteHandler}>삭제</button>;
+    </>
+  );
 };
 
 export default DeleteCommentButton;
