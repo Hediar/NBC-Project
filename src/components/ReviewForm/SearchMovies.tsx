@@ -102,11 +102,9 @@ const SearchMovies = ({ isSearchStart, setIsSearchStart }: Props) => {
             검색결과가 없습니다
           </li>
         ) : (
-          searchMovies!
-            // .slice(currentPage * DATA_PER_PAGE - DATA_PER_PAGE, currentPage * DATA_PER_PAGE)
-            .map((movie, i: number) => (
-              <SearchMoviesItem key={'searchMovieKey' + i} movie={movie} handleClick={handleClick} />
-            ))
+          searchMovies!.map((movie, i: number) => (
+            <SearchMoviesItem key={'searchMovieKey' + i} movie={movie} handleClick={handleClick} />
+          ))
         )}
       </ul>
 

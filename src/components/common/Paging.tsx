@@ -39,7 +39,7 @@ const Paging = ({ currentPage, setCurrentPage, totalPages, pageRangeDisplayed = 
   }
 
   return (
-    <div className="flex gap-1 justify-center mt-10">
+    <div className="flex flex-wrap gap-1 justify-center mt-10">
       {currentPage - pageRangeHalf > 1 && (
         <>
           <button
