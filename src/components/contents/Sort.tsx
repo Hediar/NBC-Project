@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import Sorting from '../common/Sorting';
+import Select from '../common/Select';
 
 const Sort = ({
   sortingOption,
@@ -20,8 +20,8 @@ const Sort = ({
   ];
 
   return (
-    <div className="pb-5">
-      <Sorting options={sortingOptions} selectedOption={sortingOption} onChange={handleSortingChange} />
+    <div className="w-28 mr-auto">
+      <Select defaultValue="new" className="w-28 mr-auto" onChange={handleSortingChange} options={sortingOptions} />
     </div>
   );
 };
