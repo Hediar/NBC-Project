@@ -16,7 +16,6 @@ const DeleteUser = () => {
         data: { data, error }
       } = await axios.post('/auth/delete-account');
       if (error) {
-        // console.log(error);
         messageApi.open({
           type: 'error',
           content: '에러가 발생했습니다. 다시 시도해주세요.'

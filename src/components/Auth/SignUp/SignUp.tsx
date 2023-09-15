@@ -6,7 +6,6 @@ import useUserInfoStore from '@/store/saveCurrentUserData';
 import useToggleSignUpModal from '@/store/toggleSignUpModal';
 import useToggleSignUpWIthEmailModal from '@/store/toggleSignUpWIthEmailModal';
 import Logo from '@/styles/svg/Logo';
-import authApi from '@/util/supabase/auth/auth';
 import HCaptcha from '@hcaptcha/react-hcaptcha';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Button, Input, message } from 'antd';

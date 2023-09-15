@@ -3,6 +3,8 @@ import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 import type { NextResponse as NextResponseType } from 'next/server';
 
+export const runtime = 'edge';
+
 type WatchLater = Database['public']['Tables']['watch_later']['Row'];
 
 // 찜하기 버튼 클릭 시 처리

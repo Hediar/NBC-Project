@@ -1,5 +1,3 @@
-import React from 'react';
-
 const DiscussionListSuspense = () => {
   const DUMMY_NUMBER = 5;
   const lists = new Array(DUMMY_NUMBER).fill(0);
