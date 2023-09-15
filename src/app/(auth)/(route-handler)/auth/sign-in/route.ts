@@ -2,8 +2,6 @@ import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 
-export const runtime = 'edge';
-
 export const POST = async (request: Request) => {
   const formData = await request.formData();
   const email = String(formData.get('email'));
@@ -16,7 +14,10 @@ export const POST = async (request: Request) => {
     password,
     options: { captchaToken: captchaToken }
   });
+  // console.log(error);
   if (error) {
+    // console.log(error);
+
     if (error.message.includes('captcha verification') || error.message.includes('captcha')) {
       return NextResponse.json({ error: true, message: 'captcha 오류.' });
     }

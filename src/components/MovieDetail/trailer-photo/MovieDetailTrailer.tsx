@@ -1,5 +1,5 @@
 import React from 'react';
-import GallerySlider from './GallerySlider';
+import Slider from '../../common/Slider/Slider';
 import TrailerSlider from './TrailerSlider';
 import { getImageData, getTrailerData } from '@/api/tmdb';
 
@@ -22,7 +22,7 @@ const MovieDetailTrailer = async ({ movieId }: Props) => {
 
         <p className="font-bold text-gray-500 text-2xl mt-20 mb-5">갤러리 {backdropImages?.length}</p>
         {backdropImages.length ? (
-          <GallerySlider photoData={backdropImages} />
+          <Slider photoData={backdropImages} />
         ) : (
           <p className="flex justify-center font-bold text-base my-10">갤러리가 없습니다.</p>
         )}

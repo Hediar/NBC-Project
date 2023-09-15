@@ -83,7 +83,7 @@ const ChangeAvatarPhoto = ({ userData }: Props) => {
 
     const data = await fetch('/auth/profile', { method: 'post', body: formData });
 
-    const { data: fetchData, isSuccess } = await data.json();
+    const { data: fetchData, isError, isSuccess } = await data.json();
 
     if (isSuccess) {
       saveUserInfo({ ...userInfo, avatar_url: fetchData });

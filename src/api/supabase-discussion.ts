@@ -136,7 +136,9 @@ export const revoteDiscussionOption = async ({
     const { error } = await supabase.from('discussion_user').delete().eq('option_id', optionId).eq('user_id', userId);
 
     await addDiscussionOptionVote(userData);
-  } catch (error) {}
+  } catch (error) {
+    // console.log(error.message)
+  }
 };
 //update요청
 
@@ -173,7 +175,9 @@ export const deleteDiscussionPost = async (postId: number) => {
   try {
     const { error: optionError } = await deleteDiscussionPostOptions(postId);
     const { error: postError } = await supabase.from('discussion_post').delete().eq('post_id', postId);
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const deleteDiscussionPostOptions = async (postId: number) => {

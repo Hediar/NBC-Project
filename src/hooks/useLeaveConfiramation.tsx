@@ -1,8 +1,7 @@
 import { useCallback, useState } from 'react';
-
+import useRouteChangeEvents from '@/app/RouteChangeEventsProvider';
 import { Modal } from 'antd';
 import LeaveConfirmModal from '@/components/common/LeaveConfirmModal';
-import useRouteChangeEvents from '@/static/RouteChangeEventsProvider';
 
 const useLeaveConfirmation = (shouldPreventRouteChange: boolean) => {
   const [showConfirmModal, setShowConfirmModal] = useState(false);

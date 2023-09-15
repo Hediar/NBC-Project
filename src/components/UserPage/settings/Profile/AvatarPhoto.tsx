@@ -22,6 +22,7 @@ const AvatarPhoto = ({ userData }: Props) => {
   const fileInputRef = useRef<any>(null);
   const { userInfo, saveUserInfo } = useUserInfoStore();
   const router = useRouter();
+  const [isUploadModal, setIsUploadModal] = useState<boolean>(false);
   const queryString = !!useSearchParams().get('upload-photo');
 
   const [messageApi, contextHolder] = message.useMessage();
@@ -72,7 +73,7 @@ const AvatarPhoto = ({ userData }: Props) => {
 
     const data = await fetch('/auth/profile', { method: 'post', body: formData });
 
-    const { data: fetchData, isSuccess } = await data.json();
+    const { data: fetchData, isError, isSuccess } = await data.json();
 
     if (isSuccess) {
       saveUserInfo({ ...userInfo, avatar_url: fetchData });
