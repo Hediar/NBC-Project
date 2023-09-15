@@ -43,7 +43,7 @@ const ReviewDetailPage = async ({ params }: Props) => {
               quality={100}
               className="rounded-lg"
             />
-            <div className="bg-gray-800 bg-opacity-30 rounded-lg py-1 px-1 absolute top-[10px] right-[10px] flex flex-col gap-[6px] items-center">
+            <div className=" bg-gray-800 bg-opacity-30 rounded-lg py-1 px-1 absolute top-[2px] right-[2px] flex flex-col gap-[3px] items-center">
               <WatchLaterButton movieId={review.movieid} />
               <MovieLikes movieid={review.movieid} />
             </div>
