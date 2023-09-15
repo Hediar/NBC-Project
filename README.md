@@ -16,14 +16,14 @@
 <details>
 <summary>ERD</summary>
 <div markdown="1">
-<img src="https://github.com/Hediar/NBC-Project/assets/72387948/a83e6fc7-f521-404e-84d9-7cda619d1403" width="700"/>
+<img src="https://github.com/Hediar/NBC-Project/assets/72387948/c43173ff-a929-47fd-9a1d-83df225d5e38" width="700"/>
 
 </div>
 </details>
 
 <details>
 <summary>폴더 구조</summary>
-<div markdown="2">
+<pre markdown="2">
 📦src
  ┣ 📂api
  ┃ ┣ 📂generateUsername
@@ -470,7 +470,7 @@
  ┃ ┗ 📜tripArrayToLength.ts
  ┗ 📜middleware.ts
 
-</div>
+</pre>
 </details>
 
 ---
