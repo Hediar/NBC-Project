@@ -21,7 +21,12 @@ const Sort = ({
 
   return (
     <div className="w-28 mr-auto">
-      <Select defaultValue="new" className="w-28 mr-auto" onChange={handleSortingChange} options={sortingOptions} />
+      <Select
+        defaultValue="popularity"
+        className="w-28 mr-auto"
+        onChange={handleSortingChange}
+        options={sortingOptions}
+      />
     </div>
   );
 };

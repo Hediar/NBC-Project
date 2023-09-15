@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import debounce from 'lodash/debounce';
 import { searchTMDB } from '@/api/tmdb';
 import { SearchLined } from '@/styles/icons/Icons32';
+import Select from './Select';
 
 const Search = ({
   searchMovieValue,
@@ -47,9 +48,8 @@ const Search = ({
     }
   };
 
-  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedType = e.target.value;
-    setSearchType(selectedType);
+  const handleSelectChange = (value: string) => {
+    setSearchType(value);
     setSearchResults([]);
     setSearchInput('');
   };
@@ -72,18 +72,18 @@ const Search = ({
   };
 
   return (
-    <div className="w-[570px] h-[52px]">
-      <form onSubmit={handleSubmit} className="flex border border-GreyScaleGrey rounded-xl px-2 py-1">
-        <select
-          value={searchType}
+    <div className="pt-2 sm:pt-0">
+      <form onSubmit={handleSubmit} className="flex select-search-form">
+        <Select
+          defaultValue="movie"
           onChange={handleSelectChange}
-          className="border-none rounded-none outline-transparent"
-        >
-          <option value="movie">영화</option>
-          <option value="person">인물</option>
-        </select>
+          options={[
+            { value: 'movie', label: '영화' },
+            { value: 'person', label: '인물' }
+          ]}
+        />
         <input
-          className="appearance-none border-transparent rounded w-full py-2 px-3 "
+          className="custom_input"
           id="search"
           name="search"
           type="text"
