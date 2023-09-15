@@ -18,6 +18,7 @@ const Search = ({
 }) => {
   const [searchResults, setSearchResults] = React.useState<MovieData[]>();
   const [searchInput, setSearchInput] = useState('');
+  const [offsearchState, setOffSearchState] = useState(false);
 
   const debouncedHandleChange = debounce(async (value: string) => {
     if (!value) {
@@ -39,7 +40,7 @@ const Search = ({
     const value = e.target.value;
     setSearchInput(value);
     debouncedHandleChange(value);
-
+    setOffSearchState(false);
     if (!value) {
       setSearchInput('');
       setSearchResults([]);
@@ -66,6 +67,7 @@ const Search = ({
     e.preventDefault();
     debouncedHandleChange(searchInput);
     setSearchMovieValue(searchInput); // 상위에서 사용하기 위해 set하는 값
+    setOffSearchState(true);
   };
 
   return (
@@ -93,10 +95,10 @@ const Search = ({
           <SearchLined />
         </button>
       </form>
-      {/* <ul
-        className={`overflow-auto h-44 absolute w-full bg-${
-          searchInput ? 'white' : 'transparent'
-        }  rounded z-10 transition-colors duration-300`}
+      <ul
+        className={`overflow-auto h-44 absolute w-full ${
+          searchInput ? 'bg-white' : 'bg-transparent hidden'
+        }  rounded z-10 transition-colors duration-300 ${offsearchState ? 'bg-transparent hidden' : ''}`}
       >
         {!!searchResults &&
           searchResults.map((result, i: number) => (
@@ -106,7 +108,7 @@ const Search = ({
               </button>
             </li>
           ))}
-      </ul> */}
+      </ul>
     </div>
   );
 };
