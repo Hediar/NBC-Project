@@ -1,7 +1,7 @@
 'use client';
 
 import { DropdownMenu } from '@/styles/icons/Icons24';
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 
 type Props = {
   options: { value: string; label: string }[];
