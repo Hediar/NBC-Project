@@ -15,20 +15,23 @@ const WatchLaterButton = ({ movieId }: { movieId: string | number }) => {
   const [isOnHover, setIsOnHover] = useState<boolean>(false);
 
   const checkWatchLater = async (movieId: number | string) => {
-    if (!userInfo.id) return;
-    const { data: WatchLaterTable } = await supabase.from('watch_later').select('movies').eq('userid', userInfo.id);
-
-    if (WatchLaterTable?.length) {
-      const movies = WatchLaterTable[0].movies;
-      movies.includes(movieId) ? setIsAlreadyAdded(true) : setIsAlreadyAdded(false);
-    } else {
+    if (!userInfo.id) {
       setIsAlreadyAdded(false);
+    } else {
+      const { data: WatchLaterTable } = await supabase.from('watch_later').select('movies').eq('userid', userInfo.id);
+
+      if (WatchLaterTable?.length) {
+        const movies = WatchLaterTable[0].movies;
+        movies.includes(movieId) ? setIsAlreadyAdded(true) : setIsAlreadyAdded(false);
+      } else {
+        setIsAlreadyAdded(false);
+      }
     }
   };
 
   useEffect(() => {
     checkWatchLater(movieId.toString());
-  }, []);
+  }, [userInfo]);
 
   const watchLaterClickHandler = throttle(
     async (movieId: number) => {
