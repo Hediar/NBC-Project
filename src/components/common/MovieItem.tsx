@@ -10,7 +10,6 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 import Link from 'next/link';
 import AddIgnoreMovieButton from './AddIgnoreMovieButton';
-import AlreadyWatchedButton from './Buttons/AlreadyWatchedButton';
 
 const MovieItem = ({ movie }: { movie: MovieData }) => {
   const router = useRouter();
