@@ -55,6 +55,7 @@ const Search = ({
   };
 
   const handleClick = (item: MovieData) => {
+    setOffSearchState(true);
     if (searchType === 'movie') {
       setSearchInput(item.title);
     } else if (searchType === 'person') {
