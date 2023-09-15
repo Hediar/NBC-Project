@@ -1,11 +1,11 @@
+'use client';
+
 import AuthButton from './_auth/AuthButtons';
 import HeaderUser from './HeaderUser';
 import Link from 'next/link';
 import ModalControlCentre from './_auth/ModalControlCentre';
 import Logo from '@/styles/svg/Logo';
 import Nav from './Nav';
-import { Suspense } from 'react';
-import LoadingSpinner from '../common/LoadingSpinner';
 
 const Header = () => {
   return (
@@ -26,9 +26,7 @@ const Header = () => {
           </div>
         </div>
       </header>
-      <Suspense fallback={<LoadingSpinner />}>
-        <ModalControlCentre />
-      </Suspense>
+      <ModalControlCentre />
     </>
   );
 };

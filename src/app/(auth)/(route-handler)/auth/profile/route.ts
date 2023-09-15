@@ -2,8 +2,6 @@ import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 
-export const runtime = 'edge';
-
 export const POST = async (request: Request) => {
   try {
     const supabase = createRouteHandlerClient({ cookies });
@@ -21,6 +19,8 @@ export const POST = async (request: Request) => {
     const { data: publicUrlData } = supabase.storage.from(uploadPath).getPublicUrl(fileName);
 
     const publicUrl = publicUrlData.publicUrl;
+
+    // console.log('publicUrl', publicUrl);
 
     await supabase.from('users').update({ avatar_url: publicUrl }).eq('id', userId);
 

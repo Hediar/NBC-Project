@@ -27,7 +27,9 @@ const EditDeleteBox = ({ postId, authorId }: Props) => {
 
       messageApi.open({ type: 'success', content: '삭제되었습니다' });
       router.push('/discussion/list');
-    } catch (error) {}
+    } catch (error) {
+      //   console.log('에러==>>', error);
+    }
   };
 
   useEffect(() => {

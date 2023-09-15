@@ -7,14 +7,12 @@ import { BookmarkLinedGreen, BookmarkLinedWhite } from '@/styles/icons/Icons24';
 import { throttle } from 'lodash';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
-import { message } from 'antd';
 
 const WatchLaterButton = ({ movieId }: { movieId: string | number }) => {
   const { userInfo } = useUserInfoStore();
   const router = useRouter();
   const [isAlreadyAdded, setIsAlreadyAdded] = useState<boolean>(false);
   const [isOnHover, setIsOnHover] = useState<boolean>(false);
-  const [messageApi, contextHolder] = message.useMessage();
 
   const checkWatchLater = async (movieId: number | string) => {
     if (!userInfo.id) {
@@ -45,10 +43,8 @@ const WatchLaterButton = ({ movieId }: { movieId: string | number }) => {
 
       if (!userInfo.id) {
         setIsAlreadyAdded(false);
-        return messageApi.open({
-          type: 'error',
-          content: '로그인 해주세요!'
-        });
+        router.replace('?sign-in=true');
+        return;
       }
       await POSTWatchLater(movieId);
 
@@ -61,11 +57,10 @@ const WatchLaterButton = ({ movieId }: { movieId: string | number }) => {
 
   return (
     <>
-      {contextHolder}
       {isAlreadyAdded ? (
         <BookmarkLinedGreen
           fill={isOnHover ? 'transparent' : '#0dca20'}
-          className=" w-7 h-7 sm:w-8 sm:h-8 watch-later cursor-pointer animate-200 hover:scale-110"
+          className="w-7 h-7 sm:w-8 sm:h-8 watch-later cursor-pointer animate-200 hover:scale-110"
           onMouseOver={() => setIsOnHover(true)}
           onMouseLeave={() => setIsOnHover(false)}
           onClick={() => watchLaterClickHandler(Number(movieId))}
