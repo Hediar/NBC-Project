@@ -43,22 +43,18 @@ const MovieLikes = (props: { movieid: number }) => {
   );
 
   const checkLikes = async (movieId: number) => {
-    if (!userInfo.id) {
-      setLikecurrentuser(false);
+    const { data: likesTable } = await supabase.from('movielikes').select('*').eq('movieid', movieId);
+    if (likesTable?.length) {
+      const users = likesTable[0].user_id;
+      users.includes(userInfo?.id!) ? setLikecurrentuser(true) : setLikecurrentuser(false);
     } else {
-      const { data: likesTable } = await supabase.from('movielikes').select('*').eq('movieid', movieId);
-      if (likesTable?.length) {
-        const users = likesTable[0].user_id;
-        users.includes(userInfo?.id!) ? setLikecurrentuser(true) : setLikecurrentuser(false);
-      } else {
-        setLikecurrentuser(false);
-      }
+      setLikecurrentuser(false);
     }
   };
 
   useEffect(() => {
     checkLikes(props.movieid);
-  }, [userInfo]);
+  }, []);
 
   return (
     <div>

@@ -1,9 +1,8 @@
 'use client';
 
-import React, { Suspense, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Modal from './Modal';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import LoadingSpinner from './LoadingSpinner';
 
 interface Props {
   children: React.ReactNode;
@@ -40,11 +39,9 @@ const OverlaidModal = ({ children, scrollTo = '' }: Props) => {
       }}
       className="opacity-0 -mt-20 fixed w-screen h-screen bg-gray-700 bg-opacity-50 z-40 transform ease-in-out duration-200 "
     >
-      <Suspense fallback={<LoadingSpinner />}>
-        <Modal overlayRef={overlayRef} scrollTo={scrollTo}>
-          {children}
-        </Modal>
-      </Suspense>
+      <Modal overlayRef={overlayRef} scrollTo={scrollTo}>
+        {children}
+      </Modal>
     </div>
   );
 };

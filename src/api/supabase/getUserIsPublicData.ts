@@ -10,7 +10,7 @@ const getUserIsPublicData = async (supabase: SupabaseClient, userId: string) => 
       .single();
 
     if (insertError) {
-      return;
+      return console.log(insertError);
     }
     return newlyInsertedData;
   }

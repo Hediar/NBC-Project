@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import React from 'react';
-import { StarFillWhite, StarLine } from '@/styles/icons/Icons24';
+import { StarLine } from '@/styles/icons/Icons24';
 import { SVGTalkEndPoint, SVGTalkStartPoint } from '@/styles/icons/IconsETC';
 import { extractMainColors, findBrightestTwoColors, getColors } from '@/util/findColors';
 import PreviewAppearance from './PreviewAppearance';
@@ -29,7 +29,6 @@ const KeyInfomation = async ({ movieId }: Props) => {
           background: `linear-gradient(90deg, rgb(${darknessRGB[0]},${darknessRGB[1]},${darknessRGB[2]}) 0%, rgba(${rgba1[0]},${rgba1[1]},${rgba1[2]},1) 35%, rgba(${brightnessRGB[0]},${brightnessRGB[1]},${brightnessRGB[2]},1) 100%)`
         }}
       >
-        <div className="w-full h-full left-0 top-0 absolute bg-gradient-to-b from-white to-white opacity-10" />
         <div className="flex w-full sm:w-4/5 mx-auto relative">
           <section className="w-1/3 absolute top-24 sm:top-auto lg:relative">
             <Image
@@ -58,7 +57,7 @@ const KeyInfomation = async ({ movieId }: Props) => {
                   <p>{overview}</p>
                   {!tagline && !overview && <p>…….</p>}
                 </div>
-                <div className="absolute left-5 sm:left-8 lg:left-12 top-5 px-5">
+                <div className="absolute left-16 top-5 px-5">
                   <SVGTalkStartPoint />
                 </div>
                 <div className="absolute bottom-5 right-5 sm:top-5 px-5">
@@ -69,7 +68,7 @@ const KeyInfomation = async ({ movieId }: Props) => {
             <div>
               <span className="font-bold text-base text-white flex">
                 평균 별점
-                <StarFillWhite />
+                <StarLine fill="white" />
                 {(vote_average / 2).toFixed(2)}
               </span>
             </div>

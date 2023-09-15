@@ -9,7 +9,7 @@ import { cookies } from 'next/headers';
 export const GET = async () => {
   const supabase = createRouteHandlerClient({ cookies });
   const { session } = await authApi.get('session');
-  if (!session) return NextResponse.json({ userData: null });
+  if (!session) return { userData: null };
 
   const signedInUserId = session.user.id;
 

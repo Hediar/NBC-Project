@@ -4,7 +4,7 @@ import {
   triggerBeforeRouteChangeEvent,
   triggerRouteChangeStartEvent,
   useFreezeRequestsContext
-} from '../static/RouteChangeEventsProvider';
+} from '@/app/RouteChangeEventsProvider';
 
 interface NavigateOptions {
   scroll?: boolean;

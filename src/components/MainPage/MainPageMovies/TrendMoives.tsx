@@ -2,6 +2,8 @@ import { fetchTrendMoviesByGenre, getTrendingMovies } from '@/api/tmdb';
 import TrendMovieSlider from './TrendMovieSlider';
 import MovieItem from '@/components/common/MovieItem';
 
+export const revalidate = 60;
+
 const TrendMoives = async ({ genreId }: { genreId: string }) => {
   let trendMovies;
 
@@ -18,7 +20,7 @@ const TrendMoives = async ({ genreId }: { genreId: string }) => {
       <TrendMovieSlider photoData={sliderMovies} />
       <div className="flex overflow-x-scroll sm:overflow-x-hidden sm:flex-wrap justify-center items-center mx-11 gap-6">
         {listMovies.map((movie: MovieData, idx: number) => (
-          <div key={movie.id} className="w-auto md:w-[240px] pb-5">
+          <div key={movie.id} className="w-auto md:w-[240px]">
             <MovieItem movie={movie} />
           </div>
         ))}

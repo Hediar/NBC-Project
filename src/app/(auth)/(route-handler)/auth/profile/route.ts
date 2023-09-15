@@ -22,6 +22,8 @@ export const POST = async (request: Request) => {
 
     const publicUrl = publicUrlData.publicUrl;
 
+    // console.log('publicUrl', publicUrl);
+
     await supabase.from('users').update({ avatar_url: publicUrl }).eq('id', userId);
 
     return NextResponse.json({ isSuccess: true, isError: false, data: publicUrl });

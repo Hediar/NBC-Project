@@ -13,5 +13,5 @@ export const POST = async (request: Request) => {
     await supabase.auth.exchangeCodeForSession(code);
   }
 
-  return NextResponse.redirect(requestUrl.origin + '/redirect?sign-up-success=true', { status: 301 });
+  return NextResponse.redirect(requestUrl.origin, { status: 301 });
 };

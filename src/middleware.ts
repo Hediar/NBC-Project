@@ -54,21 +54,6 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(baseUrl + req.nextUrl.pathname + '/info');
   }
 
-  if (req.nextUrl.pathname.endsWith('/user-page')) {
-    const baseUrl = new URL(req.url).origin;
-    const res = NextResponse.next();
-    const supabase = createMiddlewareClient<Database>({ req, res });
-    const { data, error } = await supabase.auth.getUser();
-
-    if (error) return NextResponse.redirect(baseUrl);
-    if (data) {
-      const id = data.user.id;
-      const { data: userData } = await supabase.from('users').select('username').eq('id', id).single();
-      return NextResponse.redirect(baseUrl + req.nextUrl.pathname + `/${userData?.username}` + '/info');
-    }
-    return NextResponse.redirect(baseUrl + req.nextUrl.pathname + '/info');
-  }
-
   if (req.nextUrl.pathname.endsWith('/settings')) {
     const baseUrl = new URL(req.url).origin;
     const res = NextResponse.next();
@@ -99,7 +84,6 @@ export const config = {
     '/user-page/:path/like',
     '/user-page/:path/likes',
     '/user-page/:path/',
-    '/user-page/:path/settings',
-    '/user-page'
+    '/user-page/:path/settings'
   ]
 };

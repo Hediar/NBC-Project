@@ -9,8 +9,6 @@ interface Props {
   };
 }
 
-export const revalidate = 0;
-
 const ReviewListPage = ({ searchParams }: Props) => {
   return (
     <div>

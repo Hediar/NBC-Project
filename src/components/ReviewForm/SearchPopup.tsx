@@ -12,8 +12,8 @@ const SearchPopup = () => {
 
   return (
     <>
-      <Modal title="리뷰 작성" open={isSearchModalOpen} onCancel={closeSearchModal} footer={null} width={1240}>
-        <div className="px-0 py-5 sm:px-5">
+      <Modal title="리뷰 작성" open={isSearchModalOpen} onCancel={closeSearchModal} footer={null} width={1540}>
+        <div className="p-5">
           <SearchMovies isSearchStart={isSearchStart} setIsSearchStart={setIsSearchStart} />
           <MyMovies isSearchStart={isSearchStart} />
         </div>

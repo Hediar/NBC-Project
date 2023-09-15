@@ -20,8 +20,8 @@ const DiscussionDetail = async ({ discussionId }: Props) => {
   return (
     <>
       <ViewCount postId={postData.post_id} viewCount={postData.view_count} />
-      <div className="flex flex-col">
-        <main className="w-full sm:w-2/3 flex flex-col p-5 sm:pl-[10%] sm:pr-[2%]">
+      <div className="flex">
+        <main className="w-full flex flex-col relative">
           <DiscussionContent movieId={postData?.movie_id} />
 
           <Suspense fallback={<DiscussionTopicSuspense />}>
@@ -31,13 +31,13 @@ const DiscussionDetail = async ({ discussionId }: Props) => {
           <Suspense fallback={<DiscussionCommentContainerSuspense />}>
             <DiscussionCommentContainer discussionId={discussionId} />
           </Suspense>
-        </main>
 
-        <section className="w-full p-5 sm:absolute sm:w-1/3 sm:right-0 sm:pr-[10%] bg-[#EBEBEB]">
-          <Suspense fallback={<RelatedDiscussionListSuspense />}>
-            <RelatedDiscussionList discussionId={discussionId} />
-          </Suspense>
-        </section>
+          <section className="w-full sm:absolute sm:w-1/3 sm:left-2/3">
+            <Suspense fallback={<RelatedDiscussionListSuspense />}>
+              <RelatedDiscussionList discussionId={discussionId} />
+            </Suspense>
+          </section>
+        </main>
       </div>
     </>
   );

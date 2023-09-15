@@ -8,6 +8,7 @@ export const POST = async (req: Request) => {
   const { email, captchaToken } = await req.json();
   const supabase = createRouteHandlerClient({ cookies });
   const { data: userData } = await supabase.auth.getUser();
+  const userId = userData.user?.id;
 
   const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
     captchaToken,
@@ -15,6 +16,7 @@ export const POST = async (req: Request) => {
   });
 
   if (error) {
+    // console.log(error);
     return NextResponse.json({ data: null, error: { message: error.message } });
   }
 
