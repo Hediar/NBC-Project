@@ -18,7 +18,6 @@ export const POST = async () => {
   const { data: deleteUserData, error: deleteUserError } = await supabase.auth.admin.deleteUser(userId);
 
   if (deleteUserError) {
-    // console.log(deleteUserError);
     return NextResponse.json({ data: null, error: deleteUserError.message });
   }
 

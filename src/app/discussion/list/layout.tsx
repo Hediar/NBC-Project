@@ -5,5 +5,5 @@ export const metadata: Metadata = {
 };
 
 export default async function DiscussionListLayout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>;
+  return <main>{children}</main>;
 }

@@ -1,7 +1,7 @@
 import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
-import { avatar_url } from '../profile/change-avatar/route';
+import avatar_url from '@/static/avatar_url';
 
 export const POST = async (request: Request) => {
   const requestUrl = new URL(request.url);

@@ -16,31 +16,31 @@
 <details>
 <summary>ERD</summary>
 <div markdown="1">
-<img src="https://github.com/Hediar/NBC-Project/assets/72387948/56d509b3-2dbd-49c9-8a58-90bd059a40dd" width="700"/>
+<img src="https://github.com/Hediar/NBC-Project/assets/72387948/c43173ff-a929-47fd-9a1d-83df225d5e38" width="700"/>
 
 </div>
 </details>
 
 <details>
 <summary>폴더 구조</summary>
-<div markdown="2">
-📦src  
- ┣ 📂api  
- ┃ ┣ 📂generateUsername  
- ┃ ┃ ┣ 📜generateRandomUsername.ts  
- ┃ ┃ ┣ 📜generateUniqueRandomUsername.ts  
- ┃ ┃ ┗ 📜isUsernameAvailable.ts  
- ┃ ┣ 📂movieStatistics  
- ┃ ┃ ┣ 📜countMovieGenres.ts  
- ┃ ┃ ┣ 📜getGenresUserLikes.ts   
- ┃ ┃ ┣ 📜getLikesByGenres.ts  
- ┃ ┃ ┣ 📜getNumbersOfGenresWatched.ts  
- ┃ ┃ ┣ 📜getOrganizedMovieDetails.ts  
- ┃ ┃ ┣ 📜getRuntimesByGenres.ts  
- ┃ ┃ ┗ 📜getWatchedMoviesList.ts  
- ┃ ┣ 📂supabase  
- ┃ ┃ ┣ 📜getUserIsPublicData.ts  
- ┃ ┃ ┣ 📜saveUserProviderWithEmail.ts  
+<pre markdown="2">
+📦src
+ ┣ 📂api
+ ┃ ┣ 📂generateUsername
+ ┃ ┃ ┣ 📜generateRandomUsername.ts
+ ┃ ┃ ┣ 📜generateUniqueRandomUsername.ts
+ ┃ ┃ ┗ 📜isUsernameAvailable.ts
+ ┃ ┣ 📂movieStatistics
+ ┃ ┃ ┣ 📜countMovieGenres.ts
+ ┃ ┃ ┣ 📜getGenresUserLikes.ts
+ ┃ ┃ ┣ 📜getLikesByGenres.ts
+ ┃ ┃ ┣ 📜getNumbersOfGenresWatched.ts
+ ┃ ┃ ┣ 📜getOrganizedMovieDetails.ts
+ ┃ ┃ ┣ 📜getRuntimesByGenres.ts
+ ┃ ┃ ┗ 📜getWatchedMoviesList.ts
+ ┃ ┣ 📂supabase
+ ┃ ┃ ┣ 📜getUserIsPublicData.ts
+ ┃ ┃ ┣ 📜saveUserProviderWithEmail.ts
  ┃ ┃ ┗ 📜toggleIsPublicData.ts
  ┃ ┣ 📜discoverMoviesWithGenreId.ts
  ┃ ┣ 📜doesUserMatch.ts
@@ -86,163 +86,56 @@
  ┃ ┃ ┃ ┃ ┃ ┗ 📜route.ts
  ┃ ┃ ┃ ┣ 📂oauth
  ┃ ┃ ┃ ┃ ┗ 📂(social-sign-in)
- ┃ ┃ ┃ ┃ ┃ ┣ 📂callback
+ ┃ ┃ ┃ ┃ ┃ ┗ 📂callback
  ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜route.ts
- ┃ ┃ ┃ ┃ ┃ ┗ 📂google-sign-in
- ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜route.ts
- ┃ ┃ ┃ ┃ ┗ 📂search-username
+ ┃ ┃ ┃ ┗ 📂search-username
  ┃ ┃ ┃ ┃ ┗ 📜route.ts
- ┃ ┃ ┃ ┣ 📂forgot-password
- ┃ ┃ ┃ ┃ ┣ 📜form.tsx
- ┃ ┃ ┃ ┃ ┣ 📜page.tsx
- ┃ ┃ ┃ ┃ ┗ 📜resetPassword.tsx
- ┃ ┃ ┃ ┣ 📜Message.tsx
- ┃ ┃ ┃ ┣ 📜SocialButtons.backup.tsx
- ┃ ┃ ┃ ┗ 📜SocialButtons.tsx
- ┃ ┃ ┣ 📂common
- ┃ ┃ ┃ ┣ 📂Buttons
- ┃ ┃ ┃ ┃ ┣ 📜AlreadyWatchedButton.tsx
- ┃ ┃ ┃ ┃ ┣ 📜NotYetWatchedButton
- ┃ ┃ ┃ ┃ ┃ ┗ 📜NotYetWatchedButton.tsx
- ┃ ┃ ┃ ┃ ┣ 📜WatchLaterButton.tsx
- ┃ ┃ ┃ ┗ 📜__tests__
- ┃ ┃ ┃ ┃ ┣ 📜AlreadyWatchedButton.test.tsx
- ┃ ┃ ┃ ┃ ┣ 📜NotYetWatchedButton.test.tsx
- ┃ ┃ ┃ ┃ ┗ 📜WatchLaterButton.test.tsx
- ┃ ┃ ┃ ┣ 📜Footer.tsx
- ┃ ┃ ┃ ┣ 📜Header.tsx
- ┃ ┃ ┃ ┗ 📜SideBar.tsx
- ┃ ┃ ┣ 📂redux
- ┃ ┃ ┃ ┣ 📂actions
- ┃ ┃ ┃ ┃ ┗ 📂auth
- ┃ ┃ ┃ ┃ ┃ ┣ 📜actions.ts
- ┃ ┃ ┃ ┃ ┃ ┗ 📜types.ts
- ┃ ┃ ┃ ┣ 📂reducers
- ┃ ┃ ┃ ┃ ┗ 📂auth
- ┃ ┃ ┃ ┃ ┃ ┣ 📜reducers.ts
- ┃ ┃ ┃ ┃ ┃ ┗ 📜types.ts
- ┃ ┃ ┃ ┣ 📂slices
- ┃ ┃ ┃ ┃ ┣ 📂auth
- ┃ ┃ ┃ ┃ ┃ ┣ 📜authSlice.ts
- ┃ ┃ ┃ ┃ ┃ ┗ 📜index.ts
- ┃ ┃ ┃ ┗ 📜store.ts
- ┃ ┃ ┣ 📂util
- ┃ ┃ ┃ ┣ 📂common
- ┃ ┃ ┃ ┃ ┣ 📜auth.ts
- ┃ ┃ ┃ ┃ ┗ 📜i18n
- ┃ ┃ ┃ ┣ 📂i18n
- ┃ ┃ ┃ ┃ ┗ 📜en.ts
- ┃ ┃ ┃ ┗ 📂types
- ┃ ┃ ┃ ┃ ┣ 📜auth.ts
- ┃ ┃ ┃ ┃ ┣ 📜index.ts
- ┃ ┃ ┃ ┃ ┗ 📜i18n.ts
- ┃ ┃ ┣ 📂views
- ┃ ┃ ┃ ┣ 📂auth
- ┃ ┃ ┃ ┃ ┣ 📜auth.tsx
- ┃ ┃ ┃ ┃ ┣ 📜page.tsx
- ┃ ┃ ┃ ┃ ┗ 📜profile.tsx
- ┃ ┃ ┃ ┣ 📂common
- ┃ ┃ ┃ ┃ ┣ 📜Footer.tsx
- ┃ ┃ ┃ ┃ ┣ 📜Header.tsx
- ┃ ┃ ┃ ┃ ┗ 📜SideBar.tsx
- ┃ ┃ ┃ ┗ 📂(route-handler)
- ┃ ┃ ┃ ┃ ┗ 📂auth
- ┃ ┃ ┃ ┃ ┃ ┗ 📂sign-up
- ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜route.ts
- ┃ ┃ ┃ ┣ 📂movie
- ┃ ┃ ┃ ┃ ┣ 📜discover.tsx
- ┃ ┃ ┃ ┃ ┣ 📜genre.tsx
- ┃ ┃ ┃ ┃ ┣ 📜page.tsx
- ┃ ┃ ┃ ┃ ┗ 📜result.tsx
- ┃ ┃ ┃ ┣ 📂not-found
- ┃ ┃ ┃ ┃ ┗ 📜page.tsx
- ┃ ┃ ┃ ┣ 📂settings
- ┃ ┃ ┃ ┃ ┣ 📂change-email
- ┃ ┃ ┃ ┃ ┃ ┣ 📜form.tsx
+ ┃ ┃ ┣ 📂forgot-password
+ ┃ ┃ ┃ ┣ 📜form.tsx
+ ┃ ┃ ┃ ┣ 📜page.tsx
+ ┃ ┃ ┃ ┗ 📜resetPassword.tsx
+ ┃ ┃ ┗ 📂redirect
+ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┣ 📂(color-extract)
+ ┃ ┃ ┗ 📂api
+ ┃ ┃ ┃ ┗ 📂imagecolorpicker
+ ┃ ┃ ┃ ┃ ┗ 📜route.ts
+ ┃ ┣ 📂(discussion-view-route-handler)
+ ┃ ┃ ┗ 📂api
+ ┃ ┃ ┃ ┗ 📂discussion
+ ┃ ┃ ┃ ┃ ┗ 📂view
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜route.ts
+ ┃ ┣ 📂(movies-route-handler)
+ ┃ ┃ ┗ 📂movies
+ ┃ ┃ ┃ ┣ 📂ignore-movie
+ ┃ ┃ ┃ ┃ ┗ 📜route.ts
+ ┃ ┃ ┃ ┣ 📂rate-movie
+ ┃ ┃ ┃ ┃ ┗ 📜route.ts
+ ┃ ┃ ┃ ┗ 📂watch-later
+ ┃ ┃ ┃ ┃ ┗ 📜route.ts
+ ┃ ┣ 📂(user-page)
+ ┃ ┃ ┗ 📂user-page
+ ┃ ┃ ┃ ┣ 📂[username]
+ ┃ ┃ ┃ ┃ ┣ 📂info
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜not-found.tsx
  ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
- ┃ ┃ ┃ ┃ ┣ 📂change-password
- ┃ ┃ ┃ ┃ ┃ ┣ 📜form.tsx
- ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
- ┃ ┃ ┃ ┃ ┣ 📂change-username
- ┃ ┃ ┃ ┃ ┃ ┣ 📜form.tsx
- ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
- ┃ ┃ ┃ ┃ ┣ 📂delete-account
- ┃ ┃ ┃ ┃ ┃ ┣ 📜form.tsx
- ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
- ┃ ┃ ┃ ┃ ┣ 📂index.ts
- ┃ ┃ ┃ ┃ ┗ 📂socials
- ┃ ┃ ┃ ┃ ┃ ┣ 📂add
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜form.tsx
+ ┃ ┃ ┃ ┃ ┣ 📂likes
+ ┃ ┃ ┃ ┃ ┃ ┣ 📂private
  ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
- ┃ ┃ ┃ ┃ ┃ ┗ 📂delete
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜form.tsx
- ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
- ┃ ┃ ┃ ┣ 📂user
- ┃ ┃ ┃ ┃ ┣ 📂account
- ┃ ┃ ┃ ┃ ┃ ┣ 📂notifications
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜notifications.tsx
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜page.tsx
- ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜settings.tsx
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜layout.tsx
  ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
- ┃ ┃ ┃ ┃ ┣ 📂activity
- ┃ ┃ ┃ ┃ ┃ ┣ 📂posts
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜posts.tsx
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜single-post.tsx
- ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜thread.tsx
+ ┃ ┃ ┃ ┃ ┣ 📂recommendations
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜layout.tsx
  ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
- ┃ ┃ ┃ ┃ ┗ 📂user
- ┃ ┃ ┃ ┃ ┃ ┣ 📂comments
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜comments.tsx
- ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┃ ┃ ┣ 📂reviews
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜client.tsx
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜layout.tsx
  ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
- ┃ ┃ ┣ 📂(store)
- ┃ ┃ ┃ ┗ 📂(auth)
- ┃ ┃ ┃ ┃ ┗ 📂(auth)
- ┃ ┃ ┃ ┃ ┃ ┗ 📜index.ts
- ┃ ┃ ┣ 📂types
- ┃ ┃ ┃ ┣ 📜app.ts
- ┃ ┃ ┃ ┣ 📜auth.ts
- ┃ ┃ ┃ ┣ 📜i18n.ts
- ┃ ┃ ┃ ┗ 📜redux.ts
- ┃ ┃ ┣ 📂util
- ┃ ┃ ┃ ┗ 📂common
- ┃ ┃ ┃ ┃ ┗ 📜auth.ts
- ┃ ┃ ┃ ┣ 📂i18n
- ┃ ┃ ┃ ┃ ┗ 📜en.ts
- ┃ ┃ ┃ ┣ 📂types
- ┃ ┃ ┃ ┃ ┣ 📜auth.ts
- ┃ ┃ ┃ ┃ ┣ 📜i18n.ts
- ┃ ┃ ┃ ┃ ┣ 📜index.ts
- ┃ ┃ ┃ ┃ ┗ 📜redux.ts
- ┃ ┃ ┣ 📂views
- ┃ ┃ ┃ ┣ 📂auth
- ┃ ┃ ┃ ┃ ┣ 📜auth.tsx
- ┃ ┃ ┃ ┃ ┣ 📜index.ts
- ┃ ┃ ┃ ┃ ┣ 📜page.tsx
- ┃ ┃ ┃ ┃ ┗ 📜profile.tsx
- ┃ ┃ ┃ ┣ 📂common
- ┃ ┃ ┃ ┃ ┣ 📜Footer.tsx
- ┃ ┃ ┃ ┃ ┣ 📜Header.tsx
- ┃ ┃ ┃ ┃ ┗ 📜SideBar.tsx
- ┃ ┃ ┃ ┗ 📂(route-handler)
- ┃ ┃ ┃ ┃ ┗ 📂auth
- ┃ ┃ ┃ ┃ ┃ ┗ 📂sign-up
- ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜route.ts
- ┃ ┃ ┃ ┣ 📂movie
- ┃ ┃ ┃ ┃ ┣ 📜discover.tsx
- ┃ ┃ ┃ ┃ ┣ 📜genre.tsx
- ┃ ┃ ┃ ┃ ┣ 📜index.ts
- ┃ ┃ ┃ ┃ ┣ 📜page.tsx
- ┃ ┃ ┃ ┃ ┣ 📜result.tsx
- ┃ ┃ ┃ ┃ ┗ 📜search.tsx
- ┃ ┃ ┃ ┣ 📂not-found
- ┃ ┃ ┃ ┃ ┗ 📜page.tsx
- ┃ ┃ ┃ ┣ 📂settings
- ┃ ┃ ┃ ┃ ┣ 📂change-email
- ┃ ┃ ┃ ┃ ┃ ┣ 📜form.tsx
+ ┃ ┃ ┃ ┃ ┣ 📂settings
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜layout.tsx
  ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
- ┃ ┃ ┃ ┃ ┣ 📂change-password
- ┃ ┃ ┃ ┃ ┃ ┣ 📜form.tsx
+ ┃ ┃ ┃ ┃ ┣ 📂watch-later
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜layout.tsx
  ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
  ┃ ┃ ┃ ┃ ┣ 📂change-username
  ┃ ┃ ┃ ┃ ┃ ┣ 📜form.tsx
@@ -573,6 +466,6 @@
 | ---------------- | -------------------------------- | ------------------------------- |
 | 이세령(팀장)     | https://github.com/Hediar        | https://velog.io/@hediar        |
 | 김환훈(부팀장)   | https://github.com/kimhwanhoon   | https://velog.io/@kimhwanhoon   |
-| 서경모(팀원)     | https://github.com/CTDKSKM       | 주소입력                        |
+| 서경모(팀원)     | https://github.com/CTDKSKM       | https://ezsswil.tistory.com/    |
 | 이지영(팀원)     | https://github.com/lizzieFEstudy | https://console-log.tistory.com |
 | 조아라(디자이너) | [이메일](이메일주소입력)         | 주소입력                        |
