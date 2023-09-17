@@ -2,6 +2,8 @@ import DiscussionDetail from '@/components/Discussion/detail/DiscussionDetail';
 import DiscussionDetailSuspense from '@/components/Discussion/detail/DiscussionDetailSuspense';
 import React, { Suspense } from 'react';
 
+export const dynamic = 'force-dynamic';
+
 interface Props {
   params: {
     discussionId: string;
