@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { message } from 'antd';
 import Option from './Option';
+import { throttle } from 'lodash';
 
 interface Props {
   postId: number;
@@ -117,11 +118,11 @@ const OptionVote = ({ postId, voteCount, checkUpdate }: Props) => {
           <div className="flex justify-between p-2">
             <span>총투표수: {sumCount}</span>
             {isVoted ? (
-              <button className="pr-10" onClick={handleRevoteCount}>
+              <button className="pr-10" onClick={throttle(handleRevoteCount, 500)}>
                 재투표하기
               </button>
             ) : (
-              <button className="pr-10" onClick={handleVoteCount}>
+              <button className="pr-10" onClick={throttle(handleVoteCount, 500)}>
                 투표하기
               </button>
             )}
