@@ -1,7 +1,5 @@
 import { Metadata } from 'next';
 
-export const revalidate = 0;
-
 export const metadata: Metadata = {
   title: '토론 - 무비바바'
 };

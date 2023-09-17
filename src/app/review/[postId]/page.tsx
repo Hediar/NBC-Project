@@ -18,8 +18,6 @@ type Props = {
   params: Params;
 };
 
-export const revalidate = 0;
-
 const ReviewDetailPage = async ({ params }: Props) => {
   const { postId } = params;
 
