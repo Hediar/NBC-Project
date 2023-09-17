@@ -116,6 +116,10 @@ select:-webkit-autofill:focus {
   transition: background-color 5000s ease-in-out 0s;
 }
 
+.star_shadow {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
 /* @apply text-[60px] not-italic font-extrabold leading-[72px] */
 .h1_suit {
   font-family: var(--base-font);

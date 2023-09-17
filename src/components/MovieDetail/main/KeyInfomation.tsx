@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import React from 'react';
-import { StarFillWhite } from '@/styles/icons/Icons24';
+import { StarFillWhiteWithShadow } from '@/styles/icons/Icons24';
 import { SVGTalkEndPoint, SVGTalkStartPoint } from '@/styles/icons/IconsETC';
 import { extractMainColors, findBrightestTwoColors, getColors } from '@/util/findColors';
 import PreviewAppearance from './PreviewAppearance';
@@ -67,12 +67,9 @@ const KeyInfomation = async ({ movieId }: Props) => {
               </div>
             </div>
             <div>
-              <span
-                className="font-bold text-base text-white flex"
-                style={{ textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)' }}
-              >
+              <span className="font-bold text-base text-white flex star_shadow">
                 평균 별점
-                <StarFillWhite />
+                <StarFillWhiteWithShadow />
                 {(vote_average / 2).toFixed(2)}
               </span>
             </div>
