@@ -14,6 +14,7 @@ export const POST = async (request: Request) => {
     password,
     options: { captchaToken: captchaToken }
   });
+
   if (error) {
     if (error.message.includes('captcha verification') || error.message.includes('captcha')) {
       return NextResponse.json({ error: true, message: 'captcha 오류.' });

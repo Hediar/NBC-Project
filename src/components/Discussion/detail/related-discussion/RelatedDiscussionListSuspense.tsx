@@ -1,13 +1,18 @@
-import { ArrowRight } from '@/styles/icons/Icons24';
+import { ArrowRight, ArrowRight2 } from '@/styles/icons/Icons24';
 import React from 'react';
 
 const RelatedDiscussionListSuspense = () => {
   const DUMMY_NUMBER = 4;
   const lists = new Array(DUMMY_NUMBER).fill(0);
   return (
-    <div className="w-full bg-[#EBEBEB] sm:min-h-screen p-10 sm:pr-0 sm:mx-10 rounded-xl sm:rounded-none">
-      <p className="font-bold text-xl h3_suit">관련 토픽</p>
-
+    <div className="mt-10 w-full sm:min-h-screen rounded-xl sm:rounded-none sm:relative sm:pl-[2%]">
+      <div className="w-full flex justify-between">
+        <p className="font-bold text-xl h3_suit">관련 토픽</p>
+        <div className="flex text-neutral-800 text-base lg:text-xl font-normal leading-normal p-2 lg:p-1">
+          전체보기
+          <ArrowRight2 />
+        </div>
+      </div>
       {lists?.map((_, idx) => {
         return (
           <React.Fragment key={idx}>

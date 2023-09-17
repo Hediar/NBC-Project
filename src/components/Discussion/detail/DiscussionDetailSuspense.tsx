@@ -1,13 +1,13 @@
-import { ArrowRight } from '@/styles/icons/Icons24';
+import { ArrowRight, ArrowRight2 } from '@/styles/icons/Icons24';
 import React from 'react';
 
 const DiscussionDetailSuspense = () => {
   return (
     <div className="animate-pulse">
       <div className="flex">
-        <main className="w-full flex flex-col relative">
+        <main className="w-full sm:w-2/3 flex flex-col p-5 sm:pl-[10%] sm:pr-[2%]">
           <p className="mt-10 h3_suit">토론 상세</p>
-          <div className="flex items-center w-full mt-5 px-5 lg:px-10 py-5 rounded-[20px] shadow1 border sm:w-2/3 ">
+          <div className="flex items-center w-full mt-5 px-5 lg:px-10 py-5 rounded-[20px] shadow1 border">
             <div className="h-full relative">
               <div>
                 <div className="rounded-lg w-[100px] h-[150px] bg-slate-200" />
@@ -15,11 +15,11 @@ const DiscussionDetailSuspense = () => {
             </div>
             <div className="flex flex-col gap-3 ml-3">
               <div>
-                <div className="body1_bold_suit sm:text-[24px] sm:leading-[30px] h-[30px] bg-slate-200 min-w-[100px] rounded-lg"></div>
+                <div className="body1_bold_suit sm:text-[24px] sm:leading-[30px] h-[30px] bg-slate-200 w-full rounded-lg"></div>
               </div>
 
               <div className="caption_suit sm:text-[16px] sm:leading-[22px] text-[#888888]">
-                <div className="flex h-[94px] bg-slate-200 w-[300px] rounded-lg">
+                <div className="flex h-[94px] bg-slate-200 w-[150px] sm:w-[300px] rounded-lg">
                   {/* 연도 */}
                   <div className=""></div>
                   {/* 장르 */}
@@ -34,7 +34,7 @@ const DiscussionDetailSuspense = () => {
           <DiscussionTopic />
           <DiscussionCommentContainer />
 
-          <section className="w-full sm:absolute sm:w-1/3 sm:left-2/3">
+          <section className="w-full p-5 sm:absolute sm:w-1/3 sm:right-0 sm:pr-[10%] bg-[#EBEBEB]">
             <RelatedDiscussionList />
           </section>
         </main>
@@ -47,7 +47,7 @@ export default DiscussionDetailSuspense;
 
 const DiscussionTopic = () => {
   return (
-    <div className="mt-[50px] sm:w-2/3">
+    <div className="mt-[50px] w-full">
       <h3 className="h3_suit flex">이 영화 토픽</h3>
       <div className="flex flex-col justify-between">
         <header className="w-full h-[60px] mt-10 rounded-[20px] bg-slate-100 flex gap-3 items-center px-6">
@@ -81,7 +81,7 @@ const DiscussionTopic = () => {
 
 const DiscussionCommentContainer = () => {
   return (
-    <div className="w-full flex flex-col gap-4 sm:w-2/3">
+    <div className="w-full flex flex-col gap-4">
       <div className="w-full flex gap-2 items-center">
         <CommentInput />
       </div>
@@ -140,9 +140,14 @@ const RelatedDiscussionList = () => {
   const DUMMY_NUMBER = 4;
   const lists = new Array(DUMMY_NUMBER).fill(0);
   return (
-    <div className="w-full bg-[#EBEBEB] sm:min-h-screen p-10 sm:pr-0 sm:mx-10 rounded-xl sm:rounded-none">
-      <p className="font-bold text-xl h3_suit">관련 토픽</p>
-
+    <div className="mt-10 w-full sm:min-h-screen rounded-xl sm:rounded-none sm:relative sm:pl-[2%]">
+      <div className="w-full flex justify-between">
+        <p className="font-bold text-xl h3_suit">관련 토픽</p>
+        <div className="flex text-neutral-800 text-base lg:text-xl font-normal leading-normal p-2 lg:p-1">
+          전체보기
+          <ArrowRight2 />
+        </div>
+      </div>
       {lists?.map((_, idx) => {
         return (
           <React.Fragment key={idx}>
