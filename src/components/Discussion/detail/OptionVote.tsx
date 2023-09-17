@@ -80,12 +80,12 @@ const OptionVote = ({ postId, voteCount, checkUpdate }: Props) => {
     revoteMutation.mutate({ optionId: votedOption!.option_id, userId, userData });
 
     setSelectedOption(null);
+    router.refresh();
   };
 
   if (isLoading) {
     return <div>Loading...</div>;
   }
-
   return (
     <>
       {contextHolder}
