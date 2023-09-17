@@ -23,13 +23,13 @@ const KeyInfomation = async ({ movieId }: Props) => {
 
   return (
     <div>
-      <main
-        className="h-[440px] py-[40px] relative"
-        style={{
-          background: `linear-gradient(90deg, rgb(${rgba1[0]},${rgba1[1]},${rgba1[2]}) 0%, rgba(${darknessRGB[0]},${darknessRGB[1]},${darknessRGB[2]},1) 35%, rgba(${brightnessRGB[0]},${brightnessRGB[1]},${brightnessRGB[2]},1) 100%)`
-        }}
-      >
-        <div className="w-full h-full left-0 top-0 absolute bg-gradient-to-b from-slate-200 to-slate-200 opacity-30" />
+      <main className="h-[440px] py-[40px] relative">
+        <div
+          className="w-full h-full left-0 top-0 absolute opacity-30"
+          style={{
+            background: `linear-gradient(90deg, rgb(${rgba1[0]},${rgba1[1]},${rgba1[2]}) 0%, rgba(${darknessRGB[0]},${darknessRGB[1]},${darknessRGB[2]},1) 35%, rgba(${brightnessRGB[0]},${brightnessRGB[1]},${brightnessRGB[2]},1) 100%)`
+          }}
+        />
         <div className="flex w-full sm:w-4/5 mx-auto relative">
           <section className="w-1/3 absolute top-24 sm:top-auto lg:relative">
             <Image
@@ -67,7 +67,10 @@ const KeyInfomation = async ({ movieId }: Props) => {
               </div>
             </div>
             <div>
-              <span className="font-bold text-base text-white flex">
+              <span
+                className="font-bold text-base text-white flex"
+                style={{ textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)' }}
+              >
                 평균 별점
                 <StarFillWhite />
                 {(vote_average / 2).toFixed(2)}
