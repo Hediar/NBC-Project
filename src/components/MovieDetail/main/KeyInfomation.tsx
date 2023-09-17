@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import React from 'react';
-import { StarFillWhite, StarLine } from '@/styles/icons/Icons24';
+import { StarFillWhite } from '@/styles/icons/Icons24';
 import { SVGTalkEndPoint, SVGTalkStartPoint } from '@/styles/icons/IconsETC';
 import { extractMainColors, findBrightestTwoColors, getColors } from '@/util/findColors';
 import PreviewAppearance from './PreviewAppearance';
@@ -26,10 +26,10 @@ const KeyInfomation = async ({ movieId }: Props) => {
       <main
         className="h-[440px] py-[40px] relative"
         style={{
-          background: `linear-gradient(90deg, rgb(${darknessRGB[0]},${darknessRGB[1]},${darknessRGB[2]}) 0%, rgba(${rgba1[0]},${rgba1[1]},${rgba1[2]},1) 35%, rgba(${brightnessRGB[0]},${brightnessRGB[1]},${brightnessRGB[2]},1) 100%)`
+          background: `linear-gradient(90deg, rgb(${rgba1[0]},${rgba1[1]},${rgba1[2]}) 0%, rgba(${darknessRGB[0]},${darknessRGB[1]},${darknessRGB[2]},1) 35%, rgba(${brightnessRGB[0]},${brightnessRGB[1]},${brightnessRGB[2]},1) 100%)`
         }}
       >
-        <div className="w-full h-full left-0 top-0 absolute bg-gradient-to-b from-white to-white opacity-10" />
+        <div className="w-full h-full left-0 top-0 absolute bg-gradient-to-b from-slate-200 to-slate-200 opacity-30" />
         <div className="flex w-full sm:w-4/5 mx-auto relative">
           <section className="w-1/3 absolute top-24 sm:top-auto lg:relative">
             <Image
