@@ -9,37 +9,102 @@ import { Plus } from '@/styles/icons/Icons24';
 import { debounce } from 'lodash';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+
+// export const REVIEWS_LIMIT = 3;
+
+// const useFetchMore = () => {
+//   const { userInfo } = useUserInfoStore();
+
+//   const [isLoading, setIsLoading] = useState(true);
+//   const [reviews, setReviews] = useState<ReviewsTable[]>([]);
+//   const [currentPage, setCurrentPage] = useState(1);
+//   const [hasNextPage, setHasNextPage] = useState<boolean>();
+//   const [totalRowsNumber, setTotalRowsNumber] = useState<number | null>(null);
+
+//   const fetchMore = async (page: number) => {
+//     // 전체 리뷰 개수 가져오는 놈
+//     if (totalRowsNumber === null) {
+//       const fetchRowNumberData = await countRowsNumber('reviews', userInfo.id!);
+//       setTotalRowsNumber(fetchRowNumberData!);
+//       return;
+//     }
+
+//     // userId, 현재 페이지, 리뷰 개수 3개를 이용하여 데이터 가져온다
+//     const { data, error } = await getReviews({ userid: userInfo.id!, page, limit: REVIEWS_LIMIT });
+//     // 리뷰를 넣어준다. (기존에 있는 리뷰는 그대로 둔 채로)
+//     setReviews([...reviews, ...(data as ReviewsTable[])]);
+//     setIsLoading(false);
+
+//     // 전체 개수가 현재 가져온 리뷰 개수랑 비교해서 많거나 같으면 다음 페이지가 있다 아니면 없다라고 지정한다.
+//     totalRowsNumber! >= reviews.length + REVIEWS_LIMIT + 1 ? setHasNextPage(true) : setHasNextPage(false);
+//   };
+
+//   // userId있으면 데이터 가져온다
+//   // if (userInfo.id) fetchMore(currentPage);
+//   const handleClick = () => {
+//     hasNextPage && setCurrentPage(currentPage + 1);
+//   };
+
+//   return {
+//     fetchMore,
+//     totalRowsNumber,
+//     userInfo,
+//     reviews,
+//     isLoading,
+//     currentPage,
+//     hasNextPage,
+//     handleClick
+//   };
+// };
 
 const MyReviewPage = ({ isUserMatch }: { isUserMatch: boolean }) => {
   const { userInfo } = useUserInfoStore();
+  // const { fetchMore, totalRowsNumber, userInfo, reviews, isLoading, currentPage, hasNextPage, handleClick } =
+  //   useFetchMore();
+  // const [option, setOption] = useState("영화");
+  // const {data, isLoading, isError } = useQuery({
+  //   queryKey: ["movies", option],
+  //   queryFn: async () => {
+  //     // 함수
+  //     // option을 이용해서 데이터 요청
+  //   }
+  // })
 
   const [isLoading, setIsLoading] = useState(true);
   const [reviews, setReviews] = useState<ReviewsTable[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [hasNextPage, setHasNextPage] = useState<boolean>();
   const [totalRowsNumber, setTotalRowsNumber] = useState<number | null>(null);
-
   const REVIEWS_LIMIT = 3;
 
   const handleClick = () => {
     hasNextPage && setCurrentPage(currentPage + 1);
   };
 
+  // useEffect(() => {
+  //   if (userInfo.id) fetchMore(currentPage);
+  // }, [userInfo, totalRowsNumber, currentPage]);
   useEffect(() => {
     const fetchMore = async (page: number) => {
+      // 전체 리뷰 개수 가져오는 놈
       if (totalRowsNumber === null) {
         const fetchRowNumberData = await countRowsNumber('reviews', userInfo.id!);
         setTotalRowsNumber(fetchRowNumberData!);
         return;
       }
 
+      // userId, 현재 페이지, 리뷰 개수 3개를 이용하여 데이터 가져온다
       const { data, error } = await getReviews({ userid: userInfo.id!, page, limit: REVIEWS_LIMIT });
+      // 리뷰를 넣어준다. (기존에 있는 리뷰는 그대로 둔 채로)
       setReviews([...reviews, ...(data as ReviewsTable[])]);
       setIsLoading(false);
 
+      // 전체 개수가 현재 가져온 리뷰 개수랑 비교해서 많거나 같으면 다음 페이지가 있다 아니면 없다라고 지정한다.
       totalRowsNumber! >= reviews.length + REVIEWS_LIMIT + 1 ? setHasNextPage(true) : setHasNextPage(false);
     };
 
+    // userId있으면 데이터 가져온다
     if (userInfo.id) fetchMore(currentPage);
   }, [userInfo, totalRowsNumber, currentPage]);
 
@@ -60,8 +125,7 @@ const MyReviewPage = ({ isUserMatch }: { isUserMatch: boolean }) => {
             </Link>
           </li>
         )}
-
-        {reviews.map((review, i) => (
+        {reviews?.map((review, i) => (
           <ReviewItem review={review} key={'ReviewItem' + i} />
         ))}
       </ul>
