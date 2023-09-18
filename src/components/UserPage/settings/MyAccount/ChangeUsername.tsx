@@ -2,7 +2,7 @@ import useUserInfoStore from '@/store/saveCurrentUserData';
 import { Button, Input, Popconfirm, message } from 'antd';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 
 interface Props {
   userData: Database['public']['Tables']['users']['Row'];
@@ -18,23 +18,24 @@ const ChangeUsername = ({ userData }: Props) => {
 
   const onConfirmHandler = async () => {
     if (usernameValue.length < 2 || usernameValue.length > 15) {
-      return messageApi.open({
+      messageApi.open({
         type: 'error',
         content: '닉네임의 길이는 최소 2글자, 최대 15글자 입니다.'
       });
+      return;
     } else if (!/^[a-zA-Z가-힣\s0-9]+$/.test(usernameValue)) {
-      return messageApi.open({
+      messageApi.open({
         type: 'error',
-        content: '닉네임은 한글과 알파벳, 숫자 그리고 띄어쓰기가 가능합니다. 특수문자는 허용되지 않습니다.',
-        duration: 2
+        content: '닉네임은 한글과 알파벳, 숫자 그리고 띄어쓰기가 가능합니다. 특수문자는 허용되지 않습니다.'
       });
+      return;
     } else {
       const formData = new FormData();
       formData.append('username', usernameValue);
       formData.append('id', userId);
 
       const {
-        data: { isError, isSuccess, error, newUsername: usernameData }
+        data: { isError, error }
       } = await axios.post('/auth/profile/username', formData);
 
       if (isError) {
