@@ -36,7 +36,6 @@ const LikeButton = ({ comment, addOptimisticComments }: Props) => {
 
   const handleLikes = throttle(async () => {
     await handleLike();
-    setIsLiked((prevState) => !prevState);
   }, 1000);
 
   const handleLike = async () => {
@@ -52,6 +51,7 @@ const LikeButton = ({ comment, addOptimisticComments }: Props) => {
           user_has_liked_comment: !comment.user_has_liked_comment
         });
         await supabase.from('discussion_comments_likes').delete().match({ user_id: user.id, comments_id: comment.id });
+        setIsLiked((prevState) => !prevState);
         router.refresh();
       } else {
         addOptimisticComments({
@@ -60,6 +60,7 @@ const LikeButton = ({ comment, addOptimisticComments }: Props) => {
           user_has_liked_comment: !comment.user_has_liked_comment
         });
         await supabase.from('discussion_comments_likes').insert({ user_id: user.id, comments_id: comment.id });
+        setIsLiked((prevState) => !prevState);
         router.refresh();
       }
     } else {
