@@ -27,7 +27,7 @@ const DeleteCommentButton = ({ postId }: Props) => {
   return (
     <>
       {context}
-      <button onClick={deleteHandler}>삭제</button>;
+      <button onClick={deleteHandler}>삭제</button>
     </>
   );
 };

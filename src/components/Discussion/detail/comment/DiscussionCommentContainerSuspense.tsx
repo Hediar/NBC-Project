@@ -1,6 +1,6 @@
 const DiscussionCommentContainerSuspense = () => {
   return (
-    <div className="w-full flex flex-col gap-4 sm:w-2/3">
+    <div className="w-full flex flex-col gap-4">
       <div className="w-full flex gap-2 items-center">
         <CommentInput />
       </div>
