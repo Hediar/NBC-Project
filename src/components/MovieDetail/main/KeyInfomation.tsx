@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import React from 'react';
-import { StarFillWhiteWithShadow } from '@/styles/icons/Icons24';
+import { StarFill, StarFillWhite } from '@/styles/icons/Icons24';
 import { SVGTalkEndPoint, SVGTalkStartPoint } from '@/styles/icons/IconsETC';
 import { extractMainColors, findBrightestTwoColors, getColors } from '@/util/findColors';
 import PreviewAppearance from './PreviewAppearance';
@@ -20,7 +20,7 @@ const KeyInfomation = async ({ movieId }: Props) => {
   const rgb = await getColors(`${baseImgUrl}w300_and_h450_bestv2${poster_path}`);
   const [rgba1] = extractMainColors(rgb, 1);
   const [darknessRGB, brightnessRGB] = findBrightestTwoColors(rgb);
-
+  console.log(darknessRGB.reduce((acc, cur) => acc + cur, 0));
   return (
     <div>
       <main className="h-[440px] py-[40px] relative">
@@ -67,9 +67,10 @@ const KeyInfomation = async ({ movieId }: Props) => {
               </div>
             </div>
             <div>
-              <span className="font-bold text-base text-white flex star_shadow">
-                평균 별점
-                <StarFillWhiteWithShadow />
+              <span className="subtitle2_suit text-[#222222] flex">
+                평균 별점&nbsp;
+                <StarFill />
+                &nbsp;
                 {(vote_average / 2).toFixed(2)}
               </span>
             </div>
