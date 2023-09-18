@@ -1,4 +1,3 @@
-import { Suspense } from 'react';
 import MovieDetailInfo from '@/components/MovieDetail/MovieDetailInfo';
 import { Metadata, ResolvingMetadata } from 'next';
 import { getDetailData } from '@/api/tmdb';
@@ -37,9 +36,7 @@ export default async function MovieDetailLayout({
 
       {children}
 
-      <Suspense>
-        <MovieLayoutDiscussion movieId={movieId} />
-      </Suspense>
+      <MovieLayoutDiscussion movieId={movieId} />
     </section>
   );
 }
