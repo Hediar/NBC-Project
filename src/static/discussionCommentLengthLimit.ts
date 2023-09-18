@@ -1,0 +1,1 @@
+export const COMMENT_LENGTH_LIMIT = 300;
