@@ -1,12 +1,13 @@
 'use client';
 
 import useUserInfoStore from '@/store/saveCurrentUserData';
-import { Edit, More } from '@/styles/icons/Icons24';
+import { More } from '@/styles/icons/Icons24';
 import supabase from '@/supabase/config';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { Dropdown, MenuProps, Modal, message } from 'antd';
+import { useQueryClient } from '@tanstack/react-query';
 
 type Props = {
   postId: string;
@@ -15,7 +16,9 @@ type Props = {
 };
 
 const UtilButtons = ({ postId, userId, className }: Props) => {
+  const queryClient = useQueryClient();
   const router = useRouter();
+  const pathname = usePathname();
   const [messageApi, contextHolder] = message.useMessage();
 
   const [mounted, setMounted] = useState<boolean>(false);
@@ -33,6 +36,7 @@ const UtilButtons = ({ postId, userId, className }: Props) => {
 
     setIsModalOpen(true);
   };
+  // console.log('라우터', router);
 
   const handleModalOk = async () => {
     const { data, error } = await supabase.from('reviews').delete().eq('reviewid', postId);
@@ -48,8 +52,13 @@ const UtilButtons = ({ postId, userId, className }: Props) => {
     });
 
     setIsModalOpen(false);
-    router.push('/review');
-    router.refresh();
+    queryClient.invalidateQueries(['reviews', userId]);
+    // router.refresh()
+    if (pathname.includes('user-page')) {
+    } else {
+      window.location.reload();
+      router.push('/review');
+    }
   };
 
   const handleModalCancel = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -61,6 +70,7 @@ const UtilButtons = ({ postId, userId, className }: Props) => {
 
   useEffect(() => {
     setMounted(true);
+    // console.log(pathname.includes('user-page'));
   }, []);
 
   const items: MenuProps['items'] = [
