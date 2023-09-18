@@ -36,9 +36,9 @@ const MovieDetailInfo = async ({ movieId }: Props) => {
               />
               <div className="w-full h-full left-0 top-0 absolute bg-gradient-to-b from-black to-black opacity-70" />
             </div>
-            <div id="detail-cont" className="absolute w-[80%] left-[10%] -bottom-12 mb-20 sm:bottom-0">
-              <h1 className="h3_suit mb-2">{movieData.title}</h1>
-              <div className="text-xl font-bold leading-normal">
+            <div id="detail-cont" className="sm:absolute w-[80%] left-[10%] -bottom-12 mb-20 sm:-bottom-5">
+              <h1 className="text-2xl sm:text-[32px] font-bold font-['SUIT'] leading-10 mb-2">{movieData.title}</h1>
+              <div className="sm:text-xl font-bold leading-normal">
                 <div className="flex flex-wrap items-center">
                   <span>{movieData.release_date.slice(0, 4)}</span>
                   <span style={{ fontSize: '0.5px' }}>●</span>
@@ -64,7 +64,7 @@ const MovieDetailInfo = async ({ movieId }: Props) => {
             {watchProviders && (
               <div
                 id="providers-cont"
-                className="absolute top-32 sm:top-auto sm:bottom-10 right-[10%] flex gap-3 pb-2 caption_suit text-white"
+                className="absolute top-28 sm:top-auto sm:bottom-10 right-[10%] flex gap-3 pb-2 caption_suit text-white"
               >
                 {watchProviders?.rent && (
                   <div id="provider-rent" className="flex flex-col gap-1">

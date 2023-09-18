@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import React from 'react';
-import { StarFill, StarFillWhite } from '@/styles/icons/Icons24';
+import { StarFill } from '@/styles/icons/Icons24';
 import { SVGTalkEndPoint, SVGTalkStartPoint } from '@/styles/icons/IconsETC';
 import { extractMainColors, findBrightestTwoColors, getColors } from '@/util/findColors';
 import PreviewAppearance from './PreviewAppearance';
@@ -20,7 +20,7 @@ const KeyInfomation = async ({ movieId }: Props) => {
   const rgb = await getColors(`${baseImgUrl}w300_and_h450_bestv2${poster_path}`);
   const [rgba1] = extractMainColors(rgb, 1);
   const [darknessRGB, brightnessRGB] = findBrightestTwoColors(rgb);
-  console.log(darknessRGB.reduce((acc, cur) => acc + cur, 0));
+
   return (
     <div>
       <main className="h-[440px] py-[40px] relative">
