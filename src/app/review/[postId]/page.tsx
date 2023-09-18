@@ -10,6 +10,9 @@ import ReviewLikes from '@/components/Review/ReviewLikes';
 import WatchLaterButton from '@/components/common/Buttons/WatchLaterButton';
 import MovieLikes from '@/components/common/Buttons/MovieLikes';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 interface Params {
   postId: string;
 }
