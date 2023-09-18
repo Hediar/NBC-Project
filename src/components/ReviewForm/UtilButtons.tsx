@@ -4,7 +4,7 @@ import useUserInfoStore from '@/store/saveCurrentUserData';
 import { Edit, More } from '@/styles/icons/Icons24';
 import supabase from '@/supabase/config';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { Dropdown, MenuProps, Modal, message } from 'antd';
 
@@ -15,6 +15,7 @@ type Props = {
 };
 
 const UtilButtons = ({ postId, userId, className }: Props) => {
+  const pathname = usePathname();
   const router = useRouter();
   const [messageApi, contextHolder] = message.useMessage();
 
@@ -48,7 +49,12 @@ const UtilButtons = ({ postId, userId, className }: Props) => {
     });
 
     setIsModalOpen(false);
-    router.push('/review');
+
+    if (!pathname.includes('user-page')) {
+      router.push('/review');
+    } else {
+      window.location.reload();
+    }
     router.refresh();
   };
 
