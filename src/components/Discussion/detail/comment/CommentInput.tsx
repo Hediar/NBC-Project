@@ -1,5 +1,6 @@
 'use client';
 
+import { COMMENT_LENGTH_LIMIT } from '@/static/discussionCommentLengthLimit';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { message } from 'antd';
 import { debounce } from 'lodash';
@@ -49,7 +50,7 @@ const CommentInput = ({ signedInUserId, discussionId }: Props) => {
   const handleFocusing = () => {
     if (textareaRef.current) textareaRef.current.focus();
   };
-  if (commentValue.length > 300) setCommentValue(commentValue.slice(0, 300));
+  if (commentValue.length > COMMENT_LENGTH_LIMIT) setCommentValue(commentValue.slice(0, COMMENT_LENGTH_LIMIT));
   return (
     <>
       {contextHolder}
@@ -63,7 +64,9 @@ const CommentInput = ({ signedInUserId, discussionId }: Props) => {
             value={commentValue}
             onChange={(e) => setCommentValue(e.target.value)}
           />
-          <div className="self-end">{commentValue.length}/300</div>
+          <div className="self-end">
+            {commentValue.length}/{COMMENT_LENGTH_LIMIT}
+          </div>
           <div className="self-end">
             <button
               onClick={(e) => {

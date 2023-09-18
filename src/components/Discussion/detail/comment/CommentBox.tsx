@@ -6,6 +6,7 @@ import changeFormat from '@/api/formatTime';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useRouter } from 'next/navigation';
 import { message } from 'antd';
+import { COMMENT_LENGTH_LIMIT } from '@/static/discussionCommentLengthLimit';
 
 interface Props {
   signedInUserId: string;
@@ -21,7 +22,7 @@ const CommentBox = ({ comment, signedInUserId, addOptimisticComments }: Props) =
   const [editInputValue, setEditInputValue] = useState<string>(comment.content);
   const editInputRef = useRef<HTMLInputElement>(null);
 
-  const editHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmitEditComment = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (editInputValue === '') {
       messageApi.open({ type: 'warning', content: '내용을 입력해주세요' });
@@ -42,12 +43,18 @@ const CommentBox = ({ comment, signedInUserId, addOptimisticComments }: Props) =
     }
   };
 
-  const handleCancleBtn = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleEditCancleBtn = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.stopPropagation();
     setIsEdit(false);
     setEditInputValue(comment.content);
   };
 
+  const handleCommentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newComment = e.target.value;
+    if (newComment.length <= COMMENT_LENGTH_LIMIT) {
+      setEditInputValue(newComment);
+    }
+  };
   return (
     <>
       {contextHolder}
@@ -72,20 +79,21 @@ const CommentBox = ({ comment, signedInUserId, addOptimisticComments }: Props) =
           <div className="flex items-center gap-4">
             {isEdit ? (
               <div className="w-full custom_input relative" onClick={() => editInputRef.current?.focus()}>
-                <form onSubmit={editHandler}>
+                <form onSubmit={handleSubmitEditComment}>
                   <input
                     ref={editInputRef}
                     type="text"
                     autoFocus
                     className="w-11/12 border-none outline-none"
                     value={editInputValue}
-                    onChange={(e) => setEditInputValue(e.target.value)}
+                    onChange={handleCommentChange}
                   />
-                  <div className="absolute top-5 right-2 flex gap-2 text-xs">
-                    <button className="text-gray-400">완료</button>
-                    <button className="text-gray-400" onClick={handleCancleBtn}>
-                      취소
-                    </button>
+                  <div className="absolute top-5 right-2 flex gap-2 text-xs text-gray-400">
+                    <span>
+                      {editInputValue.length}/{COMMENT_LENGTH_LIMIT}
+                    </span>
+                    <button>완료</button>
+                    <button onClick={handleEditCancleBtn}>취소</button>
                   </div>
                 </form>
               </div>
