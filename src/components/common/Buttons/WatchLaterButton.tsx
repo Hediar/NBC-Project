@@ -4,7 +4,7 @@ import POSTWatchLater from '@/api/POSTWatchLater';
 import useUserInfoStore from '@/store/saveCurrentUserData';
 import supabase from '@/supabase/config';
 import { BookmarkLinedGreen, BookmarkLinedWhite } from '@/styles/icons/Icons24';
-import { throttle } from 'lodash';
+import throttle from 'lodash/throttle';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { message } from 'antd';

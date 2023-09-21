@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { message } from 'antd';
 import Option from './Option';
-import { throttle } from 'lodash';
+import throttle from 'lodash/throttle';
 
 interface Props {
   postId: number;
