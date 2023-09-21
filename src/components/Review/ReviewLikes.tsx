@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import supabase from '@/supabase/config';
 import useUserInfoStore from '@/store/saveCurrentUserData';
 import { useQuery } from '@tanstack/react-query';
-import { throttle } from 'lodash';
+import throttle from 'lodash/throttle';
 import { useReviewLikesMutation } from '@/hooks/useReviewLikesMutation';
 import { HeartFilledColor, HeartLine } from '@/styles/icons/Icons24';
 import { HeartFilledColor as HeartFilledColor32, HeartLined as HeartLine32 } from '@/styles/icons/Icons32';
