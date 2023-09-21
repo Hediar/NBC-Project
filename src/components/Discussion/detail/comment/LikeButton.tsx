@@ -2,7 +2,7 @@
 
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useRouter } from 'next/navigation';
-import { throttle } from 'lodash';
+import throttle from 'lodash/throttle';
 import { useState } from 'react';
 import { HeartFilledColor, HeartLine } from '@/styles/icons/Icons24';
 
