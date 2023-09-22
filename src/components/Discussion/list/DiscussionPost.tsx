@@ -5,7 +5,7 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { baseImgUrl } from '@/static/baseImgUrl';
 import Image from 'next/image';
-import { debounce } from 'lodash';
+import debounce from 'lodash/debounce';
 
 interface Props {
   post: DiscussionPost;

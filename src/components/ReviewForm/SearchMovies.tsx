@@ -5,7 +5,7 @@ import { useReviewMovieStore, useSearchModalStore } from '@/store/useReviewStore
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import Paging from '../common/Paging';
 import SearchMoviesItem from './SearchMoviesItem';
-import { debounce } from 'lodash';
+import debounce from 'lodash/debounce';
 import { SearchLined } from '@/styles/icons/Icons32';
 
 type Props = {

@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import DiscussionPost from './DiscussionPost';
 import { getDiscussionPost } from '@/api/supabase-discussion';
-import { debounce } from 'lodash';
+import debounce from 'lodash/debounce';
 import { useSearchParams } from 'next/navigation';
 import { ArrowDown } from '@/styles/icons/Icons24';
 
