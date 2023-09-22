@@ -7,7 +7,7 @@ import { useDiscussionStore } from '@/store/useDiscussionStore';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { optionMark } from '@/static/optionMark';
 import { message } from 'antd';
-import { debounce } from 'lodash';
+import debounce from 'lodash/debounce';
 import { getDetailData } from '@/api/tmdb';
 import { addNewDiscussionPost } from '@/api/supabase-discussion';
 import useLeaveConfirmation from '@/hooks/useLeaveConfiramation';

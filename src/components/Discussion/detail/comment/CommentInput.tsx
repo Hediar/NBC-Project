@@ -3,7 +3,7 @@
 import { COMMENT_LENGTH_LIMIT } from '@/static/discussionCommentLengthLimit';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { message } from 'antd';
-import { debounce } from 'lodash';
+import debounce from 'lodash/debounce';
 import { useRouter } from 'next/navigation';
 import React, { useRef, useState } from 'react';
 
