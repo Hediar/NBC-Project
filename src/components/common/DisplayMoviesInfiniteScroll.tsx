@@ -5,7 +5,7 @@
 
 import { useEffect, useState } from 'react';
 import MovieItem from './MovieItem';
-import { debounce } from 'lodash';
+import debounce from 'lodash/debounce';
 import SkeletonMovieItem from './skeleton/MovieItem';
 
 interface Props {

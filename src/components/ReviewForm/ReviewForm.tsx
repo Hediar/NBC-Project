@@ -16,7 +16,7 @@ import StarBox from './StarBox';
 import { useForm, useFieldArray, Controller } from 'react-hook-form';
 import { getDetailData } from '@/api/tmdb';
 import { Modal, message } from 'antd';
-import { debounce } from 'lodash';
+import debounce from 'lodash/debounce';
 
 interface Props {
   movieId?: string;
