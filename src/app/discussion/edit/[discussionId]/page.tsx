@@ -8,7 +8,7 @@ import useUserInfoStore from '@/store/saveCurrentUserData';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
 import { message } from 'antd';
-import { debounce } from 'lodash';
+import debounce from 'lodash/debounce';
 import useLeaveConfirmation from '@/hooks/useLeaveConfiramation';
 
 interface Props {

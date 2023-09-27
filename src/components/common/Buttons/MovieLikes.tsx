@@ -3,9 +3,9 @@ import React, { useEffect, useState } from 'react';
 import supabase from '@/supabase/config';
 import useUserInfoStore from '@/store/saveCurrentUserData';
 import { useQuery } from '@tanstack/react-query';
-import { throttle } from 'lodash';
+import throttle from 'lodash/throttle';
 import { useMovieLikesMutation } from '@/hooks/useMovieLikesMutation';
-import { HeartFilledColor, HeartLine, HeartLineWhite } from '@/styles/icons/Icons24';
+import { HeartFilledColor, HeartLineWhite } from '@/styles/icons/Icons24';
 import { message } from 'antd';
 
 const MovieLikes = (props: { movieid: number }) => {
