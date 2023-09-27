@@ -299,7 +299,11 @@ declare global {
     title: string;
     content: string;
     movieId: string | number | null;
-    options?: { text: string }[];
+    options?: Option[];
     userId: string;
+  }
+
+  interface Option {
+    text: string;
   }
 }
