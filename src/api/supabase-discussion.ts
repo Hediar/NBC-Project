@@ -94,16 +94,16 @@ export const getHotDiscussionPost = async () => {
 
 //add 요청
 type NewDiscussionPost = Omit<DiscussionPost, 'post_id' | 'created_at'>;
-export const addNewDiscussionPost = async (newPost: NewDiscussionPost, isOptionOpen: boolean, options: string[]) => {
+export const addNewDiscussionPost = async (newPost: NewDiscussionPost, isOptionOpen: boolean, options: Option[]) => {
   try {
     const { data } = await supabase.from('discussion_post').insert(newPost).select();
 
     if (isOptionOpen) {
       for (let i = 0; i < options.length; i++) {
-        if (options[i].trim().length) {
+        if (options[i].text.trim().length) {
           const newOption = {
             post_id: data![0].post_id,
-            content: options[i]
+            content: options[i].text
           };
 
           await supabase.from('discussion_option').insert(newOption);

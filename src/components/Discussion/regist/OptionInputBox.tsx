@@ -3,7 +3,7 @@ import React from 'react';
 
 type Props = {
   idx: number;
-  option: string;
+  option: Option;
   deleteOption: (idx: number) => void;
   changeOption: (idx: number, newText: string) => void;
 };
@@ -29,7 +29,7 @@ const OptionInputBox = ({ idx, option, deleteOption, changeOption }: Props) => {
           className="border w-full px-3 py-1.5 my-2 rounded-[10px]"
           type="text"
           placeholder="내용을 입력해주세요"
-          value={option}
+          value={option.text}
           onChange={handleTextChange}
         />
       </div>

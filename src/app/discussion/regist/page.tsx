@@ -32,7 +32,7 @@ const DiscussionRegistPage = () => {
   } = useUserInfoStore();
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
-  const [options, setOptions] = useState<string[]>(['', '']);
+  const [options, setOptions] = useState<Option[]>([{ text: '' }, { text: '' }]);
   const [isOptionOpen, setIsOptionOpen] = useState<boolean>(true);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState<boolean>(false);
   const [isBlocked, setIsBlocked] = useState<boolean>(true);
@@ -73,7 +73,8 @@ const DiscussionRegistPage = () => {
   }, [movieId, movie_id]);
 
   const addOption = () => {
-    setOptions([...options, '']);
+    const newOption = { text: '' };
+    setOptions([...options, newOption]);
   };
 
   const deleteOption = (idx: number) => {
@@ -81,7 +82,7 @@ const DiscussionRegistPage = () => {
   };
 
   const changeOption = (idx: number, newText: string) => {
-    setOptions(options.map((option, index) => (index === idx ? (option = newText) : option)));
+    setOptions(options.map((option, index) => (index === idx ? (option = { text: newText }) : option)));
   };
 
   const handleCancel = () => router.back();
@@ -109,7 +110,7 @@ const DiscussionRegistPage = () => {
       return titleRef.current!.focus();
     }
     if (isOptionOpen) {
-      const optionCheck = options.filter((option) => option.trim().length).length;
+      const optionCheck = options.filter((option) => option.text.trim().length).length;
       if (optionCheck < 2) {
         messageApi.open({
           type: 'warning',

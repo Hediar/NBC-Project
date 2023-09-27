@@ -17,10 +17,6 @@ interface Props {
   };
 }
 
-interface Option {
-  text: string;
-}
-
 const marginYGap = '25px';
 
 const DiscussionEditPage = ({ params }: Props) => {
