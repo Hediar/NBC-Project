@@ -136,7 +136,6 @@ const DiscussionEditPage = ({ params }: Props) => {
       {confirmationModal}
       <div className="sm:p-5 w-full sm:w-4/5 lg:w-3/5 mx-auto">
         <h1 className={`text-2xl font-bold mb-[25px]`}>토론 작성</h1>
-        {/* S:: 영화 선택 */}
 
         {movieId && (
           <div
@@ -151,8 +150,6 @@ const DiscussionEditPage = ({ params }: Props) => {
             <ReviewMovie movieId={movieId} />
           </div>
         )}
-
-        {/* E:: 영화 선택 */}
 
         <div className={`flex flex-col w-full mt-[${marginYGap}] font-bold`}>
           <div>
@@ -261,9 +258,6 @@ const DiscussionEditPage = ({ params }: Props) => {
           <button className="button-white" onClick={handleCancel}>
             돌아가기
           </button>
-          {/* <button className="border px-2 py-1 bg-gray-300 text-white font-bold hover:bg-gray-200 hover:text-gray-700 rounded-[10px]">
-            임시저장
-          </button> */}
           <button className="button-dark" onClick={debounce(handleSubmit, 300)}>
             토론 수정하기
           </button>

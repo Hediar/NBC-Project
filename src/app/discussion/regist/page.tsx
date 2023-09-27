@@ -5,7 +5,6 @@ import useUserInfoStore from '@/store/saveCurrentUserData';
 import { useReviewMovieStore, useSearchModalStore } from '@/store/useReviewStore';
 import { useDiscussionStore } from '@/store/useDiscussionStore';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { optionMark } from '@/static/optionMark';
 import { message } from 'antd';
 import { debounce } from 'lodash';
 import { getDetailData } from '@/api/tmdb';
@@ -15,6 +14,8 @@ import ReviewMovie from '@/components/ReviewForm/ReviewMovie';
 import SearchPopup from '@/components/ReviewForm/SearchPopup';
 import LeaveCheck from '@/components/common/LeaveCheck';
 import ContinueConfirmationModal from '@/components/common/ContinueConfirmationModal';
+import OptionInputBox from '@/components/Discussion/regist/OptionInputBox';
+import DiscussionStyleBox from '@/components/Discussion/regist/DiscussionStyleBox';
 
 const marginYGap = '25px';
 const titleLengthLimit = 50;
@@ -31,7 +32,7 @@ const DiscussionRegistPage = () => {
   } = useUserInfoStore();
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
-  const [options, setOptions] = useState<{ text: string }[]>([{ text: '' }, { text: '' }]);
+  const [options, setOptions] = useState<string[]>(['', '']);
   const [isOptionOpen, setIsOptionOpen] = useState<boolean>(true);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState<boolean>(false);
   const [isBlocked, setIsBlocked] = useState<boolean>(true);
@@ -72,12 +73,15 @@ const DiscussionRegistPage = () => {
   }, [movieId, movie_id]);
 
   const addOption = () => {
-    const newOption = { text: '' };
-    setOptions([...options, newOption]);
+    setOptions([...options, '']);
   };
 
   const deleteOption = (idx: number) => {
     setOptions(options.filter((_, index) => index !== idx));
+  };
+
+  const changeOption = (idx: number, newText: string) => {
+    setOptions(options.map((option, index) => (index === idx ? (option = newText) : option)));
   };
 
   const handleCancel = () => router.back();
@@ -105,7 +109,7 @@ const DiscussionRegistPage = () => {
       return titleRef.current!.focus();
     }
     if (isOptionOpen) {
-      const optionCheck = options.filter((option) => option.text.trim().length).length;
+      const optionCheck = options.filter((option) => option.trim().length).length;
       if (optionCheck < 2) {
         messageApi.open({
           type: 'warning',
@@ -156,15 +160,6 @@ const DiscussionRegistPage = () => {
   };
 
   const handleTempSave = () => {
-    if (!isOptionOpen) {
-      const newTempPost = {
-        title,
-        content,
-        movieId,
-        userId
-      };
-      saveTempDiscussionPost(newTempPost);
-    }
     const newTempPost = {
       title,
       content,
@@ -172,8 +167,10 @@ const DiscussionRegistPage = () => {
       options,
       userId
     };
+
     saveTempDiscussionPost(newTempPost);
     setIsBlocked(false);
+    messageApi.open({ type: 'success', content: '임시저장이 완료되었습니다.' });
   };
 
   const handleModalCancel = () => {
@@ -182,12 +179,17 @@ const DiscussionRegistPage = () => {
 
   const handleModalOk = () => {
     setIsConfirmModalOpen(false);
+
     if (tempDiscussionPost) {
-      const { title, content, movieId, options } = tempDiscussionPost;
+      const { title, content, movieId, options: savedOptions } = tempDiscussionPost;
+
       setTitle(title as string);
       setContent(content as string);
       saveSearchMovieId(movieId);
-      if (options) setOptions([...options]);
+
+      if (savedOptions) {
+        setOptions(savedOptions);
+      }
     }
   };
 
@@ -197,9 +199,9 @@ const DiscussionRegistPage = () => {
       <ContinueConfirmationModal open={isConfirmModalOpen} onCancel={handleModalCancel} onOk={handleModalOk} />
       {contextHolder}
       {confirmationModal}
+
       <div className="sm:p-5 w-full sm:w-4/5 lg:w-3/5 mx-auto">
         <h1 className={`text-2xl font-bold mb-[25px]`}>토론 작성</h1>
-        {/* S:: 영화 선택 */}
         <div className="info-box">
           {movieId || movie_id ? (
             <ReviewMovie movieId={movieId ?? movie_id} />
@@ -217,7 +219,6 @@ const DiscussionRegistPage = () => {
           )}
           {isSearchModalOpen && <SearchPopup />}
         </div>
-        {/* E:: 영화 선택 */}
 
         <div className={`flex flex-col w-full mt-[${marginYGap}] font-bold`}>
           <div>
@@ -253,60 +254,12 @@ const DiscussionRegistPage = () => {
         </div>
 
         <div className={`mt-[${marginYGap}]`}>
-          <p className="font-bold relative">
-            <span
-              onMouseOver={() => {
-                setIsManualOpen(!isManualOpen);
-              }}
-              onMouseLeave={() => {
-                setIsManualOpen(!isManualOpen);
-              }}
-            >
-              토론 방식*
-            </span>
-            {isManualOpen && <span className="text-sm text-red-300">토론방식은 추후 수정하실 수 없습니다</span>}
-          </p>
-          <div className="flex gap-3 mt-3">
-            {isOptionOpen ? (
-              <>
-                <button
-                  className={`${Style.voteBtn}`}
-                  onClick={() => {
-                    setIsOptionOpen(false);
-                  }}
-                >
-                  자유 토론
-                </button>
-                <button
-                  className={`${Style.voteBtn} bg-black text-white`}
-                  onClick={() => {
-                    setIsOptionOpen(true);
-                  }}
-                >
-                  투표 토론
-                </button>
-              </>
-            ) : (
-              <>
-                <button
-                  className={`${Style.voteBtn} bg-black text-white`}
-                  onClick={() => {
-                    setIsOptionOpen(false);
-                  }}
-                >
-                  자유 토론
-                </button>
-                <button
-                  className={`${Style.voteBtn}`}
-                  onClick={() => {
-                    setIsOptionOpen(true);
-                  }}
-                >
-                  투표 토론
-                </button>
-              </>
-            )}
-          </div>
+          <DiscussionStyleBox
+            isManualOpen={isManualOpen}
+            handleManual={setIsManualOpen}
+            isOptionOpen={isOptionOpen}
+            handleOptionOpen={setIsOptionOpen}
+          />
         </div>
 
         <div className={`mt-[${marginYGap}] font-bold`}>
@@ -314,33 +267,9 @@ const DiscussionRegistPage = () => {
             <>
               {options.map((option, idx) => {
                 return (
-                  <div key={idx} className="flex gap-2 items-center">
-                    <div className="w-full">
-                      <div>
-                        {idx <= 1 ? (
-                          <label htmlFor={`의견${optionMark[idx]}`}>의견{optionMark[idx]}*</label>
-                        ) : (
-                          <label htmlFor={`의견${optionMark[idx]}`}>의견{optionMark[idx]}</label>
-                        )}
-                        {idx > 1 && (
-                          <button
-                            className="rounded-full p-1 ml-1 bg-gray-200"
-                            onClick={() => deleteOption(idx)}
-                          ></button>
-                        )}
-                      </div>
-
-                      <input
-                        name={`의견${optionMark[idx]}`}
-                        className="border w-full px-3 py-1.5 my-2 rounded-[10px]"
-                        type="text"
-                        placeholder="내용을 입력해주세요"
-                        onChange={(e) => {
-                          option.text = e.target.value;
-                        }}
-                      />
-                    </div>
-                  </div>
+                  <React.Fragment key={idx}>
+                    <OptionInputBox idx={idx} option={option} deleteOption={deleteOption} changeOption={changeOption} />
+                  </React.Fragment>
                 );
               })}
 
@@ -375,7 +304,3 @@ const DiscussionRegistPage = () => {
 };
 
 export default DiscussionRegistPage;
-
-const Style = {
-  voteBtn: 'border px-6 sm:px-20 py-3 rounded-[22px]'
-};

@@ -299,7 +299,7 @@ declare global {
     title: string;
     content: string;
     movieId: string | number | null;
-    options?: { text: string }[];
+    options?: string[];
     userId: string;
   }
 }
