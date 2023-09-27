@@ -94,11 +94,7 @@ export const getHotDiscussionPost = async () => {
 
 //add 요청
 type NewDiscussionPost = Omit<DiscussionPost, 'post_id' | 'created_at'>;
-export const addNewDiscussionPost = async (
-  newPost: NewDiscussionPost,
-  isOptionOpen: boolean,
-  options: { text: string }[]
-) => {
+export const addNewDiscussionPost = async (newPost: NewDiscussionPost, isOptionOpen: boolean, options: Option[]) => {
   try {
     const { data } = await supabase.from('discussion_post').insert(newPost).select();
 

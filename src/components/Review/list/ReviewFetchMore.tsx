@@ -1,7 +1,7 @@
 'use client';
 
 import { fetchReviewData } from '@/api/review';
-import { UseInfiniteQueryResult, useInfiniteQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import React, { useEffect, useState } from 'react';
 import ReviewItem from './ReviewItem';
 
