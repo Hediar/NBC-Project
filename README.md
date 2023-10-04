@@ -453,10 +453,13 @@
 ## 🍀 주요 기술
 
 - next.js
+
   SEO 적용에 유리, SSR을 쉽게 활용할 수 있다.
 - typescript
+
   명확한 타입 선언
 - supabase
+
   유용한 PostgreSQL 확장 기능과 플러그인 제공
 - tanstack query
   타입스크립트 지원과 활발한 커뮤니티로 문서와 예제가 풍부
