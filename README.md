@@ -453,13 +453,21 @@
 ## 🍀 주요 기술
 
 - next.js
+  SEO 적용에 유리, SSR을 쉽게 활용할 수 있다.
 - typescript
+  명확한 타입 선언
 - supabase
+  유용한 PostgreSQL 확장 기능과 플러그인 제공
 - tanstack query
+  타입스크립트 지원과 활발한 커뮤니티로 문서와 예제가 풍부
 - zustand
+  provider가 필요없음 → 앱을 래핑하지 않아 불필요한 리렌더링 최소화
 - vercel
+  Nextjs를 간편하게 배포가능
 - lodash
+  쓰로틀링, 디바운싱 등 브라우저에서 지원하지 않는 성능이 보장되어있는 다양한 메소드를 가지고 있어 생산성이 높음
 - tailwind
+  Next.js App Router에서 사용할 수 있는 CSS라이브러리
 
 ## 🧑🏻 팀원 소개
 
